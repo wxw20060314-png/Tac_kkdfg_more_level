@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_light_absorbing_tube": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tacz_morelevel:light_absorbing_tube"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tacz_morelevel:stealth_seventh_boots"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_light_absorbing_tube",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tacz_morelevel:stealth_seventh_boots"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "tacz_morelevel:slime_ruins",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 312,
+    "separation": 200,
+    "salt": 473829156
+  }
+}

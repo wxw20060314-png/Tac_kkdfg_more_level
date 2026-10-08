@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:sculk_catalyst"
+  },
+  "base": {
+    "item": "tacz_morelevel:seventh_bulletproof_helmet"
+  },
+  "result": {
+    "item": "tacz_morelevel:seventh_sculk_bulletproof_helmet"
+  },
+  "template": {
+    "item": "tacz_morelevel:super_upgrade_template"
+  }
+}

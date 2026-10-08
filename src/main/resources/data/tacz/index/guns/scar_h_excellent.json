@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.scar_h_excellent.name",
+  "display": "tacz:scar_h_display",
+  "data": "tacz:scar_h_excellent_data",
+  "tooltip": "tacz.gun.scar_h_excellent.desc",
+  "type": "rifle",
+  "sort": 55
+}

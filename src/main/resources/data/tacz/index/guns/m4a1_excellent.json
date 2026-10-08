@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m4a1_excellent.name",
+  "display": "tacz:m4a1_display",
+  "data": "tacz:m4a1_excellent_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.m4a1_excellent.desc",
+  "sort": 30
+}

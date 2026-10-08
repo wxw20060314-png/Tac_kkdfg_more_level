@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_war_machine": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:war_machine"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_war_machine"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:power_mech_bulletproof_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_war_machine.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_war_machine.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

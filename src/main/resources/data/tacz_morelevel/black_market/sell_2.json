@@ -1,0 +1,108 @@
+{
+  "trades": [
+    {
+      "input": {
+        "item": "minecraft:iron_ingot",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:copper_ingot",
+        "count": 16
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:gold_ingot",
+        "count": 2
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:emerald",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:diamond",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 4
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:netherite_ingot",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 16
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:obsidian_item",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 16
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:blaze_rod",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone",
+        "count": 16
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:lapis_lazuli",
+        "count": 16
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      }
+    },
+    {
+      "input": {  "item": "minecraft:gunpowder", "count": 8 },
+      "output": {"item": "tacz_morelevel:black_universal_currency_digit_1", "count": 2 }
+    }
+  ]
+}

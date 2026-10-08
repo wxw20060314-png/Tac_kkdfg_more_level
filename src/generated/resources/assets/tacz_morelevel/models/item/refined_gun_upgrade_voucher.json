@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tacz_morelevel:item/refined_gun_upgrade_voucher"
+  }
+}

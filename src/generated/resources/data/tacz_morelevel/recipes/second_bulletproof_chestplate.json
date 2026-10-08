@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "x": {
+      "item": "minecraft:copper_ingot"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "z z",
+    "x#x",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:second_bulletproof_chestplate"
+  },
+  "show_notification": true
+}

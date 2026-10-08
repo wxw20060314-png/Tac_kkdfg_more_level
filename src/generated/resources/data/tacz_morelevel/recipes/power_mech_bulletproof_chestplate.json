@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:obsidian_chestplate"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "y": {
+      "item": "tacz_morelevel:energy_core_gold"
+    },
+    "z": {
+      "item": "tacz_morelevel:power_thruster_gold"
+    }
+  },
+  "pattern": [
+    "xyx",
+    "x#x",
+    "zxz"
+  ],
+  "result": {
+    "item": "tacz_morelevel:power_mech_bulletproof_chestplate"
+  },
+  "show_notification": true
+}

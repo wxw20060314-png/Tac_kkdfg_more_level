@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tacz_morelevel:syringe"
+    },
+    {
+      "item": "minecraft:dragon_egg"
+    },
+    {
+      "item": "tacz_morelevel:slime_serum"
+    },
+    {
+      "item": "tacz_morelevel:slime_serum"
+    },
+    {
+      "item": "tacz_morelevel:slime_serum"
+    },
+    {
+      "item": "tacz_morelevel:slime_serum"
+    }
+  ],
+  "result": {
+    "item": "tacz_morelevel:comprehensive_immunity_needle_medium"
+  }
+}

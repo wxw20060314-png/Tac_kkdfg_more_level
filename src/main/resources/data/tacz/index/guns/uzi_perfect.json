@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.uzi_perfect.name",
+  "display": "tacz:uzi_display",
+  "data": "tacz:uzi_perfect_data",
+  "tooltip": "tacz.gun.uzi_perfect.desc",
+  "type": "smg",
+  "sort": 94
+}

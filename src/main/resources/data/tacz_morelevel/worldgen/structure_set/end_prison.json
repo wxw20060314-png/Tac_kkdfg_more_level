@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "tacz_morelevel:end_prison",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 438,
+    "separation": 320,
+    "salt": 917364825
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tacz_morelevel:item/perfect_gun_upgrade_voucher"
+  }
+}

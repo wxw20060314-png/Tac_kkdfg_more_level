@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.taurus943_legendary.name",
+  "display": "tacz:taurus943_display",
+  "data": "tacz:taurus943_legendary_data",
+  "tooltip": "tacz.gun.taurus943_legendary.desc",
+  "type": "pistol",
+  "sort": 14
+}

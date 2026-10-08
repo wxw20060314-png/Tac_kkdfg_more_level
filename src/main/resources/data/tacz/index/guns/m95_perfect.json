@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m95_perfect.name",
+  "display": "tacz:m95_display",
+  "data": "tacz:m95_perfect_data",
+  "tooltip": "tacz.gun.m95_perfect.desc",
+  "type": "sniper",
+  "sort": 174
+}

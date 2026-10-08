@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.db_long_improved.name",
+  "display": "tacz:db_long_display",
+  "data": "tacz:db_long_improved_data",
+  "tooltip": "tacz.gun.db_long_improved.desc",
+  "type": "shotgun",
+  "sort": 182
+}

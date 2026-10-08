@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "tacz_morelevel:block/black_market_contact"
+    },
+    "facing=east": {
+      "model": "tacz_morelevel:block/black_market_contact",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "tacz_morelevel:block/black_market_contact",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "tacz_morelevel:block/black_market_contact",
+      "y": 270
+    }
+  }
+}

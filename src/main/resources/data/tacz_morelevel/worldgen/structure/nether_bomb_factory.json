@@ -1,0 +1,14 @@
+{
+  "type": "tacz_morelevel:nether_ledge",
+  "spawn_overrides": {},
+  "start_pool": "tacz_morelevel:nether_bomb_factory/start",
+  "size": 6,
+  "max_distance_from_center": 128,
+  "biomes": "#tacz_morelevel:has_structure/nether_bomb_factory",
+  "step": "surface_structures",
+  "terrain_adaptation": "none",
+  "start_height": {
+    "absolute": 0
+  },
+  "use_expansion_hack": false
+}

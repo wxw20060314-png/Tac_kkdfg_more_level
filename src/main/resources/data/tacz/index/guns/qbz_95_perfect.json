@@ -1,0 +1,9 @@
+{
+  "name": "tacz.gun.qbz_95_perfect.name",
+  "display": "tacz:qbz_95_display",
+  "data": "tacz:qbz_95_perfect_data",
+  "tooltip": "tacz.gun.qbz_95_perfect.desc",
+  "type": "rifle",
+  "item_type": "modern_kinetic",
+  "sort": 14
+}

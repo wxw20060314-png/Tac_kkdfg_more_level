@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.db_short_perfect.name",
+  "display": "tacz:db_short_display",
+  "data": "tacz:db_short_perfect_data",
+  "tooltip": "tacz.gun.db_short_perfect.desc",
+  "type": "shotgun",
+  "sort": 189
+}

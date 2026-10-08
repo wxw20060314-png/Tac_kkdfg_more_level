@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m107_improved.name",
+  "display": "tacz:m107_display",
+  "data": "tacz:m107_improved_data",
+  "tooltip": "tacz.gun.m107_improved.desc",
+  "type": "sniper",
+  "sort": 162
+}

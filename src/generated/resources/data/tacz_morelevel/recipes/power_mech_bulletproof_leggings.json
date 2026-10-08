@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:obsidian_leggings"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "y": {
+      "item": "tacz_morelevel:energy_core_gold"
+    }
+  },
+  "pattern": [
+    "xyx",
+    "x#x",
+    "x x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:power_mech_bulletproof_leggings"
+  },
+  "show_notification": true
+}

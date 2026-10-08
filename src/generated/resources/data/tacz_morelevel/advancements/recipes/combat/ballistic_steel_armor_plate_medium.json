@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_seventh_steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tacz_morelevel:seventh_steel_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tacz_morelevel:ballistic_steel_armor_plate_medium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_seventh_steel_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tacz_morelevel:ballistic_steel_armor_plate_medium"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "tacz_morelevel:obsidian_item"
+    }
+  },
+  "pattern": [
+    "x x",
+    "xxx",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:obsidian_chestplate"
+  },
+  "show_notification": true
+}

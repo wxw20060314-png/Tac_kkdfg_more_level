@@ -1,0 +1,9 @@
+{
+  "name": "tacz.gun.qbz_191_improved.name",
+  "display": "tacz:qbz_191_display",
+  "data": "tacz:qbz_191_improved_data",
+  "tooltip": "tacz.gun.qbz_191_improved.desc",
+  "type": "rifle",
+  "item_type": "modern_kinetic",
+  "sort": 17
+}

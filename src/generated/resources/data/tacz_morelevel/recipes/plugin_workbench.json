@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:crafting_table"
+    },
+    "x": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "x#x",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:plugin_workbench"
+  },
+  "show_notification": true
+}

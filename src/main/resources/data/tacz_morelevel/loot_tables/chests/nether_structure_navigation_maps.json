@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_nether_wind_base_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.nether_wind_base"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_nether_bomb_factory_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.nether_bomb_factory"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

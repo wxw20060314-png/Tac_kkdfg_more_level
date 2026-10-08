@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    },
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_1"
+    }
+  ],
+  "result": {
+    "item": "tacz_morelevel:black_universal_currency_digit_2"
+  }
+}

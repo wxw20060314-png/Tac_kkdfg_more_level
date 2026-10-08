@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "y": {
+      "item": "minecraft:fire_charge"
+    },
+    "z": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "xzx",
+    "xyx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:signal_summoning_block"
+  },
+  "show_notification": true
+}

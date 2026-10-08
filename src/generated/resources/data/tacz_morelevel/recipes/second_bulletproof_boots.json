@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:leather_boots"
+    },
+    "x": {
+      "item": "minecraft:copper_ingot"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "x x",
+    "z#z",
+    "x x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:second_bulletproof_boots"
+  },
+  "show_notification": true
+}

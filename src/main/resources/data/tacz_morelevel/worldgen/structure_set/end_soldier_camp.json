@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "tacz_morelevel:end_soldier_camp",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 56,
+    "separation": 28,
+    "salt": 834729107
+  }
+}

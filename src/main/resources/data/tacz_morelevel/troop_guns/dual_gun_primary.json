@@ -1,0 +1,29 @@
+{
+  "guns": [
+    "tacz:ak47_excellent",
+    "tacz:aug_excellent",
+    "tacz:fn_fal_excellent",
+    "tacz:g36k_excellent",
+    "tacz:hk_g3_excellent",
+    "tacz:hk416d_excellent",
+    "tacz:m16a1_excellent",
+    "tacz:m16a4_excellent",
+    "tacz:m249_excellent",
+    "tacz:m4a1_excellent",
+    "tacz:mk14_excellent",
+    "tacz:qbz_191_excellent",
+    "tacz:qbz_95_excellent",
+    "tacz:rpk_excellent",
+    "tacz:scar_h_excellent",
+    "tacz:scar_l_excellent",
+    "tacz:sks_tactical_excellent",
+    "tacz:spr15hb_excellent",
+    "tacz:type_81_excellent",
+    "tacz:ai_awp_excellent",
+    "tacz:kar98_excellent",
+    "tacz:m107_excellent",
+    "tacz:m700_excellent",
+    "tacz:m95_excellent",
+    "tacz:fn_evolys_excellent"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:obsidian_chestplate"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "z": {
+      "item": "tacz_morelevel:spacetime_stone"
+    }
+  },
+  "pattern": [
+    "z z",
+    "x#x",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:spacetime_bulletproof_chestplate"
+  },
+  "show_notification": true
+}

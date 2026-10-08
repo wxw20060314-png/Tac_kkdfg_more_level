@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:diamond_helmet"
+    },
+    "x": {
+      "item": "minecraft:diamond"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "zxz",
+    "x#x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:fourth_bulletproof_helmet"
+  },
+  "show_notification": true
+}

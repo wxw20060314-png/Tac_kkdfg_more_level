@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:dragon_egg"
+  },
+  "base": {
+    "item": "tacz_morelevel:seventh_bulletproof_helmet"
+  },
+  "result": {
+    "item": "tacz_morelevel:seventh_abyss_bulletproof_helmet"
+  },
+  "template": {
+    "item": "tacz_morelevel:super_upgrade_template"
+  }
+}

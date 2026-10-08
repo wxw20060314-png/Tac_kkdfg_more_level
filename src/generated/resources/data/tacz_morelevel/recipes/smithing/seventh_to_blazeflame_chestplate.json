@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:nether_star"
+  },
+  "base": {
+    "item": "tacz_morelevel:seventh_bulletproof_chestplate"
+  },
+  "result": {
+    "item": "tacz_morelevel:seventh_blazeflame_bulletproof_chestplate"
+  },
+  "template": {
+    "item": "tacz_morelevel:super_upgrade_template"
+  }
+}

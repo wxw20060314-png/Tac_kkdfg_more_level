@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "tacz_morelevel:end_black_market_camp",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 274,
+    "separation": 175,
+    "salt": 582917364
+  }
+}

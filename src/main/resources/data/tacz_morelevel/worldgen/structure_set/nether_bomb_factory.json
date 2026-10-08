@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "tacz_morelevel:nether_bomb_factory",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 312,
+    "separation": 200,
+    "salt": 719384652
+  }
+}

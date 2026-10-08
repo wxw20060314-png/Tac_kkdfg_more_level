@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:obsidian_helmet"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "y": {
+      "item": "tacz_morelevel:energy_core_red"
+    },
+    "z": {
+      "item": "tacz_morelevel:power_thruster_red"
+    }
+  },
+  "pattern": [
+    "xyx",
+    "z#z"
+  ],
+  "result": {
+    "item": "tacz_morelevel:shockwave_bulletproof_helmet"
+  },
+  "show_notification": true
+}

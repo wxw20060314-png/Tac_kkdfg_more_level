@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.aug_refined.name",
+  "display": "tacz:aug_display",
+  "data": "tacz:aug_refined_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.aug_refined.desc",
+  "sort": 68
+}

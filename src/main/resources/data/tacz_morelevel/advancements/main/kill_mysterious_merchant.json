@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_mysterious_merchant": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:mysterious_merchant"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_mysterious_merchant"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:mysterious_merchant_bulletproof_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_mysterious_merchant.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_mysterious_merchant.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

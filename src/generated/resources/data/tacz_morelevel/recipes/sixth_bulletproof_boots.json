@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:obsidian_boots"
+    },
+    "x": {
+      "item": "tacz_morelevel:sixth_steel_ingot"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "x x",
+    "z#z",
+    "x x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:sixth_bulletproof_boots"
+  },
+  "show_notification": true
+}

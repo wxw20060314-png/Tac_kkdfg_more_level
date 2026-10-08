@@ -1,0 +1,37 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {}
+		},
+		"fly": {
+			"loop": false,
+			"animation_length": 0.5,
+			"bones": {
+				"fly1": {
+					"rotation": {
+						"0.0": {
+							"vector": [35, 30, -10]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"fly2": {
+					"rotation": {
+						"0.0": {
+							"vector": [35, -30, 10]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

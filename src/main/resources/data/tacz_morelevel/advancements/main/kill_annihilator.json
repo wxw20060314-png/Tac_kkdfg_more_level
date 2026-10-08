@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/kill_mysterious_merchant",
+  "criteria": {
+    "killed_annihilator": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:annihilator"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_annihilator"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:spacetime_bulletproof_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_annihilator.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_annihilator.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

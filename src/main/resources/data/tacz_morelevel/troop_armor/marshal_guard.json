@@ -1,0 +1,11 @@
+{
+  "armor": [
+    {
+      "weight": 1,
+      "helmet": "tacz_morelevel:special_ops_bulletproof_helmet",
+      "chestplate": "tacz_morelevel:special_ops_bulletproof_chestplate",
+      "leggings": "tacz_morelevel:special_ops_bulletproof_leggings",
+      "boots": "tacz_morelevel:special_ops_bulletproof_boots"
+    }
+  ]
+}

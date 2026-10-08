@@ -1,0 +1,469 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 17,
+          "name": "tacz_morelevel:black_universal_currency_digit_1",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 10,
+                "max": 20
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 21,
+          "name": "tacz_morelevel:black_universal_currency_digit_2",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 8,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "tacz_morelevel:black_universal_currency_digit_3",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 7,
+                "max": 14
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 14,
+          "name": "tacz_morelevel:black_universal_currency_digit_4",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6,
+                "max": 12
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 15,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "tacz_morelevel:frozen_landmine",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 16
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "tacz_morelevel:grenade",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz_morelevel:improved_gun_upgrade_voucher"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "tacz_morelevel:landmine",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 17,
+          "name": "tacz_morelevel:molotov",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 16
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:second_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:second_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:second_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:second_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:third_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:third_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:third_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:third_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:blaze_rod",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 32
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:copper_ingot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:diamond",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:emerald",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:gold_ingot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:gunpowder",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:iron_ingot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:lapis_lazuli",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:netherite_ingot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "minecraft:redstone",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 64
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz_morelevel:detection_grenade"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz_morelevel:flashbang",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 24,
+          "name": "tacz_morelevel:fourth_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz_morelevel:fourth_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz_morelevel:fourth_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "tacz_morelevel:obsidian_item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:refined_gun_upgrade_voucher"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "minecraft:dragon_egg"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "minecraft:nether_star"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:beauty_bodyguard_contact"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz_morelevel:fifth_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:fifth_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz_morelevel:fifth_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:fifth_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:perfect_gun_upgrade_voucher"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:ballistic_steel_armor_plate_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:blast_steel_armor_plate_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:bodyguard_storage"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:carbon_fiber_armor_plate_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:elite_bodyguard_contact"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:excellent_gun_upgrade_voucher"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:flash_resist_goggles_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_steel_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz_morelevel:sixth_steel_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:standard_bodyguard_contact"
+        }
+      ]
+    }
+  ]
+}

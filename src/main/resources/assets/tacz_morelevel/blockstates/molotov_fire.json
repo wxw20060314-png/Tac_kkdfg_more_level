@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    { "apply": { "model": "tacz_morelevel:block/molotov_fire_floor" } },
+    { "apply": { "model": "tacz_morelevel:block/molotov_fire_side", "y": 0 } },
+    { "apply": { "model": "tacz_morelevel:block/molotov_fire_side_alt", "y": 90 } },
+    { "apply": { "model": "tacz_morelevel:block/molotov_fire_side", "y": 180 } },
+    { "apply": { "model": "tacz_morelevel:block/molotov_fire_side_alt", "y": 270 } }
+  ]
+}

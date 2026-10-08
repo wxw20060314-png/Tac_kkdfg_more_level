@@ -1,0 +1,245 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 28,
+          "name": "tacz_morelevel:black_universal_currency_digit_4",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6,
+                "max": 12
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 9,
+          "name": "tacz_morelevel:black_universal_currency_digit_4",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 18,
+                "max": 36
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 15,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:ballistic_steel_armor_plate_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:blast_steel_armor_plate_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:bodyguard_storage"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:carbon_fiber_armor_plate_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:elite_bodyguard_contact"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:excellent_gun_upgrade_voucher"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:flash_resist_goggles_junior"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_steel_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:sixth_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz_morelevel:sixth_steel_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:special_ops_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:standard_bodyguard_contact"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:ballistic_steel_armor_plate_medium"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:blast_steel_armor_plate_medium"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:carbon_fiber_armor_plate_medium"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:demon_lord_bodyguard_contact"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:flash_resist_goggles_medium"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_abyss_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_abyss_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_abyss_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_abyss_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_blazeflame_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_blazeflame_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_blazeflame_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_blazeflame_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_sculk_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_sculk_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_sculk_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:seventh_sculk_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:super_potion_bottle"
+        }
+      ]
+    }
+  ]
+}

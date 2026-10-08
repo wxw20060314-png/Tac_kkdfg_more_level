@@ -1,0 +1,148 @@
+{
+  "trades": [
+    {
+      "input": {
+        "item": "minecraft:iron_block",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 18
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:copper_block",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 36
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:gold_block",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 18
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:emerald_block",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 9
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:diamond_block",
+        "count": 16
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 9
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:netherite_ingot",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:obsidian_item",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:blaze_rod",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:redstone_block",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 5
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:lapis_block",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 5
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:netherite_ingot",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 2
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:nether_star",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "minecraft:dragon_egg",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:seventh_steel_ingot",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 4
+      }
+    },
+    {
+      "input": {  "item": "minecraft:gunpowder", "count": 64 },
+      "output": {"item": "tacz_morelevel:black_universal_currency_digit_2", "count": 2 }
+    }
+  ]
+}

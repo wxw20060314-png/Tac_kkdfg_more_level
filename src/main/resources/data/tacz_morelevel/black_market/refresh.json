@@ -1,0 +1,9 @@
+{
+  "refresh_interval_minutes": 10,
+  "manual_refresh_cost": {
+    "item": "tacz_morelevel:black_universal_currency_digit_2",
+    "base_count": 1,
+    "max_count": 64,
+    "double_each_time": true
+  }
+}

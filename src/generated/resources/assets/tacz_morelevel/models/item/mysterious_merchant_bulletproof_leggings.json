@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tacz_morelevel:item/mysterious_merchant_bulletproof_leggings"
+  }
+}

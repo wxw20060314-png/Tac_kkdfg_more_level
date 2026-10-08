@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "x": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "x#x",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:obsidian_item"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_leggings"
+    },
+    "x": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "z z",
+    "x#x",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:fifth_bulletproof_leggings"
+  },
+  "show_notification": true
+}

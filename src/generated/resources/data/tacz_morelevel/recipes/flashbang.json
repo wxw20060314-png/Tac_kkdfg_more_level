@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "g": {
+      "item": "minecraft:gunpowder"
+    },
+    "x": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "y": {
+      "item": "minecraft:tripwire_hook"
+    },
+    "z": {
+      "item": "tacz_morelevel:sixth_steel_ingot"
+    }
+  },
+  "pattern": [
+    "zyz",
+    "gxg",
+    "zzz"
+  ],
+  "result": {
+    "item": "tacz_morelevel:flashbang"
+  },
+  "show_notification": true
+}

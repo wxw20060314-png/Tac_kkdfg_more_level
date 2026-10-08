@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m249_perfect.name",
+  "display": "tacz:m249_display",
+  "data": "tacz:m249_perfect_data",
+  "tooltip": "tacz.gun.m249_perfect.desc",
+  "type": "mg",
+  "sort": 104
+}

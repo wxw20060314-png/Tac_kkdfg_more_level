@@ -1,0 +1,116 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:black_universal_currency_digit_1",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 10,
+                "max": 20
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 15,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:first_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "tacz_morelevel:frozen_landmine"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz_morelevel:grenade"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz_morelevel:improved_gun_upgrade_voucher"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "tacz_morelevel:landmine"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 17,
+          "name": "tacz_morelevel:molotov"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:second_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 42,
+          "name": "tacz_morelevel:second_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 64,
+          "name": "tacz_morelevel:second_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 51,
+          "name": "tacz_morelevel:second_bulletproof_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 36,
+          "name": "tacz_morelevel:third_bulletproof_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 21,
+          "name": "tacz_morelevel:third_bulletproof_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 32,
+          "name": "tacz_morelevel:third_bulletproof_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 23,
+          "name": "tacz_morelevel:third_bulletproof_leggings"
+        }
+      ]
+    }
+  ]
+}

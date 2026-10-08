@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "minecraft:glass_bottle"
+    },
+    "y": {
+      "item": "minecraft:gunpowder"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " z ",
+    "yyy",
+    " x "
+  ],
+  "result": {
+    "item": "tacz_morelevel:molotov"
+  },
+  "show_notification": true
+}

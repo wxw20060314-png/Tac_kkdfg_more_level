@@ -1,0 +1,61 @@
+{
+  "parent": "tacz_morelevel:main/bulletproof_fifth_set",
+  "criteria": {
+    "helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:sixth_bulletproof_helmet"]
+          }
+        ]
+      }
+    },
+    "chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:sixth_bulletproof_chestplate"]
+          }
+        ]
+      }
+    },
+    "leggings": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:sixth_bulletproof_leggings"]
+          }
+        ]
+      }
+    },
+    "boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:sixth_bulletproof_boots"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["helmet"], ["chestplate"], ["leggings"], ["boots"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:sixth_bulletproof_chestplate"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.bulletproof_sixth_set.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.bulletproof_sixth_set.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

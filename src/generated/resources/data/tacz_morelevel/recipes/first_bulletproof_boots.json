@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:leather_boots"
+    },
+    "x": {
+      "tag": "minecraft:planks"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "x x",
+    "z#z",
+    "x x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:first_bulletproof_boots"
+  },
+  "show_notification": true
+}

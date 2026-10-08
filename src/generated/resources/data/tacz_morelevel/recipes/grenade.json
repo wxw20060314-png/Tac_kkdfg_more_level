@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "minecraft:tnt"
+    },
+    "y": {
+      "item": "minecraft:tripwire_hook"
+    },
+    "z": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "zyz",
+    "zxz",
+    "zzz"
+  ],
+  "result": {
+    "item": "tacz_morelevel:grenade"
+  },
+  "show_notification": true
+}

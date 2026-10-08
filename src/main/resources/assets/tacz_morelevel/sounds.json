@@ -1,0 +1,2004 @@
+{
+  "henhen": {
+    "subtitles": "sounds.tacz_morelevel.henhen",
+    "sounds": [
+      "tacz_morelevel:henhen"
+    ]
+  },
+  "xiangshou": {
+    "subtitles": "sounds.tacz_morelevel.xiangshou",
+    "sounds": [
+      "tacz_morelevel:xiangshou"
+    ]
+  },
+  "fire": {
+    "subtitles": "sounds.tacz_morelevel.fire",
+    "sounds": [
+      "tacz_morelevel:fire"
+    ]
+  },
+  "grenade_pin": {
+    "subtitles": "sounds.tacz_morelevel.grenade_pin",
+    "sounds": [
+      "tacz_morelevel:grenade_pin"
+    ]
+  },
+  "grenade_throw": {
+    "subtitles": "sounds.tacz_morelevel.grenade_throw",
+    "sounds": [
+      "tacz_morelevel:grenade_throw"
+    ]
+  },
+  "flashbang": {
+    "subtitles": "sounds.tacz_morelevel.flashbang",
+    "sounds": [
+      "tacz_morelevel:flashbang"
+    ]
+  },
+  "firebottle": {
+    "subtitles": "sounds.tacz_morelevel.firebottle_fly",
+    "sounds": [
+      "tacz_morelevel:firebottle"
+    ]
+  },
+  "signal_summoning_countdown": {
+    "subtitles": "sounds.tacz_morelevel.signal_summoning_countdown",
+    "sounds": [
+      "tacz_morelevel:signal_summoning_countdown"
+    ]
+  },
+  "bounty_annihilator_summon": {
+    "subtitles": "sounds.tacz_morelevel.bounty_annihilator_summon",
+    "sounds": [
+      "tacz_morelevel:bounty/summon_01"
+    ]
+  },
+  "soldier_1": {
+    "subtitles": "sounds.tacz_morelevel.soldier_1",
+    "sounds": [
+      "tacz_morelevel:soldier_1"
+    ]
+  },
+  "soldier_3": {
+    "subtitles": "sounds.tacz_morelevel.soldier_3",
+    "sounds": [
+      "tacz_morelevel:soldier_3"
+    ]
+  },
+  "soldier_4": {
+    "subtitles": "sounds.tacz_morelevel.soldier_4",
+    "sounds": [
+      "tacz_morelevel:soldier_4"
+    ]
+  },
+  "soldier_5": {
+    "subtitles": "sounds.tacz_morelevel.soldier_5",
+    "sounds": [
+      "tacz_morelevel:soldier_5"
+    ]
+  },
+  "soldier_6": {
+    "subtitles": "sounds.tacz_morelevel.soldier_6",
+    "sounds": [
+      "tacz_morelevel:soldier_6"
+    ]
+  },
+  "soldier_died_1": {
+    "subtitles": "sounds.tacz_morelevel.soldier_died_1",
+    "sounds": [
+      "tacz_morelevel:soldier_died_1"
+    ]
+  },
+  "soldier_died_2": {
+    "subtitles": "sounds.tacz_morelevel.soldier_died_2",
+    "sounds": [
+      "tacz_morelevel:soldier_died_2"
+    ]
+  },
+  "soldier_died_4": {
+    "subtitles": "sounds.tacz_morelevel.soldier_died_4",
+    "sounds": [
+      "tacz_morelevel:soldier_died_4"
+    ]
+  },
+  "soldier_died_5": {
+    "subtitles": "sounds.tacz_morelevel.soldier_died_5",
+    "sounds": [
+      "tacz_morelevel:soldier_died_5"
+    ]
+  },
+  "soldier_fight1_1": {
+    "subtitles": "sounds.tacz_morelevel.soldier_fight1_1",
+    "sounds": [
+      "tacz_morelevel:soldier_fight1_1"
+    ]
+  },
+  "soldier_fight_2": {
+    "subtitles": "sounds.tacz_morelevel.soldier_fight_2",
+    "sounds": [
+      "tacz_morelevel:soldier_fight_2"
+    ]
+  },
+  "soldier_hurt_1": {
+    "subtitles": "sounds.tacz_morelevel.soldier_hurt_1",
+    "sounds": [
+      "tacz_morelevel:soldier_hurt_1"
+    ]
+  },
+  "soldier_hurt_2": {
+    "subtitles": "sounds.tacz_morelevel.soldier_hurt_2",
+    "sounds": [
+      "tacz_morelevel:soldier_hurt_2"
+    ]
+  },
+  "jiushi_nali_le": {
+    "subtitles": "sounds.tacz_morelevel.jiushi_nali_le",
+    "sounds": [
+      "tacz_morelevel:jiushi_nali_le"
+    ]
+  },
+  "kanqilai_hen_qiangzhuang": {
+    "subtitles": "sounds.tacz_morelevel.kanqilai_hen_qiangzhuang",
+    "sounds": [
+      "tacz_morelevel:kanqilai_hen_qiangzhuang"
+    ]
+  },
+  "miaozhun_nali": {
+    "subtitles": "sounds.tacz_morelevel.miaozhun_nali",
+    "sounds": [
+      "tacz_morelevel:miaozhun_nali"
+    ]
+  },
+  "qingduo_zhijiao": {
+    "subtitles": "sounds.tacz_morelevel.qingduo_zhijiao",
+    "sounds": [
+      "tacz_morelevel:qingduo_zhijiao"
+    ]
+  },
+  "qing_wenrou_yidian": {
+    "subtitles": "sounds.tacz_morelevel.qing_wenrou_yidian",
+    "sounds": [
+      "tacz_morelevel:qing_wenrou_yidian"
+    ]
+  },
+  "teng": {
+    "subtitles": "sounds.tacz_morelevel.teng",
+    "sounds": [
+      "tacz_morelevel:teng"
+    ]
+  },
+  "zhiyu_de_liliang": {
+    "subtitles": "sounds.tacz_morelevel.zhiyu_de_liliang",
+    "sounds": [
+      "tacz_morelevel:zhiyu_de_liliang"
+    ]
+  },
+  "a": {
+    "subtitles": "sounds.tacz_morelevel.a",
+    "sounds": [
+      "tacz_morelevel:a"
+    ]
+  },
+  "baibei": {
+    "subtitles": "sounds.tacz_morelevel.baibei",
+    "sounds": [
+      "tacz_morelevel:baibei"
+    ]
+  },
+  "bu_zuo_hao_xinli_zhunbei_buxing": {
+    "subtitles": "sounds.tacz_morelevel.bu_zuo_hao_xinli_zhunbei_buxing",
+    "sounds": [
+      "tacz_morelevel:bu_zuo_hao_xinli_zhunbei_buxing"
+    ]
+  },
+  "haipa": {
+    "subtitles": "sounds.tacz_morelevel.haipa",
+    "sounds": [
+      "tacz_morelevel:haipa"
+    ]
+  },
+  "hei": {
+    "subtitles": "sounds.tacz_morelevel.hei",
+    "sounds": [
+      "tacz_morelevel:hei"
+    ]
+  },
+  "male_bodyguard_i_stand_ready": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_i_stand_ready",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_i_stand_ready"
+    ]
+  },
+  "male_bodyguard_ready_for_the_things": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_ready_for_the_things",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_ready_for_the_things"
+    ]
+  },
+  "male_bodyguard_ready_to_sir": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_ready_to_sir",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_ready_to_sir"
+    ]
+  },
+  "male_bodyguard_what_would_medo": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_what_would_medo",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_what_would_medo"
+    ]
+  },
+  "male_bodyguard_yes_sir": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_yes_sir",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_yes_sir"
+    ]
+  },
+  "male_bodyguard_your_commandsir": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_your_commandsir",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_your_commandsir"
+    ]
+  },
+  "male_bodyguard_your_orders": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_your_orders",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_your_orders"
+    ]
+  },
+  "male_bodyguard_your_wishsir": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_your_wishsir",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_your_wishsir"
+    ]
+  },
+  "male_bodyguard_at_your_command": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_at_your_command",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_at_your_command"
+    ]
+  },
+  "male_bodyguard_here_i_stand": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_here_i_stand",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_here_i_stand"
+    ]
+  },
+  "male_bodyguard_forward_we_go": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_forward_we_go",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_forward_we_go"
+    ]
+  },
+  "male_bodyguard_no_enemy_shall_stand_before_us": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_no_enemy_shall_stand_before_us",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_no_enemy_shall_stand_before_us"
+    ]
+  },
+  "male_bodyguard_defend_yourself": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_defend_yourself",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_defend_yourself"
+    ]
+  },
+  "male_bodyguard_for_honor_and_glory": {
+    "subtitles": "sounds.tacz_morelevel.male_bodyguard_for_honor_and_glory",
+    "sounds": [
+      "tacz_morelevel:male_bodyguard_for_honor_and_glory"
+    ]
+  },
+  "bodyguard_storage_xiu": {
+    "subtitles": "sounds.tacz_morelevel.bodyguard_storage_xiu",
+    "sounds": [
+      "tacz_morelevel:bodyguard_storage_xiu"
+    ]
+  },
+  "bodyguard_storage_biu": {
+    "subtitles": "sounds.tacz_morelevel.bodyguard_storage_biu",
+    "sounds": [
+      "tacz_morelevel:bodyguard_storage_biu"
+    ]
+  },
+  "dianbao": {
+    "subtitles": "sounds.tacz_morelevel.dianbao",
+    "sounds": [
+      "tacz_morelevel:dianbao"
+    ]
+  },
+  "fire_at_will": {
+    "subtitles": "sounds.tacz_morelevel.fire_at_will",
+    "sounds": [
+      "tacz_morelevel:fire_at_will"
+    ]
+  },
+  "good_work_soldier": {
+    "subtitles": "sounds.tacz_morelevel.good_work_soldier",
+    "sounds": [
+      "tacz_morelevel:good_work_soldier"
+    ]
+  },
+  "hold_your_position": {
+    "subtitles": "sounds.tacz_morelevel.hold_your_position",
+    "sounds": [
+      "tacz_morelevel:hold_your_position"
+    ]
+  },
+  "hostiles_inbound": {
+    "subtitles": "sounds.tacz_morelevel.hostiles_inbound",
+    "sounds": [
+      "tacz_morelevel:hostiles_inbound"
+    ]
+  },
+  "objective_secured": {
+    "subtitles": "sounds.tacz_morelevel.objective_secured",
+    "sounds": [
+      "tacz_morelevel:objective_secured"
+    ]
+  },
+  "secure_the_perimeter": {
+    "subtitles": "sounds.tacz_morelevel.secure_the_perimeter",
+    "sounds": [
+      "tacz_morelevel:secure_the_perimeter"
+    ]
+  },
+  "watch_your_ammo": {
+    "subtitles": "sounds.tacz_morelevel.watch_your_ammo",
+    "sounds": [
+      "tacz_morelevel:watch_your_ammo"
+    ]
+  },
+  "watch_your_six": {
+    "subtitles": "sounds.tacz_morelevel.watch_your_six",
+    "sounds": [
+      "tacz_morelevel:watch_your_six"
+    ]
+  },
+  "were_under_attack": {
+    "subtitles": "sounds.tacz_morelevel.were_under_attack",
+    "sounds": [
+      "tacz_morelevel:were_under_attack"
+    ]
+  },
+  "area_clear": {
+    "subtitles": "sounds.tacz_morelevel.area_clear",
+    "sounds": [
+      "tacz_morelevel:area_clear"
+    ]
+  },
+  "enemy_on_the_move": {
+    "subtitles": "sounds.tacz_morelevel.enemy_on_the_move",
+    "sounds": [
+      "tacz_morelevel:enemy_on_the_move"
+    ]
+  },
+  "entering_hostile_territory": {
+    "subtitles": "sounds.tacz_morelevel.entering_hostile_territory",
+    "sounds": [
+      "tacz_morelevel:entering_hostile_territory"
+    ]
+  },
+  "punisher_shoulder_cannon_shoot": {
+    "subtitles": "sounds.tacz_morelevel.punisher_shoulder_cannon_shoot",
+    "sounds": [
+      "tacz_morelevel:punisher_shoulder_cannon_shoot"
+    ]
+  },
+  "power_mech_flight": {
+    "subtitles": "sounds.tacz_morelevel.power_mech_flight",
+    "sounds": [
+      "tacz_morelevel:jijiaqifei_01"
+    ]
+  },
+  "shockwave_charge": {
+    "subtitles": "sounds.tacz_morelevel.shockwave_charge",
+    "sounds": [
+      "tacz_morelevel:shockwave_charge"
+    ]
+  },
+  "shockwave_release": {
+    "subtitles": "sounds.tacz_morelevel.shockwave_release",
+    "sounds": [
+      "tacz_morelevel:shockwave_release"
+    ]
+  },
+  "power_mech_overload": {
+    "subtitles": "sounds.tacz_morelevel.power_mech_overload",
+    "sounds": [
+      "tacz_morelevel:gangtie_zhongjiezhe_absorbshiled"
+    ]
+  },
+  "war_machine_hurt": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_hurt",
+    "sounds": [
+      "tacz_morelevel:war_machine_hurt"
+    ]
+  },
+  "war_machine_death_1": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_death",
+    "sounds": [
+      "tacz_morelevel:war_machine_death_1"
+    ]
+  },
+  "war_machine_death_2": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_death",
+    "sounds": [
+      "tacz_morelevel:war_machine_death_2"
+    ]
+  },
+  "war_machine_death_3": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_death",
+    "sounds": [
+      "tacz_morelevel:war_machine_death_3"
+    ]
+  },
+  "war_machine_death_4": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_death",
+    "sounds": [
+      "tacz_morelevel:war_machine_death_4"
+    ]
+  },
+  "war_machine_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_idle_1"
+    ]
+  },
+  "war_machine_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_idle_2"
+    ]
+  },
+  "war_machine_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_idle_3"
+    ]
+  },
+  "war_machine_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_idle_4"
+    ]
+  },
+  "bomb_cart_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_cart_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_cart_idle_1"
+    ]
+  },
+  "bomb_cart_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_cart_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_cart_idle_2"
+    ]
+  },
+  "bomb_cart_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_cart_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_cart_idle_3"
+    ]
+  },
+  "bomb_cart_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_cart_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_cart_idle_4"
+    ]
+  },
+  "bomb_cart_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_cart_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_cart_idle_5"
+    ]
+  },
+  "war_machine_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_combat_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_combat_idle_1"
+    ]
+  },
+  "war_machine_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_combat_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_combat_idle_2"
+    ]
+  },
+  "war_machine_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_combat_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_combat_idle_3"
+    ]
+  },
+  "war_machine_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_combat_idle",
+    "sounds": [
+      "tacz_morelevel:war_machine_combat_idle_4"
+    ]
+  },
+  "war_machine_target_1": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_target",
+    "sounds": [
+      "tacz_morelevel:war_machine_target_1"
+    ]
+  },
+  "war_machine_target_2": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_target",
+    "sounds": [
+      "tacz_morelevel:war_machine_target_2"
+    ]
+  },
+  "war_machine_target_3": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_target",
+    "sounds": [
+      "tacz_morelevel:war_machine_target_3"
+    ]
+  },
+  "war_machine_target_4": {
+    "subtitles": "sounds.tacz_morelevel.war_machine_target",
+    "sounds": [
+      "tacz_morelevel:war_machine_target_4"
+    ]
+  },
+  "lev_marshal_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_1"
+    ]
+  },
+  "lev_marshal_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_2"
+    ]
+  },
+  "lev_marshal_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_3"
+    ]
+  },
+  "lev_marshal_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_4"
+    ]
+  },
+  "lev_marshal_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_5"
+    ]
+  },
+  "lev_marshal_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_6"
+    ]
+  },
+  "lev_marshal_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_idle_7"
+    ]
+  },
+  "lev_marshal_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_1"
+    ]
+  },
+  "lev_marshal_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_2"
+    ]
+  },
+  "lev_marshal_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_3"
+    ]
+  },
+  "lev_marshal_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_4"
+    ]
+  },
+  "lev_marshal_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_5"
+    ]
+  },
+  "lev_marshal_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_6"
+    ]
+  },
+  "lev_marshal_combat_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_combat_idle",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_combat_idle_7"
+    ]
+  },
+  "lev_marshal_target_1": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_target",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_target_1"
+    ]
+  },
+  "lev_marshal_target_2": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_target",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_target_2"
+    ]
+  },
+  "lev_marshal_target_3": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_target",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_target_3"
+    ]
+  },
+  "lev_marshal_target_4": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_target",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_target_4"
+    ]
+  },
+  "lev_marshal_target_5": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_target",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_target_5"
+    ]
+  },
+  "lev_marshal_target_6": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_target",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_target_6"
+    ]
+  },
+  "lev_marshal_death_1": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_death",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_death_1"
+    ]
+  },
+  "lev_marshal_death_2": {
+    "subtitles": "sounds.tacz_morelevel.lev_marshal_death",
+    "sounds": [
+      "tacz_morelevel:lev_marshal_death_2"
+    ]
+  },
+  "marshal_guard_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_1"
+    ]
+  },
+  "marshal_guard_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_2"
+    ]
+  },
+  "marshal_guard_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_3"
+    ]
+  },
+  "marshal_guard_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_4"
+    ]
+  },
+  "marshal_guard_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_5"
+    ]
+  },
+  "marshal_guard_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_6"
+    ]
+  },
+  "marshal_guard_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_7"
+    ]
+  },
+  "marshal_guard_idle_8": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_8"
+    ]
+  },
+  "marshal_guard_idle_9": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_idle_9"
+    ]
+  },
+  "marshal_guard_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_combat_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_combat_idle_1"
+    ]
+  },
+  "marshal_guard_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_combat_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_combat_idle_2"
+    ]
+  },
+  "marshal_guard_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_combat_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_combat_idle_3"
+    ]
+  },
+  "marshal_guard_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_combat_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_combat_idle_4"
+    ]
+  },
+  "marshal_guard_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_combat_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_combat_idle_5"
+    ]
+  },
+  "marshal_guard_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_combat_idle",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_combat_idle_6"
+    ]
+  },
+  "marshal_guard_target_1": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_target",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_target_1"
+    ]
+  },
+  "marshal_guard_target_2": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_target",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_target_2"
+    ]
+  },
+  "marshal_guard_target_3": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_target",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_target_3"
+    ]
+  },
+  "marshal_guard_target_4": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_target",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_target_4"
+    ]
+  },
+  "marshal_guard_target_5": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_target",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_target_5"
+    ]
+  },
+  "marshal_guard_target_6": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_target",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_target_6"
+    ]
+  },
+  "marshal_guard_death_1": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_death",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_death_1"
+    ]
+  },
+  "marshal_guard_death_2": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_death",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_death_2"
+    ]
+  },
+  "marshal_guard_death_3": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_death",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_death_3"
+    ]
+  },
+  "marshal_guard_death_4": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_death",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_death_4"
+    ]
+  },
+  "marshal_guard_death_5": {
+    "subtitles": "sounds.tacz_morelevel.marshal_guard_death",
+    "sounds": [
+      "tacz_morelevel:marshal_guard_death_5"
+    ]
+  },
+  "annihilator_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_1"
+    ]
+  },
+  "annihilator_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_2"
+    ]
+  },
+  "annihilator_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_3"
+    ]
+  },
+  "annihilator_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_4"
+    ]
+  },
+  "annihilator_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_5"
+    ]
+  },
+  "annihilator_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_6"
+    ]
+  },
+  "annihilator_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_7"
+    ]
+  },
+  "annihilator_idle_8": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_idle_8"
+    ]
+  },
+  "annihilator_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_1"
+    ]
+  },
+  "annihilator_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_2"
+    ]
+  },
+  "annihilator_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_3"
+    ]
+  },
+  "annihilator_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_4"
+    ]
+  },
+  "annihilator_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_5"
+    ]
+  },
+  "annihilator_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_6"
+    ]
+  },
+  "annihilator_combat_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_combat_idle",
+    "sounds": [
+      "tacz_morelevel:annihilator_combat_idle_7"
+    ]
+  },
+  "annihilator_target_1": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_1"
+    ]
+  },
+  "annihilator_target_2": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_2"
+    ]
+  },
+  "annihilator_target_3": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_3"
+    ]
+  },
+  "annihilator_target_4": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_4"
+    ]
+  },
+  "annihilator_target_5": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_5"
+    ]
+  },
+  "annihilator_target_6": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_6"
+    ]
+  },
+  "annihilator_target_7": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_7"
+    ]
+  },
+  "annihilator_target_8": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_target",
+    "sounds": [
+      "tacz_morelevel:annihilator_target_8"
+    ]
+  },
+  "annihilator_death_1": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_1"
+    ]
+  },
+  "annihilator_death_2": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_2"
+    ]
+  },
+  "annihilator_death_3": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_3"
+    ]
+  },
+  "annihilator_death_4": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_4"
+    ]
+  },
+  "annihilator_death_5": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_5"
+    ]
+  },
+  "annihilator_death_6": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_6"
+    ]
+  },
+  "annihilator_death_7": {
+    "subtitles": "sounds.tacz_morelevel.annihilator_death",
+    "sounds": [
+      "tacz_morelevel:annihilator_death_7"
+    ]
+  },
+  "punisher_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.punisher_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_idle_1"
+    ]
+  },
+  "punisher_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.punisher_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_idle_2"
+    ]
+  },
+  "punisher_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.punisher_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_idle_3"
+    ]
+  },
+  "punisher_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.punisher_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_idle_4"
+    ]
+  },
+  "punisher_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.punisher_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_idle_5"
+    ]
+  },
+  "punisher_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.punisher_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_idle_6"
+    ]
+  },
+  "punisher_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.punisher_combat_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_combat_idle_1"
+    ]
+  },
+  "punisher_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.punisher_combat_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_combat_idle_2"
+    ]
+  },
+  "punisher_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.punisher_combat_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_combat_idle_3"
+    ]
+  },
+  "punisher_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.punisher_combat_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_combat_idle_4"
+    ]
+  },
+  "punisher_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.punisher_combat_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_combat_idle_5"
+    ]
+  },
+  "punisher_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.punisher_combat_idle",
+    "sounds": [
+      "tacz_morelevel:punisher_combat_idle_6"
+    ]
+  },
+  "punisher_target_1": {
+    "subtitles": "sounds.tacz_morelevel.punisher_target",
+    "sounds": [
+      "tacz_morelevel:punisher_target_1"
+    ]
+  },
+  "punisher_target_2": {
+    "subtitles": "sounds.tacz_morelevel.punisher_target",
+    "sounds": [
+      "tacz_morelevel:punisher_target_2"
+    ]
+  },
+  "punisher_target_3": {
+    "subtitles": "sounds.tacz_morelevel.punisher_target",
+    "sounds": [
+      "tacz_morelevel:punisher_target_3"
+    ]
+  },
+  "punisher_target_4": {
+    "subtitles": "sounds.tacz_morelevel.punisher_target",
+    "sounds": [
+      "tacz_morelevel:punisher_target_4"
+    ]
+  },
+  "punisher_target_5": {
+    "subtitles": "sounds.tacz_morelevel.punisher_target",
+    "sounds": [
+      "tacz_morelevel:punisher_target_5"
+    ]
+  },
+  "punisher_target_6": {
+    "subtitles": "sounds.tacz_morelevel.punisher_target",
+    "sounds": [
+      "tacz_morelevel:punisher_target_6"
+    ]
+  },
+  "punisher_death_1": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_1"
+    ]
+  },
+  "punisher_death_2": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_2"
+    ]
+  },
+  "punisher_death_3": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_3"
+    ]
+  },
+  "punisher_death_4": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_4"
+    ]
+  },
+  "punisher_death_5": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_5"
+    ]
+  },
+  "punisher_death_6": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_6"
+    ]
+  },
+  "punisher_death_7": {
+    "subtitles": "sounds.tacz_morelevel.punisher_death",
+    "sounds": [
+      "tacz_morelevel:punisher_death_7"
+    ]
+  },
+  "mysterious_merchant_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_idle_1"
+    ]
+  },
+  "mysterious_merchant_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_idle_2"
+    ]
+  },
+  "mysterious_merchant_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_idle_3"
+    ]
+  },
+  "mysterious_merchant_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_idle_4"
+    ]
+  },
+  "mysterious_merchant_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_idle_5"
+    ]
+  },
+  "mysterious_merchant_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_idle_6"
+    ]
+  },
+  "mysterious_merchant_target_1": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_target",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_target_1"
+    ]
+  },
+  "mysterious_merchant_target_2": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_target",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_target_2"
+    ]
+  },
+  "mysterious_merchant_target_3": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_target",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_target_3"
+    ]
+  },
+  "mysterious_merchant_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_combat_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_combat_idle_1"
+    ]
+  },
+  "mysterious_merchant_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_combat_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_combat_idle_2"
+    ]
+  },
+  "mysterious_merchant_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_combat_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_combat_idle_3"
+    ]
+  },
+  "mysterious_merchant_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_combat_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_combat_idle_4"
+    ]
+  },
+  "mysterious_merchant_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_combat_idle",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_combat_idle_5"
+    ]
+  },
+  "mysterious_merchant_death_1": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_death",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_death_1"
+    ]
+  },
+  "mysterious_merchant_death_2": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_death",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_death_2"
+    ]
+  },
+  "mysterious_merchant_death_3": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_death",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_death_3"
+    ]
+  },
+  "mysterious_merchant_death_4": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_death",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_death_4"
+    ]
+  },
+  "mysterious_merchant_trade_success_1": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_1"
+    ]
+  },
+  "mysterious_merchant_trade_success_2": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_2"
+    ]
+  },
+  "mysterious_merchant_trade_success_3": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_3"
+    ]
+  },
+  "mysterious_merchant_trade_success_4": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_4"
+    ]
+  },
+  "mysterious_merchant_trade_success_5": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_5"
+    ]
+  },
+  "mysterious_merchant_trade_success_6": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_6"
+    ]
+  },
+  "mysterious_merchant_trade_success_7": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_success",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_success_7"
+    ]
+  },
+  "mysterious_merchant_trade_fail_1": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_fail",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_fail_1"
+    ]
+  },
+  "mysterious_merchant_trade_fail_2": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_fail",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_fail_2"
+    ]
+  },
+  "mysterious_merchant_trade_fail_3": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_fail",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_fail_3"
+    ]
+  },
+  "mysterious_merchant_trade_fail_4": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_fail",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_fail_4"
+    ]
+  },
+  "mysterious_merchant_trade_fail_5": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_fail",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_fail_5"
+    ]
+  },
+  "mysterious_merchant_trade_fail_6": {
+    "subtitles": "sounds.tacz_morelevel.mysterious_merchant_trade_fail",
+    "sounds": [
+      "tacz_morelevel:mysterious_merchant/mysterious_merchant_trade_fail_6"
+    ]
+  },
+  "ceiling_duel_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_idle_1"
+    ]
+  },
+  "ceiling_duel_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_idle_2"
+    ]
+  },
+  "ceiling_duel_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_idle_3"
+    ]
+  },
+  "ceiling_duel_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_idle_4"
+    ]
+  },
+  "ceiling_duel_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_idle_5"
+    ]
+  },
+  "ceiling_duel_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_idle_6"
+    ]
+  },
+  "ceiling_duel_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_combat_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_combat_idle_1"
+    ]
+  },
+  "ceiling_duel_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_combat_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_combat_idle_2"
+    ]
+  },
+  "ceiling_duel_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_combat_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_combat_idle_3"
+    ]
+  },
+  "ceiling_duel_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_combat_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_combat_idle_4"
+    ]
+  },
+  "ceiling_duel_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_combat_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_combat_idle_5"
+    ]
+  },
+  "ceiling_duel_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_combat_idle",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_combat_idle_6"
+    ]
+  },
+  "ceiling_duel_target_1": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_target",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_target_1"
+    ]
+  },
+  "ceiling_duel_target_2": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_target",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_target_2"
+    ]
+  },
+  "ceiling_duel_target_3": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_target",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_target_3"
+    ]
+  },
+  "ceiling_duel_target_4": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_target",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_target_4"
+    ]
+  },
+  "ceiling_duel_target_5": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_target",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_target_5"
+    ]
+  },
+  "ceiling_duel_target_6": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_target",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_target_6"
+    ]
+  },
+  "ceiling_duel_death_1": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_death",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_death_1"
+    ]
+  },
+  "ceiling_duel_death_2": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_death",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_death_2"
+    ]
+  },
+  "ceiling_duel_death_3": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_death",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_death_3"
+    ]
+  },
+  "ceiling_duel_death_4": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_death",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_death_4"
+    ]
+  },
+  "ceiling_duel_death_5": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_death",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_death_5"
+    ]
+  },
+  "ceiling_duel_death_6": {
+    "subtitles": "sounds.tacz_morelevel.ceiling_duel_death",
+    "sounds": [
+      "tacz_morelevel:ceiling_duel_death_6"
+    ]
+  },
+  "bomb_baby_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_1"
+    ]
+  },
+  "bomb_baby_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_2"
+    ]
+  },
+  "bomb_baby_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_3"
+    ]
+  },
+  "bomb_baby_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_4"
+    ]
+  },
+  "bomb_baby_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_5"
+    ]
+  },
+  "bomb_baby_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_6"
+    ]
+  },
+  "bomb_baby_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_idle_7"
+    ]
+  },
+  "bomb_baby_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_1"
+    ]
+  },
+  "bomb_baby_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_2"
+    ]
+  },
+  "bomb_baby_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_3"
+    ]
+  },
+  "bomb_baby_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_4"
+    ]
+  },
+  "bomb_baby_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_5"
+    ]
+  },
+  "bomb_baby_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_6"
+    ]
+  },
+  "bomb_baby_combat_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_combat_idle_7"
+    ]
+  },
+  "bomb_baby_target_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_1"
+    ]
+  },
+  "bomb_baby_target_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_2"
+    ]
+  },
+  "bomb_baby_target_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_3"
+    ]
+  },
+  "bomb_baby_target_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_4"
+    ]
+  },
+  "bomb_baby_target_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_5"
+    ]
+  },
+  "bomb_baby_target_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_6"
+    ]
+  },
+  "bomb_baby_target_7": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_target",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_target_7"
+    ]
+  },
+  "bomb_baby_death_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_1"
+    ]
+  },
+  "bomb_baby_death_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_2"
+    ]
+  },
+  "bomb_baby_death_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_3"
+    ]
+  },
+  "bomb_baby_death_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_4"
+    ]
+  },
+  "bomb_baby_death_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_5"
+    ]
+  },
+  "bomb_baby_death_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_6"
+    ]
+  },
+  "bomb_baby_death_7": {
+    "subtitles": "sounds.tacz_morelevel.bomb_baby_death",
+    "sounds": [
+      "tacz_morelevel:bomb_baby_death_7"
+    ]
+  },
+  "bomb_sight_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_1"
+    ]
+  },
+  "bomb_sight_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_2"
+    ]
+  },
+  "bomb_sight_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_3"
+    ]
+  },
+  "bomb_sight_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_4"
+    ]
+  },
+  "bomb_sight_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_5"
+    ]
+  },
+  "bomb_sight_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_6"
+    ]
+  },
+  "bomb_sight_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_7"
+    ]
+  },
+  "bomb_sight_idle_8": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_8"
+    ]
+  },
+  "bomb_sight_idle_9": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_9"
+    ]
+  },
+  "bomb_sight_idle_10": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_idle_10"
+    ]
+  },
+  "bomb_sight_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_combat_idle_1"
+    ]
+  },
+  "bomb_sight_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_combat_idle_2"
+    ]
+  },
+  "bomb_sight_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_combat_idle_3"
+    ]
+  },
+  "bomb_sight_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_combat_idle_4"
+    ]
+  },
+  "bomb_sight_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_combat_idle_5"
+    ]
+  },
+  "bomb_sight_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_combat_idle",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_combat_idle_6"
+    ]
+  },
+  "bomb_sight_target_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_1"
+    ]
+  },
+  "bomb_sight_target_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_2"
+    ]
+  },
+  "bomb_sight_target_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_3"
+    ]
+  },
+  "bomb_sight_target_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_4"
+    ]
+  },
+  "bomb_sight_target_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_5"
+    ]
+  },
+  "bomb_sight_target_6": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_6"
+    ]
+  },
+  "bomb_sight_target_7": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_7"
+    ]
+  },
+  "bomb_sight_target_8": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_8"
+    ]
+  },
+  "bomb_sight_target_9": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_9"
+    ]
+  },
+  "bomb_sight_target_10": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_target",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_target_10"
+    ]
+  },
+  "bomb_sight_death_1": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_death",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_death_1"
+    ]
+  },
+  "bomb_sight_death_2": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_death",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_death_2"
+    ]
+  },
+  "bomb_sight_death_3": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_death",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_death_3"
+    ]
+  },
+  "bomb_sight_death_4": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_death",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_death_4"
+    ]
+  },
+  "bomb_sight_death_5": {
+    "subtitles": "sounds.tacz_morelevel.bomb_sight_death",
+    "sounds": [
+      "tacz_morelevel:bomb_sight_death_5"
+    ]
+  },
+  "scorpion_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_1"]
+  },
+  "scorpion_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_2"]
+  },
+  "scorpion_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_3"]
+  },
+  "scorpion_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_4"]
+  },
+  "scorpion_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_5"]
+  },
+  "scorpion_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_6"]
+  },
+  "scorpion_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_idle",
+    "sounds": ["tacz_morelevel:scorpion_idle_7"]
+  },
+  "scorpion_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_1"]
+  },
+  "scorpion_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_2"]
+  },
+  "scorpion_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_3"]
+  },
+  "scorpion_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_4"]
+  },
+  "scorpion_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_5"]
+  },
+  "scorpion_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_6"]
+  },
+  "scorpion_combat_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_combat_idle",
+    "sounds": ["tacz_morelevel:scorpion_combat_idle_7"]
+  },
+  "scorpion_target_1": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_target",
+    "sounds": ["tacz_morelevel:scorpion_target_1"]
+  },
+  "scorpion_target_2": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_target",
+    "sounds": ["tacz_morelevel:scorpion_target_2"]
+  },
+  "scorpion_target_3": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_target",
+    "sounds": ["tacz_morelevel:scorpion_target_3"]
+  },
+  "scorpion_target_4": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_target",
+    "sounds": ["tacz_morelevel:scorpion_target_4"]
+  },
+  "scorpion_target_5": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_target",
+    "sounds": ["tacz_morelevel:scorpion_target_5"]
+  },
+  "scorpion_death_1": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_death",
+    "sounds": ["tacz_morelevel:scorpion_death_1"]
+  },
+  "scorpion_death_2": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_death",
+    "sounds": ["tacz_morelevel:scorpion_death_2"]
+  },
+  "scorpion_death_3": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_death",
+    "sounds": ["tacz_morelevel:scorpion_death_3"]
+  },
+  "scorpion_death_4": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_death",
+    "sounds": ["tacz_morelevel:scorpion_death_4"]
+  },
+  "scorpion_death_5": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_death",
+    "sounds": ["tacz_morelevel:scorpion_death_5"]
+  },
+  "scorpion_hurt": {
+    "subtitles": "sounds.tacz_morelevel.scorpion_hurt",
+    "sounds": ["tacz_morelevel:scorpion_hurt"]
+  },
+  "slime_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_1"]
+  },
+  "slime_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_2"]
+  },
+  "slime_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_3"]
+  },
+  "slime_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_4"]
+  },
+  "slime_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_5"]
+  },
+  "slime_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_6"]
+  },
+  "slime_idle_7": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_7"]
+  },
+  "slime_idle_8": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_8"]
+  },
+  "slime_idle_9": {
+    "subtitles": "sounds.tacz_morelevel.slime_idle",
+    "sounds": ["tacz_morelevel:slime_idle_9"]
+  },
+  "medicine_bandage": {
+    "subtitles": "sounds.tacz_morelevel.medicine_bandage",
+    "sounds": [
+      "tacz_morelevel:medicine/bandage_01"
+    ]
+  },
+  "medicine_first_aid": {
+    "subtitles": "sounds.tacz_morelevel.medicine_first_aid",
+    "sounds": [
+      "tacz_morelevel:medicine/first_aid"
+    ]
+  },
+  "medicine_medical": {
+    "subtitles": "sounds.tacz_morelevel.medicine_medical",
+    "sounds": [
+      "tacz_morelevel:medicine/medical_01"
+    ]
+  },
+  "medicine_injection": {
+    "subtitles": "sounds.tacz_morelevel.medicine_injection",
+    "sounds": [
+      "tacz_morelevel:medicine/injection_01"
+    ]
+  }
+}

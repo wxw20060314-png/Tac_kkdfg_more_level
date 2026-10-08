@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "tacz_morelevel:military_base",
+      "weight": 1
+    },
+    {
+      "structure": "tacz_morelevel:warehouse_arena",
+      "weight": 1
+    },
+    {
+      "structure": "tacz_morelevel:lurker_base",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 400,
+    "separation": 300,
+    "salt": 192837465
+  }
+}

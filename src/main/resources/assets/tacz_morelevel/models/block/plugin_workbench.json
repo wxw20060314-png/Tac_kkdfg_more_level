@@ -1,0 +1,6 @@
+{
+  "parent": "geckolib:block/empty",
+  "textures": {
+    "particle": "tacz_morelevel:block/plugin_workbench"
+  }
+}

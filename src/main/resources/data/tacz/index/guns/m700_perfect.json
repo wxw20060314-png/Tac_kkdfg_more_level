@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m700_perfect.name",
+  "display": "tacz:m700_display",
+  "data": "tacz:m700_perfect_data",
+  "tooltip": "tacz.gun.m700_perfect.desc",
+  "type": "sniper",
+  "sort": 169
+}

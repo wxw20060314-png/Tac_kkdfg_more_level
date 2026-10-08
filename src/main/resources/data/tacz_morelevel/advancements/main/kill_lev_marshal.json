@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_lev_marshal": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:lev_marshal"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_lev_marshal"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:officer_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_lev_marshal.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_lev_marshal.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

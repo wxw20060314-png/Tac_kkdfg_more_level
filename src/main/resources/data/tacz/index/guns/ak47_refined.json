@@ -1,0 +1,9 @@
+{
+  "name": "tacz.gun.ak47_refined.name",
+  "display": "tacz:ak47_display",
+  "data": "tacz:ak47_refined_data",
+  "tooltip": "tacz.gun.ak47_refined.desc",
+  "type": "rifle",
+  "item_type": "modern_kinetic",
+  "sort": 8
+}

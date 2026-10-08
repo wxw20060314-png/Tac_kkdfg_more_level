@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_punisher": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:punisher"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_punisher"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:punisher_bulletproof_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_punisher.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_punisher.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

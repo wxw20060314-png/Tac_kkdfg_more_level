@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "minecraft:blue_ice"
+    },
+    "y": {
+      "item": "minecraft:iron_ingot"
+    },
+    "z": {
+      "item": "minecraft:light_weighted_pressure_plate"
+    }
+  },
+  "pattern": [
+    " z ",
+    "yxy",
+    "yyy"
+  ],
+  "result": {
+    "item": "tacz_morelevel:frozen_landmine"
+  },
+  "show_notification": true
+}

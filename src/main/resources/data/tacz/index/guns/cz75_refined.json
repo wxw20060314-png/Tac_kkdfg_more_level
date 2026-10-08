@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.cz75_refined.name",
+  "display": "tacz:cz75_display",
+  "data": "tacz:cz75_refined_data",
+  "tooltip": "tacz.gun.cz75_refined.desc",
+  "type": "pistol",
+  "sort": 123
+}

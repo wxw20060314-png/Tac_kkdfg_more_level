@@ -1,0 +1,1495 @@
+{
+  "common_roll_count": 5,
+  "rare_roll_count": 1,
+  "common": [
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:ak47_improved"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 23
+      },
+      "output": {
+        "gun": "tacz:m4a1_improved"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:deagle_improved"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 32
+      },
+      "output": {
+        "gun": "tacz:ai_awp_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:glock_17_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:m1911_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:m1911_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:p320_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:hk_mp5a5_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 16
+      },
+      "output": {
+        "gun": "tacz:p90_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 18
+      },
+      "output": {
+        "gun": "tacz:uzi_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 23
+      },
+      "output": {
+        "gun": "tacz:aug_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:scar_l_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 19
+      },
+      "output": {
+        "gun": "tacz:qbz_95_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:type_81_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 25
+      },
+      "output": {
+        "gun": "tacz:rpk_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:kar98_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:springfield1873_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 32
+      },
+      "output": {
+        "gun": "tacz:hk416d_improved",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 11
+      },
+      "output": {
+        "item": "tacz_morelevel:first_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 16
+      },
+      "output": {
+        "item": "tacz_morelevel:fourth_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 14
+      },
+      "output": {
+        "item": "tacz_morelevel:fourth_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 9
+      },
+      "output": {
+        "item": "tacz_morelevel:fourth_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 2
+      },
+      "output": {
+        "item": "minecraft:dragon_egg",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 2
+      },
+      "output": {
+        "item": "minecraft:nether_star",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:ak47_refined"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 12
+      },
+      "output": {
+        "gun": "tacz:m4a1_refined"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:deagle_refined"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 16
+      },
+      "output": {
+        "gun": "tacz:ai_awp_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:glock_17_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:m1911_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:m1911_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:p320_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:hk_mp5a5_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:p90_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 9
+      },
+      "output": {
+        "gun": "tacz:uzi_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 12
+      },
+      "output": {
+        "gun": "tacz:aug_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:scar_l_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:qbz_95_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:type_81_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 13
+      },
+      "output": {
+        "gun": "tacz:rpk_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:kar98_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:springfield1873_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 16
+      },
+      "output": {
+        "gun": "tacz:hk416d_refined",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:perfect_gun_upgrade_voucher",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 40
+      },
+      "output": {
+        "gun": "tacz:ak47_perfect"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 45
+      },
+      "output": {
+        "gun": "tacz:m4a1_perfect"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:deagle_perfect"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 64
+      },
+      "output": {
+        "gun": "tacz:ai_awp_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:glock_17_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:m1911_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:m1911_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 30
+      },
+      "output": {
+        "gun": "tacz:p320_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 30
+      },
+      "output": {
+        "gun": "tacz:hk_mp5a5_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 32
+      },
+      "output": {
+        "gun": "tacz:p90_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 35
+      },
+      "output": {
+        "gun": "tacz:uzi_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 45
+      },
+      "output": {
+        "gun": "tacz:aug_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 40
+      },
+      "output": {
+        "gun": "tacz:scar_l_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 37
+      },
+      "output": {
+        "gun": "tacz:qbz_95_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 30
+      },
+      "output": {
+        "gun": "tacz:type_81_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 50
+      },
+      "output": {
+        "gun": "tacz:rpk_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 30
+      },
+      "output": {
+        "gun": "tacz:kar98_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 30
+      },
+      "output": {
+        "gun": "tacz:springfield1873_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 64
+      },
+      "output": {
+        "gun": "tacz:hk416d_perfect",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:excellent_gun_upgrade_voucher",
+        "count": 1
+      },
+      "max_uses": 6
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 13
+      },
+      "output": {
+        "item": "tacz_morelevel:sixth_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 17
+      },
+      "output": {
+        "item": "tacz_morelevel:sixth_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 15
+      },
+      "output": {
+        "item": "tacz_morelevel:sixth_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:sixth_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 9
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_steel_ingot",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:super_upgrade_template",
+        "count": 1
+      },
+      "max_uses": 6
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 6
+      },
+      "output": {
+        "item": "tacz_morelevel:standard_bodyguard_contact",
+        "count": 1
+      },
+      "max_uses": 6
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:elite_bodyguard_contact",
+        "count": 1
+      },
+      "max_uses": 6
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 2
+      },
+      "output": {
+        "item": "tacz_morelevel:bodyguard_storage",
+        "count": 1
+      },
+      "max_uses": 6
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:super_potion_bottle",
+        "count": 1
+      },
+      "max_uses": 6
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 6
+      },
+      "output": {
+        "item": "tacz_morelevel:detection_grenade",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 2
+      },
+      "output": {
+        "item": "tacz_morelevel:sixth_steel_ingot",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:stealth_helmet",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 6
+      },
+      "output": {
+        "item": "tacz_morelevel:stealth_cloak",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 5
+      },
+      "output": {
+        "item": "tacz_morelevel:stealth_leggings",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:stealth_boots",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:hardening_needle_junior",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:comprehensive_immunity_needle_junior",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:ak47_excellent"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 23
+      },
+      "output": {
+        "gun": "tacz:m4a1_excellent"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:deagle_excellent"
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 32
+      },
+      "output": {
+        "gun": "tacz:ai_awp_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:glock_17_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:m1911_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:p320_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:hk_mp5a5_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 16
+      },
+      "output": {
+        "gun": "tacz:p90_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 18
+      },
+      "output": {
+        "gun": "tacz:uzi_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 23
+      },
+      "output": {
+        "gun": "tacz:aug_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 20
+      },
+      "output": {
+        "gun": "tacz:scar_l_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 19
+      },
+      "output": {
+        "gun": "tacz:qbz_95_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:type_81_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 25
+      },
+      "output": {
+        "gun": "tacz:rpk_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:kar98_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 15
+      },
+      "output": {
+        "gun": "tacz:springfield1873_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 32
+      },
+      "output": {
+        "gun": "tacz:hk416d_excellent",
+        "count": 1
+      },
+      "max_uses": 8
+    }
+  ],
+  "rare": [
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 17
+      },
+      "output": {
+        "item": "tacz_morelevel:power_mech_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 30
+      },
+      "output": {
+        "item": "tacz_morelevel:power_mech_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 25
+      },
+      "output": {
+        "item": "tacz_morelevel:power_mech_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 15
+      },
+      "output": {
+        "item": "tacz_morelevel:power_mech_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:spacetime_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 16
+      },
+      "output": {
+        "item": "tacz_morelevel:spacetime_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 14
+      },
+      "output": {
+        "item": "tacz_morelevel:spacetime_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:spacetime_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 4
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 6
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 5
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_blazeflame_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_blazeflame_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_blazeflame_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_blazeflame_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_abyss_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_abyss_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_abyss_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_abyss_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_sculk_bulletproof_helmet",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_sculk_bulletproof_chestplate",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_sculk_bulletproof_leggings",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:seventh_sculk_bulletproof_boots",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:demon_lord_bodyguard_contact",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 12
+      },
+      "output": {
+        "item": "tacz_morelevel:demon_lord_bodyguard_contact",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:super_upgrade_template",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 1
+      },
+      "output": {
+        "item": "tacz_morelevel:super_potion_bottle",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 20
+      },
+      "output": {
+        "item": "tacz:ammo_box",
+        "count": 1,
+        "nbt": {
+          "AllTypeCreative": true
+        }
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:hardening_needle_medium",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:comprehensive_immunity_needle_medium",
+        "count": 1
+      },
+      "max_uses": 2
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 26
+      },
+      "output": {
+        "item": "tacz_morelevel:carbon_fiber_armor_plate_advanced",
+        "count": 1
+      },
+      "max_uses": 1
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 26
+      },
+      "output": {
+        "item": "tacz_morelevel:ballistic_steel_armor_plate_advanced",
+        "count": 1
+      },
+      "max_uses": 1
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 26
+      },
+      "output": {
+        "item": "tacz_morelevel:blast_steel_armor_plate_advanced",
+        "count": 1
+      },
+      "max_uses": 1
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 26
+      },
+      "output": {
+        "item": "tacz_morelevel:flash_resist_goggles_advanced",
+        "count": 1
+      },
+      "max_uses": 1
+    }
+  ]
+}

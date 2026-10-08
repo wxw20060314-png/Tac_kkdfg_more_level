@@ -1,0 +1,461 @@
+{
+  "trades": [
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:iron_ingot",
+        "count": 2
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:gunpowder",
+        "count": 8
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:copper_ingot",
+        "count": 8
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:gold_ingot",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:emerald",
+        "count": 2
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 8
+      },
+      "output": {
+        "item": "minecraft:diamond",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 32
+      },
+      "output": {
+        "item": "minecraft:netherite_ingot",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:obsidian_item",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 2
+      },
+      "output": {
+        "item": "minecraft:blaze_rod",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:redstone",
+        "count": 8
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 1
+      },
+      "output": {
+        "item": "minecraft:lapis_lazuli",
+        "count": 8
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 2
+      },
+      "output": {
+        "item": "minecraft:dragon_egg",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 2
+      },
+      "output": {
+        "item": "minecraft:nether_star",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:ak47_refined"
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 12
+      },
+      "output": {
+        "gun": "tacz:m4a1_refined"
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:deagle_refined"
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 16
+      },
+      "output": {
+        "gun": "tacz:ai_awp_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:glock_17_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:m1911_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 5
+      },
+      "output": {
+        "gun": "tacz:m1911_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:p320_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:hk_mp5a5_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:p90_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 9
+      },
+      "output": {
+        "gun": "tacz:uzi_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 12
+      },
+      "output": {
+        "gun": "tacz:aug_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:scar_l_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 10
+      },
+      "output": {
+        "gun": "tacz:qbz_95_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:type_81_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 13
+      },
+      "output": {
+        "gun": "tacz:rpk_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:kar98_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 8
+      },
+      "output": {
+        "gun": "tacz:springfield1873_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 16
+      },
+      "output": {
+        "gun": "tacz:hk416d_refined",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 15
+      },
+      "output": {
+        "item": "tacz_morelevel:molotov",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 25
+      },
+      "output": {
+        "item": "tacz_morelevel:landmine",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 10
+      },
+      "output": {
+        "item": "tacz_morelevel:frozen_landmine",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 30
+      },
+      "output": {
+        "item": "tacz_morelevel:grenade",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 64
+      },
+      "output": {
+        "item": "tacz_morelevel:perfect_gun_upgrade_voucher",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 32
+      },
+      "output": {
+        "item": "tacz_morelevel:fifth_bulletproof_helmet",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 42
+      },
+      "output": {
+        "item": "tacz_morelevel:fifth_bulletproof_chestplate",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 37
+      },
+      "output": {
+        "item": "tacz_morelevel:fifth_bulletproof_leggings",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 28
+      },
+      "output": {
+        "item": "tacz_morelevel:fifth_bulletproof_boots",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_4",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:beauty_bodyguard_contact",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:detection_grenade",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_3",
+        "count": 4
+      },
+      "output": {
+        "item": "tacz_morelevel:flashbang",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 8
+      },
+      "output": {
+        "item": "tacz_morelevel:bandage",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_2",
+        "count": 2
+      },
+      "output": {
+        "item": "tacz_morelevel:first_aid_kit",
+        "count": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tacz_morelevel:item/black_universal_currency_digit_1"
+  }
+}

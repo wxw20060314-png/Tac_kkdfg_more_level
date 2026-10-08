@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.kar98_improved.name",
+  "display": "tacz:kar98_display",
+  "data": "tacz:kar98_improved_data",
+  "tooltip": "tacz.gun.kar98_improved.desc",
+  "type": "sniper",
+  "sort": 7
+}

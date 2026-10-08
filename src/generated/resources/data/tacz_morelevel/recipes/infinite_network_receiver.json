@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "y": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "pattern": [
+    "x x",
+    "xyx",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:infinite_network_receiver"
+  },
+  "show_notification": true
+}

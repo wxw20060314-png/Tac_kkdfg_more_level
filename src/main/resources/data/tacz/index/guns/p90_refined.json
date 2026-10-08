@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.p90_refined.name",
+  "display": "tacz:p90_display",
+  "data": "tacz:p90_refined_data",
+  "tooltip": "tacz.gun.p90_refined.desc",
+  "type": "smg",
+  "sort": 83
+}

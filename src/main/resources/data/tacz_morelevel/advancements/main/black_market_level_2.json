@@ -1,0 +1,24 @@
+{
+  "parent": "tacz_morelevel:main/black_market_level_1",
+  "criteria": {
+    "grant": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [["grant"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:black_universal_currency_digit_2"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.black_market_level_2.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.black_market_level_2.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

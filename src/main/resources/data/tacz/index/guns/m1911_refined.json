@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m1911_refined.name",
+  "display": "tacz:m1911_display",
+  "data": "tacz:m1911_refined_data",
+  "tooltip": "tacz.gun.m1911_refined.desc",
+  "type": "pistol",
+  "sort": 143
+}

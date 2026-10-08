@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_scorpion": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:scorpion"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_scorpion"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:stealth_seventh_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_scorpion.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_scorpion.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

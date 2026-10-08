@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:stealth_helmet"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "y": {
+      "item": "tacz_morelevel:light_absorbing_tube"
+    }
+  },
+  "pattern": [
+    "xyx",
+    "y#y",
+    "xyx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:stealth_seventh_helmet"
+  },
+  "show_notification": true
+}

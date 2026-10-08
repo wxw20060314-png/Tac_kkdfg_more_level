@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "tacz_morelevel:signal_summoning_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "tacz_morelevel:blocks/signal_summoning_block"
+}

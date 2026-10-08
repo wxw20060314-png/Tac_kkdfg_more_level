@@ -1,0 +1,31 @@
+{
+  "type": "tacz:gun_smith_table_crafting",
+  "materials": [
+    {
+      "item": {
+        "tag": "minecraft:logs"
+      },
+      "count": 1
+    },
+    {
+      "item": {
+        "type": "forge:partial_nbt",
+        "item": "tacz:modern_kinetic_gun",
+        "nbt": {
+          "GunId": "tacz:springfield1873"
+        }
+      },
+      "count": 1
+    },
+    {
+      "item": {
+        "item": "tacz_morelevel:improved_gun_upgrade_voucher"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "type": "gun",
+    "id": "tacz:springfield1873_improved"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "tacz_morelevel:block/signal_summoning_block"
+    },
+    "facing=east": {
+      "model": "tacz_morelevel:block/signal_summoning_block",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "tacz_morelevel:block/signal_summoning_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "tacz_morelevel:block/signal_summoning_block",
+      "y": 270
+    }
+  }
+}

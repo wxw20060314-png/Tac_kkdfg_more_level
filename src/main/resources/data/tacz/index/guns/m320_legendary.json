@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m320_legendary.name",
+  "display": "tacz:m320_display",
+  "data": "tacz:m320_legendary_data",
+  "tooltip": "tacz.gun.m320_legendary.desc",
+  "type": "rpg",
+  "sort": 206
+}

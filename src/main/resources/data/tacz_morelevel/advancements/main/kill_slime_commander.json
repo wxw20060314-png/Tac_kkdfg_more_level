@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_slime_commander": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:slime_commander"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_slime_commander"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:slime_commander_face"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_slime_commander.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_slime_commander.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

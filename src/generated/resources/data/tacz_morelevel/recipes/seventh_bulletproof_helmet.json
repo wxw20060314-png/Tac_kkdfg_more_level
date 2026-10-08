@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tacz_morelevel:obsidian_helmet"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "zxz",
+    "x#x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:seventh_bulletproof_helmet"
+  },
+  "show_notification": true
+}

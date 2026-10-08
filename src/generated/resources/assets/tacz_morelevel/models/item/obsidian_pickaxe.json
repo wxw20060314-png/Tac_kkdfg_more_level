@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "tacz_morelevel:item/obsidian_pickaxe"
+  }
+}

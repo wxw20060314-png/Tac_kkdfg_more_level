@@ -1,0 +1,5 @@
+// 1.20.1	2026-07-29T20:54:37.4945421	Tags for minecraft:block mod id tacz_morelevel
+43b480d105f17d80169f1c452f0e5ed10222d06e data/minecraft/tags/blocks/mineable/pickaxe.json
+f1006815b0d1c005eeb23773a7b67d2d629b9b5b data/minecraft/tags/blocks/needs_diamond_tool.json
+2b14c57ba7ac173865b38392b80ba885a5a50f28 data/minecraft/tags/blocks/needs_iron_tool.json
+2b9b6ff44c9d48c919cd240b52249832de47da98 data/minecraft/tags/blocks/needs_stone_tool.json

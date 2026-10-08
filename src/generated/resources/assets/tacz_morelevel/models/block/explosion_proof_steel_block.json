@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "tacz_morelevel:block/explosion_proof_steel_block"
+  }
+}

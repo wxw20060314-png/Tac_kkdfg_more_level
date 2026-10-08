@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.sks_tactical_perfect.name",
+  "display": "tacz:sks_tactical_display",
+  "data": "tacz:sks_tactical_perfect_data",
+  "tooltip": "tacz.gun.sks_tactical_perfect.desc",
+  "type": "rifle",
+  "sort": 4
+}

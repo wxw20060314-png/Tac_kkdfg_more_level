@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.rhino357_perfect.name",
+  "display": "tacz:rhino357_display",
+  "data": "tacz:rhino357_perfect_data",
+  "tooltip": "tacz.gun.rhino357_perfect.desc",
+  "type": "pistol",
+  "sort": 13
+}

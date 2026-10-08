@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "y": {
+      "item": "minecraft:glass_pane"
+    },
+    "z": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "xzx",
+    "xyx",
+    " x "
+  ],
+  "result": {
+    "item": "tacz_morelevel:monitor"
+  },
+  "show_notification": true
+}

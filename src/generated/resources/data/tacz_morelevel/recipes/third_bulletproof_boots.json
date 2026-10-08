@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_boots"
+    },
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "z": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "x x",
+    "z#z",
+    "x x"
+  ],
+  "result": {
+    "item": "tacz_morelevel:third_bulletproof_boots"
+  },
+  "show_notification": true
+}

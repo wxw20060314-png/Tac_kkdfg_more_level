@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.rpg7_improved.name",
+  "display": "tacz:rpg7_display",
+  "data": "tacz:rpg7_improved_data",
+  "tooltip": "tacz.gun.rpg7_improved.desc",
+  "type": "rpg",
+  "sort": 207
+}

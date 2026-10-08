@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "x": {
+      "item": "tacz_morelevel:monitor"
+    },
+    "y": {
+      "item": "tacz_morelevel:infinite_network_receiver"
+    },
+    "z": {
+      "item": "tacz_morelevel:computer_case"
+    }
+  },
+  "pattern": [
+    "zxy",
+    "sss"
+  ],
+  "result": {
+    "item": "tacz_morelevel:black_market_contact"
+  },
+  "show_notification": true
+}

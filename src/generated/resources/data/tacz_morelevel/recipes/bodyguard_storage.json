@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "y": {
+      "item": "minecraft:ender_chest"
+    },
+    "z": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "pattern": [
+    "xzx",
+    "xyx",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:bodyguard_storage"
+  },
+  "show_notification": true
+}

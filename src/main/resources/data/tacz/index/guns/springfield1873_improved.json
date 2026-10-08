@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.springfield1873_improved.name",
+  "display": "tacz:springfield1873_display",
+  "data": "tacz:springfield1873_improved_data",
+  "tooltip": "tacz.gun.springfield1873_improved.desc",
+  "type": "sniper",
+  "sort": 177
+}

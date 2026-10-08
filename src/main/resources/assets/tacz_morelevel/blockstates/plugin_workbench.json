@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "tacz_morelevel:block/plugin_workbench"
+    },
+    "facing=east": {
+      "model": "tacz_morelevel:block/plugin_workbench",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "tacz_morelevel:block/plugin_workbench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "tacz_morelevel:block/plugin_workbench",
+      "y": 270
+    }
+  }
+}

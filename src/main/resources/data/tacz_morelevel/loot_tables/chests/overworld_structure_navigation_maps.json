@@ -1,0 +1,137 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_military_base_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.military_base"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_warehouse_arena_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.warehouse_arena"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_underground_lab_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.underground_lab"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_merchant_camp_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.merchant_camp"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_lurker_base_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.lurker_base"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:map",
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "tacz_morelevel:on_slime_ruins_maps",
+              "decoration": "red_x",
+              "zoom": 1,
+              "search_radius": 1200,
+              "skip_existing_chunks": false
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.tacz_morelevel.slime_ruins"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "parent": "tacz_morelevel:main/root1",
+  "criteria": {
+    "killed_bomb_sight": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "tacz_morelevel:bomb_sight"
+        }
+      }
+    }
+  },
+  "requirements": [["killed_bomb_sight"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:shockwave_bulletproof_helmet"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.kill_bomb_sight.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.kill_bomb_sight.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

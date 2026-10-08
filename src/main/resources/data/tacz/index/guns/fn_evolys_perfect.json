@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.fn_evolys_perfect.name",
+  "display": "tacz:fn_evolys_display",
+  "data": "tacz:fn_evolys_perfect_data",
+  "tooltip": "tacz.gun.fn_evolys_perfect.desc",
+  "type": "mg",
+  "sort": 7
+}

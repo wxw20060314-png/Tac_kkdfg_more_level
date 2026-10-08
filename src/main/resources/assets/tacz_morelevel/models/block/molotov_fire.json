@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "tacz_morelevel:block/molotov_fire_0"
+  },
+  "render_type": "minecraft:cutout"
+}

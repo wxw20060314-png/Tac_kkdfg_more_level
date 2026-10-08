@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.fn_evolys_legendary.name",
+  "display": "tacz:fn_evolys_display",
+  "data": "tacz:fn_evolys_legendary_data",
+  "tooltip": "tacz.gun.fn_evolys_legendary.desc",
+  "type": "mg",
+  "sort": 9
+}

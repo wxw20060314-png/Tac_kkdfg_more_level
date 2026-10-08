@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.hk416d_perfect.name",
+  "display": "tacz:hk416d_display",
+  "data": "tacz:hk416d_perfect_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.hk416d_perfect.desc",
+  "sort": 24
+}

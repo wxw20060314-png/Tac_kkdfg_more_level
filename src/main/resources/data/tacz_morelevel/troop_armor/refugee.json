@@ -1,0 +1,18 @@
+{
+  "armor": [
+    {
+      "weight": 1,
+      "helmet": null,
+      "chestplate": null,
+      "leggings": null,
+      "boots": null
+    },
+    {
+      "weight": 1,
+      "helmet": "tacz_morelevel:first_bulletproof_helmet",
+      "chestplate": "tacz_morelevel:first_bulletproof_chestplate",
+      "leggings": "tacz_morelevel:first_bulletproof_leggings",
+      "boots": "tacz_morelevel:first_bulletproof_boots"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.hk416d_annihilator.name",
+  "display": "tacz:hk416d_display",
+  "data": "tacz:hk416d_annihilator_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.hk416d_annihilator.desc",
+  "sort": 26
+}

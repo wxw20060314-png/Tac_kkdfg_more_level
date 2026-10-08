@@ -1,0 +1,25 @@
+{
+  "armor": [
+    {
+      "weight": 4,
+      "helmet": "tacz_morelevel:first_bulletproof_helmet",
+      "chestplate": "tacz_morelevel:first_bulletproof_chestplate",
+      "leggings": "tacz_morelevel:first_bulletproof_leggings",
+      "boots": "tacz_morelevel:first_bulletproof_boots"
+    },
+    {
+      "weight": 3,
+      "helmet": "tacz_morelevel:second_bulletproof_helmet",
+      "chestplate": "tacz_morelevel:second_bulletproof_chestplate",
+      "leggings": "tacz_morelevel:second_bulletproof_leggings",
+      "boots": "tacz_morelevel:second_bulletproof_boots"
+    },
+    {
+      "weight": 2,
+      "helmet": "tacz_morelevel:third_bulletproof_helmet",
+      "chestplate": "tacz_morelevel:third_bulletproof_chestplate",
+      "leggings": "tacz_morelevel:third_bulletproof_leggings",
+      "boots": "tacz_morelevel:third_bulletproof_boots"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.glock_17_excellent.name",
+  "display": "tacz:glock_17_display",
+  "data": "tacz:glock_17_excellent_data",
+  "tooltip": "tacz.gun.glock_17_excellent.desc",
+  "type": "pistol",
+  "sort": 140
+}

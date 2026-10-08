@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.spr15hb_excellent.name",
+  "display": "tacz:spr15hb_display",
+  "data": "tacz:spr15hb_excellent_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.spr15hb_excellent.desc",
+  "sort": 65
+}

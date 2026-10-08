@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "minecraft:tnt"
+    },
+    "y": {
+      "item": "minecraft:iron_ingot"
+    },
+    "z": {
+      "item": "minecraft:light_weighted_pressure_plate"
+    }
+  },
+  "pattern": [
+    " z ",
+    "yyy",
+    "xxx"
+  ],
+  "result": {
+    "item": "tacz_morelevel:landmine"
+  },
+  "show_notification": true
+}

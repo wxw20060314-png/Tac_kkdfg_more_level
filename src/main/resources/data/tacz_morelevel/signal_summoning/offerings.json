@@ -1,0 +1,33 @@
+{
+  "search_radius": 32,
+  "search_up_blocks": 4,
+  "air_blocks": 2,
+  "countdown_ticks": 200,
+  "offerings": {
+    "minecraft:iron_ingot": {
+      "entity": "tacz_morelevel:militia",
+      "min": 3,
+      "max": 5
+    },
+    "minecraft:gold_ingot": {
+      "entity": "tacz_morelevel:mercenary",
+      "min": 3,
+      "max": 5
+    },
+    "minecraft:diamond": {
+      "entity": "tacz_morelevel:assault_soldier",
+      "min": 3,
+      "max": 5
+    },
+    "minecraft:netherite_ingot": {
+      "entity": "tacz_morelevel:special_forces",
+      "min": 3,
+      "max": 5
+    },
+    "tacz_morelevel:obsidian_item": {
+      "entity": "tacz_morelevel:super_special_soldier",
+      "min": 3,
+      "max": 5
+    }
+  }
+}

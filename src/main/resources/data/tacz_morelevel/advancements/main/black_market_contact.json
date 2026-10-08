@@ -1,0 +1,31 @@
+{
+  "parent": "tacz_morelevel:main/root",
+  "criteria": {
+    "contact": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:black_market_contact"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["contact"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:black_market_contact"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.black_market_contact.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.black_market_contact.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

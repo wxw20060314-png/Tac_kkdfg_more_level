@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.b93r_perfect.name",
+  "display": "tacz:b93r_display",
+  "data": "tacz:b93r_perfect_data",
+  "tooltip": "tacz.gun.b93r_perfect.desc",
+  "type": "pistol",
+  "sort": 119
+}

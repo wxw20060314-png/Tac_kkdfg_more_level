@@ -1,0 +1,61 @@
+{
+  "parent": "tacz_morelevel:main/root",
+  "criteria": {
+    "helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:first_bulletproof_helmet"]
+          }
+        ]
+      }
+    },
+    "chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:first_bulletproof_chestplate"]
+          }
+        ]
+      }
+    },
+    "leggings": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:first_bulletproof_leggings"]
+          }
+        ]
+      }
+    },
+    "boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["tacz_morelevel:first_bulletproof_boots"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["helmet"], ["chestplate"], ["leggings"], ["boots"]],
+  "display": {
+    "icon": {
+      "item": "tacz_morelevel:first_bulletproof_chestplate"
+    },
+    "title": {
+      "translate": "advancements.tacz_morelevel.main.bulletproof_first_set.title"
+    },
+    "description": {
+      "translate": "advancements.tacz_morelevel.main.bulletproof_first_set.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  }
+}

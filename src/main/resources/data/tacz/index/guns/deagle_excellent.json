@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.deagle_excellent.name",
+  "display": "tacz:deagle_display",
+  "data": "tacz:deagle_excellent_data",
+  "tooltip": "tacz.gun.deagle_excellent.desc",
+  "type": "pistol",
+  "sort": 130
+}

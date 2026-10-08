@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tacz_morelevel:black_universal_currency_digit_2"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "tacz_morelevel:black_universal_currency_digit_1"
+  }
+}

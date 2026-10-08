@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "tacz_morelevel:sixth_steel_ingot"
+    },
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "y": {
+      "item": "minecraft:spectral_arrow"
+    },
+    "z": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "pattern": [
+    "xzx",
+    "aya",
+    " x "
+  ],
+  "result": {
+    "item": "tacz_morelevel:detection_grenade"
+  },
+  "show_notification": true
+}

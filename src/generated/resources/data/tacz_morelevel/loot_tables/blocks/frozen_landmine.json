@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "tacz_morelevel:frozen_landmine"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "tacz_morelevel:blocks/frozen_landmine"
+}

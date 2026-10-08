@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tacz_morelevel:explosion_proof_steel_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "tacz_morelevel:explosion_proof_steel_ingot"
+  }
+}

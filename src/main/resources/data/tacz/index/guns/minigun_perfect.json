@@ -1,0 +1,9 @@
+{
+  "name": "tacz.gun.minigun_perfect.name",
+  "display": "tacz:minigun_display",
+  "data": "tacz:minigun_perfect_data",
+  "tooltip": "tacz.gun.minigun_perfect.desc",
+  "type": "mg",
+  "item_type": "modern_kinetic",
+  "sort": 109
+}
