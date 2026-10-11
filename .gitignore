@@ -1,0 +1,53 @@
+# eclipse
+bin/
+*.launch
+.settings/
+.metadata
+.classpath
+.project
+
+# idea
+out/
+*.ipr
+*.iws
+*.iml
+.idea/
+
+# vscode（可选：若要共享调试配置可删掉这行）
+.vscode/
+
+# gradle
+build/
+.gradle/
+
+# forge / 本地运行
+eclipse/
+run/
+run-data/
+
+# 编译产物（含 tools/）
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# 系统 / 编辑器杂项
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.tmp_env_check.txt
+
+# 本地临时输出（不要进仓库）
+deps_out.txt
+_stdout_*.txt
+_gun_rank_full_stdout.txt
+.code_stats.txt
+_tmp_cataclysm/
+
+# Files from Forge MDK
+forge*changelog.txt

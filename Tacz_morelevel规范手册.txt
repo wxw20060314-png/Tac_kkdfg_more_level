@@ -1,0 +1,220 @@
+Tacz_morelevel 规范手册
+================================
+
+位置：仓库根目录（打开本项目时即可看到本文件）
+文件名：Tacz_morelevel规范手册.txt
+
+本文件集中存放本模组的编码约定。源码里的注册类等处只保留「见本手册」的短引用，
+不要再把长规范段落复制进各个 Java 文件。
+
+
+一、ResourceLocation（资源 ID）
+--------------------------------
+
+统一使用：
+
+    ResourceLocation.fromNamespaceAndPath(namespace, path)
+
+禁止：
+
+    new ResourceLocation(...)
+
+说明：
+- 命名空间与路径已经拆成两段时，一律用 fromNamespaceAndPath。
+- 从 JSON / 配置读到的「任意 ns:path 字符串」用 ResourceLocation.tryParse(...)；
+  不要对未拆分的整串 ID 调用 fromNamespaceAndPath。
+
+
+二、资源文件编码
+--------------------------------
+
+- assets / data 下的 JSON、geo、animation、lang 等文本：UTF-8，不要带 BOM。
+- 带 UTF-8 BOM（EF BB BF）时，GeckoLib 等可能在第 1 列解析失败并导致客户端崩溃。
+
+
+三、临时测试代码
+--------------------------------
+
+- 测完即删：不要把 /tml_locate_tp、键盘脚本等永久留在正式发布包。
+- 临时包名建议 temp/；合并进正式功能前删掉或迁出。
+
+
+四、世界结构间距（备忘）
+--------------------------------
+
+- 不同 structure set 的 spacing/separation 只管「同类」结构，不负责跨类型互斥。
+- 仓库竞技场与军事基地若贴得太近：下个版本考虑合并为同一 structure set，或拆群系 / 加互斥。
+
+
+五、盔甲 / 按键效果：双 bool（优先约定）
+--------------------------------
+
+一切盔甲触发的开关型效果（夜视、隐身、隐声等）优先按双 bool 设计，不要让某一件甲
+「独占通道」在脱下时强清效果（多套抢同一功能时会出 bug）。
+
+公式：
+
+    真正生效 = toggled（开关意图） && eligible（当前装备资格）
+
+| 名 | 含义 | 存放建议 |
+|----|------|----------|
+| toggled | 玩家按键打开的意图 | 玩家侧同步/持久；或合格件上的统一 NBT 键（夜视头盔） |
+| eligible | 当前是否穿合格装备/全套 | 每 tick 或换装时计算，一般不单独持久 |
+
+规则：
+- 真正生效为 true：短时刷新 MobEffect（脱装停刷即自然过期）；需要时再挂 Visibility 等。
+- 真正生效为 false：停刷效果；禁止用永久 setInvisible 且无对称清理。
+- 多套甲共用一条通道时：开关挂玩家（或统一键），甲只贡献 eligible（OR 多套全套判定）。
+- 换套：eligible 仍真且 toggled 仍开 → 效果不断；拆套 → eligible 假 → 自动退出。
+- 禁止：甲 A 脱下时「因为我是拥有者」强制 removeEffect，误伤甲 B 仍合格的情况。
+
+现成对照：
+- 夜视（ArmorNightVisionHandler）：头盔 NBT 开关；换装边沿立刻清夜视；tick 刷新。
+- 隐身斗篷（StealthCloakSkill + ArmorStealthHandler）：
+  胸甲 StealthCloakEnabled（无键=默认关，同夜视）；TAG_WAS_ACTIVE 边沿只清效果不改开关；
+  胸甲池 t 上限 4、每 5 tick +1；
+  LivingHurtEvent(HIGH) 护甲前：t−伤害&lt;0 则归满、关开关+10s冷却。
+- 潜行七级套（StealthSeventhSkill + ArmorStealthSeventhHandler）：与斗篷完全独立；
+  胸甲 StealthSeventhEnabled；池上限 100；破隐冷却 8s；档位 7；外观同七级防弹。
+
+
+七、乘船：碰撞箱 / 走位另路 + 头部锁定冲突（待做，已标嫌疑）
+--------------------------------
+
+现象备忘：NPC 在船上走与陆地不同的一套（乘客位移由船带；枪 Goal 仍 moveTo/strafe 无效或乱探）。
+
+头部（已查源码，与半砖不同坑）：
+- 原版 Boat.positionRider → clampRotation：yBodyRot=船头；乘客 yRot 相对船 ±105°；yHeadRot=yRot。
+- 我方 applyPlayerLikeView 仍任意拧头瞄敌；tickHeadTurnBodyFollow 仍跟位移；枪 Goal 无 isPassenger 判断。
+- 结果：锁头与船抢朝向（扭一下弹回 / 只能船头扇区瞄 / 躯干钉在船上）。
+
+待做规划：
+- 乘船时禁用陆地 moveTo/strafe（或 navigation 停干净）。
+- 乘船瞄准策略二选一或组合：接受扇区限制并停硬拧；或乘船专用瞄（在 ±105° 内锁敌）；或后写 clamp 再补一次头（慎，易抖）。
+- 理清乘客 collision/Pose/眼高与射击射线起点。
+- 护航 CompanionBoatSitPoseHelper 仅陆上指令坐姿，勿与战斗乘船混为一谈。
+
+
+（后续规范继续往本文件追加即可。）
+八.# 基础兵战术 AI 路线图 — 规划备忘
+
+  > 状态：草案，待定案后再实现。
+  > 范围：六个基础兵（民兵 / 难民 / 佣兵 / 突击 / 特战 / 超特）共用层；Boss 传说技另案。
+  > 相关：`gun-cover-points.md`（8 点视线占位，可与掩体选点器后期合并）。
+  > 原则：**战术只借脚，枪还在手上**（掩体 / 警戒占 MOVE，不抢射击）。
+
+  ## 背景
+
+  - 现 `MobGunRangedPassthroughAttackGoal` 将 `moveTo`/`strafe` 与开火绑在同一 Goal；后续掩体、闪光分档都会抢导航。
+  - CeilingDuel 已有「开火 / 走位」分 Goal 先例（`performsRangedAttack()`）；基础兵应对齐该契约。
+  - 对标 SEM 的是「战术层」而非整包抄；v1 掩体做瘦身版（硬挡 + 可达 + 记忆），不上全套打分。
+
+  ## 分期
+
+  ### 第 0 期（阻塞项，最先做）— 射击与移动拆开
+
+  | 项 | 说明 |
+  |---|---|
+  | GunFire Goal | 只 `LOOK`（或 LOOK）：seeTime、瞄准、点射、`performRangedAttack`；**禁止** navigation / strafe |
+  | GunMove Goal | 只 `MOVE`：射界环 `moveTo` ↔ `strafe`；可读「战术占用」则本 tick 不驱动 |
+  | 挂载 | `mountPermanentCombatGoals` 挂 Fire + Move；六兵主路径先改 Passthrough |
+  | 清理 | Fire 的 `canContinueToUse` **不再**绑 `!navigation.isDone()` |
+  | 暂缓 | 难民/旧非 Passthrough Goal 可第二步对齐 |
+
+  **验收**
+
+  - [ ] 无战术时手感 ≈ 现网（追击 + 环 strafe + 点射）
+  - [ ] 外部 `moveTo` 占用时仍可开枪（有视线时）
+  - [ ] 停 Fire 不清导航；停 Move 不误关 aim 打断交火
+
+  ---
+
+  ### 第 1 期 — 低血掩体（只占 MOVE）+ 记忆点
+
+  | 项 | 说明 |
+  |---|---|
+  | 触发 | HP &lt; 40%（可加：刚受伤 / 正在交火） |
+  | 行为 | TacticalMove：`moveTo` 掩体候选；**不**禁用 GunFire |
+  | 选点 v1 | 硬挡视线 + 可站 + `createPath` 可达；冷却 + 每 tick 预算 |
+  | 记忆 | `lastCoverPos` + 威胁方向 + 时间戳；超时 / 目标大挪作废 |
+  | 分档 | 低级：弱或关；特战+：优先记忆点 |
+
+  **与 `gun-cover-points.md`**
+
+  - 8 点占位偏「能开枪」；低血掩体偏「挡视线」。可共用过滤/冷却，分数目标不同。
+
+  **验收**
+
+  - [ ] 残血时脚去掩体，有视线仍能开枪
+  - [ ] GunMove 在战术占用期间不抢 `moveTo`/strafe
+  - [ ] 搜点有冷却，不每 tick 扫图
+
+  ---
+
+  ### 第 2 期 — 丢视警戒 + 闪光锁定分档
+
+  #### 丢视警戒（ALERT）
+
+  - 条件：`target != null` 且持续无战斗视线。
+  - 行为：朝向 / 慢挪向 **最后可见点**；进入 ALERT；限制狂 strafe。
+  - 出口：恢复 LOS → 回交火；超时 → 放弃或转调查枪声。
+
+  #### 闪光锁定（被闪）
+
+  | 能力 | 被闪时默认 |
+  |---|---|
+  | GunFire | 禁用 |
+  | 战斗跳 / 蹲趴 Goal | 禁用 |
+  | GunMove.strafe（及建议追击 moveTo） | 禁用 |
+  | TacticalMove 找掩体 | **按兵种选择性禁用** |
+
+  分档示例（配置位，勿复制六套 Goal）：
+
+  - 民兵/难民：闪 → 掩体也禁（懵）
+  - 突击：闪 → 掩体概率 / 仅残血
+  - 特战/超特：闪 → 允许（或优先）走 **记忆掩体**
+
+  **验收**
+
+  - [ ] 挨闪后低级兵不会边眩晕边 strafe/跳蹲开枪
+  - [ ] 高级兵可在禁射下摸记忆掩体
+  - [ ] 主动「背闪」不走被闪锁定同一套（另期）
+
+  ---
+
+  ### 第 3 期 — 丢雷（盲区清点）+ 背闪（可选）
+
+  | 项 | 说明 |
+  |---|---|
+  | 丢雷模式 | ALERT + 冷却 + 有雷 → 向最后位置 / 记忆角投掷一次 |
+  | 限制 | 次数、冷却、仅「刚丢视 N 秒内」；避免刷雷 |
+  | 背闪 Goal | 主动投闪；成功后接 TacticalMove → 记忆掩体 |
+  | 注意 | 背闪 ≠ 被闪；短硬直策略单独定 |
+
+  **验收**
+
+  - [ ] 看不见乱丢雷有上限
+  - [ ] 背闪后高级兵能接记忆掩体；Fire 窗口符合设计
+
+  ---
+
+  ## 共享状态（建议）
+
+  挂在士兵组件 / 字段，供多 Goal 只读：
+
+  - `seeTime` / 最后可见位
+  - `tacticalNavLocked`（或占用者枚举）
+  - `lastCoverPos` + 过期 tick
+  - `alertUntilTick` / `flashLocks` 掩码
+  - `CoverPolicy`（按兵种或配置）
+
+  ## 非目标（本路线图不做）
+
+  - 不改 A* / 蹲趴双图寻路（认格保持现有优势）
+  - 不上 SEM 全套 Cover 打分 / 班组记忆 / 指挥官 UI
+  - Boss 传说技能 AI 不纳入本路线增量统计
+  - 不与 SEM 强制同装；若同包需另做 Goal 优先级冲突表
+
+  ## 体量与风险（预期）
+
+  - 增量常见 **+2–4k 行**（总约 6.5–6.6 万）；做全、Goal/Preset 拆很碎时可能到 **~

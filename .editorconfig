@@ -1,0 +1,19 @@
+# https://editorconfig.org — 避免 JetBrains / VS Code 将 JSON 误用系统默认编码导致中文乱码
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.{json,toml,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.java]
+indent_style = space
+indent_size = 4
+
+[*.py]
+indent_style = space
+indent_size = 4
