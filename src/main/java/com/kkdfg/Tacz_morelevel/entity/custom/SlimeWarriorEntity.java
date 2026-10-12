@@ -5,6 +5,8 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.entity.ModEntities;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -49,6 +51,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 public final class SlimeWarriorEntity extends AbstractSlimeExperimentEntity {
 
     private MobGunRangedPassthroughAttackGoal<SlimeWarriorEntity> gunGoal;
+    private MobGunRangedFireGoal<SlimeWarriorEntity> gunFireGoal;
     private MeleeAttackGoal meleeGoal;
     private boolean combatGoalsMounted;
 
@@ -92,6 +95,14 @@ public final class SlimeWarriorEntity extends AbstractSlimeExperimentEntity {
                         (float) a.gunStrafeOuterRingFrac,
                         (float) a.gunStrafeInnerRingFrac,
                         a.seeTimeToShoot);
+        this.gunFireGoal =
+                new MobGunRangedFireGoal<>(
+                        this,
+                        (float) a.gunRadius,
+                        (float) a.gunMeleeFrac,
+                        a.gunAttackIntervalMin,
+                        a.seeTimeToShoot,
+                        GunCombatSight.COMBAT);
         this.meleeGoal =
                 new MeleeAttackGoal(this, a.meleeSpeed, false) {
                     @Override
@@ -111,30 +122,42 @@ public final class SlimeWarriorEntity extends AbstractSlimeExperimentEntity {
     @Override
     protected void onGunEquipped() {
         this.mountCombatGoals();
+        int interval = this.mobGunBurstIntervalTicks();
         if (this.gunGoal != null) {
-            this.gunGoal.setMinAttackInterval(this.mobGunBurstIntervalTicks());
+            this.gunGoal.setMinAttackInterval(interval);
+        }
+        if (this.gunFireGoal != null) {
+            this.gunFireGoal.setMinAttackInterval(interval);
         }
     }
 
     @Override
     protected void onGenerationStatsApplied(SplitSpec spec) {
+        int interval = this.mobGunBurstIntervalTicks();
         if (this.gunGoal != null) {
-            this.gunGoal.setMinAttackInterval(this.mobGunBurstIntervalTicks());
+            this.gunGoal.setMinAttackInterval(interval);
+        }
+        if (this.gunFireGoal != null) {
+            this.gunFireGoal.setMinAttackInterval(interval);
         }
     }
 
     private void mountCombatGoals() {
         if (this.combatGoalsMounted
                 || this.gunGoal == null
+                || this.gunFireGoal == null
                 || this.meleeGoal == null
                 || this.level() == null
                 || this.level().isClientSide()) {
             return;
         }
         this.combatGoalsMounted = true;
+        this.goalSelector.addGoal(2, this.gunFireGoal);
         this.goalSelector.addGoal(2, this.gunGoal);
         this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, this.meleeGoal));
-        this.gunGoal.setMinAttackInterval(this.mobGunBurstIntervalTicks());
+        int interval = this.mobGunBurstIntervalTicks();
+        this.gunGoal.setMinAttackInterval(interval);
+        this.gunFireGoal.setMinAttackInterval(interval);
     }
 
     @Override

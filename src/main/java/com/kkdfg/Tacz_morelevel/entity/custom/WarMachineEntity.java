@@ -3,15 +3,18 @@ package com.kkdfg.Tacz_morelevel.entity.custom;
 import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineFlyingGunAttackGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineGunAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineFlyingGunMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachinePowerMechSkillGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineTargetGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineWeaponSwapGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import com.kkdfg.Tacz_morelevel.integration.tacz.DualGunCatalog;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
@@ -99,8 +102,10 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                     BossEvent.BossBarColor.YELLOW,
                     BossEvent.BossBarOverlay.NOTCHED_10);
 
-    private WarMachineGunAttackGoal gunGoal;
-    private WarMachineFlyingGunAttackGoal flyingGunGoal;
+    private MobGunRangedMoveGoal<WarMachineEntity> gunGoal;
+    private WarMachineFlyingGunMoveGoal flyingGunGoal;
+    private MobGunRangedFireGoal<WarMachineEntity> minigunFireGoal;
+    private MobGunRangedFireGoal<WarMachineEntity> rpgFireGoal;
     private MeleeAttackGoal meleeGoal;
 
     @Nullable
@@ -175,17 +180,32 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
         if (this.flyingGunGoal != null) {
             this.flyingGunGoal.setMinAttackInterval(interval);
         }
+        if (this.minigunFireGoal != null) {
+            this.minigunFireGoal.setMinAttackInterval(interval);
+        }
+        if (this.rpgFireGoal != null) {
+            this.rpgFireGoal.setMinAttackInterval(interval);
+        }
     }
 
-    /** 战争机器在 {@link #registerGoals} 内挂载空中+地面射击与近战，勿再走父类单枪挂载。 */
+    /** 战争机器在 {@link #registerGoals} 内挂载 Fire×2 + Move×2 + 近战，勿再走父类单枪挂载。 */
     @Override
     protected void mountPermanentCombatGoals() {
         if (this.areCombatGoalsMounted()) {
             return;
         }
-        if (this.gunGoal != null && this.flyingGunGoal != null && this.meleeGoal != null) {
+        if (this.gunGoal != null
+                && this.flyingGunGoal != null
+                && this.minigunFireGoal != null
+                && this.rpgFireGoal != null
+                && this.meleeGoal != null) {
             this.markCombatGoalsMounted();
         }
+    }
+
+    @Override
+    protected Goal createGunFireGoal() {
+        return null;
     }
 
     @Override
@@ -318,28 +338,50 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats attrs = Config.warMachineAttributes;
+        this.minigunFireGoal =
+                new MobGunRangedFireGoal<>(
+                        this,
+                        (float) attrs.gunRadius,
+                        (float) attrs.gunMeleeFrac,
+                        attrs.gunAttackIntervalMin,
+                        attrs.seeTimeToShoot,
+                        GunCombatSight.WAR_STRICT,
+                        false,
+                        m -> WarMachineWeaponSwapGoal.isMainHandGun(m, MAIN_GUN));
+        this.rpgFireGoal =
+                new MobGunRangedFireGoal<>(
+                        this,
+                        (float) attrs.gunRadius,
+                        (float) attrs.gunMeleeFrac,
+                        attrs.gunAttackIntervalMin,
+                        WarMachineWeaponSwapGoal.RPG_SEE_TICKS_TO_SHOOT,
+                        GunCombatSight.WAR_RPG,
+                        true,
+                        m -> WarMachineWeaponSwapGoal.isMainHandGun(m, BACK_GUN));
         this.flyingGunGoal =
-                new WarMachineFlyingGunAttackGoal(
+                new WarMachineFlyingGunMoveGoal(
                         this,
                         FLY_GUN_MOVE_SPEED,
-                        Config.warMachineAttributes.gunAttackIntervalMin,
-                        (float) Config.warMachineAttributes.gunRadius,
-                        (float) Config.warMachineAttributes.gunMeleeFrac,
-                        Config.warMachineAttributes.seeTimeToStopMove,
-                        (float) Config.warMachineAttributes.gunStrafeOuterRingFrac,
-                        (float) Config.warMachineAttributes.gunStrafeInnerRingFrac,
-                        Config.warMachineAttributes.seeTimeToShoot);
+                        attrs.gunAttackIntervalMin,
+                        (float) attrs.gunRadius,
+                        attrs.seeTimeToStopMove,
+                        (float) attrs.gunStrafeOuterRingFrac,
+                        (float) attrs.gunStrafeInnerRingFrac);
         this.gunGoal =
-                new WarMachineGunAttackGoal(
+                new MobGunRangedMoveGoal<>(
                         this,
                         Config.warMachineGunGoalSpeedModifier,
-                        Config.warMachineAttributes.gunAttackIntervalMin,
-                        (float) Config.warMachineAttributes.gunRadius,
-                        (float) Config.warMachineAttributes.gunMeleeFrac,
-                        Config.warMachineAttributes.seeTimeToStopMove,
-                        (float) Config.warMachineAttributes.gunStrafeOuterRingFrac,
-                        (float) Config.warMachineAttributes.gunStrafeInnerRingFrac,
-                        Config.warMachineAttributes.seeTimeToShoot);
+                        attrs.gunAttackIntervalMin,
+                        (float) attrs.gunRadius,
+                        attrs.seeTimeToStopMove,
+                        (float) attrs.gunStrafeOuterRingFrac,
+                        (float) attrs.gunStrafeInnerRingFrac,
+                        GunCombatSight.WAR_MOVE,
+                        m -> !m.isPowerMechFlying());
+        this.goalSelector.addGoal(1, new WarMachineWeaponSwapGoal(this));
+        this.goalSelector.addGoal(2, this.minigunFireGoal);
+        this.goalSelector.addGoal(2, this.rpgFireGoal);
         this.goalSelector.addGoal(2, this.flyingGunGoal);
         this.goalSelector.addGoal(3, this.gunGoal);
         this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, this.meleeGoal));

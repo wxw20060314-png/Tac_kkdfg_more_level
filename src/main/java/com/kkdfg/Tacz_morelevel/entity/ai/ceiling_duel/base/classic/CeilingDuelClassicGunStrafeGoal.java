@@ -44,11 +44,6 @@ public final class CeilingDuelClassicGunStrafeGoal extends MobGunRangedPassthrou
     }
 
     @Override
-    protected boolean performsRangedAttack() {
-        return false;
-    }
-
-    @Override
     public void start() {
         this.boss.enterBaseFresh();
         super.start();

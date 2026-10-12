@@ -71,7 +71,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
  * 对掏天花板 Boss：M4 对掏天花板；枪套同大帅（无目标收枪）。
- * 射击常驻 {@link CeilingDuelGunFireGoal}（LOOK）；走位 Goal 仅 MOVE，随阶段切换。
+ * 射击常驻 {@link CeilingDuelGunFireGoal}（LOOK，继承通用 Fire）；走位 Goal 仅 MOVE，随阶段切换。
  * 走位由导演驱动 {@link CeilingDuelManeuverPhase}（BASE↔SKILL↔BRIDGE）。
  * <p>BASE→技能：空/准入失败不转；技能失败可用 {@link #failToBase()} 直回基础。
  * <p>死亡装备掉落见 common 配置 {@code [ceilingDuelDeathDrops]}：
@@ -482,6 +482,17 @@ public final class CeilingDuelEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
+    protected Goal createGunFireGoal() {
+        Config.NpcAttributeStats attrs = this.configuredAttributeStats();
+        return new CeilingDuelGunFireGoal(
+                this,
+                (float) attrs.gunRadius,
+                (float) attrs.gunMeleeFrac,
+                attrs.gunAttackIntervalMin,
+                attrs.seeTimeToShoot);
+    }
+
+    @Override
     public String spawnArmorPoolId() {
         return "ceiling_duel";
     }
@@ -577,15 +588,7 @@ public final class CeilingDuelEntity extends AbstractHolsterGunSoldierEntity {
                 3, new SoldierHurtByTargetGoal(this, CeilingDuelEntity.class).setAlertOthers());
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
-        // 常驻射击（LOOK）：不随 BASE/SKILL/BRIDGE 切换 stop
-        this.goalSelector.addGoal(
-                1,
-                new CeilingDuelGunFireGoal(
-                        this,
-                        (float) Config.ceilingDuelAttributes.gunRadius,
-                        (float) Config.ceilingDuelAttributes.gunMeleeFrac,
-                        Config.ceilingDuelAttributes.gunAttackIntervalMin,
-                        Config.ceilingDuelAttributes.seeTimeToShoot));
+        // 常驻射击（LOOK）由 mountPermanentCombatGoals → createGunFireGoal 挂载
         this.goalSelector.addGoal(1, new CeilingDuelCatStepJumpGoal(this));
         this.goalSelector.addGoal(1, new CeilingDuelInstantCrawlGoal(this));
         // 301 同通道：蹲 + 横拉走位（registerGoals 在 super 中，须当场 new）

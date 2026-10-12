@@ -4,10 +4,14 @@ import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.armor.skill.impl.BlastSummonBombCartSkill;
-import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeWeaponSwapGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedBombBabyAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
@@ -59,7 +63,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 /**
  * 炸弹宝宝 Boss：双枪（主武器爆破 MK14 + 背枪传奇 M320）；穿爆破七级套。
  * 无目标时由 {@link AbstractDualGunSoldierEntity} 切回主武器。
- * 榴弹：{@link BombBabyGrenadeAttackGoal}（BombSight 不通达后切 M320 + 弹道仰角）。
+ * 榴弹：{@link BombBabyGrenadeWeaponSwapGoal} + {@link BombBabyGrenadeMoveGoal} + {@link BombBabyGrenadeFireGoal}。
  * 射击视线：有 target 用 {@link com.kkdfg.Tacz_morelevel.entity.ai.BombBabySight}；选目标仍普通穿透。
  * 战斗走位抄超级特种兵；抗性 III（amplifier 3 = 80% 减伤）。
  * 皮肤 {@code textures/entity/bomb_baby/skin_0..2.png}，生成时随机一套。
@@ -196,6 +200,25 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
     }
 
     @Override
+    protected GunCombatSight gunCombatSight() {
+        return GunCombatSight.BLAST;
+    }
+
+    @Override
+    protected Goal createGunFireGoal() {
+        Config.NpcAttributeStats attrs = this.configuredAttributeStats();
+        return new MobGunRangedFireGoal<>(
+                this,
+                (float) attrs.gunRadius,
+                (float) attrs.gunMeleeFrac,
+                attrs.gunAttackIntervalMin,
+                attrs.seeTimeToShoot,
+                GunCombatSight.BLAST,
+                false,
+                BombBabyEntity::isHoldingPreferredPrimaryGun);
+    }
+
+    @Override
     protected Config.NpcAttributeStats configuredAttributeStats() {
         return Config.bombBabyAttributes;
     }
@@ -274,7 +297,9 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
-        this.goalSelector.addGoal(1, new BombBabyGrenadeAttackGoal(this));
+        this.goalSelector.addGoal(1, new BombBabyGrenadeWeaponSwapGoal(this));
+        this.goalSelector.addGoal(1, new BombBabyGrenadeFireGoal(this));
+        this.goalSelector.addGoal(2, new BombBabyGrenadeMoveGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));

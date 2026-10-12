@@ -1,6 +1,5 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
-import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
 import net.minecraft.util.Mth;
@@ -10,8 +9,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 
 /**
- * 难民用点射节奏，与 {@link MobGunRangedAttackByRefugeeGoal} 相同；交火视线为头→身→脚
- * （{@link MobGunPlayerLikeAimHelper#hasCombatLineOfSight}）。
+ * 难民走位（仅 MOVE）；射击由 {@link MobGunRangedFireGoal}（tap 节奏）负责。
  */
 public final class MobGunRangedAttackByRefugeePassthroughGoal<T extends Mob & RangedAttackMob> extends Goal
         implements MobGunSoldierRangedGoal {
@@ -19,15 +17,13 @@ public final class MobGunRangedAttackByRefugeePassthroughGoal<T extends Mob & Ra
     private final T self;
     private final double speedModifier;
     private final float attackRadiusSqr;
-    private final double meleeDistSqThreshold;
     private final int seeTimeToStopMove;
     private final float strafeOuterRingAttackRadiusSqFraction;
     private final float strafeInnerRingAttackRadiusSqFraction;
     private int attackIntervalMin;
-    private final int seeTimeToShoot;
+    private final GunCombatSight sight;
 
     private static final int SEE_TIME_MAX = 1000;
-    private int attackTime;
     private int seeTime;
     private boolean strafingClockwise;
     private boolean strafingBackwards;
@@ -49,12 +45,10 @@ public final class MobGunRangedAttackByRefugeePassthroughGoal<T extends Mob & Ra
         this.strafeOuterRingAttackRadiusSqFraction = strafeOuterRingAttackRadiusSqFraction;
         this.strafeInnerRingAttackRadiusSqFraction = strafeInnerRingAttackRadiusSqFraction;
         this.attackIntervalMin = attackIntervalMin;
-        this.seeTimeToShoot = seeTimeToShoot;
         this.attackRadiusSqr = attackRadius * attackRadius;
-        float f = Mth.clamp(meleeLinearFracOfRadius, 0.05F, 1.0F);
-        double meleeR = attackRadius * f;
-        this.meleeDistSqThreshold = meleeR * meleeR;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        Mth.clamp(meleeLinearFracOfRadius, 0.05F, 1.0F);
+        this.sight = GunCombatSight.COMBAT;
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
     @Override
@@ -78,26 +72,15 @@ public final class MobGunRangedAttackByRefugeePassthroughGoal<T extends Mob & Ra
     public void start() {
         super.start();
         this.self.setAggressive(true);
-        this.attackTime = this.attackIntervalMin / 2;
         this.seeTime = 0;
         this.strafingTime = -1;
-        if (!this.self.level().isClientSide()) {
-            IGunOperator op = IGunOperator.fromLivingEntity(this.self);
-            op.initialData();
-            op.draw(this.self::getMainHandItem);
-        }
     }
 
     @Override
     public void stop() {
         super.stop();
-        this.self.setAggressive(false);
         this.seeTime = 0;
-        this.attackTime = 0;
         this.strafingTime = -1;
-        if (!this.self.level().isClientSide()) {
-            IGunOperator.fromLivingEntity(this.self).aim(false);
-        }
     }
 
     @Override
@@ -113,7 +96,7 @@ public final class MobGunRangedAttackByRefugeePassthroughGoal<T extends Mob & Ra
         }
         this.self.setSprinting(false);
         double distSqr = this.self.distanceToSqr(target.getX(), target.getY(), target.getZ());
-        boolean hasLineOfSight = MobGunPlayerLikeAimHelper.hasCombatLineOfSight(this.self, target);
+        boolean hasLineOfSight = this.sight.hasLineOfSight(this.self, target);
         boolean hadSeeTime = this.seeTime > 0;
         if (hasLineOfSight != hadSeeTime) {
             this.seeTime = 0;
@@ -146,29 +129,6 @@ public final class MobGunRangedAttackByRefugeePassthroughGoal<T extends Mob & Ra
                 this.strafingBackwards = true;
             }
             this.self.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
-        }
-        MobGunPlayerLikeAimHelper.applyPlayerLikeView(this.self, target);
-        if (!this.self.level().isClientSide()) {
-            IGunOperator op = IGunOperator.fromLivingEntity(this.self);
-            boolean inAttackRing = hasLineOfSight && distSqr <= (double) this.attackRadiusSqr;
-            boolean meleeBand = inAttackRing && distSqr <= this.meleeDistSqThreshold;
-            boolean midLongBand = inAttackRing && distSqr > this.meleeDistSqThreshold;
-            if (midLongBand) {
-                op.aim(true);
-            } else {
-                op.aim(false);
-            }
-            if (this.attackTime > 0) {
-                --this.attackTime;
-            }
-            boolean taczReady = op.getSynDrawCoolDown() == 0L && !op.getSynIsBolting();
-            boolean meleeShotOk = meleeBand && this.attackTime == 0 && taczReady && this.seeTime >= 1;
-            boolean midLongShotOk =
-                    midLongBand && this.attackTime == 0 && taczReady && this.seeTime >= this.seeTimeToShoot;
-            if (meleeShotOk || midLongShotOk) {
-                this.self.performRangedAttack(target, 1.0F);
-                this.attackTime = this.attackIntervalMin;
-            }
         }
     }
 }

@@ -15,8 +15,10 @@ import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
@@ -147,11 +149,14 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     /** 记住枪声位置并尝试寻路的持续时间（tick），约 10 秒。 */
     private static final int GUN_SOUND_MEMORY_TICKS = 200;
 
-    /** 子类提供的枪械远程 goal（由 {@link #mountPermanentCombatGoals} 常驻挂载）；须实现 {@link MobGunSoldierRangedGoal} 以调节点射间隔。 */
+    /** 子类提供的枪械走位 goal（由 {@link #mountPermanentCombatGoals} 常驻挂载）；须实现 {@link MobGunSoldierRangedGoal} 以调节点射间隔。 */
     protected abstract Goal gunGoal();
 
     /** 子类提供的近战 goal（经 {@link SoldierUnarmedMeleeGoal} 包装后常驻挂载）。 */
     protected abstract MeleeAttackGoal meleeGoal();
+
+    /** 懒建的常驻射击 Goal；子类可覆盖 {@link #createGunFireGoal()}。 */
+    @Nullable private Goal gunFireGoalInstance;
 
     /** 无枪时可走近战；枪套子类可额外要求副手也无枪。 */
     public boolean canUseUnarmedMeleeGoal() {
@@ -584,7 +589,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     }
 
     /**
-     * 子类字段就绪后调用：射击 + 徒手近战各挂一次，之后禁止 remove/add。
+     * 子类字段就绪后调用：射击(LOOK) + 走位(MOVE) + 徒手近战各挂一次，之后禁止 remove/add。
      * 战争机器等可 override 自行挂载多把射击 Goal。
      */
     protected void mountPermanentCombatGoals() {
@@ -597,8 +602,44 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
             return;
         }
         this.combatGoalsMounted = true;
+        Goal fire = this.gunFireGoal();
+        if (fire != null) {
+            this.goalSelector.addGoal(2, fire);
+        }
         this.goalSelector.addGoal(2, gun);
         this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, melee));
+    }
+
+    /**
+     * 常驻射击 Goal；默认按本档 Config + {@link GunCombatSight#COMBAT}。
+     * 对掏/战争机器等可覆盖返回 {@code null}（自行挂载）或特供实例。
+     */
+    @Nullable
+    protected Goal gunFireGoal() {
+        if (this.gunFireGoalInstance == null) {
+            this.gunFireGoalInstance = this.createGunFireGoal();
+        }
+        return this.gunFireGoalInstance;
+    }
+
+    /**
+     * 新建射击 Goal；默认头→身→脚 COMBAT。难民/宝宝等覆盖。
+     */
+    @Nullable
+    protected Goal createGunFireGoal() {
+        Config.NpcAttributeStats attrs = this.configuredAttributeStats();
+        return new MobGunRangedFireGoal<>(
+                this,
+                (float) attrs.gunRadius,
+                (float) attrs.gunMeleeFrac,
+                attrs.gunAttackIntervalMin,
+                attrs.seeTimeToShoot,
+                this.gunCombatSight());
+    }
+
+    /** 默认交火视线；宝宝等可覆盖为 {@link GunCombatSight#BLAST}。 */
+    protected GunCombatSight gunCombatSight() {
+        return GunCombatSight.COMBAT;
     }
 
     /** 是否已完成常驻战斗 Goal 挂载。 */
@@ -619,9 +660,14 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
             return;
         }
         this.mountPermanentCombatGoals();
+        int interval = this.mobGunBurstIntervalTicks();
         Goal gun = this.gunGoal();
         if (gun instanceof MobGunSoldierRangedGoal ranged) {
-            ranged.setMinAttackInterval(this.mobGunBurstIntervalTicks());
+            ranged.setMinAttackInterval(interval);
+        }
+        Goal fire = this.gunFireGoal();
+        if (fire instanceof MobGunSoldierRangedGoal fireRanged) {
+            fireRanged.setMinAttackInterval(interval);
         }
     }
 

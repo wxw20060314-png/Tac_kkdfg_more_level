@@ -10,6 +10,8 @@ import com.kkdfg.Tacz_morelevel.armor.skill.ArmorNightVisionHandler;
 import com.kkdfg.Tacz_morelevel.armor.skill.officer.OfficerGuardRosterHelper;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.custom.MarshalFactionHelper;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
@@ -117,6 +119,18 @@ public final class GuardEntity extends AbstractFriendEntity
     protected BodyguardProfile bodyguardProfile() {
         // 占位：实际属性由 marshalGuardAttributes 写入
         return BodyguardProfile.ELITE;
+    }
+
+    @Override
+    protected Goal createGunFireGoal() {
+        Config.NpcAttributeStats attrs = Config.marshalGuardAttributes;
+        return new MobGunRangedFireGoal<>(
+                this,
+                (float) attrs.gunRadius,
+                (float) attrs.gunMeleeFrac,
+                attrs.gunAttackIntervalMin,
+                attrs.seeTimeToShoot,
+                GunCombatSight.COMBAT);
     }
 
     @Override

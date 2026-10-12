@@ -82,6 +82,20 @@ public final class RefugeeEntity extends AbstractPlayerLikeSoldierEntity {
         return this.meleeGoal;
     }
 
+    /** 难民点射节奏：近战也走间隔。 */
+    @Override
+    protected Goal createGunFireGoal() {
+        Config.NpcAttributeStats attrs = this.configuredAttributeStats();
+        return new MobGunRangedFireGoal<>(
+                this,
+                (float) attrs.gunRadius,
+                (float) attrs.gunMeleeFrac,
+                attrs.gunAttackIntervalMin,
+                attrs.seeTimeToShoot,
+                GunCombatSight.COMBAT,
+                true);
+    }
+
     @Override
     protected void registerGoals() {
         super.registerGoals();

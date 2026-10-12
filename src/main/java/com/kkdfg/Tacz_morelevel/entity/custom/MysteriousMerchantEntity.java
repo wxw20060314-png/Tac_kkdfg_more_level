@@ -4,10 +4,11 @@ import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.MilitiaAcquireTargetVoice;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
@@ -71,6 +72,9 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
     private MobGunRangedPassthroughAttackGoal<MysteriousMerchantEntity> gunRangedGoal;
 
     @Nullable
+    private MobGunRangedFireGoal<MysteriousMerchantEntity> gunFireGoal;
+
+    @Nullable
     private MeleeAttackGoal meleeAttackGoal;
     private boolean combatGoalsMounted;
 
@@ -107,6 +111,7 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
         this.ensureCombatGoalsCreated();
         if (!this.combatGoalsMounted) {
             this.combatGoalsMounted = true;
+            this.goalSelector.addGoal(2, this.gunFireGoal);
             this.goalSelector.addGoal(2, this.gunRangedGoal);
             this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, this.meleeAttackGoal));
         }
@@ -155,7 +160,7 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
     }
 
     private void ensureCombatGoalsCreated() {
-        if (this.gunRangedGoal != null && this.meleeAttackGoal != null) {
+        if (this.gunRangedGoal != null && this.gunFireGoal != null && this.meleeAttackGoal != null) {
             return;
         }
         Config.NpcAttributeStats attrs = Config.mysteriousMerchantAttributes;
@@ -170,6 +175,14 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
                         (float) attrs.gunStrafeOuterRingFrac,
                         (float) attrs.gunStrafeInnerRingFrac,
                         attrs.seeTimeToShoot);
+        this.gunFireGoal =
+                new MobGunRangedFireGoal<>(
+                        this,
+                        (float) attrs.gunRadius,
+                        (float) attrs.gunMeleeFrac,
+                        attrs.gunAttackIntervalMin,
+                        attrs.seeTimeToShoot,
+                        GunCombatSight.COMBAT);
         this.meleeAttackGoal =
                 new MeleeAttackGoal(this, attrs.meleeSpeed, false) {
                     @Override
@@ -194,14 +207,18 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
         this.ensureCombatGoalsCreated();
         if (!this.combatGoalsMounted) {
             this.combatGoalsMounted = true;
+            this.goalSelector.addGoal(2, this.gunFireGoal);
             this.goalSelector.addGoal(2, this.gunRangedGoal);
             this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, this.meleeAttackGoal));
         }
-        Goal gun = this.gunRangedGoal;
-        if (gun instanceof MobGunSoldierRangedGoal ranged) {
-            ranged.setMinAttackInterval(
-                    Config.mapNpcGunBurstInterval(
-                            Config.mysteriousMerchantAttributes.gunAttackIntervalMin));
+        int interval =
+                Config.mapNpcGunBurstInterval(
+                        Config.mysteriousMerchantAttributes.gunAttackIntervalMin);
+        if (this.gunRangedGoal != null) {
+            this.gunRangedGoal.setMinAttackInterval(interval);
+        }
+        if (this.gunFireGoal != null) {
+            this.gunFireGoal.setMinAttackInterval(interval);
         }
     }
 

@@ -12,7 +12,9 @@ import com.kkdfg.Tacz_morelevel.api.PlayerLikeHeadBodyYawMob;
 import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
@@ -233,6 +235,8 @@ public abstract class AbstractFriendEntity extends PathfinderMob
 
     protected abstract MeleeAttackGoal meleeGoal();
 
+    @Nullable private Goal gunFireGoalInstance;
+
     protected void applyConfiguredLivingAttributes(boolean fillHealth) {
         ConfiguredLivingAttributes.apply(
                 this, Config.bodyguardAttributesFor(this.bodyguardProfile()), fillHealth);
@@ -362,9 +366,14 @@ public abstract class AbstractFriendEntity extends PathfinderMob
             return;
         }
         this.mountPermanentCombatGoals();
+        int interval = this.bodyguardGunBurstIntervalTicks();
         Goal gun = this.gunGoal();
         if (gun instanceof MobGunSoldierRangedGoal ranged) {
-            ranged.setMinAttackInterval(this.bodyguardGunBurstIntervalTicks());
+            ranged.setMinAttackInterval(interval);
+        }
+        Goal fire = this.gunFireGoal();
+        if (fire instanceof MobGunSoldierRangedGoal fireRanged) {
+            fireRanged.setMinAttackInterval(interval);
         }
     }
 
@@ -378,8 +387,32 @@ public abstract class AbstractFriendEntity extends PathfinderMob
             return;
         }
         this.combatGoalsMounted = true;
+        Goal fire = this.gunFireGoal();
+        if (fire != null) {
+            this.goalSelector.addGoal(2, new CompanionTamedGunGoal(this, fire));
+        }
         this.goalSelector.addGoal(2, new CompanionTamedGunGoal(this, gun));
         this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, melee));
+    }
+
+    @Nullable
+    protected Goal gunFireGoal() {
+        if (this.gunFireGoalInstance == null) {
+            this.gunFireGoalInstance = this.createGunFireGoal();
+        }
+        return this.gunFireGoalInstance;
+    }
+
+    @Nullable
+    protected Goal createGunFireGoal() {
+        BodyguardProfile profile = this.bodyguardProfile();
+        return new MobGunRangedFireGoal<>(
+                this,
+                Config.bodyguardGunRadiusFor(profile),
+                Config.bodyguardGunMeleeFracFor(profile),
+                Config.bodyguardGunAttackIntervalMinFor(profile),
+                Config.bodyguardSeeTimeToShootFor(profile),
+                GunCombatSight.COMBAT);
     }
 
     protected int bodyguardGunBurstIntervalTicks() {
