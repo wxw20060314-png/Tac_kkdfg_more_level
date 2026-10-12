@@ -67,7 +67,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                 TaczPlayerLikeMob,
                 JumpActingMob {
 
-    private static final String TAG_GUN_DATA_ID = "TaczMoreLevelHolsteredGunDataId";
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
 
     public static final int SOLDIER_SKIN_COUNT = 10;
@@ -78,9 +77,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
             SynchedEntityData.defineId(AbstractNeutralGunNpcEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_TACZ_CRAWLING =
             SynchedEntityData.defineId(AbstractNeutralGunNpcEntity.class, EntityDataSerializers.BOOLEAN);
-
-    @Nullable
-    protected ResourceLocation persistedHolsteredGunId;
 
     @Nullable
     private BlockPos investigateGunSoundPos;
@@ -344,11 +340,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         ItemStack gunStack = TaczGunMobHelper.createGunStack(gunDataId);
         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         this.setItemSlot(EquipmentSlot.OFFHAND, gunStack);
-        if (gunStack.isEmpty()) {
-            this.persistedHolsteredGunId = null;
-        } else {
-            this.persistedHolsteredGunId = gunDataId;
-        }
         this.reassessCombatGoals();
     }
 
@@ -373,7 +364,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         ItemStack holstered = this.getOffhandItem().copy();
         this.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
         this.setItemSlot(EquipmentSlot.MAINHAND, holstered);
-        this.syncPersistedGunIdFromMainHand();
         IGunOperator op = IGunOperator.fromLivingEntity(this);
         op.draw(this::getMainHandItem);
         TaczGunMobHelper.tickInfiniteMobAmmo(this);
@@ -394,24 +384,8 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         if (this.getOffhandItem().isEmpty()) {
             this.setItemSlot(EquipmentSlot.OFFHAND, main);
         }
-        this.syncPersistedGunIdFromHolsteredHand();
         this.reassessCombatGoals();
         return true;
-    }
-
-    private void syncPersistedGunIdFromMainHand() {
-        IGun gun = IGun.getIGunOrNull(this.getMainHandItem());
-        this.persistedHolsteredGunId = gun == null ? null : gun.getGunId(this.getMainHandItem());
-    }
-
-    private void syncPersistedGunIdFromHolsteredHand() {
-        ItemStack holstered = this.getOffhandItem();
-        if (!holstered.isEmpty()) {
-            IGun gun = IGun.getIGunOrNull(holstered);
-            this.persistedHolsteredGunId = gun == null ? null : gun.getGunId(holstered);
-        } else if (!IGun.mainHandHoldGun(this)) {
-            this.persistedHolsteredGunId = null;
-        }
     }
 
     @Override
@@ -419,11 +393,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         if (this.level().isClientSide()) {
             return;
         }
-        if (TaczGunMobHelper.equipMainHand(this, gunDataId)) {
-            this.persistedHolsteredGunId = gunDataId;
-        } else {
-            this.persistedHolsteredGunId = null;
-        }
+        TaczGunMobHelper.equipMainHand(this, gunDataId);
         this.reassessCombatGoals();
     }
 
@@ -516,9 +486,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt(TAG_SKIN_INDEX, this.getSoldierSkinIndex());
-        if (this.persistedHolsteredGunId != null) {
-            compound.putString(TAG_GUN_DATA_ID, this.persistedHolsteredGunId.toString());
-        }
     }
 
     @Override
@@ -527,17 +494,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         this.setLeftHanded(false);
         if (compound.contains(TAG_SKIN_INDEX, Tag.TAG_INT)) {
             this.setSoldierSkinIndex(Mth.clamp(compound.getInt(TAG_SKIN_INDEX), 0, SOLDIER_SKIN_COUNT - 1));
-        }
-        if (compound.contains(TAG_GUN_DATA_ID, Tag.TAG_STRING)) {
-            ResourceLocation id = ResourceLocation.tryParse(compound.getString(TAG_GUN_DATA_ID));
-            Level level = this.level();
-            if (id != null && level != null && !level.isClientSide()) {
-                if (this.getTarget() != null) {
-                    this.equipTaCZGunMainHand(id);
-                } else {
-                    this.equipHolsteredGun(id);
-                }
-            }
         }
         this.applyEquipmentDropChances();
     }

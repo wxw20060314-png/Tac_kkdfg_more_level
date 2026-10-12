@@ -33,11 +33,15 @@ public final class MobGunRangedBombBabyAttackGoal extends MobGunRangedPassthroug
 
     @Override
     public boolean canUse() {
-        return super.canUse() && this.mob().isHoldingPreferredPrimaryGun();
+        return super.canUse()
+                && (!this.mob().requiresPreferredMainGunForCombat()
+                        || this.mob().isHoldingPreferredMainGun());
     }
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse() && this.mob().isHoldingPreferredPrimaryGun();
+        return super.canContinueToUse()
+                && (!this.mob().requiresPreferredMainGunForCombat()
+                        || this.mob().isHoldingPreferredMainGun());
     }
 }

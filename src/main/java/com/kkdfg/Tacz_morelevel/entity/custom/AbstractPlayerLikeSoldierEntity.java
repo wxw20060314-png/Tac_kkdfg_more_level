@@ -14,6 +14,7 @@ import com.kkdfg.Tacz_morelevel.api.TaczCombatCrawlMob;
 import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
+import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
@@ -38,6 +39,7 @@ import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.entity.shooter.ShooterDataHolder;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -115,15 +117,10 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
                 JumpActingMob {
 
-    /** NBT 键：持久化的 TaCZ 枪械数据 ID（{@link ResourceLocation} 字符串形式）。 */
-    private static final String TAG_GUN_DATA_ID = "TaczMoreLevelGunDataId";
-    /**
-     * NBT 键：完整枪 ItemStack（含配件、匣弹、膛弹、射速模式等）。
-     * 优先于仅 ID 重建，避免读档冲掉配件与弹药。
-     */
-    private static final String TAG_GUN_STACK = "TaczMoreLevelGunStack";
     /** NBT 键：持久化的皮肤索引。 */
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
+    /** NBT 键：偏好主武器标记（非槽位；枪本体只靠原版装备槽）。 */
+    private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
 
     /** 可用皮肤数量，与 {@code assets/tacz_morelevel/textures/entity/militia/skin_*.png} 数量一致（各兵种暂不区分贴图）。 */
     public static final int SOLDIER_SKIN_COUNT = 10;
@@ -148,6 +145,15 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     public static final double GUN_SOUND_HEAR_RANGE_BLOCKS = 40.0;
     /** 记住枪声位置并尝试寻路的持续时间（tick），约 10 秒。 */
     private static final int GUN_SOUND_MEMORY_TICKS = 200;
+
+    /**
+     * 无存活目标达到该 tick 数后才做闲置武器整理（枪套收枪 / 双枪切回偏好主等）。
+     * 有目标时的整理由各自 Goal 立即触发，不走此 TTL。
+     */
+    public static final int NO_TARGET_WEAPON_ARRANGE_TTL = 20;
+
+    /** 士兵额外背包格数（与 {@link SoldierBackpack#SLOTS} 一致）。 */
+    public static final int SOLDIER_BACKPACK_SLOTS = SoldierBackpack.SLOTS;
 
     /** 子类提供的枪械走位 goal（由 {@link #mountPermanentCombatGoals} 常驻挂载）；须实现 {@link MobGunSoldierRangedGoal} 以调节点射间隔。 */
     protected abstract Goal gunGoal();
@@ -198,11 +204,14 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     protected abstract String skinTextureFolder();
 
     /**
-     * 服务端持久化的 TaCZ 枪械数据 ID；
-     * 非 {@code null} 表示生成或命令赋予了有效枪械，存档读写时用于重新装备。
+     * 偏好主武器标记（与主手/副手槽无关；换枪不改）。默认 {@code null}，仅 Boss/固定枪装配时写入。
+     * 枪的动态状态只存在装备槽，不另存字段。
      */
     @Nullable
-    protected ResourceLocation persistedGunDataId;
+    private ResourceLocation preferredMainGunDataId;
+
+    /** 额外 {@link #SOLDIER_BACKPACK_SLOTS} 格；仅服务端武器整理使用，不进装备栏。 */
+    private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
 
     /** 枪声调查目标位置，{@code null} 表示无调查任务或已过期；仅服务端有效。 */
     @Nullable
@@ -538,7 +547,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
      * 生成时初始化：
      * <ol>
      *   <li>随机选择皮肤索引（范围 0 .. {@value #SOLDIER_SKIN_COUNT}-1）。</li>
-     *   <li>若主手无枪，按 {@link #troopGunPoolId()} 从 {@link TaczOrdinaryGunCatalog#pickRandomForPoolId} 装备。</li>
+     *   <li>若 {@link #shouldEquipRandomTroopGun()}，按 {@link #troopGunPoolId()} 随机装备。</li>
      *   <li>调用 {@link #applyMilitiaSpawnArmor} 处理盔甲生成。</li>
      * </ol>
      * 以上均在服务端执行。
@@ -559,7 +568,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
             this.applyConfiguredLivingAttributes(true);
             RandomSource rnd = level.getLevel().getRandom();
             this.entityData.set(DATA_SKIN_INDEX, rnd.nextInt(SOLDIER_SKIN_COUNT));
-            if (!IGun.mainHandHoldGun(this)) {
+            if (this.shouldEquipRandomTroopGun()) {
                 ResourceLocation gid =
                         TaczOrdinaryGunCatalog.pickRandomForPoolId(rnd, this.troopGunPoolId());
                 this.equipTaCZGunMainHand(gid);
@@ -567,6 +576,14 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
             this.applyMilitiaSpawnArmor(rnd);
         }
         return spawnData;
+    }
+
+    /**
+     * 是否在生成时从兵种枪池随机主手。已有偏好主、或主手已持枪时默认 false。
+     * 双枪等自行装配的子类可恒返回 false。
+     */
+    protected boolean shouldEquipRandomTroopGun() {
+        return this.getPreferredMainGunDataId() == null && !IGun.mainHandHoldGun(this);
     }
 
     /** 生成时按 {@link #spawnArmorPoolId()} 从 JSON 权重池穿甲（见 {@link SpawnArmorConfigurableMob}）。 */
@@ -623,7 +640,16 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     }
 
     /**
+     * 射击/走位 Goal 是否要求主手为偏好主武器。默认 false；宝宝、战争机器等打开。
+     * public：供 {@code entity.ai} 包 Goal 查询。
+     */
+    public boolean requiresPreferredMainGunForCombat() {
+        return false;
+    }
+
+    /**
      * 新建射击 Goal；默认头→身→脚 COMBAT。难民/宝宝等覆盖。
+     * {@link #requiresPreferredMainGunForCombat()} 为 true 时挂 {@link #isHoldingPreferredMainGun}。
      */
     @Nullable
     protected Goal createGunFireGoal() {
@@ -634,7 +660,11 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
                 (float) attrs.gunMeleeFrac,
                 attrs.gunAttackIntervalMin,
                 attrs.seeTimeToShoot,
-                this.gunCombatSight());
+                this.gunCombatSight(),
+                false,
+                this.requiresPreferredMainGunForCombat()
+                        ? AbstractPlayerLikeSoldierEntity::isHoldingPreferredMainGun
+                        : null);
     }
 
     /** 默认交火视线；宝宝等可覆盖为 {@link GunCombatSight#BLAST}。 */
@@ -681,11 +711,8 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     }
 
     /**
-     * 服务端装备 TaCZ 枪械至主手。
-     * <p>
-     * 若装备成功，更新 {@link #persistedGunDataId} 用于存档；
-     * 若失败（枪械 ID 无效或未安装对应包），置为 {@code null}。
-     * 最后自动调用 {@link #reassessWeaponGoal} 刷新点射间隔。
+     * 服务端装备 TaCZ 枪械至主手（写入装备槽，与盔甲相同）。
+     * 最后调用 {@link #reassessWeaponGoal} 刷新点射间隔。
      *
      * @param gunDataId TaCZ 枪械数据 ID
      */
@@ -694,12 +721,47 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         if (this.level().isClientSide()) {
             return;
         }
-        if (TaczGunMobHelper.equipMainHand(this, gunDataId)) {
-            this.persistedGunDataId = gunDataId;
-        } else {
-            this.persistedGunDataId = null;
-        }
+        TaczGunMobHelper.equipMainHand(this, gunDataId);
         this.reassessWeaponGoal();
+    }
+
+    /** 偏好主武器标记；换槽不改。 */
+    public void setPreferredMainGunDataId(@Nullable ResourceLocation gunDataId) {
+        this.preferredMainGunDataId = gunDataId;
+    }
+
+    @Nullable
+    public ResourceLocation getPreferredMainGunDataId() {
+        return this.preferredMainGunDataId;
+    }
+
+    /**
+     * 主手是否为偏好主武器。未设置偏好时视为 true（不强制纠偏）。
+     */
+    public boolean isHoldingPreferredMainGun() {
+        if (this.preferredMainGunDataId == null) {
+            return true;
+        }
+        IGun gun = IGun.getIGunOrNull(this.getMainHandItem());
+        return gun != null && this.preferredMainGunDataId.equals(gun.getGunId(this.getMainHandItem()));
+    }
+
+    /**
+     * 放入士兵背包空格；满则 false（丢弃后续再做）。调用方自行清空来源槽。
+     */
+    public boolean tryPutIntoSoldierBackpack(ItemStack stack) {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        return SoldierBackpack.tryPut(this.soldierBackpack, stack);
+    }
+
+    /**
+     * 从背包取枪到 {@code dest}：优先 {@code preferredOrNull}，为 null 则任意枪；与 dest 当前物品交换。
+     */
+    public boolean tryTakeGunFromSoldierBackpack(
+            @Nullable ResourceLocation preferredOrNull, EquipmentSlot dest) {
+        return SoldierBackpack.tryTakeGun(this.soldierBackpack, this, preferredOrNull, dest);
     }
 
     /**
@@ -756,7 +818,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     }
 
     /**
-     * 持久化：皮肤索引 + 枪械数据 ID + 完整枪栈（配件与弹药）。
+     * 持久化：皮肤索引 + 偏好主标记 + 背包。枪本体由原版装备槽保存。
      *
      * @param compound 写入目标
      */
@@ -764,23 +826,14 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt(TAG_SKIN_INDEX, this.getSoldierSkinIndex());
-        ItemStack gunStack = this.gunStackForPersistence();
-        IGun gun = IGun.getIGunOrNull(gunStack);
-        if (gun != null) {
-            this.persistedGunDataId = gun.getGunId(gunStack);
-            compound.put(TAG_GUN_STACK, gunStack.save(new CompoundTag()));
+        if (this.preferredMainGunDataId != null) {
+            compound.putString(TAG_PREFERRED_MAIN_GUN_DATA_ID, this.preferredMainGunDataId.toString());
         }
-        if (this.persistedGunDataId != null) {
-            compound.putString(TAG_GUN_DATA_ID, this.persistedGunDataId.toString());
-        }
+        SoldierBackpack.save(compound, this.soldierBackpack);
     }
 
     /**
-     * 读取持久化数据：恢复皮肤索引、重新装备枪械。
-     * <p>
-     * 优先用 {@link #TAG_GUN_STACK} 整栈恢复（配件+弹药）；旧档无栈时仅按枪 ID 裸装。
-     * 枪械恢复仅在服务端执行，失败则置 {@code null}；
-     * 读取后自动调用 {@link #reassessWeaponGoal} 和 {@link #applyEquipmentDropChances}。
+     * 读取：皮肤、偏好主、背包；枪已由 {@code super} 从装备槽还原，此处不补枪。
      *
      * @param compound 读取来源
      */
@@ -792,43 +845,19 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
             int idx = Mth.clamp(compound.getInt(TAG_SKIN_INDEX), 0, SOLDIER_SKIN_COUNT - 1);
             this.entityData.set(DATA_SKIN_INDEX, idx);
         }
+        if (compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            this.preferredMainGunDataId =
+                    ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_MAIN_GUN_DATA_ID));
+        }
+        SoldierBackpack.load(compound, this.soldierBackpack);
         Level level = this.level();
         if (level != null && !level.isClientSide()) {
-            boolean equipped = false;
-            if (compound.contains(TAG_GUN_STACK, Tag.TAG_COMPOUND)) {
-                ItemStack saved = ItemStack.of(compound.getCompound(TAG_GUN_STACK));
-                if (TaczGunMobHelper.equipMainHandFromStack(this, saved)) {
-                    IGun g = IGun.getIGunOrNull(this.getMainHandItem());
-                    this.persistedGunDataId = g == null ? null : g.getGunId(this.getMainHandItem());
-                    equipped = this.persistedGunDataId != null;
-                }
-            }
-            if (!equipped && compound.contains(TAG_GUN_DATA_ID, Tag.TAG_STRING)) {
-                ResourceLocation id = ResourceLocation.tryParse(compound.getString(TAG_GUN_DATA_ID));
-                if (id != null && TaczGunMobHelper.equipMainHand(this, id)) {
-                    this.persistedGunDataId = id;
-                    equipped = true;
-                } else {
-                    this.persistedGunDataId = null;
-                }
-            }
-            if (equipped || this.persistedGunDataId != null) {
+            if (IGun.mainHandHoldGun(this) || IGun.getIGunOrNull(this.getOffhandItem()) != null) {
                 this.reassessWeaponGoal();
             }
             this.applyConfiguredLivingAttributes(false);
         }
         this.applyEquipmentDropChances();
-    }
-
-    /**
-     * 存档用枪栈：主手优先，否则副手（枪套收枪）。子类可覆盖。
-     */
-    protected ItemStack gunStackForPersistence() {
-        if (IGun.mainHandHoldGun(this)) {
-            return this.getMainHandItem();
-        }
-        ItemStack off = this.getOffhandItem();
-        return IGun.getIGunOrNull(off) != null ? off : ItemStack.EMPTY;
     }
 
     /**

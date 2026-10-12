@@ -11,7 +11,6 @@ import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedBombBabyAttackGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
@@ -24,7 +23,6 @@ import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.item.custom.BlastSeventhBulletproofArmorItem;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
-import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.entity.EntityKineticBullet;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
@@ -147,10 +145,9 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
         return DualGunCatalog.BACK_POOL;
     }
 
-    /** 主手是否握着传奇 M320。 */
+    /** 主手是否握着偏好副武器（传奇 M320）。 */
     public boolean isHoldingGrenadeLauncher() {
-        IGun gun = IGun.getIGunOrNull(this.getMainHandItem());
-        return gun != null && BACK_GUN.equals(gun.getGunId(this.getMainHandItem()));
+        return this.isHoldingPreferredOffhandGun();
     }
 
     /** 切到榴弹发射器（主手 M320）；已在榴弹上则 true。 */
@@ -158,7 +155,7 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
         if (this.isHoldingGrenadeLauncher()) {
             return true;
         }
-        if (!this.isHoldingPreferredPrimaryGun()) {
+        if (!this.isHoldingPreferredMainGun()) {
             return false;
         }
         return this.swapActiveAndBackGun();
@@ -166,10 +163,10 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
 
     /** 切回爆破 MK14；已在主武器上则 true。 */
     public boolean ensurePrimaryGunDrawn() {
-        if (this.isHoldingPreferredPrimaryGun()) {
+        if (this.isHoldingPreferredMainGun()) {
             return true;
         }
-        return this.trySwapBackToPreferredPrimary();
+        return this.trySwapBackToPreferredMain();
     }
 
     @Override
@@ -205,17 +202,8 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
     }
 
     @Override
-    protected Goal createGunFireGoal() {
-        Config.NpcAttributeStats attrs = this.configuredAttributeStats();
-        return new MobGunRangedFireGoal<>(
-                this,
-                (float) attrs.gunRadius,
-                (float) attrs.gunMeleeFrac,
-                attrs.gunAttackIntervalMin,
-                attrs.seeTimeToShoot,
-                GunCombatSight.BLAST,
-                false,
-                BombBabyEntity::isHoldingPreferredPrimaryGun);
+    public boolean requiresPreferredMainGunForCombat() {
+        return true;
     }
 
     @Override
@@ -279,8 +267,9 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
     protected void equipDualGunLoadout() {
         this.setSoldierSkinIndex(this.random.nextInt(BOMB_BABY_SKIN_COUNT));
         this.equipTaCZGunMainHand(MAIN_GUN);
-        this.setPreferredPrimaryGunDataId(MAIN_GUN);
+        this.setPreferredMainGunDataId(MAIN_GUN);
         this.equipTaCZGunBack(BACK_GUN);
+        this.setPreferredOffhandGunDataId(BACK_GUN);
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.SEVENTH_BLAST_BULLETPROOF_HELMET.get()));
         this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.SEVENTH_BLAST_BULLETPROOF_CHESTPLATE.get()));
         this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.SEVENTH_BLAST_BULLETPROOF_LEGGINGS.get()));

@@ -209,6 +209,11 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
     }
 
     @Override
+    public boolean requiresPreferredMainGunForCombat() {
+        return true;
+    }
+
+    @Override
     public Component getDisplayName() {
         return Component.translatable("entity.tacz_morelevel.war_machine");
     }
@@ -227,8 +232,9 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
     protected void equipDualGunLoadout() {
         this.setSoldierSkinIndex(0);
         this.equipTaCZGunMainHand(MAIN_GUN);
-        this.setPreferredPrimaryGunDataId(MAIN_GUN);
+        this.setPreferredMainGunDataId(MAIN_GUN);
         this.equipTaCZGunBack(BACK_GUN);
+        this.setPreferredOffhandGunDataId(BACK_GUN);
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.POWER_MECH_BULLETPROOF_HELMET.get()));
         this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.POWER_MECH_BULLETPROOF_CHESTPLATE.get()));
         this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.POWER_MECH_BULLETPROOF_LEGGINGS.get()));
@@ -348,7 +354,9 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                         attrs.seeTimeToShoot,
                         GunCombatSight.WAR_STRICT,
                         false,
-                        m -> WarMachineWeaponSwapGoal.isMainHandGun(m, MAIN_GUN));
+                        this.requiresPreferredMainGunForCombat()
+                                ? AbstractDualGunSoldierEntity::isHoldingPreferredMainGun
+                                : null);
         this.rpgFireGoal =
                 new MobGunRangedFireGoal<>(
                         this,
@@ -358,7 +366,7 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                         WarMachineWeaponSwapGoal.RPG_SEE_TICKS_TO_SHOOT,
                         GunCombatSight.WAR_RPG,
                         true,
-                        m -> WarMachineWeaponSwapGoal.isMainHandGun(m, BACK_GUN));
+                        AbstractDualGunSoldierEntity::isHoldingPreferredOffhandGun);
         this.flyingGunGoal =
                 new WarMachineFlyingGunMoveGoal(
                         this,

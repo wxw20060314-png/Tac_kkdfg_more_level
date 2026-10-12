@@ -528,6 +528,7 @@ public final class CeilingDuelEntity extends AbstractHolsterGunSoldierEntity {
         this.setLeftHanded(false);
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         if (!level.isClientSide()) {
+            this.setPreferredMainGunDataId(MAIN_GUN);
             this.setSoldierSkinIndex(this.random.nextInt(SOLDIER_SKIN_COUNT));
             this.equipSeventhWithJokerHelmetLoadout();
             this.enterBaseFresh();

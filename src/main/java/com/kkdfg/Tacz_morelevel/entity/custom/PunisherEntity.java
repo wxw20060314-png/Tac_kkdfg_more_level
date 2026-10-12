@@ -318,6 +318,7 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
             @Nullable CompoundTag dataTag) {
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         if (!level.isClientSide()) {
+            this.setPreferredMainGunDataId(HOLSTER_GUN);
             // 皮肤：暂借超级特种兵集合，随机一套
             RandomSource rnd = level.getLevel().getRandom();
             this.setSoldierSkinIndex(rnd.nextInt(PUNISHER_SKIN_COUNT));

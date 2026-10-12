@@ -9,6 +9,7 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.PlayerLikeHeadBodyYawMob;
 import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
+import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
@@ -31,6 +32,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -105,14 +107,16 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     public static final double GUN_SOUND_HEAR_RANGE_BLOCKS = 40.0;
     private static final int GUN_SOUND_MEMORY_TICKS = 200;
 
+    /** 额外背包格数（与 {@link SoldierBackpack#SLOTS} 一致）。 */
+    public static final int SOLDIER_BACKPACK_SLOTS = SoldierBackpack.SLOTS;
+
     private static final String TAG_GENERATION = "SlimeExpGeneration";
     private static final String TAG_ROOT = "SlimeExpRoot";
     private static final String TAG_PARENT = "SlimeExpParent";
     private static final String TAG_LINK_TTL = "SlimeExpLinkTtl";
     private static final String TAG_ROOT_IS_COMMANDER = "SlimeExpRootIsCommander";
     private static final String TAG_TREE_MEMBERS = "SlimeExpTreeMembers";
-    private static final String TAG_GUN_DATA_ID = "TaczMoreLevelGunDataId";
-    private static final String TAG_GUN_STACK = "TaczMoreLevelGunStack";
+    private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
 
     private static final EntityDataAccessor<Integer> DATA_GENERATION =
             SynchedEntityData.defineId(AbstractSlimeExperimentEntity.class, EntityDataSerializers.INT);
@@ -132,6 +136,12 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         new SplitSpec(75.0F, 0.4F, 0, 0, false),
     };
 
+    /** 偏好主武器标记（非槽位）；默认 {@code null}，固定枪时写入。 */
+    @Nullable private ResourceLocation preferredMainGunDataId;
+
+    /** 额外 {@link #SOLDIER_BACKPACK_SLOTS} 格；仅服务端武器整理使用。 */
+    private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
+
     private int linkTtl = LINK_TIMEOUT_TICKS;
     /** 树根为指挥官（含指挥官自身及其直接/间接分裂）：不远距离刷新。 */
     private boolean rootIsCommander;
@@ -139,8 +149,6 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
      * 仅根启用：同树成员 UUID 表。非根忽略。服务端字段，不进 SynchedEntityData。
      */
     private final Set<UUID> treeMemberIds = new HashSet<>();
-    @Nullable
-    private ResourceLocation persistedGunDataId;
     /** 二命处理中，防止递归致死。 */
     private boolean handlingSecondLife;
     @Nullable
@@ -606,6 +614,11 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         if (this.level().isClientSide()) {
             return;
         }
+        ResourceLocation preferred = this.getPreferredMainGunDataId();
+        if (preferred != null) {
+            this.equipTaCZGunMainHand(preferred);
+            return;
+        }
         ResourceLocation gunId =
                 TaczOrdinaryGunCatalog.pickRandomForPoolId(this.getRandom(), this.gunPoolId());
         this.equipTaCZGunMainHand(gunId);
@@ -920,12 +933,44 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         if (this.level().isClientSide()) {
             return;
         }
-        if (TaczGunMobHelper.equipMainHand(this, gunDataId)) {
-            this.persistedGunDataId = gunDataId;
-        } else {
-            this.persistedGunDataId = null;
-        }
+        TaczGunMobHelper.equipMainHand(this, gunDataId);
         this.onGunEquipped();
+    }
+
+    public void setPreferredMainGunDataId(@Nullable ResourceLocation gunDataId) {
+        this.preferredMainGunDataId = gunDataId;
+    }
+
+    @Nullable
+    public ResourceLocation getPreferredMainGunDataId() {
+        return this.preferredMainGunDataId;
+    }
+
+    /** 主手是否为偏好主武器；未设置偏好时视为 true。 */
+    public boolean isHoldingPreferredMainGun() {
+        if (this.preferredMainGunDataId == null) {
+            return true;
+        }
+        IGun gun = IGun.getIGunOrNull(this.getMainHandItem());
+        return gun != null && this.preferredMainGunDataId.equals(gun.getGunId(this.getMainHandItem()));
+    }
+
+    /**
+     * 放入背包空格；满则 false。调用方自行清空来源槽。
+     */
+    public boolean tryPutIntoSoldierBackpack(ItemStack stack) {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        return SoldierBackpack.tryPut(this.soldierBackpack, stack);
+    }
+
+    /**
+     * 从背包取枪到 {@code dest}：优先 {@code preferredOrNull}，为 null 则任意枪；与 dest 当前物品交换。
+     */
+    public boolean tryTakeGunFromSoldierBackpack(
+            @Nullable ResourceLocation preferredOrNull, EquipmentSlot dest) {
+        return SoldierBackpack.tryTakeGun(this.soldierBackpack, this, preferredOrNull, dest);
     }
 
     /** 装枪后钩子：子类刷新 Goal 点射间隔。 */
@@ -1153,21 +1198,21 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
             }
             compound.put(TAG_TREE_MEMBERS, members);
         }
-        ItemStack gunStack = this.getMainHandItem();
-        IGun gun = IGun.getIGunOrNull(gunStack);
-        if (gun != null) {
-            this.persistedGunDataId = gun.getGunId(gunStack);
-            compound.put(TAG_GUN_STACK, gunStack.save(new CompoundTag()));
+        if (this.preferredMainGunDataId != null) {
+            compound.putString(TAG_PREFERRED_MAIN_GUN_DATA_ID, this.preferredMainGunDataId.toString());
         }
-        if (this.persistedGunDataId != null) {
-            compound.putString(TAG_GUN_DATA_ID, this.persistedGunDataId.toString());
-        }
+        SoldierBackpack.save(compound, this.soldierBackpack);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setLeftHanded(false);
+        if (compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            this.preferredMainGunDataId =
+                    ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_MAIN_GUN_DATA_ID));
+        }
+        SoldierBackpack.load(compound, this.soldierBackpack);
         int gen = compound.contains(TAG_GENERATION, Tag.TAG_INT) ? compound.getInt(TAG_GENERATION) : 0;
         this.applyGenerationStats(gen, false, false);
         if (compound.contains("SlimeExpScale")) {
@@ -1196,27 +1241,6 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         }
         if (this.isCommanderEntity()) {
             this.setRootIsCommander(true);
-        }
-        if (!this.level().isClientSide()) {
-            boolean equipped = false;
-            if (compound.contains(TAG_GUN_STACK, Tag.TAG_COMPOUND)) {
-                ItemStack stack = ItemStack.of(compound.getCompound(TAG_GUN_STACK));
-                if (TaczGunMobHelper.equipMainHandFromStack(this, stack)) {
-                    IGun g = IGun.getIGunOrNull(this.getMainHandItem());
-                    this.persistedGunDataId = g == null ? null : g.getGunId(this.getMainHandItem());
-                    equipped = true;
-                }
-            }
-            if (!equipped && compound.contains(TAG_GUN_DATA_ID, Tag.TAG_STRING)) {
-                ResourceLocation id = ResourceLocation.tryParse(compound.getString(TAG_GUN_DATA_ID));
-                if (id != null) {
-                    this.equipTaCZGunMainHand(id);
-                    equipped = this.persistedGunDataId != null;
-                }
-            }
-            if (!equipped) {
-                this.equipFromCurrentPool();
-            }
         }
         this.applyNoDropChances();
     }

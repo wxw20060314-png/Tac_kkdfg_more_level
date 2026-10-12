@@ -334,6 +334,7 @@ public final class LevMarshalEntity extends AbstractHolsterGunSoldierEntity {
             @Nullable CompoundTag dataTag) {
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         if (!level.isClientSide()) {
+            this.setPreferredMainGunDataId(LEGENDARY_REVOLVER);
             this.setSoldierSkinIndex(0);
             this.applyOfficerUniform();
         }

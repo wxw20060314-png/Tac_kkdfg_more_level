@@ -221,6 +221,7 @@ public final class ScorpionEntity extends AbstractHolsterGunSoldierEntity {
         this.setLeftHanded(false);
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         if (!level.isClientSide()) {
+            this.setPreferredMainGunDataId(HOLSTER_GUN);
             this.applyConfiguredLivingAttributes(true);
             this.setSoldierSkinIndex(this.random.nextInt(SCORPION_SKIN_COUNT));
             this.equipStealthSeventhLoadout();

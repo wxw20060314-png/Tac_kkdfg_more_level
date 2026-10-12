@@ -257,9 +257,7 @@ public final class AnnihilatorEntity extends AbstractPlayerLikeSoldierEntity {
     private void equipAnnihilatorLoadout() {
         this.setSoldierSkinIndex(this.random.nextInt(ANNIHILATOR_SKIN_COUNT));
         if (TaczGunMobHelper.equipMainHandWithAttachments(this, MAIN_GUN, MAIN_GUN_ATTACHMENTS)) {
-            this.persistedGunDataId = MAIN_GUN;
-        } else {
-            this.persistedGunDataId = null;
+            this.setPreferredMainGunDataId(MAIN_GUN);
         }
         this.reassessWeaponGoal();
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.SPACETIME_BULLETPROOF_HELMET.get()));

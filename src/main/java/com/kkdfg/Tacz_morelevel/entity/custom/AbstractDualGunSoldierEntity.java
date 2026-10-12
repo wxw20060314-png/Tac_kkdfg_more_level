@@ -22,28 +22,21 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
  * 双枪士兵基类：主手为当前枪械，副手为背上枪械（由 TaCZ {@code HumanoidOffhandRender} 渲染）。
- * 默认 {@link #equipDualGunLoadout()} 从 {@link DualGunCatalog} JSON 池装配；子类可 override 写死装配。
- * 无存活目标连续 {@link #NO_TARGET_SWAP_PRIMARY_TTL} tick 后，若主手不是偏好主武器则换回（对标枪套收枪）。
+ * 默认 {@link #equipDualGunLoadout()} 从 {@link DualGunCatalog} JSON 池装配（不写偏好标记）；
+ * Boss 子类 override 装配并 {@link #setPreferredMainGunDataId}/{@link #setPreferredOffhandGunDataId}。
+ * 无存活目标连续 {@link AbstractPlayerLikeSoldierEntity#NO_TARGET_WEAPON_ARRANGE_TTL} tick 后，
+ * 若主手不是偏好主武器则换回。
  * <p>
- * 射击 Goal 常驻（父类 {@link #mountPermanentCombatGoals}）；MK14↔背枪换枪抑制 reassess，不改 Goal 列表，
- * 主/副武器靠各自 Goal 的 {@code canUse} 互斥。
- * 死亡装备掉落与 {@link AbstractPlayerLikeSoldierEntity} 相同（含主手/副手）；不参与
- * {@link com.kkdfg.Tacz_morelevel.integration.tacz.TaczCompatForgeEvents} 的弹匣子弹额外掉落。
+ * 射击 Goal 常驻；主/副武器靠各自 Goal 的 {@code canUse} 互斥。偏好标记与槽位无关；枪动态只在装备槽。
  */
 public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSoldierEntity {
 
-    private static final String TAG_BACK_GUN_DATA_ID = "TaczMoreLevelBackGunDataId";
-    private static final String TAG_PREFERRED_PRIMARY_GUN_DATA_ID = "TaczMoreLevelPreferredPrimaryGunDataId";
+    private static final String TAG_PREFERRED_OFFHAND_GUN_DATA_ID =
+            "TaczMoreLevelPreferredOffhandGunDataId";
 
-    /** 无存活目标达到该 tick 数后切回偏好主武器。 */
-    protected static final int NO_TARGET_SWAP_PRIMARY_TTL = 20;
-
+    /** 偏好副武器（背枪）标记；换枪不改。默认 null。 */
     @Nullable
-    private ResourceLocation persistedBackGunDataId;
-
-    /** 装配时记下的主武器 id；换枪不改，用于无目标时切回。 */
-    @Nullable
-    private ResourceLocation preferredPrimaryGunDataId;
+    private ResourceLocation preferredOffhandGunDataId;
 
     private int noTargetTicks;
 
@@ -60,33 +53,26 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
     /** 背枪枪械池 id，见 {@link DualGunCatalog}。 */
     protected abstract String backGunPoolId();
 
-    /** 服务端：装配主手 + 背枪；默认从 JSON 池随机，子类可 override 固定装配。 */
+    /** 服务端：装配主手 + 背枪；默认从 JSON 池随机，不写偏好标记。子类可 override 固定装配。 */
     protected void equipDualGunLoadout() {
         RandomSource rnd = this.getRandom();
         ResourceLocation primary = DualGunCatalog.pickRandom(this.primaryGunPoolId(), rnd);
         this.equipTaCZGunMainHand(primary);
-        this.setPreferredPrimaryGunDataId(primary);
         this.equipTaCZGunBack(DualGunCatalog.pickRandom(this.backGunPoolId(), rnd));
         TaczGunMobHelper.tickInfiniteMobAmmo(this);
     }
 
-    /** 子类写死装配时调用，标记无目标时应回到的主武器。 */
-    protected void setPreferredPrimaryGunDataId(@Nullable ResourceLocation gunDataId) {
-        this.preferredPrimaryGunDataId = gunDataId;
+    public void setPreferredOffhandGunDataId(@Nullable ResourceLocation gunDataId) {
+        this.preferredOffhandGunDataId = gunDataId;
     }
 
     @Nullable
-    public ResourceLocation getPreferredPrimaryGunDataId() {
-        return this.preferredPrimaryGunDataId;
+    public ResourceLocation getPreferredOffhandGunDataId() {
+        return this.preferredOffhandGunDataId;
     }
 
     public boolean hasBackGun() {
         return IGun.getIGunOrNull(this.getOffhandItem()) != null;
-    }
-
-    @Nullable
-    public ResourceLocation getPersistedBackGunDataId() {
-        return this.persistedBackGunDataId;
     }
 
     public boolean canSwapGun() {
@@ -99,13 +85,14 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
                 && !op.getSynReloadState().getStateType().isReloading();
     }
 
-    /** 主手是否已是偏好主武器（未标记偏好时视为已在主武器态）。 */
-    public boolean isHoldingPreferredPrimaryGun() {
-        if (this.preferredPrimaryGunDataId == null) {
-            return true;
+    /** 主手是否为偏好副武器（未设置偏好副时 false）。 */
+    public boolean isHoldingPreferredOffhandGun() {
+        if (this.preferredOffhandGunDataId == null) {
+            return false;
         }
         IGun gun = IGun.getIGunOrNull(this.getMainHandItem());
-        return gun != null && this.preferredPrimaryGunDataId.equals(gun.getGunId(this.getMainHandItem()));
+        return gun != null
+                && this.preferredOffhandGunDataId.equals(gun.getGunId(this.getMainHandItem()));
     }
 
     /** 服务端：副手（背上）装备 TaCZ 枪。 */
@@ -115,14 +102,9 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
         }
         ItemStack gunStack = TaczGunMobHelper.createGunStack(gunDataId);
         this.setItemSlot(EquipmentSlot.OFFHAND, gunStack);
-        if (gunStack.isEmpty()) {
-            this.persistedBackGunDataId = null;
-        } else {
-            this.persistedBackGunDataId = gunDataId;
-        }
     }
 
-    /** 主手 ↔ 副手换枪，走 TaCZ {@link IGunOperator#draw}。换枪不改射击 Goal 列表。 */
+    /** 主手 ↔ 副手换枪，走 TaCZ {@link IGunOperator#draw}。不改偏好标记。 */
     public boolean swapActiveAndBackGun() {
         if (!this.canSwapGun()) {
             return false;
@@ -136,7 +118,6 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
             ItemStack back = this.getOffhandItem().copy();
             this.setItemSlot(EquipmentSlot.MAINHAND, back);
             this.setItemSlot(EquipmentSlot.OFFHAND, main);
-            this.syncPersistedGunIdsFromEquipment();
             op.draw(this::getMainHandItem);
             TaczGunMobHelper.tickInfiniteMobAmmo(this);
         } finally {
@@ -146,23 +127,16 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
     }
 
     /** 若偏好主武器在背上，则换回主手。 */
-    public boolean trySwapBackToPreferredPrimary() {
-        if (this.preferredPrimaryGunDataId == null || this.isHoldingPreferredPrimaryGun()) {
+    public boolean trySwapBackToPreferredMain() {
+        ResourceLocation preferredMain = this.getPreferredMainGunDataId();
+        if (preferredMain == null || this.isHoldingPreferredMainGun()) {
             return false;
         }
         IGun backGun = IGun.getIGunOrNull(this.getOffhandItem());
-        if (backGun == null
-                || !this.preferredPrimaryGunDataId.equals(backGun.getGunId(this.getOffhandItem()))) {
+        if (backGun == null || !preferredMain.equals(backGun.getGunId(this.getOffhandItem()))) {
             return false;
         }
         return this.swapActiveAndBackGun();
-    }
-
-    private void syncPersistedGunIdsFromEquipment() {
-        IGun mainGun = IGun.getIGunOrNull(this.getMainHandItem());
-        IGun backGun = IGun.getIGunOrNull(this.getOffhandItem());
-        this.persistedGunDataId = mainGun == null ? null : mainGun.getGunId(this.getMainHandItem());
-        this.persistedBackGunDataId = backGun == null ? null : backGun.getGunId(this.getOffhandItem());
     }
 
     @Override
@@ -185,8 +159,8 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
             return;
         }
         this.noTargetTicks++;
-        if (this.noTargetTicks >= NO_TARGET_SWAP_PRIMARY_TTL && !this.isHoldingPreferredPrimaryGun()) {
-            this.trySwapBackToPreferredPrimary();
+        if (this.noTargetTicks >= NO_TARGET_WEAPON_ARRANGE_TTL && !this.isHoldingPreferredMainGun()) {
+            this.trySwapBackToPreferredMain();
         }
     }
 
@@ -208,42 +182,18 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (compound.contains(TAG_PREFERRED_PRIMARY_GUN_DATA_ID, Tag.TAG_STRING)) {
-            this.preferredPrimaryGunDataId =
-                    ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_PRIMARY_GUN_DATA_ID));
-        }
-        if (compound.contains(TAG_BACK_GUN_DATA_ID, Tag.TAG_STRING)) {
-            ResourceLocation id = ResourceLocation.tryParse(compound.getString(TAG_BACK_GUN_DATA_ID));
-            Level level = this.level();
-            if (id != null && level != null && !level.isClientSide()) {
-                this.equipTaCZGunBack(id);
-            }
-        }
-        if (this.preferredPrimaryGunDataId == null && this.persistedGunDataId != null) {
-            this.preferredPrimaryGunDataId = this.persistedGunDataId;
+        if (compound.contains(TAG_PREFERRED_OFFHAND_GUN_DATA_ID, Tag.TAG_STRING)) {
+            this.preferredOffhandGunDataId =
+                    ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_OFFHAND_GUN_DATA_ID));
         }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        if (this.persistedBackGunDataId != null) {
-            compound.putString(TAG_BACK_GUN_DATA_ID, this.persistedBackGunDataId.toString());
-        }
-        if (this.preferredPrimaryGunDataId != null) {
+        if (this.preferredOffhandGunDataId != null) {
             compound.putString(
-                    TAG_PREFERRED_PRIMARY_GUN_DATA_ID, this.preferredPrimaryGunDataId.toString());
-        }
-    }
-
-    @Override
-    public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
-        super.setItemSlot(slot, stack);
-        if (this.level() != null && !this.level().isClientSide()) {
-            if (slot == EquipmentSlot.OFFHAND) {
-                IGun gun = IGun.getIGunOrNull(stack);
-                this.persistedBackGunDataId = gun == null ? null : gun.getGunId(stack);
-            }
+                    TAG_PREFERRED_OFFHAND_GUN_DATA_ID, this.preferredOffhandGunDataId.toString());
         }
     }
 }

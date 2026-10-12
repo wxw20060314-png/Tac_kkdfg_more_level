@@ -1,16 +1,14 @@
 package com.kkdfg.Tacz_morelevel.entity.ai.war_machine;
 
-import com.kkdfg.Tacz_morelevel.entity.custom.AbstractDualGunSoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
-import javax.annotation.Nullable;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 /**
  * 战争机器切枪：严格看见持续 → 加特林；否则穿透档持续 → RPG。
+ * 认枪用实体偏好标记（main / offhand），不写死常量。
  * 不占 Flag，与 Fire/Move 并行。
  */
 public final class WarMachineWeaponSwapGoal extends Goal {
@@ -84,8 +82,8 @@ public final class WarMachineWeaponSwapGoal extends Goal {
         if (this.mob.level().isClientSide() || this.swapCooldown > 0) {
             return;
         }
-        boolean holdingMinigun = isMainHandGun(this.mob, WarMachineEntity.MAIN_GUN);
-        boolean holdingRpg = isMainHandGun(this.mob, WarMachineEntity.BACK_GUN);
+        boolean holdingMinigun = this.mob.isHoldingPreferredMainGun();
+        boolean holdingRpg = this.mob.isHoldingPreferredOffhandGun();
         if (wantMinigun && !holdingMinigun && holdingRpg) {
             if (this.mob.swapActiveAndBackGun()) {
                 this.swapCooldown = SWAP_COOLDOWN_TICKS;
@@ -95,16 +93,5 @@ public final class WarMachineWeaponSwapGoal extends Goal {
                 this.swapCooldown = SWAP_COOLDOWN_TICKS;
             }
         }
-    }
-
-    public static boolean isMainHandGun(AbstractDualGunSoldierEntity mob, ResourceLocation gunId) {
-        ResourceLocation held = mainHandGunId(mob);
-        return gunId.equals(held);
-    }
-
-    @Nullable
-    private static ResourceLocation mainHandGunId(AbstractDualGunSoldierEntity mob) {
-        IGun gun = IGun.getIGunOrNull(mob.getMainHandItem());
-        return gun == null ? null : gun.getGunId(mob.getMainHandItem());
     }
 }

@@ -62,13 +62,6 @@ public final class BombBabyGrenadeFireGoal extends Goal {
     public void stop() {
         this.hasHeldAim = false;
         this.mob.setAggressive(false);
-        // applyHeldAim 写过绝对弹道仰角；推出后清掉，避免抬头卡住
-        LivingEntity target = this.mob.getTarget();
-        if (target != null && target.isAlive()) {
-            MobGunPlayerLikeAimHelper.applyPlayerLikeView(this.mob, target);
-        } else {
-            this.mob.setXRot(0.0F);
-        }
         if (!this.mob.level().isClientSide()) {
             IGunOperator.fromLivingEntity(this.mob).aim(false);
         }

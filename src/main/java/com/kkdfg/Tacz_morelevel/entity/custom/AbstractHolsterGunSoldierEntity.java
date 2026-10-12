@@ -1,5 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.custom;
 
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatDrawGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleHolsterGoal;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.item.IGun;
@@ -12,7 +14,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.monster.Monster;
@@ -21,19 +22,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
- * 与 {@link AbstractDualGunSoldierEntity} 同级：副手枪套，有攻击目标时拔至主手。
- * <p>
- * 无存活目标连续 {@link #NO_TARGET_HOLSTER_TTL} tick 后收枪；拔/收枪时抑制主手 {@code setItemSlot}
- * 触发的反复 {@link #reassessWeaponGoal()}，并在拔枪时 {@code initialData}+{@code draw}，避免 Goal
- * 反复 stop/start 导致只跟随不射击。
+ * 与 {@link AbstractDualGunSoldierEntity} 同级：副手枪套。
+ * 闲置/战斗武器整理分别由 {@link MobGunIdleHolsterGoal}、{@link MobGunCombatDrawGoal} 负责；
+ * 本类只提供换槽 / TaCZ draw；背包见父类 {@link AbstractPlayerLikeSoldierEntity}。
  */
 public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLikeSoldierEntity {
 
-    /** 无存活目标达到该 tick 数后收枪。 */
-    protected static final int NO_TARGET_HOLSTER_TTL = 20;
-
-    /** 连续无存活目标的 tick 计数。 */
-    private int noTargetTicks;
     /** 拔枪/收枪改槽期间为 true，阻止父类主手变更触发的 reassess。 */
     private boolean suppressWeaponReassess;
 
@@ -41,7 +35,7 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
         super(type, level);
     }
 
-    /** 生成时写入枪套的枪械 ID（不读 troop_guns 池，由子类决定）。 */
+    /** 生成时写入枪套的枪械 ID。偏好主由子类自行 {@link #setPreferredMainGunDataId}。 */
     protected abstract ResourceLocation pickHolsterGunId(RandomSource random);
 
     /** 枪套配件；默认无。子类可覆盖（如对掏挂扩容弹匣）。 */
@@ -61,19 +55,16 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
         if (this.level().isClientSide()) {
             return;
         }
-        this.suppressWeaponReassess = true;
-        try {
-            ItemStack gunStack =
-                    attachments == null || attachments.isEmpty()
-                            ? TaczGunMobHelper.createGunStack(gunDataId)
-                            : TaczGunMobHelper.createGunStackWithAttachments(gunDataId, attachments);
-            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-            this.setItemSlot(EquipmentSlot.OFFHAND, gunStack);
-            this.persistedGunDataId = gunStack.isEmpty() ? null : gunDataId;
-            this.noTargetTicks = 0;
-        } finally {
-            this.suppressWeaponReassess = false;
-        }
+        this.runWithWeaponSlotMute(
+                () -> {
+                    ItemStack gunStack =
+                            attachments == null || attachments.isEmpty()
+                                    ? TaczGunMobHelper.createGunStack(gunDataId)
+                                    : TaczGunMobHelper.createGunStackWithAttachments(
+                                            gunDataId, attachments);
+                    this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                    this.setItemSlot(EquipmentSlot.OFFHAND, gunStack);
+                });
         this.reassessWeaponGoal();
     }
 
@@ -81,8 +72,9 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
         return IGun.getIGunOrNull(this.getOffhandItem()) != null;
     }
 
-    public boolean canDrawHolsteredGun() {
-        if (this.level().isClientSide() || !this.hasHolsteredGun() || IGun.mainHandHoldGun(this)) {
+    /** TaCZ 不在切枪/拉栓/换弹。 */
+    public boolean canOperateWeaponSwap() {
+        if (this.level().isClientSide()) {
             return false;
         }
         IGunOperator op = IGunOperator.fromLivingEntity(this);
@@ -91,68 +83,54 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
                 && !op.getSynReloadState().getStateType().isReloading();
     }
 
-    /** 副手 → 主手，对齐 {@link TaczGunMobHelper}：{@code initialData} + {@code draw}。 */
-    public boolean drawHolsteredGun() {
-        if (!this.canDrawHolsteredGun()) {
-            return false;
-        }
-        this.suppressWeaponReassess = true;
-        try {
-            ItemStack holstered = this.getOffhandItem().copy();
-            this.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
-            this.setItemSlot(EquipmentSlot.MAINHAND, holstered);
-            this.syncPersistedGunIdFromHands();
-            IGunOperator op = IGunOperator.fromLivingEntity(this);
-            op.initialData();
-            op.draw(this::getMainHandItem);
-            TaczGunMobHelper.tickInfiniteMobAmmo(this);
-            this.setAggressive(true);
-            this.noTargetTicks = 0;
-        } finally {
-            this.suppressWeaponReassess = false;
-        }
-        this.reassessWeaponGoal();
-        return true;
-    }
-
-    /** 主手 → 副手（枪套）。 */
-    public boolean holsterGun() {
-        if (this.level().isClientSide() || !IGun.mainHandHoldGun(this)) {
-            return false;
-        }
-        this.suppressWeaponReassess = true;
-        try {
-            IGunOperator op = IGunOperator.fromLivingEntity(this);
-            op.aim(false);
-            op.cancelReload();
-            ItemStack main = this.getMainHandItem().copy();
-            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-            if (this.getOffhandItem().isEmpty()) {
-                this.setItemSlot(EquipmentSlot.OFFHAND, main);
-            }
-            this.syncPersistedGunIdFromHands();
-            this.setAggressive(false);
-            this.noTargetTicks = 0;
-        } finally {
-            this.suppressWeaponReassess = false;
-        }
-        this.reassessWeaponGoal();
-        return true;
-    }
-
-    private void syncPersistedGunIdFromHands() {
-        IGun main = IGun.getIGunOrNull(this.getMainHandItem());
-        if (main != null) {
-            this.persistedGunDataId = main.getGunId(this.getMainHandItem());
+    /** 主手 ↔ 副手交换（抑制 reassess）。 */
+    public void swapMainAndOffhand() {
+        if (this.level().isClientSide()) {
             return;
         }
-        IGun off = IGun.getIGunOrNull(this.getOffhandItem());
-        this.persistedGunDataId = off == null ? null : off.getGunId(this.getOffhandItem());
+        this.runWithWeaponSlotMute(
+                () -> {
+                    ItemStack main = this.getMainHandItem().copy();
+                    ItemStack off = this.getOffhandItem().copy();
+                    this.setItemSlot(EquipmentSlot.MAINHAND, off);
+                    this.setItemSlot(EquipmentSlot.OFFHAND, main);
+                });
     }
 
-    /**
-     * 枪套：射击/近战由父类常驻挂载；此处仅在非抑制时刷新点射间隔。
-     */
+    /** 战斗：主手枪 {@code initialData}+{@code draw}，并开战意。 */
+    public void applyCombatDrawEffects() {
+        if (this.level().isClientSide() || !IGun.mainHandHoldGun(this)) {
+            return;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        op.initialData();
+        op.draw(this::getMainHandItem);
+        TaczGunMobHelper.tickInfiniteMobAmmo(this);
+        this.setAggressive(true);
+        this.reassessWeaponGoal();
+    }
+
+    /** 闲置：关瞄准/换弹，并关战意。 */
+    public void applyIdleHolsterEffects() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        op.aim(false);
+        op.cancelReload();
+        this.setAggressive(false);
+        this.reassessWeaponGoal();
+    }
+
+    private void runWithWeaponSlotMute(Runnable action) {
+        this.suppressWeaponReassess = true;
+        try {
+            action.run();
+        } finally {
+            this.suppressWeaponReassess = false;
+        }
+    }
+
     @Override
     public void reassessWeaponGoal() {
         if (this.suppressWeaponReassess || this.level() == null || this.level().isClientSide()) {
@@ -162,52 +140,21 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
     }
 
     @Override
+    protected void mountPermanentCombatGoals() {
+        boolean alreadyMounted = this.areCombatGoalsMounted();
+        super.mountPermanentCombatGoals();
+        if (!alreadyMounted
+                && this.areCombatGoalsMounted()
+                && this.level() != null
+                && !this.level().isClientSide()) {
+            this.goalSelector.addGoal(1, new MobGunCombatDrawGoal(this));
+            this.goalSelector.addGoal(1, new MobGunIdleHolsterGoal(this));
+        }
+    }
+
+    @Override
     public boolean canUseUnarmedMeleeGoal() {
         return !IGun.mainHandHoldGun(this) && !this.hasHolsteredGun();
-    }
-
-    @Override
-    public void setTarget(@Nullable LivingEntity target) {
-        LivingEntity previous = this.getTarget();
-        super.setTarget(target);
-        if (this.level().isClientSide()) {
-            return;
-        }
-        if (target != null && target.isAlive()) {
-            this.noTargetTicks = 0;
-            if (!IGun.mainHandHoldGun(this)) {
-                if (!this.drawHolsteredGun()) {
-                    this.reassessWeaponGoal();
-                }
-            } else {
-                this.setAggressive(true);
-                this.reassessWeaponGoal();
-            }
-        } else if (target == null && previous != null) {
-            this.setAggressive(false);
-            this.reassessWeaponGoal();
-        }
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.level().isClientSide()) {
-            return;
-        }
-        LivingEntity target = this.getTarget();
-        boolean hasAliveTarget = target != null && target.isAlive();
-        if (hasAliveTarget) {
-            this.noTargetTicks = 0;
-            if (!IGun.mainHandHoldGun(this) && this.hasHolsteredGun()) {
-                this.drawHolsteredGun();
-            }
-            return;
-        }
-        this.noTargetTicks++;
-        if (this.noTargetTicks >= NO_TARGET_HOLSTER_TTL && IGun.mainHandHoldGun(this)) {
-            this.holsterGun();
-        }
     }
 
     @Override
@@ -231,13 +178,12 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
         if (this.level() == null || this.level().isClientSide()) {
             return;
         }
-        if (this.getTarget() == null && IGun.mainHandHoldGun(this) && this.getOffhandItem().isEmpty()) {
-            this.holsterGun();
-        } else if (this.getTarget() == null
-                && !IGun.mainHandHoldGun(this)
-                && this.persistedGunDataId != null
-                && !this.hasHolsteredGun()) {
-            this.equipHolsteredGun(this.persistedGunDataId);
+        // 仅姿态：主手有枪、副手空 → 收到副手；不补枪
+        if (this.getTarget() == null
+                && IGun.mainHandHoldGun(this)
+                && this.getOffhandItem().isEmpty()) {
+            this.swapMainAndOffhand();
+            this.applyIdleHolsterEffects();
         }
     }
 }
