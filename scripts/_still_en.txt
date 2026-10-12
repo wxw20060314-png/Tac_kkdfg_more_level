@@ -1,0 +1,60 @@
+Ad Astra.
+Ballistic protection: %s
+Black market level required: %s
+Bodyguard storage: absorb
+Bodyguard storage: release
+Legendary Skill: Spatial Movement
+Legendary: Damage Cap
+Refresh failed: not enough items.
+Soldier: Area clear.
+Soldier: Enemy on the move.
+Soldier: Entering hostile territory.
+Soldier: Fire at will!
+Soldier: Good work, soldier.
+Soldier: Hold your position.
+Soldier: Hostiles inbound!
+Soldier: Objective secured.
+Soldier: Secure the perimeter.
+Soldier: Watch your ammo.
+Soldier: Watch your six.
+Soldier: We're under attack!
+Spawns remaining: %s
+Stealth cooldown: %s s
+Summoning countdown: %s seconds
+TaCZ More Level
+Tacz More Level
+Target dimension unavailable: %s
+Trade failed: not enough items.
+[Packet Fixer]
+[XXL Packets]
+[gun_upgrade all] failed: %s
+[gun_upgrade all] scanned=%s eligible=%s gunsOk=%s gunsSkipped=%s files=%s recipes=%s path=%s (reload manually: /tacz reload)
+[gun_upgrade clear] failed: %s
+[gun_upgrade clear] removed %s (reload manually if needed: /tacz reload)
+[gun_upgrade test] failed: %s
+[gun_upgrade test] scanned=%s eligible=%s withRecipe=%s withoutRecipe=%s path=%s
+§4§lBomb Baby§r
+§4§lLegendary I: Blast Guard§r
+§4§lLegendary II: Bomb Cart§r
+§4§oLegendary I: Blast Guard§r
+§4§oLegendary II: Fire Resistance§r
+§5§lLegendary I: Speed Boost§r
+§5§lLegendary II: Fall Guard§r
+§6§oLegendary I: Blast Guard§r
+§6§oLegendary II: Overload§r
+§6§oLegendary Skill: Guard of Retainers (X to summon)§r
+§7Empty: right-click your bodyguard to store§r
+§7Stored: %s§r
+§7§lLegendary Skill I: Stealth (X to toggle, full set required)§r
+§7§lLegendary Skill II: Anti-Detection§r
+§8§lAnnihilator§r
+§9§lLegendary I: Extremely high defensive capability§r
+§bSkill: Stealth (X to toggle, full set required)§r
+§b§lBomb Sight§r
+§b§lLegendary I: Shockwave§r
+§b§lLegendary II: Blast Guard§r
+§b§lLegendary III: Fall Guard§r
+§c§lCeiling Duel§r
+§c§lLegendary Skill: Head Defense§r
+§d§lPunisher§r
+§e§lLegendary I: Radiation Guard§r

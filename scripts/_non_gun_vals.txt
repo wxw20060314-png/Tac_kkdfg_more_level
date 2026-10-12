@@ -1,0 +1,504 @@
+0	(Certified by the Ceiling)
+1	(Required on both sides; limits are configurable.)
+2	1-digit Black Universal Currency
+3	2-digit Black Universal Currency
+4	3-digit Black Universal Currency
+5	4-digit Black Universal Currency
+6	Annihilator: combat voice
+7	Annihilator: death
+8	Annihilator: target acquired
+9	Annihilator: voice
+10	Armor Legendary Skill
+11	Armor Night Vision
+12	Assault Soldier
+13	Assault Soldier Spawn Egg
+14	Ballistic protection: %s
+15	Bandage
+16	Beauty Bodyguard
+17	Beauty Bodyguard Spawn Egg
+18	Black Market Contact System
+19	Black Market Purchase
+20	Black Market Sale
+21	Black market level required: %s
+22	Black market stock refreshed.
+23	Blast Guard
+24	Blink failed
+25	Blinked to %s, %s, %s
+26	Bodyguard Storage
+27	Bodyguard released
+28	Bodyguard storage: absorb
+29	Bodyguard storage: release
+30	Bodyguard stored
+31	Bomb Baby Spawn Egg
+32	Bomb Baby: combat idle
+33	Bomb Baby: death
+34	Bomb Baby: engage
+35	Bomb Baby: idle
+36	Bomb Cart
+37	Bomb Cart: idle
+38	Bomb Sight: combat idle
+39	Bomb Sight: death
+40	Bomb Sight: engage
+41	Bomb Sight: idle
+42	Bounty Wanted
+43	Bounty annihilator summoning
+44	Can spawn on Peaceful
+45	Ceiling Duel: combat idle
+46	Ceiling Duel: death
+47	Ceiling Duel: engage
+48	Ceiling Duel: idle
+49	Comprehensive Immunity
+50	Computer Case
+51	Damaged — stealth broken
+52	Defence
+53	Demon Lord Bodyguard
+54	Demon Lord Bodyguard Spawn Egg
+55	Detection Grenade
+56	Does not spawn on Peaceful
+57	Elite Bodyguard
+58	Elite Bodyguard Spawn Egg
+59	End Black Market Camp
+60	End Black Market Camp Navigation Map
+61	End Sky Prison
+62	End Sky Prison Navigation Map
+63	End Soldier Camp
+64	Explosion-Proof Steel Block
+65	Explosion-Proof Steel Ingot
+66	Extremely high ballistic protection.
+67	Fielded %s/%s · Reserve %s/%s
+68	First Aid Kit
+69	Flashbang
+70	Flashbang detonates
+71	Flashed
+72	From Guns to Goods?
+73	Frozen Landmine
+74	Gadgets
+75	Grants Comprehensive Immunity I when used
+76	Grants Comprehensive Immunity II when used
+77	Grants Comprehensive Immunity III when used
+78	Grants Hardening I when used
+79	Grants Hardening II when used
+80	Grants Hardening III when used
+81	Greatly increases movement speed and jump height when worn.
+82	Grenade
+83	Guard
+84	Guard Spawn Egg
+85	Hardening
+86	Have a Mysterious Merchant ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+87	Have a Type I ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+88	Have a Type II ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+89	Have a Type III ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+90	Have a Type IV ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+91	Have a Type V ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+92	Have a Type VI ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+93	Have a Type VII ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+94	He's here
+95	Infinite Network Receiver
+96	Injection
+97	Invalid look destination
+98	Invalid look destination, not saved
+99	Landmine
+100	Large upgrade packs may cause oversized-packet disconnects (Packet too big / Badly compressed packet). If that happens, install on BOTH client and server:
+101	Legendary Skill: Spatial Movement
+102	Legendary: Damage Cap
+103	Lev Marshal: combat voice
+104	Lev Marshal: death
+105	Lev Marshal: target acquired
+106	Lev Marshal: voice
+107	Limited Spawner
+108	Lurker
+109	Lurker Base
+110	Lurker Base Navigation Map
+111	Lurker Spawn Egg
+112	Marshal Guard
+113	Marshal Guard: combat voice
+114	Marshal Guard: death
+115	Marshal Guard: target acquired
+116	Marshal Guard: voice
+117	Medical Box
+118	Mercenary
+119	Mercenary Spawn Egg
+120	Merchant Camp
+121	Merchant Camp Navigation Map
+122	Military Base
+123	Military Base Navigation Map
+124	Militia
+125	Militia Spawn Egg
+126	Molotov Cocktail
+127	Molotov whooshes
+128	Monitor
+129	Mysterious Merchant
+130	Mysterious Merchant Ballistic Boots
+131	Mysterious Merchant Ballistic Helmet
+132	Mysterious Merchant Ballistic Leg Guards
+133	Mysterious Merchant Ballistic Vest
+134	Mysterious Merchant Spawn Egg
+135	Mysterious Merchant: combat voice
+136	Mysterious Merchant: death
+137	Mysterious Merchant: target acquired
+138	Mysterious Merchant: trade failed
+139	Mysterious Merchant: trade success
+140	Mysterious Merchant: voice
+141	Nether Bomb Factory
+142	Nether Bomb Factory Navigation Map
+143	Nether Soldier Camp
+144	Nether Underground Wind Base
+145	Nether Underground Wind Base Navigation Map
+146	Night vision disabled
+147	Night vision enabled
+148	No valid air space was found within %sx%s blocks, %s blocks upward, requiring %s blocks of air.
+149	No valid spot nearby
+150	No waypoint saved
+151	Not enough space here to release the bodyguard
+152	Obsidian Alloy
+153	Obsidian Alloy Axe
+154	Obsidian Alloy Boots
+155	Obsidian Alloy Chestplate
+156	Obsidian Alloy Helmet
+157	Obsidian Alloy Hoe
+158	Obsidian Alloy Leggings
+159	Obsidian Alloy Pickaxe
+160	Obsidian Alloy Shovel
+161	Obsidian Alloy Sword
+162	Obtain a Black Market Contact System.
+163	Open CurseForge
+164	Open the contact UI while the black market is at level 1.
+165	Open the contact UI while the black market is at level 2.
+166	Open the contact UI while the black market is at level 3.
+167	Open the contact UI while the black market is at level 4.
+168	Open the contact UI while the black market is at level 5.
+169	Plugin Workbench
+170	Plugin:
+171	Power Mech flight
+172	Power Mech overload
+173	Provides radiation resistance when worn.
+174	Punisher shoulder cannon fires
+175	Punisher: combat voice
+176	Punisher: death
+177	Punisher: target acquired
+178	Punisher: voice
+179	Radiation
+180	Recalled to %s, %s, %s
+181	Reduces explosion damage taken.
+182	Refresh failed: not enough items.
+183	Refugee
+184	Refugee Spawn Egg
+185	Relic of the Fallen Marshal
+186	Requires a Space-Time, Power Mech, Special Ops, Blast Type VII, Shockwave, or Stealth Type VII helmet
+187	Restores a large amount of health and grants Regeneration
+188	Restores a moderate amount of health and grants Regeneration
+189	Restores a small amount of health
+190	Scorpion: acquire target
+191	Scorpion: combat idle
+192	Scorpion: death
+193	Scorpion: hurt
+194	Scorpion: idle
+195	Shockwave Impact
+196	Shockwave set charge
+197	Shockwave set release
+198	Slaughter the Innocent? Justice Served?
+199	Slay the Mysterious Merchant.
+200	Slime Ruins
+201	Slime Ruins Navigation Map
+202	Slime: idle
+203	Soldier Camp
+204	Soldier: Area clear.
+205	Soldier: Enemy on the move.
+206	Soldier: Entering hostile territory.
+207	Soldier: Fire at will!
+208	Soldier: Good work, soldier.
+209	Soldier: Hold your position.
+210	Soldier: Hostiles inbound!
+211	Soldier: Objective secured.
+212	Soldier: Secure the perimeter.
+213	Soldier: Watch your ammo.
+214	Soldier: Watch your six.
+215	Soldier: We're under attack!
+216	Soldiers, ballistic gear, and related equipment.
+217	Something feels wrong
+218	Space-Time Stone
+219	Spawns remaining: %s
+220	Special Forces
+221	Special Forces Spawn Egg
+222	Special Forces Summoning Block
+223	Stand + use: look blink; Crouch + use: random blink (30–60 blocks)
+224	Standard Bodyguard
+225	Standard Bodyguard Spawn Egg
+226	Stealth Boots
+227	Stealth Cap
+228	Stealth Cloak
+229	Stealth Pants
+230	Stealth cooldown: %s s
+231	Stealth disabled
+232	Stealth enabled
+233	Stealth on cooldown
+234	Stealth pool %s / %s
+235	Storage is empty
+236	Summoning block countdown
+237	Summoning complete. Spawned %s targets.
+238	Summoning countdown: %s seconds
+239	Summoning started. %s seconds until %s targets appear.
+240	Super Special Soldier
+241	Super Special Soldier Spawn Egg
+242	Syringe
+243	TaCZ More Level
+244	Tacz More Level
+245	Target dimension unavailable: %s
+246	The Special Forces Summoning Block is already counting down.
+247	This storage already holds a bodyguard
+248	Trade failed: not enough items.
+249	Trade successful.
+250	Type I Ballistic Boots
+251	Type I Ballistic Helmet
+252	Type I Ballistic Kit
+253	Type I Ballistic Leg Guards
+254	Type I Ballistic Vest
+255	Type II Ballistic Boots
+256	Type II Ballistic Helmet
+257	Type II Ballistic Kit
+258	Type II Ballistic Leg Guards
+259	Type II Ballistic Vest
+260	Type III Ballistic Boots
+261	Type III Ballistic Helmet
+262	Type III Ballistic Kit
+263	Type III Ballistic Leg Guards
+264	Type III Ballistic Vest
+265	Type VII Radiation Ballistic Boots
+266	Type VII Radiation Ballistic Helmet
+267	Type VII Radiation Ballistic Leg Guards
+268	Type VII Radiation Ballistic Vest
+269	Underground Contact
+270	Underground Test Base
+271	Underground Test Base Navigation Map
+272	Using
+273	Using %s %s%%
+274	Using bandage
+275	Using first aid kit
+276	Using medical box
+277	War Machine: combat voice
+278	War Machine: death
+279	War Machine: hurt
+280	War Machine: target acquired
+281	War Machine: voice
+282	Warehouse Arena
+283	Warehouse Arena Navigation Map
+284	Waypoint is no longer safe
+285	Waypoint saved %s, %s, %s
+286	You can only store your own bodyguards
+287	[Packet Fixer]
+288	[XXL Packets]
+289	[gun_upgrade all] failed: %s
+290	[gun_upgrade all] scanned=%s eligible=%s gunsOk=%s gunsSkipped=%s files=%s recipes=%s path=%s (reload manually: /tacz reload)
+291	[gun_upgrade clear] failed: %s
+292	[gun_upgrade clear] removed %s (reload manually if needed: /tacz reload)
+293	[gun_upgrade test] failed: %s
+294	[gun_upgrade test] scanned=%s eligible=%s withRecipe=%s withoutRecipe=%s path=%s
+295	§2Slime Serum§r
+296	§2Slime Warrior Spawn Egg§r
+297	§2Slime Warrior§r
+298	§2Thoroughly slay the Slime Commander.§r
+299	§2§lSlime Commander Spawn Egg§r
+300	§2§lSlime Commander§r
+301	§2§lSlime Slayer§r
+302	§4Have a Type VII Blast ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+303	§4Have a Type VII Blazeflame ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+304	§4Slay the Bomb Baby.§r
+305	§4§lA Child Led Astray?§r
+306	§4§lBomb Baby§r
+307	§4§lBomb? Cart?§r
+308	§4§lLegendary I: Blast Guard§r
+309	§4§lLegendary II: Bomb Cart§r
+310	§4§lType VII Blast Ballistic Boots§r
+311	§4§lType VII Blast Ballistic Helmet§r
+312	§4§lType VII Blast Ballistic Leg Guards§r
+313	§4§lType VII Blast Ballistic Vest§r
+314	§4§oLegendary I: Blast Guard§r
+315	§4§oLegendary II: Fire Resistance§r
+316	§4§oType VII Blazeflame Ballistic Boots§r
+317	§4§oType VII Blazeflame Ballistic Helmet§r
+318	§4§oType VII Blazeflame Ballistic Leg Guards§r
+319	§4§oType VII Blazeflame Ballistic Vest§r
+320	§4§oWarrior Reborn from the Flames!§r
+321	§5Have a Special Ops ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+322	§5Have a Type VII Abyss ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+323	§5Medium Ballistic Steel Armor Plate§r
+324	§5Medium Blast Steel Armor Plate§r
+325	§5Medium Carbon Fiber Armor Plate§r
+326	§5Medium Comprehensive Immunity Needle
+327	§5Medium Flash Resist Goggles§r
+328	§5Medium Hardening Needle
+329	§5Medium Radiation Resist Plate§r
+330	§5Sixth Grade Steel Ingot§r
+331	§5§lLegendary I: Speed Boost§r
+332	§5§lLegendary II: Fall Guard§r
+333	§5§lType VII Abyss Ballistic Boots§r
+334	§5§lType VII Abyss Ballistic Helmet§r
+335	§5§lType VII Abyss Ballistic Leg Guards§r
+336	§5§lType VII Abyss Ballistic Vest§r
+337	§5§lWarrior of the End!§r
+338	§5§oBlack Market Tycoon§r
+339	§5§oElite Bodyguard Contact§r
+340	§5§oPerfect Firearm Upgrade Voucher
+341	§5§oRebel?Guard§r
+342	§5§oSpecial Ops Boots§r
+343	§5§oSpecial Ops Chestplate§r
+344	§5§oSpecial Ops Helmet§r
+345	§5§oSpecial Ops Leggings§r
+346	§5§oTier IV Black Market Terminal§r
+347	§5§oType VI Ballistic Boots§r
+348	§5§oType VI Ballistic Helmet§r
+349	§5§oType VI Ballistic Kit§r
+350	§5§oType VI Ballistic Leg Guards§r
+351	§5§oType VI Ballistic Vest§r
+352	§6A core component charged with energy§r
+353	§6A device that provides thrust§r
+354	§6Have Lev Marshal's cap, coat, trousers, and boots in your inventory at the same time.§r
+355	§6Have a Power Mech ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+356	§6Lev Marshal Spawn Egg§r
+357	§6Slay the War Machine.§r
+358	§6Super Upgrade Template§r
+359	§6War Machine Spawn Egg§r
+360	§6§lBullets vs Steel!§r
+361	§6§lGold Energy Core§r
+362	§6§lGold Power Thruster§r
+363	§6§lLev Marshal§r
+364	§6§lOverlord of One Side!§r
+365	§6§lPower Mech Ballistic Boots§r
+366	§6§lPower Mech Ballistic Helmet§r
+367	§6§lPower Mech Ballistic Leg Guards§r
+368	§6§lPower Mech Ballistic Vest§r
+369	§6§lTechnology Changes Life§r
+370	§6§lWar Machine§r
+371	§6§oLegendary I: Blast Guard§r
+372	§6§oLegendary II: Overload§r
+373	§6§oLegendary Skill: Guard of Retainers (X to summon)§r
+374	§6§oLev Marshal's Boots§r
+375	§6§oLev Marshal's Cap§r
+376	§6§oLev Marshal's Trousers§r
+377	§6§oLev Marshal's Tunic§r
+378	§7Contains a stored bodyguard§r
+379	§7Empty: right-click your bodyguard to store§r
+380	§7Have a Stealth Type VII helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+381	§7Scorpion Spawn Egg§r
+382	§7Slay the Scorpion.§r
+383	§7Stored: %s§r
+384	§7When placed, the name follows this dimension's market tier (W/G/B/P/R).§r
+385	§7§lAmbush the Scorpion!§r
+386	§7§lBest Lurker!§r
+387	§7§lLegendary Skill I: Stealth (X to toggle, full set required)§r
+388	§7§lLegendary Skill II: Anti-Detection§r
+389	§7§lScorpion§r
+390	§7§lStealth Type VII Boots§r
+391	§7§lStealth Type VII Chestplate§r
+392	§7§lStealth Type VII Helmet§r
+393	§7§lStealth Type VII Leggings§r
+394	§8Annihilator Spawn Egg§r
+395	§8§lAnnihilator§r
+396	§9Have a Space-Time ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+397	§9Have a Type VII Sculk ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+398	§9Junior Ballistic Steel Armor Plate§r
+399	§9Junior Blast Steel Armor Plate§r
+400	§9Junior Carbon Fiber Armor Plate§r
+401	§9Junior Comprehensive Immunity Needle
+402	§9Junior Flash Resist Goggles§r
+403	§9Junior Hardening Needle
+404	§9Junior Radiation Resist Plate§r
+405	§9Slay the Annihilator.§r
+406	§9§lLegendary I: Extremely high defensive capability§r
+407	§9§lSpace Bends to Me!§r
+408	§9§lSpace-Time Ballistic Boots§r
+409	§9§lSpace-Time Ballistic Helmet§r
+410	§9§lSpace-Time Ballistic Leg Guards§r
+411	§9§lSpace-Time Ballistic Vest§r
+412	§9§lTop Assassin? Nothing Special§r
+413	§9§lType VII Sculk Ballistic Boots§r
+414	§9§lType VII Sculk Ballistic Helmet§r
+415	§9§lType VII Sculk Ballistic Leg Guards§r
+416	§9§lType VII Sculk Ballistic Vest§r
+417	§9§lWarrior Who Cleared the Ancient City§r
+418	§9§oRefined Firearm Upgrade Voucher
+419	§9§oTier III Black Market Terminal§r
+420	§9§oType V Ballistic Boots§r
+421	§9§oType V Ballistic Helmet§r
+422	§9§oType V Ballistic Kit§r
+423	§9§oType V Ballistic Leg Guards§r
+424	§9§oType V Ballistic Vest§r
+425	§aClick this row to trade§r
+426	§aClick to refresh stock (consumes item above)§r
+427	§a§oImproved Firearm Upgrade Voucher
+428	§a§oOutlaw!§r
+429	§a§oStandard Bodyguard Contact§r
+430	§a§oTier II Black Market Terminal§r
+431	§a§oType IV Ballistic Boots§r
+432	§a§oType IV Ballistic Helmet§r
+433	§a§oType IV Ballistic Kit§r
+434	§a§oType IV Ballistic Leg Guards§r
+435	§a§oType IV Ballistic Vest§r
+436	§bBomb Sight Spawn Egg§r
+437	§bHave a Shockwave ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+438	§bHave a stealth helmet, cloak, leggings, and boots in your inventory at the same time.§r
+439	§bLight-Absorbing Tube§r
+440	§bSimple Camouflage§r
+441	§bSkill: Stealth (X to toggle, full set required)§r
+442	§bSlay Bomb Sight.§r
+443	§b§lBomb Sight§r
+444	§b§lHero's Bane!§r
+445	§b§lJet Engine owo§r
+446	§b§lLegendary I: Shockwave§r
+447	§b§lLegendary II: Blast Guard§r
+448	§b§lLegendary III: Fall Guard§r
+449	§b§oShockwave Ballistic Boots§r
+450	§b§oShockwave Ballistic Helmet§r
+451	§b§oShockwave Ballistic Leg Guards§r
+452	§b§oShockwave Ballistic Vest§r
+453	§cA core component charged with energy§r
+454	§cA device that provides thrust§r
+455	§cAdvanced Ballistic Steel Armor Plate§r
+456	§cAdvanced Blast Steel Armor Plate§r
+457	§cAdvanced Carbon Fiber Armor Plate§r
+458	§cAdvanced Comprehensive Immunity Needle
+459	§cAdvanced Flash Resist Goggles§r
+460	§cAdvanced Hardening Needle
+461	§cAdvanced Radiation Resist Plate§r
+462	§cCannot afford refresh§r
+463	§cCeiling Duel Spawn Egg§r
+464	§cNot enough items in inventory§r
+465	§cSeventh Grade Steel Ingot§r
+466	§cSlay Lev Marshal.§r
+467	§cSuccessfully defeat the legendary super special forces — Ceiling Duel§r
+468	§cSuper Potion§r
+469	§c§lAbove the Ceiling§r
+470	§c§lCeiling Duel§r
+471	§c§lJoker Type VII Helmet§r
+472	§c§lLegendary Skill: Head Defense§r
+473	§c§lRed Energy Core§r
+474	§c§lRed Power Thruster§r
+475	§c§lWarlord? Nothing Special!§r
+476	§c§oDemon Lord Bodyguard Contact§r
+477	§c§oExcellent Firearm Upgrade Voucher
+478	§c§oHunter's List§r
+479	§c§oKingpin§r
+480	§c§oTier V Black Market Terminal§r
+481	§c§oType VII Ballistic Boots§r
+482	§c§oType VII Ballistic Helmet§r
+483	§c§oType VII Ballistic Kit§r
+484	§c§oType VII Ballistic Leg Guards§r
+485	§c§oType VII Ballistic Vest§r
+486	§c§oWar Machine and bounty targets.§r
+487	§dHave a Punisher Type VII ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+488	§dPunisher Shoulder Cannon Plugin§r
+489	§dPunisher Shoulder Cannon§r
+490	§dPunisher Spawn Egg§r
+491	§dSlay the Punisher.§r
+492	§d§lPrisoner Who Carries Out the Sentence?§r
+493	§d§lPunisher§r
+494	§d§lThe Accused's Verdict!§r
+495	§d§oBeauty Bodyguard Contact§r
+496	§d§oPunisher Type VII Ballistic Boots§r
+497	§d§oPunisher Type VII Ballistic Helmet§r
+498	§d§oPunisher Type VII Ballistic Leg Guards§r
+499	§d§oPunisher Type VII Ballistic Vest§r
+500	§e§lLegendary I: Radiation Guard§r
+501	§e§oRolling in It§r
+502	§f§oA Small Start§r
+503	§f§oTier I Black Market Terminal§r

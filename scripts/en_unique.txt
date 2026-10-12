@@ -1,0 +1,796 @@
+(Certified by the Ceiling)
+(Required on both sides; limits are configurable.)
+1-digit Black Universal Currency
+2-digit Black Universal Currency
+3-digit Black Universal Currency
+4-digit Black Universal Currency
+[gun_upgrade all] failed: %s
+[gun_upgrade all] scanned=%s eligible=%s gunsOk=%s gunsSkipped=%s files=%s recipes=%s path=%s (reload manually: /tacz reload)
+[gun_upgrade clear] failed: %s
+[gun_upgrade clear] removed %s (reload manually if needed: /tacz reload)
+[gun_upgrade test] failed: %s
+[gun_upgrade test] scanned=%s eligible=%s withRecipe=%s withoutRecipe=%s path=%s
+[Packet Fixer]
+[XXL Packets]
+A lie of the bureaucracy.
+Ad Astra.
+Although it's not the right size, it gets the job done.
+Annihilator: combat voice
+Annihilator: death
+Annihilator: target acquired
+Annihilator: voice
+Armor Legendary Skill
+Armor Night Vision
+Assault Soldier
+Assault Soldier Spawn Egg
+Ballistic protection: %s
+Bandage
+Beauty Bodyguard
+Beauty Bodyguard Spawn Egg
+Better than empty hand.
+Better throw it away, you can destroy them by firewalking.
+Black Market Contact System
+Black market level required: %s
+Black Market Purchase
+Black Market Sale
+Black market stock refreshed.
+Blast Guard
+Blink failed
+Blinked to %s, %s, %s
+Bodyguard released
+Bodyguard Storage
+Bodyguard storage: absorb
+Bodyguard storage: release
+Bodyguard stored
+Bomb Baby Spawn Egg
+Bomb Baby: combat idle
+Bomb Baby: death
+Bomb Baby: engage
+Bomb Baby: idle
+Bomb Cart
+Bomb Cart: idle
+Bomb Sight: combat idle
+Bomb Sight: death
+Bomb Sight: engage
+Bomb Sight: idle
+Bounty annihilator summoning
+Bounty Wanted
+Bureaucratic lie again? Maybe not.
+Can spawn on Peaceful
+Ceiling Duel: combat idle
+Ceiling Duel: death
+Ceiling Duel: engage
+Ceiling Duel: idle
+Collectors love to see their favorites reborn in the modern age
+Comprehensive Immunity
+Computer Case
+Count to three, you still have a chance to run... Three!
+Cut anything down in your way.
+Damaged — stealth broken
+Defence
+Demon Lord Bodyguard
+Demon Lord Bodyguard Spawn Egg
+Destroying them, Politely.
+Detection Grenade
+Did those 98ks lying on the ground back then ever get rusty?
+Does not spawn on Peaceful
+Don't call me M416.
+Don't touch any high speed moving parts... Ouch!
+Dragon's breath rounds are not provided in principle.
+Draw a smiley face on their body armor.
+Elite Bodyguard
+Elite Bodyguard Spawn Egg
+End Black Market Camp
+End Black Market Camp Navigation Map
+End Sky Prison
+End Sky Prison Navigation Map
+End Soldier Camp
+Exercise your Second Amendment rights.
+Explosion-Proof Steel Block
+Explosion-Proof Steel Ingot
+Extremely high ballistic protection.
+Fielded %s/%s · Reserve %s/%s
+First Aid Kit
+Flashbang
+Flashbang detonates
+Flashed
+From Guns to Goods?
+From jungles to bays, it's always present.
+Frozen Landmine
+Gadgets
+Grants Comprehensive Immunity I when used
+Grants Comprehensive Immunity II when used
+Grants Comprehensive Immunity III when used
+Grants Hardening I when used
+Grants Hardening II when used
+Grants Hardening III when used
+Greatly increases movement speed and jump height when worn.
+Grenade
+Guard
+Guard Spawn Egg
+Hardening
+Have a Mysterious Merchant ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type I ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type II ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type III ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type IV ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type V ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type VI ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+Have a Type VII ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.
+He's here
+Hey, this is an integrated receiver... what are you doing!?
+Infinite Network Receiver
+Injection
+Invalid look destination
+Invalid look destination, not saved
+It can destroy anything just like your wrists.
+It is fast, but a bit too fast.
+It's a nice thing to carry, isn't it?
+Its flat design makes the enemy's lifeline also flat.
+Jiu Hu, go slay two monsters for me. Make sure they're alive.
+Just like petting a purring cat.
+Landmine
+Large upgrade packs may cause oversized-packet disconnects (Packet too big / Badly compressed packet). If that happens, install on BOTH client and server:
+Legendary Skill: Spatial Movement
+Legendary: Damage Cap
+Let it all start from zero again. 
+§eTaCZ 1st Anniversary
+Lev Marshal: combat voice
+Lev Marshal: death
+Lev Marshal: target acquired
+Lev Marshal: voice
+Lightweight, but power-up.
+Limited Spawner
+Listen to the whistle of the authority.
+Loud, great, and hard on the hands.
+Lurker
+Lurker Base
+Lurker Base Navigation Map
+Lurker Spawn Egg
+Marshal Guard
+Marshal Guard: combat voice
+Marshal Guard: death
+Marshal Guard: target acquired
+Marshal Guard: voice
+Maybe you don't want to mess with this rhino.
+Medical Box
+Mercenary
+Mercenary Spawn Egg
+Merchant Camp
+Merchant Camp Navigation Map
+Military Base
+Military Base Navigation Map
+Militia
+Militia Spawn Egg
+Molotov Cocktail
+Molotov whooshes
+Monitor
+Mysterious Merchant
+Mysterious Merchant Ballistic Boots
+Mysterious Merchant Ballistic Helmet
+Mysterious Merchant Ballistic Leg Guards
+Mysterious Merchant Ballistic Vest
+Mysterious Merchant Spawn Egg
+Mysterious Merchant: combat voice
+Mysterious Merchant: death
+Mysterious Merchant: target acquired
+Mysterious Merchant: trade failed
+Mysterious Merchant: trade success
+Mysterious Merchant: voice
+Nether Bomb Factory
+Nether Bomb Factory Navigation Map
+Nether Soldier Camp
+Nether Underground Wind Base
+Nether Underground Wind Base Navigation Map
+Next one, or next generation?
+Night vision disabled
+Night vision enabled
+No limit of shots taken to hit the target.
+No valid air space was found within %sx%s blocks, %s blocks upward, requiring %s blocks of air.
+No valid spot nearby
+No waypoint saved
+Not born on the wrong date, just on the wrong place.
+Not enough space here to release the bodyguard
+Obsidian Alloy
+Obsidian Alloy Axe
+Obsidian Alloy Boots
+Obsidian Alloy Chestplate
+Obsidian Alloy Helmet
+Obsidian Alloy Hoe
+Obsidian Alloy Leggings
+Obsidian Alloy Pickaxe
+Obsidian Alloy Shovel
+Obsidian Alloy Sword
+Obtain a Black Market Contact System.
+Open CurseForge
+Open the contact UI while the black market is at level 1.
+Open the contact UI while the black market is at level 2.
+Open the contact UI while the black market is at level 3.
+Open the contact UI while the black market is at level 4.
+Open the contact UI while the black market is at level 5.
+Pizza color won't help tactics, but at least you'll look good before you shoot
+Plugin Workbench
+Plugin:
+Polymer Tech, Boy!
+Poverty shrinks not the gun.
+Power Mech flight
+Power Mech overload
+Provides radiation resistance when worn.
+Punisher shoulder cannon fires
+Punisher: combat voice
+Punisher: death
+Punisher: target acquired
+Punisher: voice
+Radiation
+Recalled to %s, %s, %s
+Reduces explosion damage taken.
+Refresh failed: not enough items.
+Refugee
+Refugee Spawn Egg
+Relic of the Fallen Marshal
+Requires a Space-Time, Power Mech, Special Ops, Blast Type VII, Shockwave, or Stealth Type VII helmet
+Restores a large amount of health and grants Regeneration
+Restores a moderate amount of health and grants Regeneration
+Restores a small amount of health
+Scorpion: acquire target
+Scorpion: combat idle
+Scorpion: death
+Scorpion: hurt
+Scorpion: idle
+Shiny and charismatic.
+Shockwave Impact
+Shockwave set charge
+Shockwave set release
+Slaughter the Innocent? Justice Served?
+Slay the Mysterious Merchant.
+Slime Ruins
+Slime Ruins Navigation Map
+Slime: idle
+Soldier Camp
+Soldier: Area clear.
+Soldier: Enemy on the move.
+Soldier: Entering hostile territory.
+Soldier: Fire at will!
+Soldier: Good work, soldier.
+Soldier: Hold your position.
+Soldier: Hostiles inbound!
+Soldier: Objective secured.
+Soldier: Secure the perimeter.
+Soldier: Watch your ammo.
+Soldier: Watch your six.
+Soldier: We're under attack!
+Soldiers' love, wife, and mistress.
+Soldiers, ballistic gear, and related equipment.
+Something feels wrong
+Space-Time Stone
+Spawns remaining: %s
+Special Forces
+Special Forces Spawn Egg
+Special Forces Summoning Block
+Stand + use: look blink; Crouch + use: random blink (30–60 blocks)
+Standard Bodyguard
+Standard Bodyguard Spawn Egg
+Stealth Boots
+Stealth Cap
+Stealth Cloak
+Stealth cooldown: %s s
+Stealth disabled
+Stealth enabled
+Stealth on cooldown
+Stealth Pants
+Stealth pool %s / %s
+Storage is empty
+Suffocating barrage of pellets.
+Summoning block countdown
+Summoning complete. Spawned %s targets.
+Summoning countdown: %s seconds
+Summoning started. %s seconds until %s targets appear.
+Super Special Soldier
+Super Special Soldier Spawn Egg
+Syringe
+TaCZ More Level
+Tacz More Level
+Target dimension unavailable: %s
+The only bad thing for expensive things, is the expense.
+The other arm of the free world.
+The right hand of the free world
+The Special Forces Summoning Block is already counting down.
+There's nothing the RPG can't deal... except one more shot!
+This is my rifle. There are many like it, but this one is mine.
+This storage already holds a bodyguard
+Trade failed: not enough items.
+Trade successful.
+Trustworthy.
+Type I Ballistic Boots
+Type I Ballistic Helmet
+Type I Ballistic Kit
+Type I Ballistic Leg Guards
+Type I Ballistic Vest
+Type II Ballistic Boots
+Type II Ballistic Helmet
+Type II Ballistic Kit
+Type II Ballistic Leg Guards
+Type II Ballistic Vest
+Type III Ballistic Boots
+Type III Ballistic Helmet
+Type III Ballistic Kit
+Type III Ballistic Leg Guards
+Type III Ballistic Vest
+Type VII Radiation Ballistic Boots
+Type VII Radiation Ballistic Helmet
+Type VII Radiation Ballistic Leg Guards
+Type VII Radiation Ballistic Vest
+Under the truck, old friend. An echo of Shadow Moses.
+Underground Contact
+Underground Test Base
+Underground Test Base Navigation Map
+Unquestionably precious.
+Using
+Using %s %s%%
+Using bandage
+Using first aid kit
+Using medical box
+War Machine: combat voice
+War Machine: death
+War Machine: hurt
+War Machine: target acquired
+War Machine: voice
+Warehouse Arena
+Warehouse Arena Navigation Map
+Waypoint is no longer safe
+Waypoint saved %s, %s, %s
+We are not going to Ravenholm.
+What was your mission in Shanghai!
+Where there is a will, there is a gun.
+Why reinvent the wheel?
+You can only store your own bodyguards
+You can use words and money to solve the problem. Or, just bring it to the table.
+You know, I'm a minimalist.
+You pick the wrong house, Fool!
+§2Slime Serum§r
+§2Slime Warrior Spawn Egg§r
+§2Slime Warrior§r
+§2Thoroughly slay the Slime Commander.§r
+§2§lSlime Commander Spawn Egg§r
+§2§lSlime Commander§r
+§2§lSlime Slayer§r
+§4Have a Type VII Blast ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§4Have a Type VII Blazeflame ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§4Slay the Bomb Baby.§r
+§4§lA Child Led Astray?§r
+§4§lBlast MK14§r
+§4§lBomb Baby§r
+§4§lBomb? Cart?§r
+§4§lLegendary I: Blast Guard§r
+§4§lLegendary II: Bomb Cart§r
+§4§lLegendary: Bullet Blast§r
+§4§lLegendary: High-Explosive Grenade§r
+§4§lRapid-Fire Grenade Cannon§r
+§4§lType VII Blast Ballistic Boots§r
+§4§lType VII Blast Ballistic Helmet§r
+§4§lType VII Blast Ballistic Leg Guards§r
+§4§lType VII Blast Ballistic Vest§r
+§4§oLegendary I: Blast Guard§r
+§4§oLegendary II: Fire Resistance§r
+§4§oType VII Blazeflame Ballistic Boots§r
+§4§oType VII Blazeflame Ballistic Helmet§r
+§4§oType VII Blazeflame Ballistic Leg Guards§r
+§4§oType VII Blazeflame Ballistic Vest§r
+§4§oWarrior Reborn from the Flames!§r
+§5Have a Special Ops ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§5Have a Type VII Abyss ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§5Medium Ballistic Steel Armor Plate§r
+§5Medium Blast Steel Armor Plate§r
+§5Medium Carbon Fiber Armor Plate§r
+§5Medium Comprehensive Immunity Needle
+§5Medium Flash Resist Goggles§r
+§5Medium Hardening Needle
+§5Medium Radiation Resist Plate§r
+§5Sixth Grade Steel Ingot§r
+§5§6§oTimeless .50 Z-Type Perfect§r
+§5§lLegendary I: Speed Boost§r
+§5§lLegendary II: Fall Guard§r
+§5§lType VII Abyss Ballistic Boots§r
+§5§lType VII Abyss Ballistic Helmet§r
+§5§lType VII Abyss Ballistic Leg Guards§r
+§5§lType VII Abyss Ballistic Vest§r
+§5§lWarrior of the End!§r
+§5§o.22 Modle 943 Revolver Perfect§r
+§5§o.30-06 Lonetrail Hand Cannon Perfect§r
+§5§o.357 Rhino Revolver Perfect§r
+§5§oAA12 Shotgun Perfect§r
+§5§oAccuracy International AWM Perfect§r
+§5§oAKM Perfect§r
+§5§oAUG Perfect§r
+§5§oB93R Perfect§r
+§5§oBlack Market Tycoon§r
+§5§oCZ 75 Perfect§r
+§5§oDB-2 Durin Perfect§r
+§5§oDB-4 Ursus Perfect§r
+§5§oDeagle 50 Perfect§r
+§5§oElite Bodyguard Contact§r
+§5§oFN EVOLYS Machine Gun Perfect§r
+§5§oFN FAL Battle Rifle Perfect§r
+§5§oG36K Perfect§r
+§5§oGlock 17 Perfect§r
+§5§oGolden Deagle 357 Perfect§r
+§5§oHK G3 Battle rifle Perfect§r
+§5§oHK-416D Perfect§r
+§5§oHK-MP5A5 Perfect§r
+§5§oM1014 Battle Shotgun Perfect§r
+§5§oM107 Sniper Rifle Perfect§r
+§5§oM134 Minigun Perfect§r
+§5§oM16A1 Service Rifle Perfect§r
+§5§oM16A4 Service Rifle Perfect§r
+§5§oM1911 Perfect§r
+§5§oM249 Machine Gun Perfect§r
+§5§oM320 Grenade Launcher Perfect§r
+§5§oM4A1 Carbine Perfect§r
+§5§oM700 Sniper Rifle Perfect§r
+§5§oM870 Perfect§r
+§5§oM95 .50 Cal Antimaterial Perfect§r
+§5§oM9A4 Perfect§r
+§5§oMauser Kar98k Rifle Perfect§r
+§5§oMK14 EBR Perfect§r
+§5§oMK23 Offensive Pistol Perfect§r
+§5§oP320 Perfect§r
+§5§oP90 PDW Perfect§r
+§5§oPerfect Firearm Upgrade Voucher
+§5§oQBZ-191 Assault Rifle Perfect§r
+§5§oQBZ-95 "Longbow" Perfect§r
+§5§oRebel?Guard§r
+§5§oRPG-7 Perfect§r
+§5§oRPK Perfect§r
+§5§oSCAR-H Battle Rifle Perfect§r
+§5§oSCAR-L Assault Rifle Perfect§r
+§5§oSks Tactical Rifle Perfect§r
+§5§oSPAS-12 Multi-purpose Shotgun Perfect§r
+§5§oSpecial Ops Boots§r
+§5§oSpecial Ops Chestplate§r
+§5§oSpecial Ops Helmet§r
+§5§oSpecial Ops Leggings§r
+§5§oSPR-15 HB "Sagittarius" Perfect§r
+§5§oSpringfield 1873 Trapdoor Rifle Perfect§r
+§5§oTaurus "Raging Hunter" Hand Cannon Perfect§r
+§5§oTier IV Black Market Terminal§r
+§5§oType 81-1 Service Rifle Perfect§r
+§5§oType VI Ballistic Boots§r
+§5§oType VI Ballistic Helmet§r
+§5§oType VI Ballistic Kit§r
+§5§oType VI Ballistic Leg Guards§r
+§5§oType VI Ballistic Vest§r
+§5§oUMP45 SMG Perfect§r
+§5§oUZI Perfect§r
+§5§oVector SMG Perfect§r
+§6"Burn me to the ground"
+§6A core component charged with energy§r
+§6A device that provides thrust§r
+§6Have a Power Mech ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§6Have Lev Marshal's cap, coat, trousers, and boots in your inventory at the same time.§r
+§6Lev Marshal Spawn Egg§r
+§6Slay the War Machine.§r
+§6Super Upgrade Template§r
+§6War Machine Spawn Egg§r
+§6§lBullets vs Steel!§r
+§6§lGold Energy Core§r
+§6§lGold Power Thruster§r
+§6§lLev Marshal§r
+§6§lOverlord of One Side!§r
+§6§lPower Mech Ballistic Boots§r
+§6§lPower Mech Ballistic Helmet§r
+§6§lPower Mech Ballistic Leg Guards§r
+§6§lPower Mech Ballistic Vest§r
+§6§lTechnology Changes Life§r
+§6§lWar Machine§r
+§6§o.22 Model 943 Revolver Legendary§r
+§6§oGatling War Machine§r
+§6§oLegendary I: Blast Guard§r
+§6§oLegendary I: Bullet penetration
+Legendary II: Vehicle destruction (Superb Warfare)§r
+§6§oLegendary I: Greatly faster reload
+Legendary II: Greatly reduced draw time§r
+§6§oLegendary I: Oversized magazine
+Legendary II: Instant reload
+Legendary III: Sustained fire§r
+§6§oLegendary II: Overload§r
+§6§oLegendary Skill: Guard of Retainers (X to summon)§r
+§6§oLegendary skill: Slowdown§r
+§6§oLegendary: Assisted aim§r
+§6§oLev Marshal's Boots§r
+§6§oLev Marshal's Cap§r
+§6§oLev Marshal's Trousers§r
+§6§oLev Marshal's Tunic§r
+§6§oRPG-7 Legendary§r
+§7Contains a stored bodyguard§r
+§7Empty: right-click your bodyguard to store§r
+§7Have a Stealth Type VII helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§7Scorpion Spawn Egg§r
+§7Slay the Scorpion.§r
+§7Stored: %s§r
+§7When placed, the name follows this dimension's market tier (W/G/B/P/R).§r
+§7§lAmbush the Scorpion!§r
+§7§lBest Lurker!§r
+§7§lLegendary Skill I: Stealth (X to toggle, full set required)§r
+§7§lLegendary Skill II: Anti-Detection§r
+§7§lScorpion§r
+§7§lStealth Type VII Boots§r
+§7§lStealth Type VII Chestplate§r
+§7§lStealth Type VII Helmet§r
+§7§lStealth Type VII Leggings§r
+§8Annihilator Spawn Egg§r
+§8§lAnnihilator§r
+§8§lHK-416D Annihilator§r
+§9Have a Space-Time ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§9Have a Type VII Sculk ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§9Junior Ballistic Steel Armor Plate§r
+§9Junior Blast Steel Armor Plate§r
+§9Junior Carbon Fiber Armor Plate§r
+§9Junior Comprehensive Immunity Needle
+§9Junior Flash Resist Goggles§r
+§9Junior Hardening Needle
+§9Junior Radiation Resist Plate§r
+§9Slay the Annihilator.§r
+§9§6§oTimeless .50 Z-Type Refined§r
+§9§lLegendary I: Extremely high defensive capability§r
+§9§lSpace Bends to Me!§r
+§9§lSpace-Time Ballistic Boots§r
+§9§lSpace-Time Ballistic Helmet§r
+§9§lSpace-Time Ballistic Leg Guards§r
+§9§lSpace-Time Ballistic Vest§r
+§9§lTop Assassin? Nothing Special§r
+§9§lType VII Sculk Ballistic Boots§r
+§9§lType VII Sculk Ballistic Helmet§r
+§9§lType VII Sculk Ballistic Leg Guards§r
+§9§lType VII Sculk Ballistic Vest§r
+§9§lWarrior Who Cleared the Ancient City§r
+§9§o.22 Modle 943 Revolver Refined§r
+§9§o.30-06 Lonetrail Hand Cannon Refined§r
+§9§o.357 Rhino Revolver Refined§r
+§9§oAA12 Shotgun Refined§r
+§9§oAccuracy International AWM Refined§r
+§9§oAKM Refined§r
+§9§oAUG Refined§r
+§9§oB93R Refined§r
+§9§oCZ 75 Refined§r
+§9§oDB-2 Durin Refined§r
+§9§oDB-4 Ursus Refined§r
+§9§oDeagle 50 Refined§r
+§9§oFN EVOLYS Machine Gun Refined§r
+§9§oFN FAL Battle Rifle Refined§r
+§9§oG36K Refined§r
+§9§oGlock 17 Refined§r
+§9§oGolden Deagle 357 Refined§r
+§9§oHK G3 Battle rifle Refined§r
+§9§oHK-416D Refined§r
+§9§oHK-MP5A5 Refined§r
+§9§oM1014 Battle Shotgun Refined§r
+§9§oM107 Sniper Rifle Refined§r
+§9§oM134 Minigun Refined§r
+§9§oM16A1 Service Rifle Refined§r
+§9§oM16A4 Service Rifle Refined§r
+§9§oM1911 Refined§r
+§9§oM249 Machine Gun Refined§r
+§9§oM320 Grenade Launcher Refined§r
+§9§oM4A1 Carbine Refined§r
+§9§oM700 Sniper Rifle Refined§r
+§9§oM870 Refined§r
+§9§oM95 .50 Cal Antimaterial Refined§r
+§9§oM9A4 Refined§r
+§9§oMauser Kar98k Rifle Refined§r
+§9§oMK14 EBR Refined§r
+§9§oMK23 Offensive Pistol Refined§r
+§9§oP320 Refined§r
+§9§oP90 PDW Refined§r
+§9§oQBZ-191 Assault Rifle Refined§r
+§9§oQBZ-95 "Longbow" Refined§r
+§9§oRefined Firearm Upgrade Voucher
+§9§oRPG-7 Refined§r
+§9§oRPK Refined§r
+§9§oSCAR-H Battle Rifle Refined§r
+§9§oSCAR-L Assault Rifle Refined§r
+§9§oSks Tactical Rifle Refined§r
+§9§oSPAS-12 Multi-purpose Shotgun Refined§r
+§9§oSPR-15 HB "Sagittarius" Refined§r
+§9§oSpringfield 1873 Trapdoor Rifle Refined§r
+§9§oTaurus "Raging Hunter" Hand Cannon Refined§r
+§9§oTier III Black Market Terminal§r
+§9§oType 81-1 Service Rifle Refined§r
+§9§oType V Ballistic Boots§r
+§9§oType V Ballistic Helmet§r
+§9§oType V Ballistic Kit§r
+§9§oType V Ballistic Leg Guards§r
+§9§oType V Ballistic Vest§r
+§9§oUMP45 SMG Refined§r
+§9§oUZI Refined§r
+§9§oVector SMG Refined§r
+§aClick this row to trade§r
+§aClick to refresh stock (consumes item above)§r
+§a§6§oTimeless .50 Z-Type Improved§r
+§a§o.22 Modle 943 Revolver Improved§r
+§a§o.30-06 Lonetrail Hand Cannon Improved§r
+§a§o.357 Rhino Revolver Improved§r
+§a§oAA12 Shotgun Improved§r
+§a§oAccuracy International AWM Improved§r
+§a§oAKM Improved§r
+§a§oAUG Improved§r
+§a§oB93R Improved§r
+§a§oCZ 75 Improved§r
+§a§oDB-2 Durin Improved§r
+§a§oDB-4 Ursus Improved§r
+§a§oDeagle 50 Improved§r
+§a§oFN EVOLYS Machine Gun Improved§r
+§a§oFN FAL Battle Rifle Improved§r
+§a§oG36K Improved§r
+§a§oGlock 17 Improved§r
+§a§oGolden Deagle 357 Improved§r
+§a§oHK G3 Battle rifle Improved§r
+§a§oHK-416D Improved§r
+§a§oHK-MP5A5 Improved§r
+§a§oImproved Firearm Upgrade Voucher
+§a§oM1014 Battle Shotgun Improved§r
+§a§oM107 Sniper Rifle Improved§r
+§a§oM134 Minigun Improved§r
+§a§oM16A1 Service Rifle Improved§r
+§a§oM16A4 Service Rifle Improved§r
+§a§oM1911 Improved§r
+§a§oM249 Machine Gun Improved§r
+§a§oM320 Grenade Launcher Improved§r
+§a§oM4A1 Carbine Improved§r
+§a§oM700 Sniper Rifle Improved§r
+§a§oM870 Improved§r
+§a§oM95 .50 Cal Antimaterial Improved§r
+§a§oM9A4 Improved§r
+§a§oMauser Kar98k Rifle Improved§r
+§a§oMK14 EBR Improved§r
+§a§oMK23 Offensive Pistol Improved§r
+§a§oOutlaw!§r
+§a§oP320 Improved§r
+§a§oP90 PDW Improved§r
+§a§oQBZ-191 Assault Rifle Improved§r
+§a§oQBZ-95 "Longbow" Improved§r
+§a§oRPG-7 Improved§r
+§a§oRPK Improved§r
+§a§oSCAR-H Battle Rifle Improved§r
+§a§oSCAR-L Assault Rifle Improved§r
+§a§oSks Tactical Rifle Improved§r
+§a§oSPAS-12 Multi-purpose Shotgun Improved§r
+§a§oSPR-15 HB "Sagittarius" Improved§r
+§a§oSpringfield 1873 Trapdoor Rifle Improved§r
+§a§oStandard Bodyguard Contact§r
+§a§oTaurus "Raging Hunter" Hand Cannon Improved§r
+§a§oTier II Black Market Terminal§r
+§a§oType 81-1 Service Rifle Improved§r
+§a§oType IV Ballistic Boots§r
+§a§oType IV Ballistic Helmet§r
+§a§oType IV Ballistic Kit§r
+§a§oType IV Ballistic Leg Guards§r
+§a§oType IV Ballistic Vest§r
+§a§oUMP45 SMG Improved§r
+§a§oUZI Improved§r
+§a§oVector SMG Improved§r
+§bBomb Sight Spawn Egg§r
+§bHave a Shockwave ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§bHave a stealth helmet, cloak, leggings, and boots in your inventory at the same time.§r
+§bLight-Absorbing Tube§r
+§bSimple Camouflage§r
+§bSkill: Stealth (X to toggle, full set required)§r
+§bSlay Bomb Sight.§r
+§b§lBomb Sight§r
+§b§lHero's Bane!§r
+§b§lJet Engine owo§r
+§b§lLegendary I: Shockwave§r
+§b§lLegendary II: Blast Guard§r
+§b§lLegendary III: Fall Guard§r
+§b§oAA12 Shockwave§r
+§b§oShockwave Ballistic Boots§r
+§b§oShockwave Ballistic Helmet§r
+§b§oShockwave Ballistic Leg Guards§r
+§b§oShockwave Ballistic Vest§r
+§cA core component charged with energy§r
+§cA device that provides thrust§r
+§cAdvanced Ballistic Steel Armor Plate§r
+§cAdvanced Blast Steel Armor Plate§r
+§cAdvanced Carbon Fiber Armor Plate§r
+§cAdvanced Comprehensive Immunity Needle
+§cAdvanced Flash Resist Goggles§r
+§cAdvanced Hardening Needle
+§cAdvanced Radiation Resist Plate§r
+§cCannot afford refresh§r
+§cCeiling Duel Spawn Egg§r
+§cNot enough items in inventory§r
+§cSeventh Grade Steel Ingot§r
+§cSlay Lev Marshal.§r
+§cSuccessfully defeat the legendary super special forces — Ceiling Duel§r
+§cSuper Potion§r
+§c§6§oTimeless .50 Z-Type Excellent§r
+§c§lAbove the Ceiling§r
+§c§lCeiling Duel§r
+§c§lJoker Type VII Helmet§r
+§c§lLegendary Skill: Head Defense§r
+§c§lLegendary skill: Helmet Penetration
+§c§lM4_Ceiling Duel§r
+§c§lRed Energy Core§r
+§c§lRed Power Thruster§r
+§c§lWarlord? Nothing Special!§r
+§c§o.22 Modle 943 Revolver Excellent§r
+§c§o.30-06 Lonetrail Hand Cannon Excellent§r
+§c§o.357 Rhino Revolver Excellent§r
+§c§oAA12 Shotgun Excellent§r
+§c§oAccuracy International AWM Excellent§r
+§c§oAKM Excellent§r
+§c§oAUG Excellent§r
+§c§oB93R Excellent§r
+§c§oCZ 75 Excellent§r
+§c§oDB-2 Durin Excellent§r
+§c§oDB-4 Ursus Excellent§r
+§c§oDeagle 50 Excellent§r
+§c§oDemon Lord Bodyguard Contact§r
+§c§oExcellent Firearm Upgrade Voucher
+§c§oFN EVOLYS Machine Gun Excellent§r
+§c§oFN FAL Battle Rifle Excellent§r
+§c§oG36K Excellent§r
+§c§oGlock 17 Excellent§r
+§c§oGolden Deagle 357 Excellent§r
+§c§oHK G3 Battle rifle Excellent§r
+§c§oHK-416D Excellent§r
+§c§oHK-MP5A5 Excellent§r
+§c§oHunter's List§r
+§c§oKingpin§r
+§c§oM1014 Battle Shotgun Excellent§r
+§c§oM107 Sniper Rifle Excellent§r
+§c§oM134 Minigun Excellent§r
+§c§oM16A1 Service Rifle Excellent§r
+§c§oM16A4 Service Rifle Excellent§r
+§c§oM1911 Excellent§r
+§c§oM249 Machine Gun Excellent§r
+§c§oM320 Grenade Launcher Excellent§r
+§c§oM4A1 Carbine Excellent§r
+§c§oM700 Sniper Rifle Excellent§r
+§c§oM870 Excellent§r
+§c§oM95 .50 Cal Antimaterial Excellent§r
+§c§oM9A4 Excellent§r
+§c§oMauser Kar98k Rifle Excellent§r
+§c§oMK14 EBR Excellent§r
+§c§oMK23 Offensive Pistol Excellent§r
+§c§oP320 Excellent§r
+§c§oP90 PDW Excellent§r
+§c§oQBZ-191 Assault Rifle Excellent§r
+§c§oQBZ-95 "Longbow" Excellent§r
+§c§oRPG-7 Excellent§r
+§c§oRPK Excellent§r
+§c§oSCAR-H Battle Rifle Excellent§r
+§c§oSCAR-L Assault Rifle Excellent§r
+§c§oSks Tactical Rifle Excellent§r
+§c§oSPAS-12 Multi-purpose Shotgun Excellent§r
+§c§oSPR-15 HB "Sagittarius" Excellent§r
+§c§oSpringfield 1873 Trapdoor Rifle Excellent§r
+§c§oTaurus "Raging Hunter" Hand Cannon Excellent§r
+§c§oTier V Black Market Terminal§r
+§c§oType 81-1 Service Rifle Excellent§r
+§c§oType VII Ballistic Boots§r
+§c§oType VII Ballistic Helmet§r
+§c§oType VII Ballistic Kit§r
+§c§oType VII Ballistic Leg Guards§r
+§c§oType VII Ballistic Vest§r
+§c§oUMP45 SMG Excellent§r
+§c§oUZI Excellent§r
+§c§oVector SMG Excellent§r
+§c§oWar Machine and bounty targets.§r
+§dHave a Punisher Type VII ballistic helmet, chestplate, leggings, and boots in your inventory at the same time.§r
+§dPunisher Shoulder Cannon Plugin§r
+§dPunisher Shoulder Cannon§r
+§dPunisher Spawn Egg§r
+§dSlay the Punisher.§r
+§d§lPrisoner Who Carries Out the Sentence?§r
+§d§lPunisher FN EVOLYS Machine Gun§r
+§d§lPunisher§r
+§d§lThe Accused's Verdict!§r
+§d§oBeauty Bodyguard Contact§r
+§d§oPunisher Type VII Ballistic Boots§r
+§d§oPunisher Type VII Ballistic Helmet§r
+§d§oPunisher Type VII Ballistic Leg Guards§r
+§d§oPunisher Type VII Ballistic Vest§r
+§e§lLegendary I: Radiation Guard§r
+§e§oRolling in It§r
+§f§oA Small Start§r
+§f§oTier I Black Market Terminal§r

@@ -1,0 +1,225 @@
+§4§lBlast MK14§r
+§4§lRapid-Fire Grenade Cannon§r
+§5§6§oTimeless .50 Z-Type Perfect§r
+§5§o.22 Modle 943 Revolver Perfect§r
+§5§o.30-06 Lonetrail Hand Cannon Perfect§r
+§5§o.357 Rhino Revolver Perfect§r
+§5§oAA12 Shotgun Perfect§r
+§5§oAKM Perfect§r
+§5§oAUG Perfect§r
+§5§oAccuracy International AWM Perfect§r
+§5§oB93R Perfect§r
+§5§oCZ 75 Perfect§r
+§5§oDB-2 Durin Perfect§r
+§5§oDB-4 Ursus Perfect§r
+§5§oDeagle 50 Perfect§r
+§5§oFN EVOLYS Machine Gun Perfect§r
+§5§oFN FAL Battle Rifle Perfect§r
+§5§oG36K Perfect§r
+§5§oGlock 17 Perfect§r
+§5§oGolden Deagle 357 Perfect§r
+§5§oHK G3 Battle rifle Perfect§r
+§5§oHK-416D Perfect§r
+§5§oHK-MP5A5 Perfect§r
+§5§oM1014 Battle Shotgun Perfect§r
+§5§oM107 Sniper Rifle Perfect§r
+§5§oM134 Minigun Perfect§r
+§5§oM16A1 Service Rifle Perfect§r
+§5§oM16A4 Service Rifle Perfect§r
+§5§oM1911 Perfect§r
+§5§oM249 Machine Gun Perfect§r
+§5§oM320 Grenade Launcher Perfect§r
+§5§oM4A1 Carbine Perfect§r
+§5§oM700 Sniper Rifle Perfect§r
+§5§oM870 Perfect§r
+§5§oM95 .50 Cal Antimaterial Perfect§r
+§5§oM9A4 Perfect§r
+§5§oMK14 EBR Perfect§r
+§5§oMK23 Offensive Pistol Perfect§r
+§5§oMauser Kar98k Rifle Perfect§r
+§5§oP320 Perfect§r
+§5§oP90 PDW Perfect§r
+§5§oQBZ-191 Assault Rifle Perfect§r
+§5§oQBZ-95 "Longbow" Perfect§r
+§5§oRPG-7 Perfect§r
+§5§oRPK Perfect§r
+§5§oSCAR-H Battle Rifle Perfect§r
+§5§oSCAR-L Assault Rifle Perfect§r
+§5§oSPAS-12 Multi-purpose Shotgun Perfect§r
+§5§oSPR-15 HB "Sagittarius" Perfect§r
+§5§oSks Tactical Rifle Perfect§r
+§5§oSpringfield 1873 Trapdoor Rifle Perfect§r
+§5§oTaurus "Raging Hunter" Hand Cannon Perfect§r
+§5§oType 81-1 Service Rifle Perfect§r
+§5§oUMP45 SMG Perfect§r
+§5§oUZI Perfect§r
+§5§oVector SMG Perfect§r
+§6§o.22 Model 943 Revolver Legendary§r
+§6§oGatling War Machine§r
+§6§oRPG-7 Legendary§r
+§8§lHK-416D Annihilator§r
+§9§6§oTimeless .50 Z-Type Refined§r
+§9§o.22 Modle 943 Revolver Refined§r
+§9§o.30-06 Lonetrail Hand Cannon Refined§r
+§9§o.357 Rhino Revolver Refined§r
+§9§oAA12 Shotgun Refined§r
+§9§oAKM Refined§r
+§9§oAUG Refined§r
+§9§oAccuracy International AWM Refined§r
+§9§oB93R Refined§r
+§9§oCZ 75 Refined§r
+§9§oDB-2 Durin Refined§r
+§9§oDB-4 Ursus Refined§r
+§9§oDeagle 50 Refined§r
+§9§oFN EVOLYS Machine Gun Refined§r
+§9§oFN FAL Battle Rifle Refined§r
+§9§oG36K Refined§r
+§9§oGlock 17 Refined§r
+§9§oGolden Deagle 357 Refined§r
+§9§oHK G3 Battle rifle Refined§r
+§9§oHK-416D Refined§r
+§9§oHK-MP5A5 Refined§r
+§9§oM1014 Battle Shotgun Refined§r
+§9§oM107 Sniper Rifle Refined§r
+§9§oM134 Minigun Refined§r
+§9§oM16A1 Service Rifle Refined§r
+§9§oM16A4 Service Rifle Refined§r
+§9§oM1911 Refined§r
+§9§oM249 Machine Gun Refined§r
+§9§oM320 Grenade Launcher Refined§r
+§9§oM4A1 Carbine Refined§r
+§9§oM700 Sniper Rifle Refined§r
+§9§oM870 Refined§r
+§9§oM95 .50 Cal Antimaterial Refined§r
+§9§oM9A4 Refined§r
+§9§oMK14 EBR Refined§r
+§9§oMK23 Offensive Pistol Refined§r
+§9§oMauser Kar98k Rifle Refined§r
+§9§oP320 Refined§r
+§9§oP90 PDW Refined§r
+§9§oQBZ-191 Assault Rifle Refined§r
+§9§oQBZ-95 "Longbow" Refined§r
+§9§oRPG-7 Refined§r
+§9§oRPK Refined§r
+§9§oSCAR-H Battle Rifle Refined§r
+§9§oSCAR-L Assault Rifle Refined§r
+§9§oSPAS-12 Multi-purpose Shotgun Refined§r
+§9§oSPR-15 HB "Sagittarius" Refined§r
+§9§oSks Tactical Rifle Refined§r
+§9§oSpringfield 1873 Trapdoor Rifle Refined§r
+§9§oTaurus "Raging Hunter" Hand Cannon Refined§r
+§9§oType 81-1 Service Rifle Refined§r
+§9§oUMP45 SMG Refined§r
+§9§oUZI Refined§r
+§9§oVector SMG Refined§r
+§a§6§oTimeless .50 Z-Type Improved§r
+§a§o.22 Modle 943 Revolver Improved§r
+§a§o.30-06 Lonetrail Hand Cannon Improved§r
+§a§o.357 Rhino Revolver Improved§r
+§a§oAA12 Shotgun Improved§r
+§a§oAKM Improved§r
+§a§oAUG Improved§r
+§a§oAccuracy International AWM Improved§r
+§a§oB93R Improved§r
+§a§oCZ 75 Improved§r
+§a§oDB-2 Durin Improved§r
+§a§oDB-4 Ursus Improved§r
+§a§oDeagle 50 Improved§r
+§a§oFN EVOLYS Machine Gun Improved§r
+§a§oFN FAL Battle Rifle Improved§r
+§a§oG36K Improved§r
+§a§oGlock 17 Improved§r
+§a§oGolden Deagle 357 Improved§r
+§a§oHK G3 Battle rifle Improved§r
+§a§oHK-416D Improved§r
+§a§oHK-MP5A5 Improved§r
+§a§oM1014 Battle Shotgun Improved§r
+§a§oM107 Sniper Rifle Improved§r
+§a§oM134 Minigun Improved§r
+§a§oM16A1 Service Rifle Improved§r
+§a§oM16A4 Service Rifle Improved§r
+§a§oM1911 Improved§r
+§a§oM249 Machine Gun Improved§r
+§a§oM320 Grenade Launcher Improved§r
+§a§oM4A1 Carbine Improved§r
+§a§oM700 Sniper Rifle Improved§r
+§a§oM870 Improved§r
+§a§oM95 .50 Cal Antimaterial Improved§r
+§a§oM9A4 Improved§r
+§a§oMK14 EBR Improved§r
+§a§oMK23 Offensive Pistol Improved§r
+§a§oMauser Kar98k Rifle Improved§r
+§a§oP320 Improved§r
+§a§oP90 PDW Improved§r
+§a§oQBZ-191 Assault Rifle Improved§r
+§a§oQBZ-95 "Longbow" Improved§r
+§a§oRPG-7 Improved§r
+§a§oRPK Improved§r
+§a§oSCAR-H Battle Rifle Improved§r
+§a§oSCAR-L Assault Rifle Improved§r
+§a§oSPAS-12 Multi-purpose Shotgun Improved§r
+§a§oSPR-15 HB "Sagittarius" Improved§r
+§a§oSks Tactical Rifle Improved§r
+§a§oSpringfield 1873 Trapdoor Rifle Improved§r
+§a§oTaurus "Raging Hunter" Hand Cannon Improved§r
+§a§oType 81-1 Service Rifle Improved§r
+§a§oUMP45 SMG Improved§r
+§a§oUZI Improved§r
+§a§oVector SMG Improved§r
+§b§oAA12 Shockwave§r
+§c§6§oTimeless .50 Z-Type Excellent§r
+§c§lM4_Ceiling Duel§r
+§c§o.22 Modle 943 Revolver Excellent§r
+§c§o.30-06 Lonetrail Hand Cannon Excellent§r
+§c§o.357 Rhino Revolver Excellent§r
+§c§oAA12 Shotgun Excellent§r
+§c§oAKM Excellent§r
+§c§oAUG Excellent§r
+§c§oAccuracy International AWM Excellent§r
+§c§oB93R Excellent§r
+§c§oCZ 75 Excellent§r
+§c§oDB-2 Durin Excellent§r
+§c§oDB-4 Ursus Excellent§r
+§c§oDeagle 50 Excellent§r
+§c§oFN EVOLYS Machine Gun Excellent§r
+§c§oFN FAL Battle Rifle Excellent§r
+§c§oG36K Excellent§r
+§c§oGlock 17 Excellent§r
+§c§oGolden Deagle 357 Excellent§r
+§c§oHK G3 Battle rifle Excellent§r
+§c§oHK-416D Excellent§r
+§c§oHK-MP5A5 Excellent§r
+§c§oM1014 Battle Shotgun Excellent§r
+§c§oM107 Sniper Rifle Excellent§r
+§c§oM134 Minigun Excellent§r
+§c§oM16A1 Service Rifle Excellent§r
+§c§oM16A4 Service Rifle Excellent§r
+§c§oM1911 Excellent§r
+§c§oM249 Machine Gun Excellent§r
+§c§oM320 Grenade Launcher Excellent§r
+§c§oM4A1 Carbine Excellent§r
+§c§oM700 Sniper Rifle Excellent§r
+§c§oM870 Excellent§r
+§c§oM95 .50 Cal Antimaterial Excellent§r
+§c§oM9A4 Excellent§r
+§c§oMK14 EBR Excellent§r
+§c§oMK23 Offensive Pistol Excellent§r
+§c§oMauser Kar98k Rifle Excellent§r
+§c§oP320 Excellent§r
+§c§oP90 PDW Excellent§r
+§c§oQBZ-191 Assault Rifle Excellent§r
+§c§oQBZ-95 "Longbow" Excellent§r
+§c§oRPG-7 Excellent§r
+§c§oRPK Excellent§r
+§c§oSCAR-H Battle Rifle Excellent§r
+§c§oSCAR-L Assault Rifle Excellent§r
+§c§oSPAS-12 Multi-purpose Shotgun Excellent§r
+§c§oSPR-15 HB "Sagittarius" Excellent§r
+§c§oSks Tactical Rifle Excellent§r
+§c§oSpringfield 1873 Trapdoor Rifle Excellent§r
+§c§oTaurus "Raging Hunter" Hand Cannon Excellent§r
+§c§oType 81-1 Service Rifle Excellent§r
+§c§oUMP45 SMG Excellent§r
+§c§oUZI Excellent§r
+§c§oVector SMG Excellent§r
+§d§lPunisher FN EVOLYS Machine Gun§r
