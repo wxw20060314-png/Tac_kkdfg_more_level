@@ -7,15 +7,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 /**
- * 战争机器切枪：严格看见持续 → 加特林；否则穿透档持续 → RPG。
+ * 战争机器切枪：严格看见持续 → 加特林；严格看不见持续 → RPG（不设穿透上限）。
+ * 寻敌仍由 {@link WarMachineTargetGoal} 用 RPG 穿透档；本 Goal 只看严格视线 + 持续 tick。
  * 认枪用实体偏好标记（main / offhand），不写死常量。
  * 不占 Flag，与 Fire/Move 并行。
  */
 public final class WarMachineWeaponSwapGoal extends Goal {
 
-    public static final int STRICT_SEE_TICKS_FOR_MINIGUN = 3;
+    public static final int STRICT_SEE_TICKS_FOR_MINIGUN = 40;
     public static final int NO_STRICT_SEE_TICKS_FOR_RPG = 10;
-    public static final int RPG_SEE_TICKS_TO_SHOOT = 3;
 
     private static final int SWAP_COOLDOWN_TICKS = 4;
 
@@ -33,7 +33,10 @@ public final class WarMachineWeaponSwapGoal extends Goal {
     @Override
     public boolean canUse() {
         LivingEntity target = this.mob.getTarget();
-        return target != null && target.isAlive() && IGun.mainHandHoldGun(this.mob);
+        return target != null
+                && target.isAlive()
+                && IGun.mainHandHoldGun(this.mob)
+                && this.mob.hasPreferredPairInHands();
     }
 
     @Override
@@ -63,9 +66,7 @@ public final class WarMachineWeaponSwapGoal extends Goal {
         if (this.swapCooldown > 0) {
             this.swapCooldown--;
         }
-        WarMachineGunSight.Result sight = WarMachineGunSight.evaluate(this.mob, target);
-        boolean strictSee = sight.strictLineOfSight();
-        boolean rpgSee = sight.rpgLineOfSight();
+        boolean strictSee = WarMachineGunSight.hasStrictLineOfSight(this.mob, target);
         if (strictSee != this.lastStrictSee) {
             this.strictSeeTime = 0;
             this.noStrictSeeTime = 0;
@@ -77,9 +78,11 @@ public final class WarMachineWeaponSwapGoal extends Goal {
         this.lastStrictSee = strictSee;
 
         boolean wantMinigun = strictSee && this.strictSeeTime >= STRICT_SEE_TICKS_FOR_MINIGUN;
-        boolean wantRpg =
-                rpgSee && !wantMinigun && this.noStrictSeeTime >= NO_STRICT_SEE_TICKS_FOR_RPG;
-        if (this.mob.level().isClientSide() || this.swapCooldown > 0) {
+        boolean wantRpg = !strictSee && this.noStrictSeeTime >= NO_STRICT_SEE_TICKS_FOR_RPG;
+        if (this.mob.level().isClientSide()
+                || this.swapCooldown > 0
+                || !this.mob.canOperateWeaponSwap()
+                || !this.mob.hasPreferredPairInHands()) {
             return;
         }
         boolean holdingMinigun = this.mob.isHoldingPreferredMainGun();

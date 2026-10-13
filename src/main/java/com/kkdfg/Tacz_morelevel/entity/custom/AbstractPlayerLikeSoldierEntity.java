@@ -16,6 +16,9 @@ import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
+import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
@@ -115,7 +118,7 @@ import net.minecraft.util.RandomSource;
 public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         implements RangedAttackMob, GunEquippedMob, MilitiaAcquireTargetVoice, PlayerLikeHeadBodyYawMob,
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
-                JumpActingMob {
+                JumpActingMob, SoldierWeaponArrangeHost {
 
     /** NBT 键：持久化的皮肤索引。 */
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
@@ -625,6 +628,18 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         }
         this.goalSelector.addGoal(2, gun);
         this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, melee));
+        if (this.mountsMainhandWeaponArrangeGoals()) {
+            this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
+            this.goalSelector.addGoal(1, new MobGunIdleMainhandArrangeGoal(this));
+        }
+    }
+
+    /**
+     * 是否挂主手整理 Goal。默认 true；{@link AbstractHolsterGunSoldierEntity} /
+     * {@link AbstractDualGunSoldierEntity} 关掉（各自有枪套 / 双枪逻辑）。
+     */
+    protected boolean mountsMainhandWeaponArrangeGoals() {
+        return true;
     }
 
     /**
@@ -749,6 +764,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     /**
      * 放入士兵背包空格；满则 false（丢弃后续再做）。调用方自行清空来源槽。
      */
+    @Override
     public boolean tryPutIntoSoldierBackpack(ItemStack stack) {
         if (this.level().isClientSide()) {
             return false;
@@ -762,6 +778,132 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     public boolean tryTakeGunFromSoldierBackpack(
             @Nullable ResourceLocation preferredOrNull, EquipmentSlot dest) {
         return SoldierBackpack.tryTakeGun(this.soldierBackpack, this, preferredOrNull, dest);
+    }
+
+    /** 背包是否含指定枪（{@code null} 则任意枪）。 */
+    public boolean hasGunInSoldierBackpack(@Nullable ResourceLocation gunIdOrNull) {
+        return SoldierBackpack.containsGun(this.soldierBackpack, gunIdOrNull);
+    }
+
+    /** 背包格子（整理 / 偏好逻辑读写）。 */
+    @Override
+    public NonNullList<ItemStack> soldierBackpackSlots() {
+        return this.soldierBackpack;
+    }
+
+    /** 手槽与背包第 {@code index} 格交换。 */
+    @Override
+    public void swapHandWithSoldierBackpackSlot(EquipmentSlot hand, int index) {
+        if (this.level().isClientSide()
+                || index < 0
+                || index >= this.soldierBackpack.size()) {
+            return;
+        }
+        ItemStack bag = this.soldierBackpack.get(index);
+        ItemStack held = this.getItemBySlot(hand);
+        this.soldierBackpack.set(index, held.isEmpty() ? ItemStack.EMPTY : held.copy());
+        this.setItemSlot(hand, bag);
+    }
+
+    @Override
+    public Mob asArrangeLiving() {
+        return this;
+    }
+
+    @Override
+    public void swapMainAndOffhand() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        ItemStack main = this.getMainHandItem().copy();
+        ItemStack off = this.getOffhandItem().copy();
+        this.setItemSlot(EquipmentSlot.MAINHAND, off);
+        this.setItemSlot(EquipmentSlot.OFFHAND, main);
+    }
+
+    @Override
+    public boolean canOperateWeaponSwap() {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        return op.getSynDrawCoolDown() == 0L
+                && !op.getSynIsBolting()
+                && !op.getSynReloadState().getStateType().isReloading();
+    }
+
+    @Override
+    public void afterCombatMainhandArrange(boolean hadMainGunBefore) {
+        if (IGun.mainHandHoldGun(this)) {
+            IGunOperator op = IGunOperator.fromLivingEntity(this);
+            op.initialData();
+            op.draw(this::getMainHandItem);
+            TaczGunMobHelper.tickInfiniteMobAmmo(this);
+            this.setAggressive(true);
+            this.reassessWeaponGoal();
+        } else if (hadMainGunBefore) {
+            this.reassessWeaponGoal();
+        }
+    }
+
+    @Override
+    public void afterIdleMainhandArrange() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        op.aim(false);
+        op.cancelReload();
+        this.setAggressive(false);
+        this.reassessWeaponGoal();
+    }
+
+    @Override
+    public int noTargetWeaponArrangeTtl() {
+        return NO_TARGET_WEAPON_ARRANGE_TTL;
+    }
+
+    /**
+     * 叠堆：背包内合并，再把主/副手可叠物品并入背包已有堆（不新占空格）；双手之间同种也并。
+     */
+    @Override
+    public void compactSoldierInventory() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        SoldierBackpack.compact(this.soldierBackpack);
+        this.mergeHandIntoBackpack(EquipmentSlot.MAINHAND);
+        this.mergeHandIntoBackpack(EquipmentSlot.OFFHAND);
+        this.mergeHandsTogether();
+        SoldierBackpack.compact(this.soldierBackpack);
+    }
+
+    private void mergeHandIntoBackpack(EquipmentSlot hand) {
+        ItemStack stack = this.getItemBySlot(hand);
+        if (stack.isEmpty()) {
+            return;
+        }
+        if (SoldierBackpack.tryMergeIntoExisting(this.soldierBackpack, stack) && stack.isEmpty()) {
+            this.setItemSlot(hand, ItemStack.EMPTY);
+        }
+    }
+
+    /** 主手 → 副手（同种可叠则并）。 */
+    private void mergeHandsTogether() {
+        ItemStack main = this.getMainHandItem();
+        ItemStack off = this.getOffhandItem();
+        if (main.isEmpty() || off.isEmpty() || !main.isStackable() || !ItemStack.isSameItemSameTags(main, off)) {
+            return;
+        }
+        int move = Math.min(main.getCount(), off.getMaxStackSize() - off.getCount());
+        if (move <= 0) {
+            return;
+        }
+        off.grow(move);
+        main.shrink(move);
+        if (main.isEmpty()) {
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        }
     }
 
     /**

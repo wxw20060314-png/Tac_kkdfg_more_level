@@ -167,6 +167,7 @@ public final class BeautyBodyguardEntity extends AbstractFriendlyCompanionEntity
         this.goalSelector.addGoal(1, new CompanionMobRandomSneakWithTargetInShortDistanceGoal(this,
                 g.shortSneakTimeDelay, g.shortSneakTime, g.shortSneakRandomTime, g.shortSneakDistance, g.shortSneakEnabled));
         this.goalSelector.addGoal(1, new CompanionMobRandomJumpGoal(this, g.jumpChance, g.jumpEnabled, g.jumpMaxDistance));
+        this.registerCompanionWeaponArrangeGoals();
         this.registerCompanionGunReloadGoal();
     }
 

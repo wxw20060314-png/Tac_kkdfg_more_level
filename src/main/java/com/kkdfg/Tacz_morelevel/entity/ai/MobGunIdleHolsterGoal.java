@@ -1,10 +1,13 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
+import com.kkdfg.Tacz_morelevel.entity.SoldierCombatItemPreference;
 import com.kkdfg.Tacz_morelevel.entity.custom.AbstractHolsterGunSoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.AbstractPlayerLikeSoldierEntity;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
 import javax.annotation.Nullable;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,9 +16,13 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * 枪套闲置整理：无存活目标连续 {@link AbstractPlayerLikeSoldierEntity#NO_TARGET_WEAPON_ARRANGE_TTL}
- * tick 后，整理为副手偏好枪、主手空（偏好 null=任意枪）。
+ * tick 后，最高战斗偏好物品放副手，主手清空（塞包 / 丢最低分）。
  */
 public final class MobGunIdleHolsterGoal extends Goal {
+
+    private static final int DROP_ATTEMPTS_MAX = SoldierBackpack.SLOTS + 4;
+    private static final EquipmentSlot DEST = EquipmentSlot.OFFHAND;
+    private static final EquipmentSlot OTHER = EquipmentSlot.MAINHAND;
 
     private final AbstractHolsterGunSoldierEntity mob;
     private int noTargetTicks;
@@ -36,8 +43,12 @@ public final class MobGunIdleHolsterGoal extends Goal {
             return false;
         }
         this.noTargetTicks++;
-        return this.noTargetTicks >= AbstractPlayerLikeSoldierEntity.NO_TARGET_WEAPON_ARRANGE_TTL
-                && !this.isReady();
+        boolean delay = false;
+        if (this.noTargetTicks >= AbstractPlayerLikeSoldierEntity.NO_TARGET_WEAPON_ARRANGE_TTL) {
+            delay = true;
+            this.noTargetTicks = 0;
+        }
+        return delay && !this.isReady();
     }
 
     @Override
@@ -45,9 +56,11 @@ public final class MobGunIdleHolsterGoal extends Goal {
         if (this.isReady()) {
             return;
         }
-        // 扫描：主 → 副 → 包；目标手=副手
-        this.ensurePreferredInOffhand();
-        this.stashHand(EquipmentSlot.MAINHAND);
+        this.mob.compactSoldierInventory();
+        ResourceLocation preferred = this.mob.getPreferredMainGunDataId();
+        ResourceLocation keeper = this.resolveKeeperGunId(preferred);
+        this.moveBestToDest(preferred, keeper);
+        this.clearOtherHand(preferred, keeper);
         this.mob.applyIdleHolsterEffects();
     }
 
@@ -61,66 +74,176 @@ public final class MobGunIdleHolsterGoal extends Goal {
         return true;
     }
 
-    /** 主空 + 副手偏好（或任意）枪。 */
     private boolean isReady() {
-        return this.mob.getMainHandItem().isEmpty() && this.matchesPreferred(this.mob.getOffhandItem());
-    }
-
-    private boolean matchesPreferred(@Nullable ItemStack stack) {
-        IGun gun = IGun.getIGunOrNull(stack);
-        if (gun == null || stack == null) {
+        if (!this.mob.getItemBySlot(OTHER).isEmpty()) {
+            return false;
+        }
+        ItemStack held = this.mob.getItemBySlot(DEST);
+        if (held.isEmpty()) {
             return false;
         }
         ResourceLocation preferred = this.mob.getPreferredMainGunDataId();
-        return preferred == null || preferred.equals(gun.getGunId(stack));
+        ResourceLocation keeper = this.resolveKeeperGunId(preferred);
+        int heldScore = SoldierCombatItemPreference.score(held, preferred, keeper);
+        return heldScore == this.maxScore(preferred, keeper);
     }
 
-    private void ensurePreferredInOffhand() {
-        EquipmentSlot dest = EquipmentSlot.OFFHAND;
-        if (this.matchesPreferred(this.mob.getItemBySlot(dest))) {
-            return;
-        }
-        if (this.moveMatchingTo(dest, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND, true)) {
-            return;
-        }
-        if (this.mob.tryTakeGunFromSoldierBackpack(this.mob.getPreferredMainGunDataId(), dest)) {
-            return;
-        }
-        if (this.moveMatchingTo(dest, EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND, false)) {
-            return;
-        }
-        this.mob.tryTakeGunFromSoldierBackpack(null, dest);
-    }
+    private void moveBestToDest(
+            @Nullable ResourceLocation preferred, @Nullable ResourceLocation keeper) {
+        int bestScore = SoldierCombatItemPreference.GRADE_EMPTY;
+        int bestBag = -1;
+        EquipmentSlot bestHand = null;
 
-    private boolean moveMatchingTo(
-            EquipmentSlot dest, EquipmentSlot first, EquipmentSlot second, boolean preferredOnly) {
-        if (this.handMatches(first, preferredOnly)) {
-            if (first != dest) {
-                this.mob.swapMainAndOffhand();
+        int mainScore =
+                SoldierCombatItemPreference.score(this.mob.getMainHandItem(), preferred, keeper);
+        if (mainScore > bestScore) {
+            bestScore = mainScore;
+            bestHand = EquipmentSlot.MAINHAND;
+            bestBag = -1;
+        }
+        int offScore =
+                SoldierCombatItemPreference.score(this.mob.getOffhandItem(), preferred, keeper);
+        if (offScore > bestScore) {
+            bestScore = offScore;
+            bestHand = EquipmentSlot.OFFHAND;
+            bestBag = -1;
+        }
+        NonNullList<ItemStack> bag = this.mob.soldierBackpackSlots();
+        for (int i = 0; i < bag.size(); i++) {
+            int s = SoldierCombatItemPreference.score(bag.get(i), preferred, keeper);
+            if (s > bestScore) {
+                bestScore = s;
+                bestHand = null;
+                bestBag = i;
             }
-            return this.handMatches(dest, preferredOnly);
         }
-        if (this.handMatches(second, preferredOnly)) {
-            if (second != dest) {
-                this.mob.swapMainAndOffhand();
-            }
-            return this.handMatches(dest, preferredOnly);
-        }
-        return false;
-    }
-
-    private boolean handMatches(EquipmentSlot slot, boolean preferredOnly) {
-        ItemStack stack = this.mob.getItemBySlot(slot);
-        return preferredOnly ? this.matchesPreferred(stack) : IGun.getIGunOrNull(stack) != null;
-    }
-
-    private void stashHand(EquipmentSlot hand) {
-        ItemStack stack = this.mob.getItemBySlot(hand);
-        if (stack.isEmpty()) {
+        if (bestScore == SoldierCombatItemPreference.GRADE_EMPTY) {
             return;
         }
-        if (this.mob.tryPutIntoSoldierBackpack(stack)) {
-            this.mob.setItemSlot(hand, ItemStack.EMPTY);
+        if (bestHand == DEST) {
+            return;
         }
+        if (bestHand != null) {
+            this.mob.swapMainAndOffhand();
+            return;
+        }
+        if (bestBag >= 0) {
+            this.mob.swapHandWithSoldierBackpackSlot(DEST, bestBag);
+        }
+    }
+
+    private void clearOtherHand(
+            @Nullable ResourceLocation preferred, @Nullable ResourceLocation keeper) {
+        for (int n = 0; n < DROP_ATTEMPTS_MAX; n++) {
+            ItemStack stack = this.mob.getItemBySlot(OTHER);
+            if (stack.isEmpty()) {
+                return;
+            }
+            if (this.mob.tryPutIntoSoldierBackpack(stack)) {
+                this.mob.setItemSlot(OTHER, ItemStack.EMPTY);
+                return;
+            }
+            if (!this.dropLowest(preferred, keeper)) {
+                this.mob.spawnAtLocation(stack.copy());
+                this.mob.setItemSlot(OTHER, ItemStack.EMPTY);
+                return;
+            }
+        }
+    }
+
+    private boolean dropLowest(
+            @Nullable ResourceLocation preferred, @Nullable ResourceLocation keeper) {
+        int lowest = Integer.MAX_VALUE;
+        int bagIdx = -1;
+        boolean dropOtherHand = false;
+
+        ItemStack otherStack = this.mob.getItemBySlot(OTHER);
+        if (!otherStack.isEmpty()) {
+            int s = SoldierCombatItemPreference.score(otherStack, preferred, keeper);
+            if (s < lowest) {
+                lowest = s;
+                dropOtherHand = true;
+                bagIdx = -1;
+            }
+        }
+        NonNullList<ItemStack> bag = this.mob.soldierBackpackSlots();
+        for (int i = 0; i < bag.size(); i++) {
+            ItemStack stack = bag.get(i);
+            if (stack.isEmpty()) {
+                continue;
+            }
+            int s = SoldierCombatItemPreference.score(stack, preferred, keeper);
+            if (s < lowest) {
+                lowest = s;
+                dropOtherHand = false;
+                bagIdx = i;
+            }
+        }
+        if (lowest == Integer.MAX_VALUE) {
+            return false;
+        }
+        if (dropOtherHand) {
+            this.mob.spawnAtLocation(otherStack.copy());
+            this.mob.setItemSlot(OTHER, ItemStack.EMPTY);
+            return true;
+        }
+        ItemStack dropped = bag.get(bagIdx).copy();
+        bag.set(bagIdx, ItemStack.EMPTY);
+        this.mob.spawnAtLocation(dropped);
+        return true;
+    }
+
+    private int maxScore(
+            @Nullable ResourceLocation preferred, @Nullable ResourceLocation keeper) {
+        int max = SoldierCombatItemPreference.GRADE_EMPTY;
+        max =
+                Math.max(
+                        max,
+                        SoldierCombatItemPreference.score(
+                                this.mob.getMainHandItem(), preferred, keeper));
+        max =
+                Math.max(
+                        max,
+                        SoldierCombatItemPreference.score(
+                                this.mob.getOffhandItem(), preferred, keeper));
+        for (ItemStack stack : this.mob.soldierBackpackSlots()) {
+            max = Math.max(max, SoldierCombatItemPreference.score(stack, preferred, keeper));
+        }
+        return max;
+    }
+
+    @Nullable
+    private ResourceLocation resolveKeeperGunId(@Nullable ResourceLocation preferred) {
+        if (preferred != null && this.hasGunId(preferred)) {
+            return preferred;
+        }
+        ItemStack main = this.mob.getMainHandItem();
+        IGun mainGun = IGun.getIGunOrNull(main);
+        if (mainGun != null) {
+            return mainGun.getGunId(main);
+        }
+        ItemStack off = this.mob.getOffhandItem();
+        IGun offGun = IGun.getIGunOrNull(off);
+        if (offGun != null) {
+            return offGun.getGunId(off);
+        }
+        for (ItemStack stack : this.mob.soldierBackpackSlots()) {
+            IGun gun = IGun.getIGunOrNull(stack);
+            if (gun != null) {
+                return gun.getGunId(stack);
+            }
+        }
+        return null;
+    }
+
+    private boolean hasGunId(ResourceLocation gunId) {
+        return this.gunMatches(this.mob.getMainHandItem(), gunId)
+                || this.gunMatches(this.mob.getOffhandItem(), gunId)
+                || SoldierBackpack.containsGun(this.mob.soldierBackpackSlots(), gunId);
+    }
+
+    private boolean gunMatches(ItemStack stack, ResourceLocation gunId) {
+        IGun gun = IGun.getIGunOrNull(stack);
+        return gun != null && gunId.equals(gun.getGunId(stack));
     }
 }

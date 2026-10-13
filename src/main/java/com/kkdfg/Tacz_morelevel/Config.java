@@ -200,6 +200,15 @@ public final class Config {
     public static double lurkerGunGoalSpeedModifier = 1.1D;
     public static boolean lurkerRemoveWhenFarAway = false;
 
+    /**
+     * 双手 Boss（战争机器 / 炸弹宝宝）非偏好枪普通开火；默认抄超级特种兵射击段。
+     * 见 {@code bosses.toml} {@code [normalShoot]}。
+     */
+    public static float normalShootGunRadius = 80.0F;
+    public static float normalShootGunMeleeFrac = 0.4F;
+    public static int normalShootGunAttackIntervalMin = 0;
+    public static int normalShootSeeTimeToShoot = 2;
+
     public static NpcAttributeStats warMachineAttributes;
     public static CombatGoalStats warMachineCombatGoals;
     public static double warMachineMaxHealth = 30.0D;

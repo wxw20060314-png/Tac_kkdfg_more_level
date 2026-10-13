@@ -12,4 +12,7 @@ public interface TaczCrawlCapableMob {
     boolean isTaczCrawling();
 
     SoldierTaczCrawlState getTaczCrawlState();
+
+    /** 服务端进入/退出趴；失败返回 false。 */
+    boolean setTaczCrawling(boolean crawling);
 }

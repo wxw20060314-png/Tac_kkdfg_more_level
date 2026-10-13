@@ -11,6 +11,9 @@ import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
 import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
+import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
@@ -53,6 +56,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -90,7 +94,8 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
                 TaczPlayerLikeMob,
                 PlayerLikeHeadBodyYawMob,
                 TaczGunSoundInvestigatingMob,
-                JumpActingMob {
+                JumpActingMob,
+                SoldierWeaponArrangeHost {
 
     public static final String TEXTURE_FOLDER = "slime_experiment";
     public static final ResourceLocation SKIN_TEXTURE =
@@ -171,6 +176,8 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
+        this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
+        this.goalSelector.addGoal(1, new MobGunIdleMainhandArrangeGoal(this));
         this.resetJumpTierToDefault();
     }
 
@@ -551,6 +558,11 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     @Override
     public SoldierTaczCrawlState getTaczCrawlState() {
         return SoldierTaczCrawlState.STANDING;
+    }
+
+    @Override
+    public boolean setTaczCrawling(boolean crawling) {
+        return false;
     }
 
     @Override
@@ -958,6 +970,7 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     /**
      * 放入背包空格；满则 false。调用方自行清空来源槽。
      */
+    @Override
     public boolean tryPutIntoSoldierBackpack(ItemStack stack) {
         if (this.level().isClientSide()) {
             return false;
@@ -971,6 +984,113 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     public boolean tryTakeGunFromSoldierBackpack(
             @Nullable ResourceLocation preferredOrNull, EquipmentSlot dest) {
         return SoldierBackpack.tryTakeGun(this.soldierBackpack, this, preferredOrNull, dest);
+    }
+
+    @Override
+    public Mob asArrangeLiving() {
+        return this;
+    }
+
+    @Override
+    public NonNullList<ItemStack> soldierBackpackSlots() {
+        return this.soldierBackpack;
+    }
+
+    @Override
+    public void swapHandWithSoldierBackpackSlot(EquipmentSlot hand, int index) {
+        if (this.level().isClientSide()
+                || index < 0
+                || index >= this.soldierBackpack.size()) {
+            return;
+        }
+        ItemStack bag = this.soldierBackpack.get(index);
+        ItemStack held = this.getItemBySlot(hand);
+        this.soldierBackpack.set(index, held.isEmpty() ? ItemStack.EMPTY : held.copy());
+        this.setItemSlot(hand, bag);
+    }
+
+    @Override
+    public void swapMainAndOffhand() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        ItemStack main = this.getMainHandItem().copy();
+        ItemStack off = this.getOffhandItem().copy();
+        this.setItemSlot(EquipmentSlot.MAINHAND, off);
+        this.setItemSlot(EquipmentSlot.OFFHAND, main);
+    }
+
+    @Override
+    public boolean canOperateWeaponSwap() {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        return op.getSynDrawCoolDown() == 0L
+                && !op.getSynIsBolting()
+                && !op.getSynReloadState().getStateType().isReloading();
+    }
+
+    @Override
+    public void afterCombatMainhandArrange(boolean hadMainGunBefore) {
+        if (IGun.mainHandHoldGun(this)) {
+            IGunOperator op = IGunOperator.fromLivingEntity(this);
+            op.initialData();
+            op.draw(this::getMainHandItem);
+            TaczGunMobHelper.tickInfiniteMobAmmo(this);
+            this.setAggressive(true);
+            this.onGunEquipped();
+        } else if (hadMainGunBefore) {
+            this.onGunEquipped();
+        }
+    }
+
+    @Override
+    public void afterIdleMainhandArrange() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        op.aim(false);
+        op.cancelReload();
+        this.setAggressive(false);
+    }
+
+    /** 叠堆：背包内合并，再把主/副手可叠物品并入背包已有堆；双手同种也并。 */
+    @Override
+    public void compactSoldierInventory() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        SoldierBackpack.compact(this.soldierBackpack);
+        this.mergeHandIntoBackpack(EquipmentSlot.MAINHAND);
+        this.mergeHandIntoBackpack(EquipmentSlot.OFFHAND);
+        ItemStack main = this.getMainHandItem();
+        ItemStack off = this.getOffhandItem();
+        if (!main.isEmpty()
+                && !off.isEmpty()
+                && main.isStackable()
+                && ItemStack.isSameItemSameTags(main, off)) {
+            int move = Math.min(main.getCount(), off.getMaxStackSize() - off.getCount());
+            if (move > 0) {
+                off.grow(move);
+                main.shrink(move);
+                if (main.isEmpty()) {
+                    this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                }
+            }
+        }
+        SoldierBackpack.compact(this.soldierBackpack);
+    }
+
+    private void mergeHandIntoBackpack(EquipmentSlot hand) {
+        ItemStack stack = this.getItemBySlot(hand);
+        if (stack.isEmpty()) {
+            return;
+        }
+        if (SoldierBackpack.tryMergeIntoExisting(this.soldierBackpack, stack) && stack.isEmpty()) {
+            this.setItemSlot(hand, ItemStack.EMPTY);
+        }
     }
 
     /** 装枪后钩子：子类刷新 Goal 点射间隔。 */

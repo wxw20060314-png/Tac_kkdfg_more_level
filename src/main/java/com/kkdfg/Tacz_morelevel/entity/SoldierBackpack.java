@@ -62,6 +62,63 @@ public final class SoldierBackpack {
         return true;
     }
 
+    /** 背包是否含指定枪 ID（{@code null} 则任意枪）。 */
+    public static boolean containsGun(
+            NonNullList<ItemStack> slots, @Nullable ResourceLocation gunIdOrNull) {
+        return findGunIndex(slots, gunIdOrNull) >= 0;
+    }
+
+    /** 背包内可叠加物品并堆（同物品同 NBT）。 */
+    public static void compact(NonNullList<ItemStack> slots) {
+        for (int i = 0; i < slots.size(); i++) {
+            ItemStack a = slots.get(i);
+            if (a.isEmpty() || !a.isStackable()) {
+                continue;
+            }
+            for (int j = i + 1; j < slots.size(); j++) {
+                ItemStack b = slots.get(j);
+                if (b.isEmpty() || !ItemStack.isSameItemSameTags(a, b)) {
+                    continue;
+                }
+                int move = Math.min(b.getCount(), a.getMaxStackSize() - a.getCount());
+                if (move <= 0) {
+                    continue;
+                }
+                a.grow(move);
+                b.shrink(move);
+                if (b.isEmpty()) {
+                    slots.set(j, ItemStack.EMPTY);
+                }
+            }
+        }
+    }
+
+    /**
+     * 将 {@code stack} 并入背包已有同种堆（不占空格）。就地 shrink；全并完则变空。
+     *
+     * @return 是否并入过至少 1 个
+     */
+    public static boolean tryMergeIntoExisting(NonNullList<ItemStack> slots, ItemStack stack) {
+        if (stack == null || stack.isEmpty() || !stack.isStackable()) {
+            return false;
+        }
+        boolean merged = false;
+        for (int i = 0; i < slots.size() && !stack.isEmpty(); i++) {
+            ItemStack slot = slots.get(i);
+            if (slot.isEmpty() || !ItemStack.isSameItemSameTags(slot, stack)) {
+                continue;
+            }
+            int move = Math.min(stack.getCount(), slot.getMaxStackSize() - slot.getCount());
+            if (move <= 0) {
+                continue;
+            }
+            slot.grow(move);
+            stack.shrink(move);
+            merged = true;
+        }
+        return merged;
+    }
+
     public static void save(CompoundTag compound, NonNullList<ItemStack> slots) {
         CompoundTag bag = new CompoundTag();
         ContainerHelper.saveAllItems(bag, slots, true);

@@ -349,6 +349,33 @@ public final class BossConfig {
         BUILDER.pop();
     }
 
+    /** 双手 Boss 普通开火（非偏好主/副）；默认超级特种兵射击数值。 */
+    private static final NormalShootConfigEntry NORMAL_SHOOT = defineNormalShoot();
+
+    private record NormalShootConfigEntry(
+            ForgeConfigSpec.DoubleValue gunRadius,
+            ForgeConfigSpec.DoubleValue gunMeleeFrac,
+            ForgeConfigSpec.IntValue gunAttackIntervalMin,
+            ForgeConfigSpec.IntValue seeTimeToShoot) {}
+
+    private static NormalShootConfigEntry defineNormalShoot() {
+        int i = CombatUnitConfig.SUPER_SPECIAL_NPC_DEFAULT_INDEX;
+        double[] d = CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[i];
+        BUILDER.push("normalShoot");
+        BUILDER.comment(
+                "Shared normal-fire tuning for dual-gun bosses (War Machine / Bomb Baby) when holding neither preferred gun. Defaults match superSpecial.");
+        ForgeConfigSpec.DoubleValue gunRadius =
+                BUILDER.defineInRange("gunRadius", d[3], 4.0D, 128.0D);
+        ForgeConfigSpec.DoubleValue gunMeleeFrac =
+                BUILDER.defineInRange("gunMeleeFrac", d[4], 0.05D, 1.0D);
+        ForgeConfigSpec.IntValue gunAttackIntervalMin =
+                BUILDER.defineInRange("gunAttackIntervalMin", (int) d[8], 0, 200);
+        ForgeConfigSpec.IntValue seeTimeToShoot =
+                BUILDER.defineInRange("seeTimeToShoot", (int) d[9], 0, 100);
+        BUILDER.pop();
+        return new NormalShootConfigEntry(gunRadius, gunMeleeFrac, gunAttackIntervalMin, seeTimeToShoot);
+    }
+
     static final CombatUnitConfig.SpecEntry WAR_MACHINE = defineWarMachine();
     static final CombatUnitConfig.SpecEntry BOMB_BABY = defineBombBaby();
     static final CeilingDuelConfigEntry CEILING_DUEL = defineCeilingDuel();
@@ -559,6 +586,28 @@ public final class BossConfig {
         Config.bossGunBurstIntervalScaleB = GUN_BURST_INTERVAL_SCALE_B.get();
         Config.bossGunMeleeFracOffsetA = GUN_MELEE_FRAC_OFFSET_A.get();
         Config.bossGunMeleeFracScaleB = GUN_MELEE_FRAC_SCALE_B.get();
+
+        Config.normalShootGunRadius =
+                (float)
+                        clampDouble(
+                                (NORMAL_SHOOT.gunRadius().get() + GUN_RADIUS_OFFSET_A.get())
+                                        * GUN_RADIUS_SCALE_B.get(),
+                                4.0D,
+                                128.0D);
+        Config.normalShootGunMeleeFrac =
+                (float)
+                        clampDouble(
+                                (NORMAL_SHOOT.gunMeleeFrac().get() + GUN_MELEE_FRAC_OFFSET_A.get())
+                                        * GUN_MELEE_FRAC_SCALE_B.get(),
+                                0.05D,
+                                1.0D);
+        Config.normalShootGunAttackIntervalMin = NORMAL_SHOOT.gunAttackIntervalMin().get();
+        Config.normalShootSeeTimeToShoot =
+                clampFloor(
+                        (NORMAL_SHOOT.seeTimeToShoot().get() + SEE_TIME_TO_SHOOT_OFFSET_A.get())
+                                * SEE_TIME_TO_SHOOT_SCALE_B.get(),
+                        0,
+                        100);
 
         applyBossUnit(WAR_MACHINE, true);
         applyBossUnit(BOMB_BABY, false);

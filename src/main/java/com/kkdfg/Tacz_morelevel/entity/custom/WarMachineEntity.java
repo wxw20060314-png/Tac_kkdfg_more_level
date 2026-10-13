@@ -13,6 +13,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineFlyingGunMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachinePowerMechSkillGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineRpgFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineWeaponSwapGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
@@ -105,7 +106,9 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
     private MobGunRangedMoveGoal<WarMachineEntity> gunGoal;
     private WarMachineFlyingGunMoveGoal flyingGunGoal;
     private MobGunRangedFireGoal<WarMachineEntity> minigunFireGoal;
-    private MobGunRangedFireGoal<WarMachineEntity> rpgFireGoal;
+    private WarMachineRpgFireGoal rpgFireGoal;
+    /** 非偏好主/副时的普通开火；优先级低于俩特殊 Fire。 */
+    private MobGunRangedFireGoal<WarMachineEntity> normalFireGoal;
     private MeleeAttackGoal meleeGoal;
 
     @Nullable
@@ -186,9 +189,13 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
         if (this.rpgFireGoal != null) {
             this.rpgFireGoal.setMinAttackInterval(interval);
         }
+        if (this.normalFireGoal != null) {
+            this.normalFireGoal.setMinAttackInterval(
+                    Config.mapBossGunBurstInterval(Config.normalShootGunAttackIntervalMin));
+        }
     }
 
-    /** 战争机器在 {@link #registerGoals} 内挂载 Fire×2 + Move×2 + 近战，勿再走父类单枪挂载。 */
+    /** 战争机器在 {@link #registerGoals} 内挂载 Fire×3 + Move×2 + 近战，勿再走父类单枪挂载。 */
     @Override
     protected void mountPermanentCombatGoals() {
         if (this.areCombatGoalsMounted()) {
@@ -198,6 +205,7 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                 && this.flyingGunGoal != null
                 && this.minigunFireGoal != null
                 && this.rpgFireGoal != null
+                && this.normalFireGoal != null
                 && this.meleeGoal != null) {
             this.markCombatGoalsMounted();
         }
@@ -357,16 +365,19 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                         this.requiresPreferredMainGunForCombat()
                                 ? AbstractDualGunSoldierEntity::isHoldingPreferredMainGun
                                 : null);
-        this.rpgFireGoal =
+        this.rpgFireGoal = new WarMachineRpgFireGoal(this);
+        this.normalFireGoal =
                 new MobGunRangedFireGoal<>(
                         this,
-                        (float) attrs.gunRadius,
-                        (float) attrs.gunMeleeFrac,
-                        attrs.gunAttackIntervalMin,
-                        WarMachineWeaponSwapGoal.RPG_SEE_TICKS_TO_SHOOT,
-                        GunCombatSight.WAR_RPG,
-                        true,
-                        AbstractDualGunSoldierEntity::isHoldingPreferredOffhandGun);
+                        Config.normalShootGunRadius,
+                        Config.normalShootGunMeleeFrac,
+                        Config.normalShootGunAttackIntervalMin,
+                        Config.normalShootSeeTimeToShoot,
+                        GunCombatSight.COMBAT,
+                        false,
+                        m ->
+                                !m.isHoldingPreferredMainGun()
+                                        && !m.isHoldingPreferredOffhandGun());
         this.flyingGunGoal =
                 new WarMachineFlyingGunMoveGoal(
                         this,
@@ -390,10 +401,12 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
         this.goalSelector.addGoal(1, new WarMachineWeaponSwapGoal(this));
         this.goalSelector.addGoal(2, this.minigunFireGoal);
         this.goalSelector.addGoal(2, this.rpgFireGoal);
+        this.goalSelector.addGoal(3, this.normalFireGoal);
         this.goalSelector.addGoal(2, this.flyingGunGoal);
         this.goalSelector.addGoal(3, this.gunGoal);
         this.goalSelector.addGoal(2, new SoldierUnarmedMeleeGoal(this, this.meleeGoal));
         this.markCombatGoalsMounted();
+        this.mountDualWeaponArrangeGoals();
         this.goalSelector.addGoal(4, new WarMachinePowerMechSkillGoal(this));
         this.goalSelector.addGoal(5, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));

@@ -4,7 +4,6 @@ import com.kkdfg.Tacz_morelevel.api.JumpActingMob;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierWalkNodeEvaluator;
-import com.kkdfg.Tacz_morelevel.entity.custom.AbstractPlayerLikeSoldierEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -140,8 +139,8 @@ public final class SoldierMoveControl extends MoveControl {
                 || !eval.isStandPoseClearAt(this.mob, feet.getX(), feet.getY(), feet.getZ())) {
             return;
         }
-        if (this.mob instanceof AbstractPlayerLikeSoldierEntity soldier) {
-            soldier.setTaczCrawling(false);
+        if (this.mob instanceof TaczCrawlCapableMob crawl) {
+            crawl.setTaczCrawling(false);
         }
         this.crawlTicks = 0;
     }
@@ -165,7 +164,7 @@ public final class SoldierMoveControl extends MoveControl {
                 || !eval.needsCrawlPoseAt(this.mob, next.x, next.y, next.z)) {
             return;
         }
-        if (this.mob instanceof AbstractPlayerLikeSoldierEntity soldier && soldier.setTaczCrawling(true)) {
+        if (this.mob instanceof TaczCrawlCapableMob crawl && crawl.setTaczCrawling(true)) {
             this.crawlTicks = 0;
         }
     }

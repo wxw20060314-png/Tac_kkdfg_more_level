@@ -27,7 +27,7 @@ public final class BombBabyGrenadeWeaponSwapGoal extends Goal {
             return false;
         }
         LivingEntity target = this.mob.getTarget();
-        return target != null && target.isAlive();
+        return target != null && target.isAlive() && this.mob.hasPreferredPairInHands();
     }
 
     @Override
@@ -48,7 +48,10 @@ public final class BombBabyGrenadeWeaponSwapGoal extends Goal {
     @Override
     public void stop() {
         this.noSightTicks = 0;
-        if (!this.mob.level().isClientSide() && this.mob.isHoldingGrenadeLauncher()) {
+        if (!this.mob.level().isClientSide()
+                && this.mob.canOperateWeaponSwap()
+                && this.mob.hasPreferredPairInHands()
+                && this.mob.isHoldingGrenadeLauncher()) {
             this.mob.ensurePrimaryGunDrawn();
         }
     }
@@ -58,6 +61,9 @@ public final class BombBabyGrenadeWeaponSwapGoal extends Goal {
         LivingEntity target = this.mob.getTarget();
         if (target == null || !target.isAlive()) {
             this.noSightTicks = 0;
+            return;
+        }
+        if (!this.mob.canOperateWeaponSwap() || !this.mob.hasPreferredPairInHands()) {
             return;
         }
         boolean sight = BombBabySight.hasLineOfSight(this.mob, target);

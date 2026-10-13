@@ -23,8 +23,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
  * 与 {@link AbstractDualGunSoldierEntity} 同级：副手枪套。
- * 闲置/战斗武器整理分别由 {@link MobGunIdleHolsterGoal}、{@link MobGunCombatDrawGoal} 负责；
- * 本类只提供换槽 / TaCZ draw；背包见父类 {@link AbstractPlayerLikeSoldierEntity}。
+ * 闲置/战斗武器整理分别由 {@link MobGunIdleHolsterGoal}、{@link MobGunCombatDrawGoal} 负责。
+ * 背包 / {@code canOperateWeaponSwap} 等见父类 Host；本类只 Override 改槽 mute 与 draw/收枪副作用。
  */
 public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLikeSoldierEntity {
 
@@ -72,29 +72,22 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
         return IGun.getIGunOrNull(this.getOffhandItem()) != null;
     }
 
-    /** TaCZ 不在切枪/拉栓/换弹。 */
-    public boolean canOperateWeaponSwap() {
-        if (this.level().isClientSide()) {
-            return false;
-        }
-        IGunOperator op = IGunOperator.fromLivingEntity(this);
-        return op.getSynDrawCoolDown() == 0L
-                && !op.getSynIsBolting()
-                && !op.getSynReloadState().getStateType().isReloading();
-    }
-
-    /** 主手 ↔ 副手交换（抑制 reassess）。 */
+    /** 主手 ↔ 副手（抑制 reassess）。 */
+    @Override
     public void swapMainAndOffhand() {
         if (this.level().isClientSide()) {
             return;
         }
-        this.runWithWeaponSlotMute(
-                () -> {
-                    ItemStack main = this.getMainHandItem().copy();
-                    ItemStack off = this.getOffhandItem().copy();
-                    this.setItemSlot(EquipmentSlot.MAINHAND, off);
-                    this.setItemSlot(EquipmentSlot.OFFHAND, main);
-                });
+        this.runWithWeaponSlotMute(super::swapMainAndOffhand);
+    }
+
+    /** 手 ↔ 背包格（抑制 reassess）。 */
+    @Override
+    public void swapHandWithSoldierBackpackSlot(EquipmentSlot hand, int index) {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        this.runWithWeaponSlotMute(() -> super.swapHandWithSoldierBackpackSlot(hand, index));
     }
 
     /** 战斗：主手枪 {@code initialData}+{@code draw}，并开战意。 */
@@ -137,6 +130,11 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
             return;
         }
         super.reassessWeaponGoal();
+    }
+
+    @Override
+    protected boolean mountsMainhandWeaponArrangeGoals() {
+        return false;
     }
 
     @Override

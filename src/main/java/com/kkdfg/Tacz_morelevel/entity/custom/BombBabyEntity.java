@@ -11,6 +11,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedBombBabyAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
@@ -123,6 +124,9 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
                     BombBabyEntity.this.setAggressive(true);
                 }
             };
+
+    /** 非偏好主/副时的普通开火；优先级低于偏好主枪 Fire 与榴弹 Fire。 */
+    private MobGunRangedFireGoal<BombBabyEntity> normalFireGoal;
 
     public BombBabyEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -242,6 +246,15 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
     }
 
     @Override
+    public void reassessWeaponGoal() {
+        super.reassessWeaponGoal();
+        if (this.normalFireGoal != null) {
+            this.normalFireGoal.setMinAttackInterval(
+                    Config.mapBossGunBurstInterval(Config.normalShootGunAttackIntervalMin));
+        }
+    }
+
+    @Override
     protected MeleeAttackGoal meleeGoal() {
         return this.meleeGoal;
     }
@@ -289,6 +302,19 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
         this.goalSelector.addGoal(1, new BombBabyGrenadeWeaponSwapGoal(this));
         this.goalSelector.addGoal(1, new BombBabyGrenadeFireGoal(this));
         this.goalSelector.addGoal(2, new BombBabyGrenadeMoveGoal(this));
+        this.normalFireGoal =
+                new MobGunRangedFireGoal<>(
+                        this,
+                        Config.normalShootGunRadius,
+                        Config.normalShootGunMeleeFrac,
+                        Config.normalShootGunAttackIntervalMin,
+                        Config.normalShootSeeTimeToShoot,
+                        GunCombatSight.COMBAT,
+                        false,
+                        m ->
+                                !m.isHoldingPreferredMainGun()
+                                        && !m.isHoldingPreferredOffhandGun());
+        this.goalSelector.addGoal(3, this.normalFireGoal);
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));

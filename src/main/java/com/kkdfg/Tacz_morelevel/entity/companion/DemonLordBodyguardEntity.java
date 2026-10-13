@@ -88,6 +88,11 @@ public final class DemonLordBodyguardEntity extends AbstractFriendlyCompanionEnt
     }
 
     @Override
+    protected boolean allowsCrawlPathfinding() {
+        return true;
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_SKIN_INDEX, 0);
@@ -180,6 +185,7 @@ public final class DemonLordBodyguardEntity extends AbstractFriendlyCompanionEnt
         this.goalSelector.addGoal(1, new CompanionMobRandomSneakWithTargetInShortDistanceGoal(this,
                 g.shortSneakTimeDelay, g.shortSneakTime, g.shortSneakRandomTime, g.shortSneakDistance, g.shortSneakEnabled));
         this.goalSelector.addGoal(1, new CompanionMobRandomJumpGoal(this, g.jumpChance, g.jumpEnabled, g.jumpMaxDistance));
+        this.registerCompanionWeaponArrangeGoals();
         this.registerCompanionGunReloadGoal();
     }
 

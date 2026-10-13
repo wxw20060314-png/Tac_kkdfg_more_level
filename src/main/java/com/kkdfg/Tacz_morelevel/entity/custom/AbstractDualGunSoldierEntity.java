@@ -1,5 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.custom;
 
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatDualArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleDualArrangeGoal;
 import com.kkdfg.Tacz_morelevel.integration.tacz.DualGunCatalog;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.tacz.guns.api.entity.IGunOperator;
@@ -12,7 +14,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.monster.Monster;
@@ -24,9 +25,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
  * 双枪士兵基类：主手为当前枪械，副手为背上枪械（由 TaCZ {@code HumanoidOffhandRender} 渲染）。
  * 默认 {@link #equipDualGunLoadout()} 从 {@link DualGunCatalog} JSON 池装配（不写偏好标记）；
  * Boss 子类 override 装配并 {@link #setPreferredMainGunDataId}/{@link #setPreferredOffhandGunDataId}。
- * 无存活目标连续 {@link AbstractPlayerLikeSoldierEntity#NO_TARGET_WEAPON_ARRANGE_TTL} tick 后，
- * 若主手不是偏好主武器则换回。
  * <p>
+ * 合规：{@link #hasPreferredPairInHands()}（顺序不论）/ {@link #isPreferredDualOrderReady()}（顺序也对）。
+ * 闲置/战斗整理：{@link MobGunIdleDualArrangeGoal} / {@link MobGunCombatDualArrangeGoal}。
  * 射击 Goal 常驻；主/副武器靠各自 Goal 的 {@code canUse} 互斥。偏好标记与槽位无关；枪动态只在装备槽。
  */
 public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSoldierEntity {
@@ -38,10 +39,10 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
     @Nullable
     private ResourceLocation preferredOffhandGunDataId;
 
-    private int noTargetTicks;
-
     /** 换枪改槽期间抑制 reassess。 */
     private boolean suppressWeaponReassess;
+
+    private boolean dualArrangeGoalsMounted;
 
     protected AbstractDualGunSoldierEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -95,6 +96,46 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
                 && this.preferredOffhandGunDataId.equals(gun.getGunId(this.getMainHandItem()));
     }
 
+    /**
+     * 主副手正好是偏好主 + 偏好副（顺序不论）。偏好未设齐或任一手非对应枪 → false。
+     * 战术切枪启用用此档。
+     */
+    public boolean hasPreferredPairInHands() {
+        ResourceLocation preferredMain = this.getPreferredMainGunDataId();
+        ResourceLocation preferredOff = this.preferredOffhandGunDataId;
+        if (preferredMain == null || preferredOff == null) {
+            return false;
+        }
+        ResourceLocation mainId = gunDataId(this.getMainHandItem());
+        ResourceLocation offId = gunDataId(this.getOffhandItem());
+        if (mainId == null || offId == null) {
+            return false;
+        }
+        return (preferredMain.equals(mainId) && preferredOff.equals(offId))
+                || (preferredOff.equals(mainId) && preferredMain.equals(offId));
+    }
+
+    /**
+     * 主手=偏好主 且 副手=偏好副。偏好未设齐 → false。
+     * 闲置顺序合规用此档。
+     */
+    public boolean isPreferredDualOrderReady() {
+        ResourceLocation preferredMain = this.getPreferredMainGunDataId();
+        ResourceLocation preferredOff = this.preferredOffhandGunDataId;
+        if (preferredMain == null || preferredOff == null) {
+            return false;
+        }
+        ResourceLocation mainId = gunDataId(this.getMainHandItem());
+        ResourceLocation offId = gunDataId(this.getOffhandItem());
+        return preferredMain.equals(mainId) && preferredOff.equals(offId);
+    }
+
+    @Nullable
+    private static ResourceLocation gunDataId(ItemStack stack) {
+        IGun gun = IGun.getIGunOrNull(stack);
+        return gun == null ? null : gun.getGunId(stack);
+    }
+
     /** 服务端：副手（背上）装备 TaCZ 枪。 */
     public void equipTaCZGunBack(ResourceLocation gunDataId) {
         if (this.level().isClientSide()) {
@@ -140,28 +181,39 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
     }
 
     @Override
+    protected boolean mountsMainhandWeaponArrangeGoals() {
+        return false;
+    }
+
+    /**
+     * 挂载双枪闲置/战斗整理 Goal（priority 1）。战争机器等自行 {@link #markCombatGoalsMounted} 时也须调用。
+     */
+    protected final void mountDualWeaponArrangeGoals() {
+        if (this.dualArrangeGoalsMounted
+                || this.level() == null
+                || this.level().isClientSide()) {
+            return;
+        }
+        this.dualArrangeGoalsMounted = true;
+        this.goalSelector.addGoal(1, new MobGunCombatDualArrangeGoal(this));
+        this.goalSelector.addGoal(1, new MobGunIdleDualArrangeGoal(this));
+    }
+
+    @Override
+    protected void mountPermanentCombatGoals() {
+        boolean alreadyMounted = this.areCombatGoalsMounted();
+        super.mountPermanentCombatGoals();
+        if (!alreadyMounted && this.areCombatGoalsMounted()) {
+            this.mountDualWeaponArrangeGoals();
+        }
+    }
+
+    @Override
     public void reassessWeaponGoal() {
         if (this.suppressWeaponReassess) {
             return;
         }
         super.reassessWeaponGoal();
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.level().isClientSide()) {
-            return;
-        }
-        LivingEntity target = this.getTarget();
-        if (target != null && target.isAlive()) {
-            this.noTargetTicks = 0;
-            return;
-        }
-        this.noTargetTicks++;
-        if (this.noTargetTicks >= NO_TARGET_WEAPON_ARRANGE_TTL && !this.isHoldingPreferredMainGun()) {
-            this.trySwapBackToPreferredMain();
-        }
     }
 
     @Override

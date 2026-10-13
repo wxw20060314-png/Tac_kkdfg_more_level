@@ -2,7 +2,7 @@ package com.kkdfg.Tacz_morelevel.entity.companion.ai;
 
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierGunPassthroughSight;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
-import com.kkdfg.Tacz_morelevel.entity.companion.CompanionTaczCrawlHelper;
+import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -97,7 +97,7 @@ public class CompanionMobTaczCombatCrawlGoal extends Goal {
 
     @Override
     public void stop() {
-        CompanionTaczCrawlHelper.setCrawlIntent(this.companion, false);
+        SoldierTaczCrawlHelper.setCrawlIntent(this.companion, false);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class CompanionMobTaczCombatCrawlGoal extends Goal {
                 this.companion.isTaczCrawlingSynced()
                         ? this.shouldHoldCrawlIntentContinue()
                         : this.shouldHoldCrawlIntent();
-        CompanionTaczCrawlHelper.setCrawlIntent(this.companion, hold);
+        SoldierTaczCrawlHelper.setCrawlIntent(this.companion, hold);
     }
 
     
@@ -128,7 +128,7 @@ public class CompanionMobTaczCombatCrawlGoal extends Goal {
         if (target == null || !target.isAlive()) {
             return false;
         }
-        if (!CompanionTaczCrawlHelper.canEnterCrawl(this.companion)) {
+        if (!SoldierTaczCrawlHelper.canEnterCrawl(this.companion)) {
             return false;
         }
         if (this.companion.getHealth() >= (this.maxHealthExclusive / 3.0F) * 2.0F) {
@@ -164,7 +164,7 @@ public class CompanionMobTaczCombatCrawlGoal extends Goal {
         if (target == null || !target.isAlive()) {
             return false;
         }
-        if (!CompanionTaczCrawlHelper.canEnterCrawl(this.companion)) {
+        if (!SoldierTaczCrawlHelper.canEnterCrawl(this.companion)) {
             return false;
         }
         if (this.companion.getHealth() >= this.maxHealthExclusive) {

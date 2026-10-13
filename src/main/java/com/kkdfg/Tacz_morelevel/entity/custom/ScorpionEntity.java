@@ -128,6 +128,11 @@ public final class ScorpionEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
+    protected boolean allowsCrawlPathfinding() {
+        return true;
+    }
+
+    @Override
     protected ResourceLocation pickHolsterGunId(RandomSource random) {
         return HOLSTER_GUN;
     }

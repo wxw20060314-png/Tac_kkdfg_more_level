@@ -1,8 +1,12 @@
 package com.kkdfg.Tacz_morelevel.entity.companion;
 
+import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionCombatMainhandArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionSitWhenOrderedGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.inventory.CompanionInventory;
 import com.kkdfg.Tacz_morelevel.entity.companion.menu.CompanionInventoryMenu;
+import com.tacz.guns.api.entity.IGunOperator;
+import com.tacz.guns.api.item.IGun;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -12,6 +16,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
@@ -44,10 +49,89 @@ public abstract class AbstractFriendlyCompanionEntity extends AbstractFriendEnti
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(2, new CompanionSitWhenOrderedGoal(this));
+        this.registerCompanionWeaponArrangeGoals();
+    }
+
+    /** 子类若整表重写 {@link #registerGoals()}，请调用本方法。 */
+    protected void registerCompanionWeaponArrangeGoals() {
+        this.goalSelector.addGoal(1, new CompanionCombatMainhandArrangeGoal(this));
+        this.goalSelector.addGoal(1, new CompanionIdleMainhandArrangeGoal(this));
     }
 
     public CompanionInventory getCompanionInventory() {
         return this.companionInventory;
+    }
+
+    /** TaCZ 不在切枪/拉栓/换弹。 */
+    public boolean canOperateWeaponSwap() {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        return op.getSynDrawCoolDown() == 0L
+                && !op.getSynIsBolting()
+                && !op.getSynReloadState().getStateType().isReloading();
+    }
+
+    public void swapMainAndOffhand() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        ItemStack main = this.getMainHandItem().copy();
+        ItemStack off = this.getOffhandItem().copy();
+        this.setItemSlot(EquipmentSlot.MAINHAND, off);
+        this.setItemSlot(EquipmentSlot.OFFHAND, main);
+    }
+
+    public void swapHandWithCompanionInventorySlot(EquipmentSlot hand, int index) {
+        CompanionInventory inv = this.companionInventory;
+        if (this.level().isClientSide() || index < 0 || index >= inv.getContainerSize()) {
+            return;
+        }
+        ItemStack bag = inv.getItem(index);
+        ItemStack held = this.getItemBySlot(hand);
+        inv.setItem(index, held.isEmpty() ? ItemStack.EMPTY : held.copy());
+        this.setItemSlot(hand, bag);
+    }
+
+    /** 仅空格放入（copy）；不叠堆合并。满则 false。 */
+    public boolean tryPutIntoCompanionInventoryEmptySlot(ItemStack stack) {
+        if (this.level().isClientSide() || stack == null || stack.isEmpty()) {
+            return false;
+        }
+        CompanionInventory inv = this.companionInventory;
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            if (inv.getItem(i).isEmpty()) {
+                inv.setItem(i, stack.copy());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void afterCombatMainhandArrange(boolean hadMainGunBefore) {
+        if (IGun.mainHandHoldGun(this)) {
+            IGunOperator op = IGunOperator.fromLivingEntity(this);
+            op.initialData();
+            op.draw(this::getMainHandItem);
+            CompanionBodyguardAmmoHelper.stripDummyAmmoTag(this.getMainHandItem());
+            CompanionBodyguardAmmoHelper.applyCreativeMagazineTopUp(this);
+            this.setAggressive(true);
+            this.reassessWeaponGoal();
+        } else if (hadMainGunBefore) {
+            this.reassessWeaponGoal();
+        }
+    }
+
+    public void afterIdleMainhandArrange() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        op.aim(false);
+        op.cancelReload();
+        this.setAggressive(false);
+        this.reassessWeaponGoal();
     }
 
     @Override

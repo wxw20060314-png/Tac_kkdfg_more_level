@@ -9,6 +9,7 @@ import com.kkdfg.Tacz_morelevel.api.JumpActingMob;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.MilitiaAcquireTargetVoice;
 import com.kkdfg.Tacz_morelevel.api.PlayerLikeHeadBodyYawMob;
+import com.kkdfg.Tacz_morelevel.api.TaczCombatCrawlMob;
 import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
@@ -32,6 +33,7 @@ import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionMobTaczCombatCrawlG
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionOwnerHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionOwnerHurtTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionTamedGunGoal;
+import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
@@ -96,6 +98,7 @@ public abstract class AbstractFriendEntity extends PathfinderMob
                 GunEquippedMob,
                 CompanionMob,
                 TaczCrawlCapableMob,
+                TaczCombatCrawlMob,
                 PlayerLikeHeadBodyYawMob,
                 MilitiaAcquireTargetVoice,
                 JumpActingMob {
@@ -117,7 +120,7 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     protected AbstractFriendEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.lookControl = new SoldierPlayerLikeLookControl(this);
-        this.moveControl = new SoldierMoveControl(this);
+        this.moveControl = new SoldierMoveControl(this, this.allowsCrawlPathfinding());
         this.xpReward = 0;
         this.disableVanillaEquipmentDrops();
         if (this.getNavigation() instanceof GroundPathNavigation ground) {
@@ -129,9 +132,14 @@ public abstract class AbstractFriendEntity extends PathfinderMob
         this.resetJumpTierToDefault();
     }
 
+    /** 趴寻路白名单；仅返回常量，避免构造期读未初始化字段。默认关。 */
+    protected boolean allowsCrawlPathfinding() {
+        return false;
+    }
+
     @Override
     protected PathNavigation createNavigation(Level level) {
-        return new SoldierGroundPathNavigation(this, level);
+        return new SoldierGroundPathNavigation(this, level, this.allowsCrawlPathfinding());
     }
 
     @Override
@@ -445,29 +453,31 @@ public abstract class AbstractFriendEntity extends PathfinderMob
         return this.entityData.get(DATA_TACZ_CRAWLING);
     }
 
+    @Override
     public void syncTaczCrawlingFlag(boolean crawling) {
         this.entityData.set(DATA_TACZ_CRAWLING, crawling);
     }
 
     @Override
     public boolean isTaczCrawling() {
-        return CompanionTaczCrawlHelper.isCrawling(this);
+        return SoldierTaczCrawlHelper.isCrawling(this);
     }
 
     @Override
     public SoldierTaczCrawlState getTaczCrawlState() {
-        return CompanionTaczCrawlHelper.getCrawlState(this);
+        return SoldierTaczCrawlHelper.getCrawlState(this);
     }
 
+    @Override
     public boolean setTaczCrawling(boolean crawling) {
-        return CompanionTaczCrawlHelper.applyCrawl(this, crawling);
+        return SoldierTaczCrawlHelper.applyCrawl(this, crawling);
     }
 
     @Override
     public void tick() {
         super.tick();
         if (!this.mayUseCombatCrouchOrCrawl() && this.isTaczCrawlingSynced()) {
-            CompanionTaczCrawlHelper.setCrawlIntent(this, false);
+            SoldierTaczCrawlHelper.setCrawlIntent(this, false);
         }
         if (!this.level().isClientSide()) {
             LivingEntity target = this.getTarget();
@@ -477,9 +487,9 @@ public abstract class AbstractFriendEntity extends PathfinderMob
                                     && (player.isCreative() || player.isSpectator())))) {
                 this.setTarget(null);
             }
-            CompanionTaczCrawlHelper.maintainCrawlFromSync(this);
+            SoldierTaczCrawlHelper.maintainCrawlFromSync(this);
         }
-        CompanionTaczCrawlHelper.applyCrawlPose(this);
+        SoldierTaczCrawlHelper.applyCrawlPose(this);
     }
 
     /**
@@ -780,6 +790,12 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
+    }
+
+    /** 装备时写入的枪 ID；护航整理作偏好主枪。 */
+    @Nullable
+    public ResourceLocation getPreferredMainGunDataId() {
+        return this.persistedGunDataId;
     }
 
     @Override
