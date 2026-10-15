@@ -11,7 +11,8 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * 炸弹宝宝榴弹射击（仅 LOOK）：弹道仰角 + {@code performRangedAttack}。
- * 切枪由 {@link BombBabyGrenadeWeaponSwapGoal}，走位由 {@link BombBabyGrenadeMoveGoal}。
+ * 通视切枪由 {@link BombBabyGrenadeWeaponSwapGoal}；本 Goal 不卡看见，
+ * 进入前须水平距 ≤ {@link BombBabyBallistics#DIRECT_AIM_RANGE} 或圆族能解出仰角。
  */
 public final class BombBabyGrenadeFireGoal extends Goal {
 
@@ -19,7 +20,6 @@ public final class BombBabyGrenadeFireGoal extends Goal {
     private boolean hasHeldAim;
     private float heldYawDeg;
     private float heldPitchElevationDeg;
-    private Boolean preferHighArc;
 
     public BombBabyGrenadeFireGoal(BombBabyEntity mob) {
         this.mob = mob;
@@ -35,8 +35,7 @@ public final class BombBabyGrenadeFireGoal extends Goal {
         if (target == null || !target.isAlive()) {
             return false;
         }
-        // 有爆破视线时应交应已切回 MK14；此处再挡一层
-        return !BombBabySight.hasLineOfSight(this.mob, target);
+        return this.hasFireSolution(target);
     }
 
     @Override
@@ -48,9 +47,6 @@ public final class BombBabyGrenadeFireGoal extends Goal {
     public void start() {
         this.hasHeldAim = false;
         this.mob.setAggressive(true);
-        if (this.preferHighArc == null) {
-            this.preferHighArc = this.mob.getRandom().nextBoolean();
-        }
         if (!this.mob.level().isClientSide()) {
             IGunOperator op = IGunOperator.fromLivingEntity(this.mob);
             op.initialData();
@@ -80,29 +76,38 @@ public final class BombBabyGrenadeFireGoal extends Goal {
             return;
         }
         this.mob.setSprinting(false);
-        this.lookAtBallisticAim(target);
-
         if (!this.mob.isHoldingGrenadeLauncher()) {
             this.hasHeldAim = false;
             return;
         }
+        // 朝向不依赖抽枪 CD；解失败则本 tick 不硬锁仰角
+        this.solveAim(target);
+        this.lookAtBallisticAim(target);
 
         IGunOperator op = IGunOperator.fromLivingEntity(this.mob);
         op.aim(false);
         boolean taczReady = op.getSynDrawCoolDown() == 0L && !op.getSynIsBolting();
-        if (!taczReady) {
-            return;
-        }
-        if (!this.solveAim(target)) {
+        if (!taczReady || !this.hasHeldAim) {
             return;
         }
         this.applyHeldAim();
         this.mob.performRangedAttack(target, 1.0F);
     }
 
+    /** 近距直瞄带，或圆族能解出仰角。 */
+    private boolean hasFireSolution(LivingEntity target) {
+        double range = BombBabyBallistics.horizontalRange(this.mob, target);
+        if (range <= BombBabyBallistics.DIRECT_AIM_RANGE) {
+            return true;
+        }
+        return BombBabyBallistics.solveAim(
+                        this.mob, target, BombBabyEntity.BACK_GUN, this.mob.getRandom())
+                .isPresent();
+    }
+
     private void lookAtBallisticAim(LivingEntity target) {
         Vec3 eye = this.mob.getEyePosition(1.0F);
-        Vec3 aim = target.position().add(0.0D, target.getBbHeight() * 0.5D, 0.0D);
+        Vec3 aim = BombBabyBallistics.aimPoint(target);
         double dx = aim.x - eye.x;
         double dz = aim.z - eye.z;
         double range = Math.sqrt(dx * dx + dz * dz);
@@ -114,16 +119,9 @@ public final class BombBabyGrenadeFireGoal extends Goal {
     }
 
     private boolean solveAim(LivingEntity target) {
-        if (this.mob.getRandom().nextFloat() < 0.15F) {
-            this.preferHighArc = this.preferHighArc == null || !this.preferHighArc;
-        }
         Optional<BombBabyBallistics.AimAngles> aim =
                 BombBabyBallistics.solveAim(
-                        this.mob,
-                        target,
-                        BombBabyEntity.BACK_GUN,
-                        this.preferHighArc,
-                        this.mob.getRandom());
+                        this.mob, target, BombBabyEntity.BACK_GUN, this.mob.getRandom());
         if (aim.isEmpty()) {
             this.hasHeldAim = false;
             return false;
