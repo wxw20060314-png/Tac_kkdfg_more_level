@@ -14,9 +14,24 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 /**
  * 通用枪械射击 Goal：仅占 {@link Flag#LOOK}；走位由 {@link MobGunRangedMoveGoal} 等负责。
  * <p>节奏：默认近战腰射可连发、中远距点射；{@code tapFireRhythm} 时近战也走点射间隔（难民）。
+ * <p>通视记忆默认 {@link SeeTimeTune#DEFAULT}（上限 40、断视 −4）；战争机器等用 {@link SeeTimeTune#LEGACY}。
  */
 public class MobGunRangedFireGoal<T extends Mob & RangedAttackMob> extends Goal
         implements MobGunSoldierRangedGoal {
+
+    /**
+     * 射击通视累计参数。
+     *
+     * @param max 上限
+     * @param decayPerMissTick 断视每 tick 递减
+     * @param resetOnLosFlip 通视与「曾看见」翻转时是否清零
+     */
+    public record SeeTimeTune(int max, int decayPerMissTick, boolean resetOnLosFlip) {
+        /** 士兵等：上限 40，断视 −4，无翻转清零。 */
+        public static final SeeTimeTune DEFAULT = new SeeTimeTune(40, 4, false);
+        /** 旧版：上限 1000，断视 −1，翻转清零（战争机器）。 */
+        public static final SeeTimeTune LEGACY = new SeeTimeTune(1000, 1, true);
+    }
 
     private final T mob;
     private final float attackRadiusSqr;
@@ -26,8 +41,8 @@ public class MobGunRangedFireGoal<T extends Mob & RangedAttackMob> extends Goal
     private final GunCombatSight sight;
     private final boolean tapFireRhythm;
     @Nullable private final Predicate<T> extraCanUse;
+    private final SeeTimeTune seeTimeTune;
 
-    private static final int SEE_TIME_MAX = 1000;
     private int attackTime;
     private int seeTime;
 
@@ -94,6 +109,28 @@ public class MobGunRangedFireGoal<T extends Mob & RangedAttackMob> extends Goal
             GunCombatSight sight,
             boolean tapFireRhythm,
             @Nullable Predicate<T> extraCanUse) {
+        this(
+                mob,
+                attackRadius,
+                meleeLinearFracOfRadius,
+                attackIntervalMin,
+                seeTimeToShoot,
+                sight,
+                tapFireRhythm,
+                extraCanUse,
+                SeeTimeTune.DEFAULT);
+    }
+
+    public MobGunRangedFireGoal(
+            T mob,
+            float attackRadius,
+            float meleeLinearFracOfRadius,
+            int attackIntervalMin,
+            int seeTimeToShoot,
+            GunCombatSight sight,
+            boolean tapFireRhythm,
+            @Nullable Predicate<T> extraCanUse,
+            SeeTimeTune seeTimeTune) {
         this.mob = mob;
         this.attackRadiusSqr = attackRadius * attackRadius;
         float f = Mth.clamp(meleeLinearFracOfRadius, 0.05F, 1.0F);
@@ -104,6 +141,7 @@ public class MobGunRangedFireGoal<T extends Mob & RangedAttackMob> extends Goal
         this.sight = sight != null ? sight : GunCombatSight.COMBAT;
         this.tapFireRhythm = tapFireRhythm;
         this.extraCanUse = extraCanUse;
+        this.seeTimeTune = seeTimeTune != null ? seeTimeTune : SeeTimeTune.DEFAULT;
         this.setFlags(EnumSet.of(Flag.LOOK));
     }
 
@@ -174,14 +212,16 @@ public class MobGunRangedFireGoal<T extends Mob & RangedAttackMob> extends Goal
         this.mob.setSprinting(false);
         double distSqr = this.mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
         boolean hasLineOfSight = this.hasGunLineOfSight(target);
-        boolean hadSeeTime = this.seeTime > 0;
-        if (hasLineOfSight != hadSeeTime) {
-            this.seeTime = 0;
+        if (this.seeTimeTune.resetOnLosFlip()) {
+            boolean hadSeeTime = this.seeTime > 0;
+            if (hasLineOfSight != hadSeeTime) {
+                this.seeTime = 0;
+            }
         }
         if (hasLineOfSight) {
-            this.seeTime = Math.min(this.seeTime + 1, SEE_TIME_MAX);
+            this.seeTime = Math.min(this.seeTime + 1, this.seeTimeTune.max());
         } else {
-            this.seeTime = Math.max(this.seeTime - 1, 0);
+            this.seeTime = Math.max(this.seeTime - this.seeTimeTune.decayPerMissTick(), 0);
         }
         MobGunPlayerLikeAimHelper.applyPlayerLikeView(this.mob, target);
         if (this.mob.level().isClientSide()) {

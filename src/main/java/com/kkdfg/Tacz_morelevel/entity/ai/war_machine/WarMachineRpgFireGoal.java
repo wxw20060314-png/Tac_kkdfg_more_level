@@ -20,6 +20,7 @@ public final class WarMachineRpgFireGoal extends MobGunRangedFireGoal<WarMachine
                 0,
                 (m, t) -> true,
                 false,
-                AbstractDualGunSoldierEntity::isHoldingPreferredOffhandGun);
+                AbstractDualGunSoldierEntity::isHoldingPreferredOffhandGun,
+                MobGunRangedFireGoal.SeeTimeTune.LEGACY);
     }
 }

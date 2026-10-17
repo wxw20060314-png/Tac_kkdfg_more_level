@@ -43,6 +43,9 @@ public abstract class AbstractShoulderCannonEntity extends Mob {
     public static final int REGEN_INTERVAL_TICKS = 20;
     public static final float REGEN_AMOUNT = 10.0F;
 
+    /** 肩炮子弹标记：父类据此屏蔽对宿主的直击与爆炸。子类开火时调用 {@link #markShoulderBullet}。 */
+    public static final String TAG_SHOULDER_CANNON_BULLET = "ShoulderCannonBullet";
+
     private static final String TAG_HOST = "Host";
     private static final String TAG_PLUGIN_SLOT = "PluginSlot";
 
@@ -81,6 +84,43 @@ public abstract class AbstractShoulderCannonEntity extends Mob {
     protected float tickHeadTurn(float yRot, float animStep) {
         this.yBodyRot = this.yHeadRot;
         return animStep;
+    }
+
+    /**
+     * 交战目标是否合法。子类选目标时调用；创造/旁观玩家、宿主、炮自身、同盟、超距均排除。
+     */
+    public boolean isValidCombatTarget(LivingEntity host, @Nullable LivingEntity target) {
+        if (host == null || target == null || !target.isAlive() || target.isRemoved()) {
+            return false;
+        }
+        if (target == host || target == this) {
+            return false;
+        }
+        if (target instanceof Player player && (player.isCreative() || player.isSpectator())) {
+            return false;
+        }
+        if (target.level() != host.level()) {
+            return false;
+        }
+        if (host.isAlliedTo(target) || target.isAlliedTo(host)) {
+            return false;
+        }
+        double range = this.getAttributeValue(Attributes.FOLLOW_RANGE);
+        return host.distanceToSqr(target) <= range * range;
+    }
+
+    /** 标记为肩炮子弹，供宿主免伤识别。 */
+    public static void markShoulderBullet(EntityKineticBullet bullet) {
+        if (bullet != null) {
+            bullet.getPersistentData().putBoolean(TAG_SHOULDER_CANNON_BULLET, true);
+        }
+    }
+
+    /** 这发肩炮子弹的 owner 是否就是受伤者（宿主自伤，含爆炸溅射）。 */
+    public static boolean hurtsOwnHost(@Nullable Entity entity, LivingEntity victim) {
+        return entity instanceof EntityKineticBullet bullet
+                && bullet.getPersistentData().getBoolean(TAG_SHOULDER_CANNON_BULLET)
+                && bullet.getOwner() == victim;
     }
 
     public void bind(LivingEntity host, int pluginSlot) {

@@ -34,8 +34,6 @@ public final class PunisherShoulderCannonShoot {
     public static final ResourceLocation RPG_GUN_ID =
             ResourceLocation.fromNamespaceAndPath("tacz", "rpg7");
 
-    public static final double MAX_RANGE = 64.0D;
-
     private static final float SMALL_EXPLOSION_RADIUS = 1.5F;
     private static final float SMALL_EXPLOSION_DAMAGE = 24.0F;
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -54,8 +52,8 @@ public final class PunisherShoulderCannonShoot {
         if (host instanceof Player player) {
             LivingEntity attacked = player.getLastHurtMob();
             LivingEntity attacker = player.getLastHurtByMob();
-            boolean attackedOk = isValidTarget(cannon, host, attacked);
-            boolean attackerOk = isValidTarget(cannon, host, attacker);
+            boolean attackedOk = cannon.isValidCombatTarget(host, attacked);
+            boolean attackerOk = cannon.isValidCombatTarget(host, attacker);
             if (attackedOk && attackerOk) {
                 return player.getLastHurtMobTimestamp() >= player.getLastHurtByMobTimestamp()
                         ? attacked
@@ -71,27 +69,10 @@ public final class PunisherShoulderCannonShoot {
         }
         if (host instanceof Mob mob) {
             LivingEntity hate = mob.getTarget();
-            return isValidTarget(cannon, host, hate) ? hate : null;
+            return cannon.isValidCombatTarget(host, hate) ? hate : null;
         }
         LivingEntity lastBy = host.getLastHurtByMob();
-        return isValidTarget(cannon, host, lastBy) ? lastBy : null;
-    }
-
-    public static boolean isValidTarget(
-            AbstractShoulderCannonEntity cannon, LivingEntity host, @Nullable LivingEntity target) {
-        if (target == null || !target.isAlive() || target.isRemoved()) {
-            return false;
-        }
-        if (target == host || target == cannon) {
-            return false;
-        }
-        if (target.level() != host.level()) {
-            return false;
-        }
-        if (host.isAlliedTo(target) || target.isAlliedTo(host)) {
-            return false;
-        }
-        return host.distanceToSqr(target) <= MAX_RANGE * MAX_RANGE;
+        return cannon.isValidCombatTarget(host, lastBy) ? lastBy : null;
     }
 
     public static boolean canSee(AbstractShoulderCannonEntity cannon, LivingEntity target) {
@@ -145,6 +126,7 @@ public final class PunisherShoulderCannonShoot {
                 new EntityKineticBullet(
                         level, host, gunStack, ammoId, RPG_GUN_ID, false, gunData, bulletData);
         applySmallExplosion(bullet);
+        AbstractShoulderCannonEntity.markShoulderBullet(bullet);
         CompoundTag data = bullet.getPersistentData();
         data.putBoolean(TAG_PUNISHER_SHOULDER, true);
         double x = from.x + dir.x * 0.35D;

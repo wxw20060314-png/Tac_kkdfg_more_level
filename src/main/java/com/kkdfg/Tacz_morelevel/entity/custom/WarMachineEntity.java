@@ -364,7 +364,8 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                         false,
                         this.requiresPreferredMainGunForCombat()
                                 ? AbstractDualGunSoldierEntity::isHoldingPreferredMainGun
-                                : null);
+                                : null,
+                        MobGunRangedFireGoal.SeeTimeTune.LEGACY);
         this.rpgFireGoal = new WarMachineRpgFireGoal(this);
         this.normalFireGoal =
                 new MobGunRangedFireGoal<>(
@@ -377,7 +378,8 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
                         false,
                         m ->
                                 !m.isHoldingPreferredMainGun()
-                                        && !m.isHoldingPreferredOffhandGun());
+                                        && !m.isHoldingPreferredOffhandGun(),
+                        MobGunRangedFireGoal.SeeTimeTune.LEGACY);
         this.flyingGunGoal =
                 new WarMachineFlyingGunMoveGoal(
                         this,
