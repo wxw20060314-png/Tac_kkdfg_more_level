@@ -1,6 +1,5 @@
 package com.kkdfg.Tacz_morelevel.entity.ai.war_machine;
 
-import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
 import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
 import com.tacz.guns.api.item.IGun;
@@ -22,7 +21,6 @@ public final class WarMachineFlyingGunMoveGoal extends Goal implements MobGunSol
     private final int seeTimeToStopMove;
     private final float strafeOuterRingAttackRadiusSqFraction;
     private final float strafeInnerRingAttackRadiusSqFraction;
-    private final GunCombatSight sight;
 
     private static final int SEE_TIME_MAX = 1000;
     private int seeTime;
@@ -45,7 +43,6 @@ public final class WarMachineFlyingGunMoveGoal extends Goal implements MobGunSol
         this.seeTimeToStopMove = seeTimeToStopMove;
         this.strafeOuterRingAttackRadiusSqFraction = strafeOuterRingAttackRadiusSqFraction;
         this.strafeInnerRingAttackRadiusSqFraction = strafeInnerRingAttackRadiusSqFraction;
-        this.sight = GunCombatSight.WAR_MOVE;
         this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
@@ -94,7 +91,7 @@ public final class WarMachineFlyingGunMoveGoal extends Goal implements MobGunSol
         }
         this.mob.setSprinting(false);
         double distSqr = this.mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
-        boolean hasLineOfSight = this.sight.hasLineOfSight(this.mob, target);
+        boolean hasLineOfSight = this.mob.hasStrictGunSight() || this.mob.hasRpgGunSight();
         boolean hadSeeTime = this.seeTime > 0;
         if (hasLineOfSight != hadSeeTime) {
             this.seeTime = 0;

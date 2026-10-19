@@ -5,6 +5,7 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.armor.skill.impl.BlastSummonBombCartSkill;
 import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.BombBabySight;
 import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.BombBabyGrenadeWeaponSwapGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
@@ -97,6 +98,9 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
                     Component.translatable("entity.tacz_morelevel.bomb_baby"),
                     BossEvent.BossBarColor.RED,
                     BossEvent.BossBarOverlay.NOTCHED_10);
+
+    /** 本拍对当前目标的爆炸看见。 */
+    private boolean blastGunSight;
 
     private final MobGunRangedBombBabyAttackGoal gunGoal =
             new MobGunRangedBombBabyAttackGoal(
@@ -370,8 +374,25 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
         return JumpController.TIER_HIGH;
     }
 
+    /** 本拍爆炸看见。继承的 {@link #hasGunCombatSight()} 仍是头→身→脚。 */
+    public boolean hasBlastGunSight() {
+        return this.blastGunSight;
+    }
+
+    private void tickBlastGunSight() {
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive()) {
+            this.blastGunSight = false;
+            return;
+        }
+        this.blastGunSight = BombBabySight.hasLineOfSight(this, target);
+    }
+
     @Override
     public void tick() {
+        if (!this.level().isClientSide()) {
+            this.tickBlastGunSight();
+        }
         super.tick();
         if (!this.hasEffect(MobEffects.REGENERATION)) {
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 999999, 1, false, false));

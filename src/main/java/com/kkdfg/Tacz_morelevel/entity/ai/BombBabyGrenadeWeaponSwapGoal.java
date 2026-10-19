@@ -66,7 +66,7 @@ public final class BombBabyGrenadeWeaponSwapGoal extends Goal {
         if (!this.mob.canOperateWeaponSwap() || !this.mob.hasPreferredPairInHands()) {
             return;
         }
-        boolean sight = BombBabySight.hasLineOfSight(this.mob, target);
+        boolean sight = this.mob.hasBlastGunSight();
         if (sight) {
             this.noSightTicks = 0;
             if (this.mob.isHoldingGrenadeLauncher()) {

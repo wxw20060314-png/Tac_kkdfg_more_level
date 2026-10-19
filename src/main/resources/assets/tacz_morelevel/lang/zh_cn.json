@@ -464,6 +464,8 @@
   "tooltip.tacz_morelevel.bandage": "恢复少量生命值",
   "item.tacz_morelevel.first_aid_kit": "急救包",
   "tooltip.tacz_morelevel.first_aid_kit": "恢复中量生命值，并获得生命回复",
+  "item.tacz_morelevel.armor_repair_kit": "盔甲维修包",
+  "tooltip.tacz_morelevel.armor_repair_kit": "读条 7 秒，修复身上每件盔甲 25% 耐久",
   "item.tacz_morelevel.medical_box": "医疗箱",
   "tooltip.tacz_morelevel.medical_box": "恢复大量生命值，并获得生命回复",
   "item.tacz_morelevel.syringe": "注射器",
@@ -970,6 +972,7 @@
   "message.tacz_morelevel.medicine.use_label": "治疗中",
   "sounds.tacz_morelevel.medicine_bandage": "使用绷带",
   "sounds.tacz_morelevel.medicine_first_aid": "使用急救包",
+  "sounds.tacz_morelevel.medicine_armor_repair": "使用盔甲维修包",
   "sounds.tacz_morelevel.medicine_medical": "使用医疗箱",
   "sounds.tacz_morelevel.medicine_injection": "注射"
 }

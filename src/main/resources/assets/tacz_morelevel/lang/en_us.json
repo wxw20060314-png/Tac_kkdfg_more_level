@@ -286,6 +286,8 @@
   "tooltip.tacz_morelevel.bandage": "Restores a small amount of health",
   "item.tacz_morelevel.first_aid_kit": "First Aid Kit",
   "tooltip.tacz_morelevel.first_aid_kit": "Restores a moderate amount of health and grants Regeneration",
+  "item.tacz_morelevel.armor_repair_kit": "Armor Repair Kit",
+  "tooltip.tacz_morelevel.armor_repair_kit": "Channels for 7 seconds and restores 25% durability to each worn armor piece",
   "item.tacz_morelevel.medical_box": "Medical Box",
   "tooltip.tacz_morelevel.medical_box": "Restores a large amount of health and grants Regeneration",
   "item.tacz_morelevel.syringe": "Syringe",
@@ -970,6 +972,7 @@
   "message.tacz_morelevel.medicine.use_label": "Using",
   "sounds.tacz_morelevel.medicine_bandage": "Using bandage",
   "sounds.tacz_morelevel.medicine_first_aid": "Using first aid kit",
+  "sounds.tacz_morelevel.medicine_armor_repair": "Using armor repair kit",
   "sounds.tacz_morelevel.medicine_medical": "Using medical box",
   "sounds.tacz_morelevel.medicine_injection": "Injection"
 }

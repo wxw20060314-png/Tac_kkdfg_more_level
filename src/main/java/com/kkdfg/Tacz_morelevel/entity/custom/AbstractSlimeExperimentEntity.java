@@ -14,6 +14,7 @@ import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
 import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
@@ -91,6 +92,7 @@ import net.minecraft.world.phys.Vec3;
 public abstract class AbstractSlimeExperimentEntity extends Monster
         implements RangedAttackMob,
                 GunEquippedMob,
+                GunCombatSightHolder,
                 TaczPlayerLikeMob,
                 PlayerLikeHeadBodyYawMob,
                 TaczGunSoundInvestigatingMob,
@@ -162,6 +164,8 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
 
     /** 下一次 {@link #getJumpPower()} 用的档；消费后归 {@link #defaultJumpTier()}。子类可细改。 */
     private int currentJumpTier;
+    /** 本拍对当前目标的交火看见。默认头→身→脚。 */
+    private boolean gunCombatSight;
 
     protected AbstractSlimeExperimentEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -813,7 +817,28 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     // region —— root 拉回 / TTL ——
 
     @Override
+    public boolean hasGunCombatSight() {
+        return this.gunCombatSight;
+    }
+
+    protected boolean evaluateGunCombatSight(LivingEntity target) {
+        return MobGunPlayerLikeAimHelper.hasCombatLineOfSight(this, target);
+    }
+
+    private void tickGunCombatSight() {
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive()) {
+            this.gunCombatSight = false;
+            return;
+        }
+        this.gunCombatSight = this.evaluateGunCombatSight(target);
+    }
+
+    @Override
     public void tick() {
+        if (!this.level().isClientSide()) {
+            this.tickGunCombatSight();
+        }
         super.tick();
         if (this.level().isClientSide()) {
             return;

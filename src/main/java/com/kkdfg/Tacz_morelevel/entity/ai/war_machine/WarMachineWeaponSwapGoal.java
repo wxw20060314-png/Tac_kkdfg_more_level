@@ -66,7 +66,7 @@ public final class WarMachineWeaponSwapGoal extends Goal {
         if (this.swapCooldown > 0) {
             this.swapCooldown--;
         }
-        boolean strictSee = WarMachineGunSight.hasStrictLineOfSight(this.mob, target);
+        boolean strictSee = this.mob.hasStrictGunSight();
         if (strictSee != this.lastStrictSee) {
             this.strictSeeTime = 0;
             this.noStrictSeeTime = 0;

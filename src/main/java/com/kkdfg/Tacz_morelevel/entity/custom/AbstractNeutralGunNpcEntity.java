@@ -12,6 +12,7 @@ import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
@@ -65,7 +66,8 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                 TaczCrawlCapableMob,
                 TaczGunSoundInvestigatingMob,
                 TaczPlayerLikeMob,
-                JumpActingMob {
+                JumpActingMob,
+                GunCombatSightHolder {
 
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
 
@@ -84,6 +86,8 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
 
     /** 下一次 {@link #getJumpPower()} 用的档；消费后归 {@link #defaultJumpTier()}。子类可细改。 */
     private int currentJumpTier;
+    /** 本拍对当前目标的交火看见。默认头→身→脚。 */
+    private boolean gunCombatSight;
 
     protected AbstractNeutralGunNpcEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -293,7 +297,28 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     }
 
     @Override
+    public boolean hasGunCombatSight() {
+        return this.gunCombatSight;
+    }
+
+    protected boolean evaluateGunCombatSight(LivingEntity target) {
+        return MobGunPlayerLikeAimHelper.hasCombatLineOfSight(this, target);
+    }
+
+    private void tickGunCombatSight() {
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive()) {
+            this.gunCombatSight = false;
+            return;
+        }
+        this.gunCombatSight = this.evaluateGunCombatSight(target);
+    }
+
+    @Override
     public void tick() {
+        if (!this.level().isClientSide()) {
+            this.tickGunCombatSight();
+        }
         super.tick();
         if (!this.level().isClientSide()) {
             LivingEntity target = this.getTarget();

@@ -12,6 +12,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineFlyingGunMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineGunSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachinePowerMechSkillGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineRpgFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineTargetGoal;
@@ -114,6 +115,10 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
     @Nullable
     private MoveControl groundMoveControl;
     private boolean serverWasFlying;
+    /** 本拍严格看见。继承的 {@link #hasGunCombatSight()} 仍是头→身→脚。 */
+    private boolean strictGunSight;
+    /** 本拍 RPG 看见。 */
+    private boolean rpgGunSight;
 
     public WarMachineEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -426,8 +431,31 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
         return JumpController.TIER_HIGH;
     }
 
+    public boolean hasStrictGunSight() {
+        return this.strictGunSight;
+    }
+
+    public boolean hasRpgGunSight() {
+        return this.rpgGunSight;
+    }
+
+    private void tickWarMachineGunSight() {
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive()) {
+            this.strictGunSight = false;
+            this.rpgGunSight = false;
+            return;
+        }
+        WarMachineGunSight.Result sight = WarMachineGunSight.evaluate(this, target);
+        this.strictGunSight = sight.strictLineOfSight();
+        this.rpgGunSight = sight.rpgLineOfSight();
+    }
+
     @Override
     public void tick() {
+        if (!this.level().isClientSide()) {
+            this.tickWarMachineGunSight();
+        }
         super.tick();
         if (!this.level().isClientSide()) {
             LivingEntity combatTarget = this.getTarget();

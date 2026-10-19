@@ -73,6 +73,10 @@ public final class ModGeoItemClientExtensions {
         registerGeoItemRenderer(consumer, LightAbsorbingTubeGeoItemRenderer::new);
     }
 
+    public static void registerArmorRepairKit(Consumer<IClientItemExtensions> consumer) {
+        registerGeoItemRenderer(consumer, ArmorRepairKitGeoItemRenderer::new);
+    }
+
     public static void registerBlackMarketContactBlock(Consumer<IClientItemExtensions> consumer) {
         registerGeoItemRenderer(consumer, BlackMarketContactBlockItemRenderer::new);
     }

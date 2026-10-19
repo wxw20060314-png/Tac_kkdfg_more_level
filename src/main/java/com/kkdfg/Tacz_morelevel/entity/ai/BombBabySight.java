@@ -10,11 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -34,8 +32,6 @@ public final class BombBabySight {
      */
     public static final float BLAST_STRENGTH_FACTOR = 1.2F;
 
-    private static final int MAX_CLIP_ITERATIONS = 96;
-    private static final double STEP_EPS = 0.0625D;
     private static final float FALLBACK_RADIUS = 1.0F;
 
     private BombBabySight() {}
@@ -56,7 +52,6 @@ public final class BombBabySight {
         float strength = params.radius() * BLAST_STRENGTH_FACTOR;
         return trace(
                 viewer.level(),
-                viewer,
                 viewer.getEyePosition(1.0F),
                 target.getEyePosition(1.0F),
                 strength);
@@ -115,38 +110,25 @@ public final class BombBabySight {
         return absorbed < strength;
     }
 
-    private static boolean trace(
-            Level level, LivingEntity living, Vec3 start, Vec3 end, float strength) {
-        Vec3 toEnd = end.subtract(start);
-        double maxLen = toEnd.length();
-        if (maxLen < 1.0e-4D) {
+    private static boolean trace(Level level, Vec3 start, Vec3 end, float strength) {
+        if (start.distanceToSqr(end) < 1.0e-8D) {
             return true;
         }
-        Vec3 dir = toEnd.scale(1.0D / maxLen);
-        Vec3 cursor = start;
-        for (int i = 0; i < MAX_CLIP_ITERATIONS; i++) {
-            BlockHitResult hit =
-                    level.clip(
-                            new ClipContext(
-                                    cursor, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, living));
-            if (hit.getType() == HitResult.Type.MISS) {
-                return true;
-            }
-            BlockPos pos = hit.getBlockPos();
-            BlockState state = level.getBlockState(pos);
-            if (!isDestroyableByBlastStrength(state, level, pos, strength)) {
-                return false;
-            }
-            Vec3 at = hit.getLocation();
-            cursor = at.add(dir.scale(STEP_EPS));
-            if (cursor.distanceToSqr(end) < STEP_EPS * STEP_EPS * 4) {
-                return true;
-            }
-            if (cursor.distanceToSqr(start) >= end.distanceToSqr(start) - 1.0e-6D) {
-                return true;
-            }
-        }
-        return false;
+        BlockHitResult hit =
+                BlockGetter.traverseBlocks(
+                        start,
+                        end,
+                        level,
+                        (lvl, pos) -> {
+                            BlockState state = lvl.getBlockState(pos);
+                            if (isDestroyableByBlastStrength(state, lvl, pos, strength)) {
+                                return null;
+                            }
+                            return lvl.clipWithInteractionOverride(
+                                    start, end, pos, state.getCollisionShape(lvl, pos), state);
+                        },
+                        ignored -> null);
+        return hit == null;
     }
 
     public record BlastParams(float radius, boolean destroyBlock) {}

@@ -20,6 +20,7 @@ import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
@@ -118,7 +119,7 @@ import net.minecraft.util.RandomSource;
 public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         implements RangedAttackMob, GunEquippedMob, MilitiaAcquireTargetVoice, PlayerLikeHeadBodyYawMob,
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
-                JumpActingMob, SoldierWeaponArrangeHost {
+                JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder {
 
     /** NBT 键：持久化的皮肤索引。 */
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
@@ -224,6 +225,8 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
 
     /** 下一次 {@link #getJumpPower()} 用的档；消费后归 {@link #defaultJumpTier()}。子类可细改。 */
     private int currentJumpTier;
+    /** 本拍对当前目标的交火看见。默认头→身→脚。 */
+    private boolean gunCombatSight;
 
     /**
      * 是否像原版生物一样在远离玩家时被卸载；由 {@code config/tacz_morelevel-common.toml} 中
@@ -416,7 +419,29 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     }
 
     @Override
+    public boolean hasGunCombatSight() {
+        return this.gunCombatSight;
+    }
+
+    /** 默认头→身→脚。子类可覆写。 */
+    protected boolean evaluateGunCombatSight(LivingEntity target) {
+        return MobGunPlayerLikeAimHelper.hasCombatLineOfSight(this, target);
+    }
+
+    private void tickGunCombatSight() {
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive()) {
+            this.gunCombatSight = false;
+            return;
+        }
+        this.gunCombatSight = this.evaluateGunCombatSight(target);
+    }
+
+    @Override
     public void tick() {
+        if (!this.level().isClientSide()) {
+            this.tickGunCombatSight();
+        }
         super.tick();
         if (!this.level().isClientSide()) {
             LivingEntity target = this.getTarget();

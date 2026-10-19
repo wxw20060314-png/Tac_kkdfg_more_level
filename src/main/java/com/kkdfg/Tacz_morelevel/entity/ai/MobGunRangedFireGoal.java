@@ -1,5 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.custom.BombBabyEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
@@ -154,6 +156,12 @@ public class MobGunRangedFireGoal<T extends Mob & RangedAttackMob> extends Goal
     }
 
     protected boolean hasGunLineOfSight(LivingEntity target) {
+        if (this.sight == GunCombatSight.BLAST && this.mob instanceof BombBabyEntity baby) {
+            return baby.hasBlastGunSight();
+        }
+        if (this.sight == GunCombatSight.WAR_STRICT && this.mob instanceof WarMachineEntity warMachine) {
+            return warMachine.hasStrictGunSight();
+        }
         return this.sight.hasLineOfSight(this.mob, target);
     }
 

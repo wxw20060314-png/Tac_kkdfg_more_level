@@ -974,6 +974,20 @@ public final class ModItems {
                                             .consumeMode(MedicineConsumeMode.SHRINK_ONE)
                                             .build()));
 
+    /** 盔甲维修包：读条 7 秒，修复身上每件盔甲 25% 最大耐久。 */
+    public static final RegistryObject<Item> ARMOR_REPAIR_KIT =
+            ITEMS.register(
+                    "armor_repair_kit",
+                    () ->
+                            new ArmorRepairKitItem(
+                                    new Item.Properties().stacksTo(16),
+                                    MedicineSpec.builder()
+                                            .useTicks(7 * 20)
+                                            .heal(HealSpec.none())
+                                            .sounds(MedicineSounds.once(ModSounds.MEDICINE_ARMOR_REPAIR::get))
+                                            .consumeMode(MedicineConsumeMode.SHRINK_ONE)
+                                            .build()));
+
     /** 医疗箱：恢复大量生命值，生命回复。 */
     public static final RegistryObject<Item> MEDICAL_BOX =
             ITEMS.register(

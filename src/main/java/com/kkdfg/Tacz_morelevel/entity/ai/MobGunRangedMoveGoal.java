@@ -1,5 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
 import java.util.function.Predicate;
@@ -137,6 +138,9 @@ public class MobGunRangedMoveGoal<T extends Mob & RangedAttackMob> extends Goal
     }
 
     protected boolean hasGunLineOfSight(LivingEntity target) {
+        if (this.sight == GunCombatSight.WAR_MOVE && this.mob instanceof WarMachineEntity warMachine) {
+            return warMachine.hasStrictGunSight() || warMachine.hasRpgGunSight();
+        }
         return this.sight.hasLineOfSight(this.mob, target);
     }
 

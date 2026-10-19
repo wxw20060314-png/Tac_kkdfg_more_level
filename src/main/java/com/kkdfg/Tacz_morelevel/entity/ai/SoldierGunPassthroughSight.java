@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.Block;
@@ -16,12 +15,11 @@ import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
- * 枪械 NPC 用「弹道向」视线（改写原版 Sensing）：射线用 {@link ClipContext.Block#COLLIDER} 迭代命中，
+ * 枪械 NPC 用「弹道向」视线（改写原版 Sensing）：沿起点到终点只扫一遍方块，
  * 穿过与 TaCZ 子弹一致的方块（{@link ModBlocks#BULLET_IGNORE_BLOCKS}、配置
  * {@link AmmoConfig#PASS_THROUGH_BLOCKS}，以及 {@link AmmoConfig#DESTROY_GLASS} 开启时
  * 与 TaCZ {@code DestroyGlassBlock} 相同的玻璃/玻璃板），其余视为遮挡。
@@ -30,9 +28,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  * {@link MobGunPlayerLikeAimHelper#findAimPoint}，射线复用 {@link #hasPassthroughLine}。
  */
 public final class SoldierGunPassthroughSight {
-
-    private static final int MAX_CLIP_ITERATIONS = 96;
-    private static final double STEP_EPS = 0.0625D;
 
     private SoldierGunPassthroughSight() {}
 
@@ -76,34 +71,24 @@ public final class SoldierGunPassthroughSight {
         if (level != living.level()) {
             return false;
         }
-        Vec3 toEnd = end.subtract(start);
-        double maxLen = toEnd.length();
-        if (maxLen < 1.0e-4D) {
+        if (start.distanceToSqr(end) < 1.0e-8D) {
             return true;
         }
-        Vec3 dir = toEnd.scale(1.0D / maxLen);
-        Vec3 cursor = start;
-        for (int i = 0; i < MAX_CLIP_ITERATIONS; i++) {
-            BlockHitResult hit =
-                    level.clip(new ClipContext(cursor, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, living));
-            if (hit.getType() == HitResult.Type.MISS) {
-                return true;
-            }
-            BlockPos pos = hit.getBlockPos();
-            BlockState state = level.getBlockState(pos);
-            if (!isPassthroughForGunSight(state, level, pos)) {
-                return false;
-            }
-            Vec3 at = hit.getLocation();
-            cursor = at.add(dir.scale(STEP_EPS));
-            if (cursor.distanceToSqr(end) < STEP_EPS * STEP_EPS * 4) {
-                return true;
-            }
-            if (cursor.distanceToSqr(start) >= end.distanceToSqr(start) - 1.0e-6D) {
-                return true;
-            }
-        }
-        return false;
+        BlockHitResult hit =
+                BlockGetter.traverseBlocks(
+                        start,
+                        end,
+                        level,
+                        (lvl, pos) -> {
+                            BlockState state = lvl.getBlockState(pos);
+                            if (isPassthroughForGunSight(state, lvl, pos)) {
+                                return null;
+                            }
+                            return lvl.clipWithInteractionOverride(
+                                    start, end, pos, state.getCollisionShape(lvl, pos), state);
+                        },
+                        ignored -> null);
+        return hit == null;
     }
 
     /**

@@ -89,6 +89,7 @@ public final class ModCreativeModeTabs {
                                                 output.accept(ModItems.SYRINGE.get());
                                                 output.accept(ModItems.BANDAGE.get());
                                                 output.accept(ModItems.FIRST_AID_KIT.get());
+                                                output.accept(ModItems.ARMOR_REPAIR_KIT.get());
                                                 output.accept(ModItems.MEDICAL_BOX.get());
                                                 output.accept(ModItems.HARDENING_NEEDLE_JUNIOR.get());
                                                 output.accept(ModItems.HARDENING_NEEDLE_MEDIUM.get());

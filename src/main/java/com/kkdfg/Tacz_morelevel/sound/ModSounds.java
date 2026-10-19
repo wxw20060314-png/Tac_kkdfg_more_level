@@ -70,6 +70,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> MEDICINE_BANDAGE = registerMedicine("medicine_bandage");
     /** 急救包使用音效。 */
     public static final RegistryObject<SoundEvent> MEDICINE_FIRST_AID = registerMedicine("medicine_first_aid");
+    /** 盔甲维修包使用音效。 */
+    public static final RegistryObject<SoundEvent> MEDICINE_ARMOR_REPAIR = registerMedicine("medicine_armor_repair");
     /** 医疗箱使用音效。 */
     public static final RegistryObject<SoundEvent> MEDICINE_MEDICAL = registerMedicine("medicine_medical");
     /** 针剂使用音效（硬化针 / 综合免疫针共用）。 */

@@ -1989,6 +1989,12 @@
       "tacz_morelevel:medicine/first_aid"
     ]
   },
+  "medicine_armor_repair": {
+    "subtitles": "sounds.tacz_morelevel.medicine_armor_repair",
+    "sounds": [
+      "tacz_morelevel:medicine/armor_repair_01"
+    ]
+  },
   "medicine_medical": {
     "subtitles": "sounds.tacz_morelevel.medicine_medical",
     "sounds": [

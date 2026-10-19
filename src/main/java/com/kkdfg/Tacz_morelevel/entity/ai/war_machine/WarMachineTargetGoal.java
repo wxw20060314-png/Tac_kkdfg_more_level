@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai.war_machine;
 
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
+import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
@@ -93,6 +94,14 @@ public final class WarMachineTargetGoal<T extends LivingEntity> extends TargetGo
         return best;
     }
 
+    /** 当前目标读本拍缓存；其他人仍当场射。 */
+    private static boolean hasRpgSightOnCurrentTarget(Mob mob, LivingEntity target) {
+        if (target == mob.getTarget() && mob instanceof WarMachineEntity warMachine) {
+            return warMachine.hasRpgGunSight();
+        }
+        return WarMachineGunSight.hasRpgLineOfSight(mob, target);
+    }
+
     @Override
     public boolean canContinueToUse() {
         LivingEntity t = this.mob.getTarget();
@@ -113,7 +122,7 @@ public final class WarMachineTargetGoal<T extends LivingEntity> extends TargetGo
             return false;
         }
         if (this.mustSee) {
-            if (WarMachineGunSight.hasRpgLineOfSight(this.mob, t)) {
+            if (hasRpgSightOnCurrentTarget(this.mob, t)) {
                 this.unseenRpgTicks = 0;
             } else {
                 this.unseenRpgTicks++;
@@ -161,7 +170,7 @@ public final class WarMachineTargetGoal<T extends LivingEntity> extends TargetGo
             if (this.mob.distanceToSqr(t) > follow * follow) {
                 return false;
             }
-            if (WarMachineGunSight.hasRpgLineOfSight(this.mob, t)) {
+            if (WarMachineTargetGoal.hasRpgSightOnCurrentTarget(this.mob, t)) {
                 this.unseenRpgTicks = 0;
             } else {
                 this.unseenRpgTicks++;

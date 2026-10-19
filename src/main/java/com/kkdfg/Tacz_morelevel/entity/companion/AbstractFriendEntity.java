@@ -14,6 +14,7 @@ import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
@@ -101,7 +102,8 @@ public abstract class AbstractFriendEntity extends PathfinderMob
                 TaczCombatCrawlMob,
                 PlayerLikeHeadBodyYawMob,
                 MilitiaAcquireTargetVoice,
-                JumpActingMob {
+                JumpActingMob,
+                GunCombatSightHolder {
 
     private static final EntityDataAccessor<Boolean> DATA_TAME =
             SynchedEntityData.defineId(AbstractFriendEntity.class, EntityDataSerializers.BOOLEAN);
@@ -116,6 +118,8 @@ public abstract class AbstractFriendEntity extends PathfinderMob
 
     /** 下一次 {@link #getJumpPower()} 用的档；消费后归 {@link #defaultJumpTier()}。子类可细改。 */
     private int currentJumpTier;
+    /** 本拍对当前目标的交火看见。默认头→身→脚。 */
+    private boolean gunCombatSight;
 
     protected AbstractFriendEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -474,7 +478,28 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     }
 
     @Override
+    public boolean hasGunCombatSight() {
+        return this.gunCombatSight;
+    }
+
+    protected boolean evaluateGunCombatSight(LivingEntity target) {
+        return MobGunPlayerLikeAimHelper.hasCombatLineOfSight(this, target);
+    }
+
+    private void tickGunCombatSight() {
+        LivingEntity target = this.getTarget();
+        if (target == null || !target.isAlive()) {
+            this.gunCombatSight = false;
+            return;
+        }
+        this.gunCombatSight = this.evaluateGunCombatSight(target);
+    }
+
+    @Override
     public void tick() {
+        if (!this.level().isClientSide()) {
+            this.tickGunCombatSight();
+        }
         super.tick();
         if (!this.mayUseCombatCrouchOrCrawl() && this.isTaczCrawlingSynced()) {
             SoldierTaczCrawlHelper.setCrawlIntent(this, false);
