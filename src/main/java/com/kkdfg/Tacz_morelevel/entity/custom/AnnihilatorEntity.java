@@ -54,7 +54,9 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -277,6 +279,10 @@ public final class AnnihilatorEntity extends AbstractPlayerLikeSoldierEntity {
                 TARGET_PRIORITY_BODYGUARD,
                 new MobGunNearestAttackablePassthroughTargetGoal<>(
                         this, AbstractFriendEntity.class, false));
+        this.targetSelector.addGoal(
+                5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, WitherBoss.class, false));
+        this.targetSelector.addGoal(
+                5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Warden.class, false));
         this.targetSelector.addGoal(
                 3, new SoldierHurtByTargetGoal(this, AnnihilatorEntity.class).setAlertOthers());
         this.goalSelector.addGoal(1, new AnnihilatorBlinkSkillGoal(this));

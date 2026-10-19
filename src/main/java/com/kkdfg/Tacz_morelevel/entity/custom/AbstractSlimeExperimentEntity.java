@@ -10,6 +10,9 @@ import com.kkdfg.Tacz_morelevel.api.PlayerLikeHeadBodyYawMob;
 import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
 import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBox;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxHolder;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxReloadAccess;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
 import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
@@ -36,6 +39,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -74,6 +78,8 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
@@ -97,7 +103,8 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
                 PlayerLikeHeadBodyYawMob,
                 TaczGunSoundInvestigatingMob,
                 JumpActingMob,
-                SoldierWeaponArrangeHost {
+                SoldierWeaponArrangeHost,
+                MobCreativeAmmoBoxHolder {
 
     public static final String TEXTURE_FOLDER = "slime_experiment";
     public static final ResourceLocation SKIN_TEXTURE =
@@ -148,6 +155,35 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
 
     /** 额外 {@link #SOLDIER_BACKPACK_SLOTS} 格；仅服务端武器整理使用。 */
     private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
+
+    /** 一格全类型创造弹药箱，供 TaCZ {@code reload()} 扫描。 */
+    private final NonNullList<ItemStack> creativeAmmoBox = MobCreativeAmmoBox.createSlot();
+
+    private final MobCreativeAmmoBoxReloadAccess creativeAmmoReload =
+            new MobCreativeAmmoBoxReloadAccess(this.creativeAmmoBox);
+
+    @Override
+    public NonNullList<ItemStack> mobCreativeAmmoBox() {
+        return this.creativeAmmoBox;
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
+        return ammo != null ? ammo : super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.creativeAmmoReload.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.creativeAmmoReload.revive();
+    }
 
     private int linkTtl = LINK_TIMEOUT_TICKS;
     /** 树根为指挥官（含指挥官自身及其直接/间接分裂）：不远距离刷新。 */
@@ -838,6 +874,7 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     public void tick() {
         if (!this.level().isClientSide()) {
             this.tickGunCombatSight();
+            MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
         }
         super.tick();
         if (this.level().isClientSide()) {

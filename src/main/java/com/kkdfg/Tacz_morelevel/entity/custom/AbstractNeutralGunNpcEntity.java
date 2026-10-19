@@ -11,12 +11,19 @@ import com.kkdfg.Tacz_morelevel.api.TaczCombatCrawlMob;
 import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.api.TaczGunSoundInvestigatingMob;
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
+import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
 import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
+import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBox;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxHolder;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxReloadAccess;
 import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.tacz.guns.api.entity.IGunOperator;
@@ -25,6 +32,8 @@ import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.entity.shooter.ShooterDataHolder;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -35,6 +44,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
@@ -50,6 +60,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -67,9 +79,12 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                 TaczGunSoundInvestigatingMob,
                 TaczPlayerLikeMob,
                 JumpActingMob,
-                GunCombatSightHolder {
+                GunCombatSightHolder,
+                MobCreativeAmmoBoxHolder,
+                SoldierWeaponArrangeHost {
 
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
+    private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
 
     public static final int SOLDIER_SKIN_COUNT = 10;
     public static final double GUN_SOUND_HEAR_RANGE_BLOCKS = 40.0;
@@ -89,6 +104,41 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     /** 本拍对当前目标的交火看见。默认头→身→脚。 */
     private boolean gunCombatSight;
 
+    /** 一格全类型创造弹药箱，供 TaCZ {@code reload()} 扫描。 */
+    private final NonNullList<ItemStack> creativeAmmoBox = MobCreativeAmmoBox.createSlot();
+
+    private final MobCreativeAmmoBoxReloadAccess creativeAmmoReload =
+            new MobCreativeAmmoBoxReloadAccess(this.creativeAmmoBox);
+
+    /** 换枪整理用的 6 格背包，与士兵相同。 */
+    private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
+
+    @Nullable
+    private ResourceLocation preferredMainGunDataId;
+
+    @Override
+    public NonNullList<ItemStack> mobCreativeAmmoBox() {
+        return this.creativeAmmoBox;
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
+        return ammo != null ? ammo : super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.creativeAmmoReload.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.creativeAmmoReload.revive();
+    }
+
     protected AbstractNeutralGunNpcEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.lookControl = new SoldierPlayerLikeLookControl(this);
@@ -100,6 +150,8 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
+        this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
+        this.goalSelector.addGoal(1, new MobGunIdleMainhandArrangeGoal(this));
         this.resetJumpTierToDefault();
     }
 
@@ -318,6 +370,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     public void tick() {
         if (!this.level().isClientSide()) {
             this.tickGunCombatSight();
+            MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
         }
         super.tick();
         if (!this.level().isClientSide()) {
@@ -363,6 +416,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
             return;
         }
         ItemStack gunStack = TaczGunMobHelper.createGunStack(gunDataId);
+        this.preferredMainGunDataId = gunStack.isEmpty() ? null : gunDataId;
         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         this.setItemSlot(EquipmentSlot.OFFHAND, gunStack);
         this.reassessCombatGoals();
@@ -411,6 +465,125 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         }
         this.reassessCombatGoals();
         return true;
+    }
+
+    @Override
+    public Mob asArrangeLiving() {
+        return this;
+    }
+
+    @Override
+    @Nullable
+    public ResourceLocation getPreferredMainGunDataId() {
+        return this.preferredMainGunDataId;
+    }
+
+    @Override
+    public NonNullList<ItemStack> soldierBackpackSlots() {
+        return this.soldierBackpack;
+    }
+
+    @Override
+    public boolean tryPutIntoSoldierBackpack(ItemStack stack) {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        return SoldierBackpack.tryPut(this.soldierBackpack, stack);
+    }
+
+    @Override
+    public void swapHandWithSoldierBackpackSlot(EquipmentSlot hand, int index) {
+        if (this.level().isClientSide() || index < 0 || index >= this.soldierBackpack.size()) {
+            return;
+        }
+        ItemStack bag = this.soldierBackpack.get(index);
+        ItemStack held = this.getItemBySlot(hand);
+        this.soldierBackpack.set(index, held.isEmpty() ? ItemStack.EMPTY : held.copy());
+        this.setItemSlot(hand, bag);
+    }
+
+    @Override
+    public void swapMainAndOffhand() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        ItemStack main = this.getMainHandItem().copy();
+        ItemStack off = this.getOffhandItem().copy();
+        this.setItemSlot(EquipmentSlot.MAINHAND, off);
+        this.setItemSlot(EquipmentSlot.OFFHAND, main);
+    }
+
+    @Override
+    public boolean canOperateWeaponSwap() {
+        if (this.level().isClientSide()) {
+            return false;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        return op.getSynDrawCoolDown() == 0L
+                && !op.getSynIsBolting()
+                && !op.getSynReloadState().getStateType().isReloading();
+    }
+
+    @Override
+    public void afterCombatMainhandArrange(boolean hadMainGunBefore) {
+        if (IGun.mainHandHoldGun(this)) {
+            IGunOperator op = IGunOperator.fromLivingEntity(this);
+            op.initialData();
+            op.draw(this::getMainHandItem);
+            TaczGunMobHelper.tickInfiniteMobAmmo(this);
+            this.setAggressive(true);
+            this.reassessCombatGoals();
+        } else if (hadMainGunBefore) {
+            this.reassessCombatGoals();
+        }
+    }
+
+    @Override
+    public void afterIdleMainhandArrange() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        IGunOperator op = IGunOperator.fromLivingEntity(this);
+        op.aim(false);
+        op.cancelReload();
+        this.setAggressive(false);
+        this.reassessCombatGoals();
+    }
+
+    @Override
+    public void compactSoldierInventory() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+        SoldierBackpack.compact(this.soldierBackpack);
+        this.mergeHandIntoBackpack(EquipmentSlot.MAINHAND);
+        this.mergeHandIntoBackpack(EquipmentSlot.OFFHAND);
+        ItemStack main = this.getMainHandItem();
+        ItemStack off = this.getOffhandItem();
+        if (!main.isEmpty()
+                && !off.isEmpty()
+                && main.isStackable()
+                && ItemStack.isSameItemSameTags(main, off)) {
+            int move = Math.min(main.getCount(), off.getMaxStackSize() - off.getCount());
+            if (move > 0) {
+                off.grow(move);
+                main.shrink(move);
+                if (main.isEmpty()) {
+                    this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                }
+            }
+        }
+        SoldierBackpack.compact(this.soldierBackpack);
+    }
+
+    private void mergeHandIntoBackpack(EquipmentSlot hand) {
+        ItemStack stack = this.getItemBySlot(hand);
+        if (stack.isEmpty()) {
+            return;
+        }
+        if (SoldierBackpack.tryMergeIntoExisting(this.soldierBackpack, stack) && stack.isEmpty()) {
+            this.setItemSlot(hand, ItemStack.EMPTY);
+        }
     }
 
     @Override
@@ -511,6 +684,10 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt(TAG_SKIN_INDEX, this.getSoldierSkinIndex());
+        if (this.preferredMainGunDataId != null) {
+            compound.putString(TAG_PREFERRED_MAIN_GUN_DATA_ID, this.preferredMainGunDataId.toString());
+        }
+        SoldierBackpack.save(compound, this.soldierBackpack);
     }
 
     @Override
@@ -520,6 +697,11 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         if (compound.contains(TAG_SKIN_INDEX, Tag.TAG_INT)) {
             this.setSoldierSkinIndex(Mth.clamp(compound.getInt(TAG_SKIN_INDEX), 0, SOLDIER_SKIN_COUNT - 1));
         }
+        if (compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            this.preferredMainGunDataId =
+                    ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_MAIN_GUN_DATA_ID));
+        }
+        SoldierBackpack.load(compound, this.soldierBackpack);
         this.applyEquipmentDropChances();
     }
 

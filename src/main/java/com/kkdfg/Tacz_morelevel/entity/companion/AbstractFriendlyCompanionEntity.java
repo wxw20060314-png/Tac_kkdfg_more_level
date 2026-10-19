@@ -4,9 +4,13 @@ import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionCombatMainhandArran
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionSitWhenOrderedGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.inventory.CompanionInventory;
+import com.kkdfg.Tacz_morelevel.entity.companion.inventory.CompanionInventoryItemHandler;
 import com.kkdfg.Tacz_morelevel.entity.companion.menu.CompanionInventoryMenu;
+import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.item.IGun;
+import javax.annotation.Nullable;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,6 +27,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
 /**
@@ -34,6 +42,11 @@ public abstract class AbstractFriendlyCompanionEntity extends AbstractFriendEnti
             SynchedEntityData.defineId(AbstractFriendlyCompanionEntity.class, EntityDataSerializers.BOOLEAN);
 
     private final CompanionInventory companionInventory = new CompanionInventory(this);
+
+    /** 方向为 null 时交给 TaCZ 扫整包。构造期能力查询时字段尚未初始化。 */
+    @Nullable
+    private LazyOptional<IItemHandler> backpackReload =
+            LazyOptional.of(() -> new CompanionInventoryItemHandler(this.companionInventory));
 
     protected AbstractFriendlyCompanionEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -60,6 +73,31 @@ public abstract class AbstractFriendlyCompanionEntity extends AbstractFriendEnti
 
     public CompanionInventory getCompanionInventory() {
         return this.companionInventory;
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        if (this.isAlive()
+                && side == null
+                && cap == ForgeCapabilities.ITEM_HANDLER
+                && this.backpackReload != null) {
+            return this.backpackReload.cast();
+        }
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        if (this.backpackReload != null) {
+            this.backpackReload.invalidate();
+        }
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.backpackReload = LazyOptional.of(() -> new CompanionInventoryItemHandler(this.companionInventory));
     }
 
     /** TaCZ 不在切枪/拉栓/换弹。 */
@@ -114,8 +152,7 @@ public abstract class AbstractFriendlyCompanionEntity extends AbstractFriendEnti
             IGunOperator op = IGunOperator.fromLivingEntity(this);
             op.initialData();
             op.draw(this::getMainHandItem);
-            CompanionBodyguardAmmoHelper.stripDummyAmmoTag(this.getMainHandItem());
-            CompanionBodyguardAmmoHelper.applyCreativeMagazineTopUp(this);
+            TaczGunMobHelper.tickInfiniteMobAmmo(this);
             this.setAggressive(true);
             this.reassessWeaponGoal();
         } else if (hadMainGunBefore) {

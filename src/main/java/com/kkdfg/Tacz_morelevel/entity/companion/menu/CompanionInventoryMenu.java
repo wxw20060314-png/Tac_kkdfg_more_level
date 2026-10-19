@@ -1,7 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.companion.menu;
 
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendlyCompanionEntity;
-import com.kkdfg.Tacz_morelevel.entity.companion.CompanionBodyguardAmmoHelper;
 import com.kkdfg.Tacz_morelevel.entity.companion.inventory.CompanionEquipmentContainer;
 import com.kkdfg.Tacz_morelevel.menu.ModMenus;
 import com.kkdfg.Tacz_morelevel.entity.companion.inventory.CompanionEquipmentSlot;
@@ -202,7 +201,6 @@ public final class CompanionInventoryMenu extends AbstractContainerMenu {
         result = stack.copy();
 
         if (index < COMPANION_SLOT_COUNT) {
-            CompanionBodyguardAmmoHelper.stripDummyAmmoTag(stack);
             if (!this.moveItemStackTo(stack, PLAYER_INVENTORY_START, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }

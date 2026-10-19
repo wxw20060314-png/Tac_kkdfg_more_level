@@ -112,7 +112,6 @@ public class MobGunCoverStrafeMoveGoal<T extends Mob & RangedAttackMob>
     }
 
     private void retarget(SoldierMoveControl control, LivingEntity target) {
-        System.out.println("1");
         BlockPos feet = this.mob().blockPosition();
         int[] pointed = this.facingStep();
         if (pointed != null

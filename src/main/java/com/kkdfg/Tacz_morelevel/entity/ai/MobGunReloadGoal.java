@@ -1,5 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBox;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxHolder;
 import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.entity.ReloadState;
@@ -13,8 +15,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * 士兵换弹：无目标且弹匣未满，或有目标且弹匣 {@code < 1} 时调用 {@link IGunOperator#reload()}；依赖
- * {@link com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper} 的虚拟备弹 / 背包直读补弹，使换弹能完成。
+ * 士兵换弹：无目标且弹匣未满，或有目标且弹匣 {@code < 1} 时调用 {@link IGunOperator#reload()}。
  */
 public class MobGunReloadGoal extends Goal {
     private final Mob mob;
@@ -44,6 +45,10 @@ public class MobGunReloadGoal extends Goal {
         }
         LivingEntity target = this.mob.getTarget();
         if (target != null && cur >= 1) {
+            return false;
+        }
+        if (this.mob instanceof MobCreativeAmmoBoxHolder holder
+                && !MobCreativeAmmoBox.isAllTypeCreative(holder.mobCreativeAmmoBox().get(0))) {
             return false;
         }
         IGunOperator op = IGunOperator.fromLivingEntity(this.mob);

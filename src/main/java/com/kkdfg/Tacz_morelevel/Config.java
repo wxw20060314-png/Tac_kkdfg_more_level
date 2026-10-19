@@ -4,7 +4,6 @@ import com.kkdfg.Tacz_morelevel.config.ArmorConfig;
 import com.kkdfg.Tacz_morelevel.config.BossConfig;
 import com.kkdfg.Tacz_morelevel.config.CombatUnitConfig;
 import com.kkdfg.Tacz_morelevel.config.NpcConfig;
-import com.kkdfg.Tacz_morelevel.integration.tacz.TaczCompatForgeEvents;
 import net.minecraft.util.Mth;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -101,12 +100,6 @@ public final class Config {
                         .defineInRange("pointBlankFactor", 0.2, 0.0, 1.0);
         BUILDER.pop();
     }
-
-    private static final ForgeConfigSpec.DoubleValue PRESENT_TO_DROP_CONFIG = BUILDER
-            .comment(
-                    "Multiplier for death magazine-ammo percentages (see TaczCompatForgeEvents);",
-                    "written to TaczCompatForgeEvents.PRESENT_TO_DROP when this file loads.")
-            .defineInRange("presentToDrop", 1.0, 0.0, 10.0);
 
     private static final ForgeConfigSpec.DoubleValue NPC_OUTGOING_DAMAGE_TO_PLAYER_SCALE = BUILDER
             .comment(
@@ -825,7 +818,6 @@ public final class Config {
         flashbangRadius = FLASHBANG_RADIUS.get();
         flashbangBaseDurationSeconds = FLASHBANG_BASE_DURATION_SECONDS.get();
         flashbangPointBlankFactor = FLASHBANG_POINT_BLANK_FACTOR.get();
-        TaczCompatForgeEvents.PRESENT_TO_DROP = PRESENT_TO_DROP_CONFIG.get();
         npcOutgoingDamageToPlayerScale = NPC_OUTGOING_DAMAGE_TO_PLAYER_SCALE.get().floatValue();
     }
 }

@@ -61,7 +61,9 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -585,6 +587,10 @@ public final class CeilingDuelEntity extends AbstractHolsterGunSoldierEntity {
                 2,
                 new MobGunNearestAttackablePassthroughTargetGoal<>(
                         this, AbstractFriendEntity.class, false));
+        this.targetSelector.addGoal(
+                5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, WitherBoss.class, false));
+        this.targetSelector.addGoal(
+                5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Warden.class, false));
         this.targetSelector.addGoal(
                 3, new SoldierHurtByTargetGoal(this, CeilingDuelEntity.class).setAlertOthers());
         this.goalSelector.addGoal(0, new FloatGoal(this));

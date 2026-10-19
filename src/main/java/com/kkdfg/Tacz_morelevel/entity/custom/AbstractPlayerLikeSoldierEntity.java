@@ -29,6 +29,9 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBox;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxHolder;
+import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxReloadAccess;
 import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -43,6 +46,7 @@ import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.entity.shooter.ShooterDataHolder;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -80,6 +84,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.Mth;
@@ -103,12 +109,12 @@ import net.minecraft.util.RandomSource;
  *       有枪走远程、无枪走近战，靠 {@code canUse} 互斥，禁止运行时动态挂卸；
  *       {@link #reassessWeaponGoal} 仅刷新点射间隔（须在子类字段初始化后调用，勿在父类 {@code registerGoals} 里挂枪）。
  *       优先级 1 为 {@link SoldierAvoidGrenadeAndFireGoal}。</li>
- *   <li><b>子弹</b>：服务端每 tick 补充弹药（{@link TaczGunMobHelper#tickInfiniteMobAmmo}），并强制自动开火模式。</li>
+ *   <li><b>子弹</b>：背包直读枪由 {@link TaczGunMobHelper#tickInfiniteMobAmmo} 每 tick 补满弹匣，并强制自动开火模式。</li>
  *   <li><b>碰撞/视角</b>：尺寸、眼高、下马姿态均与 {@link Player} 一致，便于潜行贴墙和受击判定。</li>
  *   <li><b>声音</b>：闲置与首次锁定敌对目标时为 {@link ModSounds} 随机语音；受伤/死亡使用玩家音效；
  *       索敌反应见 {@link MilitiaAcquireTargetVoice}、{@link com.kkdfg.Tacz_morelevel.event.MilitiaAcquireTargetVoiceEvents}。</li>
  *   <li><b>装备掉落</b>：装备槽统一使用 {@link Config#equipmentDropChance}（默认 4%，见 common 配置 {@code equipmentDropChance}）。</li>
- *   <li><b>额外掉落</b>：升级凭证与黑市货币见 {@code loot_tables/entities/<entity_id>.json}；弹匣子弹见 {@link com.kkdfg.Tacz_morelevel.integration.tacz.TaczCompatForgeEvents}。</li>
+ *   <li><b>额外掉落</b>：升级凭证与黑市货币见 {@code loot_tables/entities/<entity_id>.json}。</li>
  *   <li><b>移速与追踪</b>：各子类 {@code createAttributes} 使用 {@link Config#npcAttributesFor(SoldierSpawnArmorProfile)}
  *      （common 配置 {@code [npcAttributes]}）。</li>
  * </ul>
@@ -119,7 +125,7 @@ import net.minecraft.util.RandomSource;
 public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         implements RangedAttackMob, GunEquippedMob, MilitiaAcquireTargetVoice, PlayerLikeHeadBodyYawMob,
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
-                JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder {
+                JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder, MobCreativeAmmoBoxHolder {
 
     /** NBT 键：持久化的皮肤索引。 */
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
@@ -216,6 +222,35 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
 
     /** 额外 {@link #SOLDIER_BACKPACK_SLOTS} 格；仅服务端武器整理使用，不进装备栏。 */
     private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
+
+    /** 一格全类型创造弹药箱，供 TaCZ {@code reload()} 扫描。 */
+    private final NonNullList<ItemStack> creativeAmmoBox = MobCreativeAmmoBox.createSlot();
+
+    private final MobCreativeAmmoBoxReloadAccess creativeAmmoReload =
+            new MobCreativeAmmoBoxReloadAccess(this.creativeAmmoBox);
+
+    @Override
+    public NonNullList<ItemStack> mobCreativeAmmoBox() {
+        return this.creativeAmmoBox;
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
+        return ammo != null ? ammo : super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.creativeAmmoReload.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.creativeAmmoReload.revive();
+    }
 
     /** 枪声调查目标位置，{@code null} 表示无调查任务或已过期；仅服务端有效。 */
     @Nullable
@@ -441,6 +476,8 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     public void tick() {
         if (!this.level().isClientSide()) {
             this.tickGunCombatSight();
+            MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
+
         }
         super.tick();
         if (!this.level().isClientSide()) {
@@ -553,7 +590,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     /**
      * 每 tick 服务端 AI 步进：
      * <ol>
-     *   <li>调用 {@link TaczGunMobHelper#tickInfiniteMobAmmo} 维持无限弹药。</li>
+     *   <li>背包直读枪由 {@link TaczGunMobHelper#tickInfiniteMobAmmo} 补满弹匣。</li>
      *   <li>若主手持枪，规范化并锁定为自动开火模式。</li>
      * </ol>
      */

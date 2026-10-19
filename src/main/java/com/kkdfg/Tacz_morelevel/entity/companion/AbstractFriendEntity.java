@@ -438,12 +438,7 @@ public abstract class AbstractFriendEntity extends PathfinderMob
             ItemStack main = this.getMainHandItem();
             TaczGunMobHelper.normalizeFireModeIfInvalid(main);
             TaczGunMobHelper.preferAutoFireModeForMobMainHandGun(main);
-            if (this instanceof AbstractFriendlyCompanionEntity companion) {
-                CompanionBodyguardAmmoHelper.stripDummyAmmoTag(main);
-                CompanionBodyguardAmmoHelper.applyCreativeMagazineTopUp(companion);
-            } else {
-                TaczGunMobHelper.tickInfiniteMobAmmo(this);
-            }
+            TaczGunMobHelper.tickInfiniteMobAmmo(this);
         }
     }
 
@@ -860,15 +855,7 @@ public abstract class AbstractFriendEntity extends PathfinderMob
         } else if (result == ShootResult.NEED_BOLT) {
             op.bolt();
         } else if (result == ShootResult.NO_AMMO) {
-            ItemStack gunStack = this.getMainHandItem();
-            if (this instanceof AbstractFriendlyCompanionEntity companion) {
-                if (CompanionBodyguardAmmoHelper.hasReloadAmmoSupply(companion, gunStack)) {
-                    CompanionBodyguardAmmoHelper.stripDummyAmmoTag(gunStack);
-                    op.reload();
-                }
-            } else {
-                op.reload();
-            }
+            op.reload();
         }
     }
 

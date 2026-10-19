@@ -55,13 +55,7 @@ public final class CompanionBodyguardDeathDropHelper {
         if (chance <= 0.0F || random.nextFloat() >= chance) {
             return;
         }
-        ItemStack dropStack = prepareDropStack(stack.copy());
-        drops.add(createDropEntity(companion, level, dropStack));
-    }
-
-    private static ItemStack prepareDropStack(ItemStack stack) {
-        CompanionBodyguardAmmoHelper.stripDummyAmmoTag(stack);
-        return stack;
+        drops.add(createDropEntity(companion, level, stack.copy()));
     }
 
     private static ItemEntity createDropEntity(AbstractFriendlyCompanionEntity companion, Level level, ItemStack stack) {

@@ -1,7 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.companion.ai;
 
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
-import com.kkdfg.Tacz_morelevel.entity.companion.CompanionBodyguardAmmoHelper;
 import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.item.IGun;
@@ -52,8 +51,7 @@ public class CompanionMobGunReloadGoal extends Goal {
         if (target != null && cur >= 1) {
             return false;
         }
-        if (!(this.companion instanceof com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendlyCompanionEntity bodyguard)
-                || !CompanionBodyguardAmmoHelper.hasReloadAmmoSupply(bodyguard, stack)) {
+        if (!(this.companion instanceof com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendlyCompanionEntity)) {
             return false;
         }
         IGunOperator op = IGunOperator.fromLivingEntity(this.companion);
@@ -77,15 +75,6 @@ public class CompanionMobGunReloadGoal extends Goal {
 
     @Override
     public void start() {
-        ItemStack stack = this.companion.getMainHandItem();
-        CompanionBodyguardAmmoHelper.stripDummyAmmoTag(stack);
         IGunOperator.fromLivingEntity(this.companion).reload();
-    }
-
-    @Override
-    public void stop() {
-        if (this.companion instanceof com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendlyCompanionEntity bodyguard) {
-            CompanionBodyguardAmmoHelper.applyCreativeMagazineTopUp(bodyguard);
-        }
     }
 }

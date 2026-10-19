@@ -15,6 +15,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistance
 import com.kkdfg.Tacz_morelevel.entity.ai.MobTaczCombatCrawlGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
+import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.item.custom.BulletproofArmor;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
@@ -219,8 +220,8 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     /**
-     * 索敌：凋零 + 坚守者 + 玩家（不挂友军 goal），外加避雷火 goal 与受击反击。
-     * 不调用 {@code super.registerGoals()}，以免引入父类的友军索敌。
+     * 索敌：凋零 + 坚守者 + 玩家 + 友方，外加避雷火 goal 与受击反击。
+     * 不调用 {@code super.registerGoals()}，射击与走位在本类单独挂。
      */
     @Override
     protected void registerGoals() {
@@ -230,6 +231,8 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
                 5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Warden.class, false));
         this.targetSelector.addGoal(
                 2, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Player.class, false));
+        this.targetSelector.addGoal(
+                3, new MobGunNearestAttackablePassthroughTargetGoal<>(this, AbstractFriendEntity.class, false));
         this.goalSelector.addGoal(1, new SoldierAvoidGrenadeAndFireGoal(this));
         this.targetSelector.addGoal(
                 1, new SoldierHurtByTargetGoal(this, PunisherEntity.class).setAlertOthers());
