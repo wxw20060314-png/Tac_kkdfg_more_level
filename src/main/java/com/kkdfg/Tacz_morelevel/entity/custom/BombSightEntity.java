@@ -16,6 +16,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInShortDistanc
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.bomb_sight.BombSightDashGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.bomb_sight.BombSightReleaseCrawlGoal;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
@@ -236,6 +237,7 @@ public final class BombSightEntity extends AbstractHolsterGunSoldierEntity {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new BombSightDashGoal(this));
+        this.goalSelector.addGoal(1, new BombSightReleaseCrawlGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));

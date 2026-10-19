@@ -3,7 +3,7 @@ package com.kkdfg.Tacz_morelevel.entity.custom;
 import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -78,8 +78,8 @@ public final class LevMarshalEntity extends AbstractHolsterGunSoldierEntity {
     private int minionReserve = MarshalFactionHelper.MAX_MINION_RESERVE;
     private int reserveTtl;
 
-    private final MobGunRangedPassthroughAttackGoal<LevMarshalEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<LevMarshalEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.levMarshalGunGoalSpeedModifier,
                     Config.levMarshalAttributes.gunAttackIntervalMin,

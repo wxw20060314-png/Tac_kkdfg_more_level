@@ -29,8 +29,8 @@ import javax.annotation.Nullable;
 
 /** 特种兵：完美档枪械（{@code *_perfect}）。*/
 public final class SpecialForcesSoldierEntity extends AbstractPlayerLikeSoldierEntity {
-    private final MobGunRangedPassthroughAttackGoal<SpecialForcesSoldierEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<SpecialForcesSoldierEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.gunGoalSpeedModifierFor(SoldierSpawnArmorProfile.SPECIAL_FORCES),
                     Config.gunAttackIntervalMinFor(SoldierSpawnArmorProfile.SPECIAL_FORCES),

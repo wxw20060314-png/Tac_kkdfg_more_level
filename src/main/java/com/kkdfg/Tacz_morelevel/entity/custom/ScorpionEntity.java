@@ -6,7 +6,7 @@ import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.armor.skill.ArmorLegendarySkillRegistry;
 import com.kkdfg.Tacz_morelevel.armor.skill.ArmorStealthSeventhHandler;
 import com.kkdfg.Tacz_morelevel.armor.skill.impl.StealthSeventhSkill;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -90,8 +90,8 @@ public final class ScorpionEntity extends AbstractHolsterGunSoldierEntity {
                     BossEvent.BossBarColor.WHITE,
                     BossEvent.BossBarOverlay.NOTCHED_10);
 
-    private final MobGunRangedPassthroughAttackGoal<ScorpionEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<ScorpionEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.scorpionGunGoalSpeedModifier,
                     Config.scorpionAttributes.gunAttackIntervalMin,

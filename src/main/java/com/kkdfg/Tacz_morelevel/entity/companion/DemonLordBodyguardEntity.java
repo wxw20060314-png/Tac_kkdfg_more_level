@@ -6,7 +6,7 @@ import com.kkdfg.Tacz_morelevel.BodyguardProfile;
 import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAttackMonsterGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAvoidGrenadeAndFireGoal;
@@ -68,8 +68,8 @@ public final class DemonLordBodyguardEntity extends AbstractFriendlyCompanionEnt
         return PROFILE;
     }
 
-    private final MobGunRangedPassthroughAttackGoal<DemonLordBodyguardEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<DemonLordBodyguardEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.bodyguardGunGoalSpeedModifierFor(PROFILE),
                     Config.bodyguardGunAttackIntervalMinFor(PROFILE),

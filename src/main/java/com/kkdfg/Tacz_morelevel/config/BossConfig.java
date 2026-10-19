@@ -392,7 +392,7 @@ public final class BossConfig {
     private BossConfig() {}
 
     private static CombatUnitConfig.SpecEntry defineWarMachine() {
-        double[] attrs = {0.8D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D};
+        double[] attrs = {0.54D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D};
         // 无潜行/趴/跳 Goal → 不写 combatGoals 段
         return CombatUnitConfig.define(
                 BUILDER,
@@ -427,7 +427,7 @@ public final class BossConfig {
             CombatUnitConfig.SpecEntry unit, ForgeConfigSpec.DoubleValue helmetDropChance) {}
 
     private static CeilingDuelConfigEntry defineCeilingDuel() {
-        double[] attrs = {0.64D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D};
+        double[] attrs = {0.54D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D};
         ForgeConfigSpec.DoubleValue[] helmetDropChance = new ForgeConfigSpec.DoubleValue[1];
         CombatUnitConfig.SpecEntry unit =
                 CombatUnitConfig.define(
@@ -484,7 +484,7 @@ public final class BossConfig {
     private static CombatUnitConfig.SpecEntry defineScorpion() {
         int superSpecialIndex = CombatUnitConfig.SUPER_SPECIAL_NPC_DEFAULT_INDEX;
         // Melee/no-aim ≤20; engage 100; strafe outer≈80 / inner≈40 → (80/100)²=0.64, (40/100)²=0.16.
-        double[] attrs = {0.64D, 108.0D, 1.25D, 100.0D, 0.2D, 3.0D, 0.64D, 0.16D, 0.0D, 2.0D};
+        double[] attrs = {0.5D, 108.0D, 1.25D, 100.0D, 0.2D, 3.0D, 0.64D, 0.16D, 0.0D, 2.0D};
         return CombatUnitConfig.define(
                 BUILDER,
                 "scorpion",
@@ -535,7 +535,7 @@ public final class BossConfig {
     }
 
     private static CombatUnitConfig.SpecEntry defineLevMarshal() {
-        double[] attrs = {0.4D, 108.0D, 1.18D, 80.0D, 0.5D, 5.0D, 0.5D, 0.2D, 3.0D, 5.0D};
+        double[] attrs = {0.37D, 108.0D, 1.18D, 80.0D, 0.5D, 5.0D, 0.5D, 0.2D, 3.0D, 5.0D};
         // 仅跳 Goal → 不写潜行/趴字段
         return CombatUnitConfig.define(
                 BUILDER,
@@ -557,7 +557,7 @@ public final class BossConfig {
     private static BombSightConfigEntry defineBombSight() {
         int superSpecialIndex = CombatUnitConfig.SUPER_SPECIAL_NPC_DEFAULT_INDEX;
         // Strafe rings ≈ 12 / 6 blocks at gunRadius 80: (12/80)²≈0.0225, (6/80)²≈0.005625 → 0.022 / 0.0056.
-        double[] attrs = {0.64D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.022D, 0.0056D, 0.0D, 2.0D};
+        double[] attrs = {0.5D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.022D, 0.0056D, 0.0D, 2.0D};
         ForgeConfigSpec.IntValue[] resistanceAmplifier = new ForgeConfigSpec.IntValue[1];
         CombatUnitConfig.SpecEntry unit =
                 CombatUnitConfig.define(

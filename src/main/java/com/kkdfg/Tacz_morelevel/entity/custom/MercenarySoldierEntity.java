@@ -22,8 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 /** 雇佣兵：改进档枪械（{@code *_improved}）。*/
 public final class MercenarySoldierEntity extends AbstractPlayerLikeSoldierEntity {
-    private final MobGunRangedPassthroughAttackGoal<MercenarySoldierEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<MercenarySoldierEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.gunGoalSpeedModifierFor(SoldierSpawnArmorProfile.MERCENARY),
                     Config.gunAttackIntervalMinFor(SoldierSpawnArmorProfile.MERCENARY),

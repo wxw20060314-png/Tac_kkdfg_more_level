@@ -16,7 +16,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
@@ -114,8 +114,8 @@ public final class GuardEntity extends AbstractFriendEntity
     private ResourceLocation preferredMainGunDataId;
     private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
 
-    private final MobGunRangedPassthroughAttackGoal<GuardEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<GuardEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.marshalGuardGunGoalSpeedModifier,
                     Config.marshalGuardAttributes.gunAttackIntervalMin,

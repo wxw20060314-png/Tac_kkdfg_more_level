@@ -129,6 +129,7 @@ public final class BombSightDashGoal extends Goal {
             this.prefire.reset();
             this.aimReleaseAtBodyMid(target);
             ShockwaveDashSkill.applyImpulseFromKinetic(this.mob, k, false);
+            this.mob.setTaczCrawling(true);
         }
     }
 

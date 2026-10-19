@@ -204,7 +204,7 @@ public final class SoldierMoveControl extends MoveControl {
     /**
      * 同原版 {@code MoveControl#isWalkable}，额外允许半砖/楼梯/耕地/土径站立面。
      */
-    private boolean isWalkable(float relativeX, float relativeZ) {
+    public boolean isWalkable(float relativeX, float relativeZ) {
         PathNavigation pathnavigation = this.mob.getNavigation();
         if (pathnavigation == null) {
             return true;

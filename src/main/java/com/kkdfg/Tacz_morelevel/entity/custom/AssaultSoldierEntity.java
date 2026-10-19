@@ -23,8 +23,8 @@ import net.minecraft.world.level.Level;
 
 /** 突击兵：卓越档枪械（{@code *_excellent}）。*/
 public final class AssaultSoldierEntity extends AbstractPlayerLikeSoldierEntity {
-    private final MobGunRangedPassthroughAttackGoal<AssaultSoldierEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<AssaultSoldierEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.gunGoalSpeedModifierFor(SoldierSpawnArmorProfile.ASSAULT),
                     Config.gunAttackIntervalMinFor(SoldierSpawnArmorProfile.ASSAULT),

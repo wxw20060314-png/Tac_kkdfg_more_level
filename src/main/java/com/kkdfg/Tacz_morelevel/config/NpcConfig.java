@@ -443,7 +443,7 @@ public final class NpcConfig {
 
     private static CombatUnitConfig.SpecEntry defineMarshalGuard() {
         double[] attrs = {
-            0.64D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 2.0D, 2.0D
+            0.46D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 2.0D, 2.0D
         };
         return CombatUnitConfig.define(
                 BUILDER,

@@ -6,7 +6,7 @@ import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.armor.skill.ArmorLegendarySkillRegistry;
 import com.kkdfg.Tacz_morelevel.armor.skill.ArmorStealthHandler;
 import com.kkdfg.Tacz_morelevel.armor.skill.impl.StealthCloakSkill;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -42,8 +42,8 @@ import net.minecraft.world.level.Level;
  */
 public final class LurkerEntity extends AbstractPlayerLikeSoldierEntity {
 
-    private final MobGunRangedPassthroughAttackGoal<LurkerEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<LurkerEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.lurkerGunGoalSpeedModifier,
                     Config.lurkerAttributes.gunAttackIntervalMin,

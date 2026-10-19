@@ -10,7 +10,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardOwnerHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardOwnerHurtTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardShareTargetToOwnerGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
@@ -66,8 +66,8 @@ public final class MarshalGuardEntity extends AbstractPlayerLikeSoldierEntity
     /** 丢目标后仍保持头盔夜视的 tick 数。 */
     private static final int NIGHT_VISION_OFF_TTL_TICKS = 60;
 
-    private final MobGunRangedPassthroughAttackGoal<MarshalGuardEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<MarshalGuardEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.marshalGuardGunGoalSpeedModifier,
                     Config.marshalGuardAttributes.gunAttackIntervalMin,

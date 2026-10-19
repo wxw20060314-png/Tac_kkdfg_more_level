@@ -24,10 +24,17 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
     private final float strafeInnerRingAttackRadiusSqFraction;
     private final GunCombatSight sight;
     private static final int SEE_TIME_MAX = 1000;
+    private static final int SIDE_FLIP_COOLDOWN = 20;
+    private static final int HURT_FLIP_WINDOW = 10;
     private int seeTime;
+    private GunSightMode sightMode = GunSightMode.NOT_SEEING;
     private boolean strafingClockwise;
     private boolean strafingBackwards;
     private int strafingTime = -1;
+    /** 上次左右变相之后的冷却。和横移节拍、掩体定向冷却都不是同一个计数。 */
+    private int sideFlipCooldown;
+    private int hurtFlipWindowTick;
+    private float healthAtWindowStart;
 
     public MobGunRangedPassthroughAttackGoal(
             T mob,
@@ -86,6 +93,65 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
         return 0.5F;
     }
 
+    protected boolean isStrafing() {
+        return this.strafingTime > -1;
+    }
+
+    protected boolean strafingBackwards() {
+        return this.strafingBackwards;
+    }
+
+    protected boolean strafingClockwise() {
+        return this.strafingClockwise;
+    }
+
+    protected void setStrafingBackwards(boolean backwards) {
+        this.strafingBackwards = backwards;
+    }
+
+    protected void setStrafingClockwise(boolean clockwise) {
+        this.strafingClockwise = clockwise;
+    }
+
+    /**
+     * 左右变相请求。冷却已好则必定对调 {@code strafingClockwise} 并进入 20 tick 冷却；冷却中本次请求无效。
+     * 不改前后，也不动掩体定向。
+     */
+    protected void requestSideFlip() {
+        if (this.sideFlipCooldown > 0) {
+            return;
+        }
+        this.strafingClockwise = !this.strafingClockwise;
+        this.sideFlipCooldown = SIDE_FLIP_COOLDOWN;
+    }
+
+    /**
+     * 每 {@value #HURT_FLIP_WINDOW} 拍看一次血量。只计相对最大生命少掉的部分，少掉多少比例就以这个比例请求一次左右变相。
+     */
+    private void tickHurtSideFlip() {
+        if (++this.hurtFlipWindowTick < HURT_FLIP_WINDOW) {
+            return;
+        }
+        this.hurtFlipWindowTick = 0;
+        float health = this.mob.getHealth();
+        float start = this.healthAtWindowStart;
+        this.healthAtWindowStart = health;
+        float maxHealth = this.mob.getMaxHealth();
+        if (maxHealth <= 0.0F) {
+            return;
+        }
+        float loss = (start - health) / maxHealth;
+        if (loss <= 0.0F) {
+            return;
+        }
+        if (loss > 1.0F) {
+            loss = 1.0F;
+        }
+        if (this.mob.getRandom().nextFloat() < loss) {
+            this.requestSideFlip();
+        }
+    }
+
     protected T mob() {
         return this.mob;
     }
@@ -120,7 +186,10 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
         super.start();
         this.mob.setAggressive(true);
         this.seeTime = 0;
+        this.sightMode = GunSightMode.NOT_SEEING;
         this.strafingTime = -1;
+        this.hurtFlipWindowTick = 0;
+        this.healthAtWindowStart = this.mob.getHealth();
     }
 
     @Override
@@ -128,6 +197,7 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
         super.stop();
         this.strafingTime = -1;
         this.seeTime = 0;
+        this.sightMode = GunSightMode.NOT_SEEING;
     }
 
     @Override
@@ -137,6 +207,10 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
 
     @Override
     public void tick() {
+        if (this.sideFlipCooldown > 0) {
+            this.sideFlipCooldown--;
+        }
+        this.tickHurtSideFlip();
         LivingEntity target = this.mob.getTarget();
         if (target == null) {
             return;
@@ -144,14 +218,15 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
         this.mob.setSprinting(false);
         double distSqr = this.mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
         boolean hasLineOfSight = this.hasGunLineOfSight(target);
-        boolean hadSeeTime = this.seeTime > 0;
-        if (hasLineOfSight != hadSeeTime) {
+        GunSightMode next = hasLineOfSight ? GunSightMode.SEEING : GunSightMode.NOT_SEEING;
+        if (next != this.sightMode) {
             this.seeTime = 0;
+            this.sightMode = next;
         }
-        if (hasLineOfSight) {
+        if (this.sightMode == GunSightMode.SEEING) {
             this.seeTime = Math.min(this.seeTime + 1, SEE_TIME_MAX);
         } else {
-            this.seeTime = Math.max(this.seeTime - 1, 0);
+            this.seeTime =0;
         }
         if (!(distSqr > (double) this.attackRadiusSqr) && this.seeTime >= this.seeTimeToStopMove) {
             this.mob.getNavigation().stop();
@@ -162,7 +237,7 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
         }
         if (this.strafingTime >= 20) {
             if ((double) this.mob.getRandom().nextFloat() < 0.3D) {
-                this.strafingClockwise = !this.strafingClockwise;
+                this.requestSideFlip();
             }
             if ((double) this.mob.getRandom().nextFloat() < 0.3D) {
                 this.strafingBackwards = !this.strafingBackwards;
@@ -175,10 +250,15 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
             } else if (distSqr < (double) (this.attackRadiusSqr * this.strafeInnerRingAttackRadiusSqFraction)) {
                 this.strafingBackwards = true;
             }
-            this.mob.getMoveControl()
-                    .strafe(
-                            this.strafingBackwards ? -this.strafeAxis() : this.strafeAxis(),
-                            this.strafingClockwise ? this.strafeAxis() : -this.strafeAxis());
+            this.issueStrafe(target, distSqr);
         }
+    }
+
+    /** 内外圈已经写好前后之后调用。子类可改方向再发出横移。 */
+    protected void issueStrafe(LivingEntity target, double distSqr) {
+        this.mob.getMoveControl()
+                .strafe(
+                        this.strafingBackwards ? -this.strafeAxis() : this.strafeAxis(),
+                        this.strafingClockwise ? this.strafeAxis() : -this.strafeAxis());
     }
 }

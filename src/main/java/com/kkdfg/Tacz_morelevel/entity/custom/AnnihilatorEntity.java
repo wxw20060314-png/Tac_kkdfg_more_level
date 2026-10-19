@@ -5,7 +5,7 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
@@ -123,8 +123,8 @@ public final class AnnihilatorEntity extends AbstractPlayerLikeSoldierEntity {
                     BossEvent.BossBarColor.WHITE,
                     BossEvent.BossBarOverlay.NOTCHED_10);
 
-    private final MobGunRangedPassthroughAttackGoal<AnnihilatorEntity> gunGoal =
-            new MobGunRangedPassthroughAttackGoal<>(
+    private final MobGunCoverStrafeMoveGoal<AnnihilatorEntity> gunGoal =
+            new MobGunCoverStrafeMoveGoal<>(
                     this,
                     Config.annihilatorGunGoalSpeedModifier,
                     Config.annihilatorAttributes.gunAttackIntervalMin,
