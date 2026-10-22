@@ -21,6 +21,10 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableMob;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableSupport;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadInfo;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SoldierLocomotionMode;
 import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBox;
 import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxHolder;
 import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxReloadAccess;
@@ -81,7 +85,11 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                 JumpActingMob,
                 GunCombatSightHolder,
                 MobCreativeAmmoBoxHolder,
-                SoldierWeaponArrangeHost {
+                SoldierWeaponArrangeHost,
+                SimThreadCapableMob {
+
+    private final SimThreadCapableSupport simThreadSupport =
+            new SimThreadCapableSupport(this::getCoverModeDurationTicks);
 
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
     private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
@@ -598,6 +606,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+        this.simThreadSupport.serverTick(this.level().getGameTime());
         TaczGunMobHelper.tickInfiniteMobAmmo(this);
         if (IGun.mainHandHoldGun(this)) {
             ItemStack main = this.getMainHandItem();
@@ -607,6 +616,73 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         if (this.isGunCombatAiming()) {
             this.yHeadRot = this.getYRot();
         }
+    }
+
+    @Override
+    public boolean canSimThreadEnqueue() {
+        return true;
+    }
+
+    @Override
+    public boolean offerSimThreadInfo(SimThreadInfo info) {
+        return this.simThreadSupport.offer(info, this.level().getGameTime());
+    }
+
+    @Override
+    @Nullable
+    public SimThreadInfo peekSimThreadInfo() {
+        return this.simThreadSupport.peek();
+    }
+
+    @Override
+    public void clearSimThreadInfo() {
+        this.simThreadSupport.clearMailbox();
+    }
+
+    @Override
+    public boolean isSimThreadReceiveCooling() {
+        return this.simThreadSupport.isReceiveCooling(this.level().getGameTime());
+    }
+
+    @Override
+    public void tickSimThreadReceiver(long gameTime) {
+        // 已在 customServerAiStep → serverTick 推进，避免与 Manager 重复扣 TTL
+    }
+
+    @Override
+    public SoldierLocomotionMode getLocomotionMode() {
+        return this.simThreadSupport.mode();
+    }
+
+    @Override
+    public void enterCoverMode(@Nullable BlockPos coverPos, boolean crawl) {
+        this.simThreadSupport.enterCover(coverPos, crawl);
+    }
+
+    @Override
+    public void exitCoverMode() {
+        this.simThreadSupport.exitCover();
+    }
+
+    @Override
+    public int getCoverModeTicksLeft() {
+        return this.simThreadSupport.coverTicksLeft();
+    }
+
+    @Override
+    @Nullable
+    public BlockPos getPendingCoverPos() {
+        return this.simThreadSupport.pendingCoverPos();
+    }
+
+    @Override
+    public boolean isPendingCoverCrawl() {
+        return this.simThreadSupport.pendingCoverCrawl();
+    }
+
+    @Override
+    public int getCoverModeDurationTicks() {
+        return 30;
     }
 
     @Override

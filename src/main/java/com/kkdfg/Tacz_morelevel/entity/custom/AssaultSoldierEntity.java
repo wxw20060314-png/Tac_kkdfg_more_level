@@ -23,8 +23,8 @@ import net.minecraft.world.level.Level;
 
 /** 突击兵：卓越档枪械（{@code *_excellent}）。*/
 public final class AssaultSoldierEntity extends AbstractPlayerLikeSoldierEntity {
-    private final MobGunCoverStrafeMoveGoal<AssaultSoldierEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<AssaultSoldierEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.gunGoalSpeedModifierFor(SoldierSpawnArmorProfile.ASSAULT),
                     Config.gunAttackIntervalMinFor(SoldierSpawnArmorProfile.ASSAULT),
@@ -85,6 +85,13 @@ public final class AssaultSoldierEntity extends AbstractPlayerLikeSoldierEntity 
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.95D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 9.5F));

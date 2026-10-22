@@ -10,7 +10,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardOwnerHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardOwnerHurtTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardShareTargetToOwnerGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
@@ -66,8 +67,8 @@ public final class MarshalGuardEntity extends AbstractPlayerLikeSoldierEntity
     /** 丢目标后仍保持头盔夜视的 tick 数。 */
     private static final int NIGHT_VISION_OFF_TTL_TICKS = 60;
 
-    private final MobGunCoverStrafeMoveGoal<MarshalGuardEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<MarshalGuardEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.marshalGuardGunGoalSpeedModifier,
                     Config.marshalGuardAttributes.gunAttackIntervalMin,
@@ -339,6 +340,13 @@ public final class MarshalGuardEntity extends AbstractPlayerLikeSoldierEntity
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));

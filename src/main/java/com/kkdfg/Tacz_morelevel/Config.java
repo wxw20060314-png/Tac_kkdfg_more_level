@@ -394,6 +394,10 @@ public final class Config {
         public double gunStrafeInnerRingFrac;
         public int gunAttackIntervalMin;
         public int seeTimeToShoot;
+        /** 找掩体请求近界（格，3D）；{@code <0} 表示不限近。 */
+        public double findCoverNearDistance;
+        /** 找掩体请求远界（格，3D）；{@code <0} 表示不限远。 */
+        public double findCoverFarDistance;
 
         public NpcAttributeStats(
                 double maxHealth,
@@ -409,6 +413,40 @@ public final class Config {
                 double gunStrafeInnerRingFrac,
                 int gunAttackIntervalMin,
                 int seeTimeToShoot) {
+            this(
+                    maxHealth,
+                    attackDamage,
+                    gunGoalSpeedModifier,
+                    movementSpeed,
+                    followRange,
+                    meleeSpeed,
+                    gunRadius,
+                    gunMeleeFrac,
+                    seeTimeToStopMove,
+                    gunStrafeOuterRingFrac,
+                    gunStrafeInnerRingFrac,
+                    gunAttackIntervalMin,
+                    seeTimeToShoot,
+                    CombatUnitConfig.defaultFindCoverNear(gunRadius, gunMeleeFrac),
+                    CombatUnitConfig.defaultFindCoverFar(gunRadius, gunStrafeOuterRingFrac));
+        }
+
+        public NpcAttributeStats(
+                double maxHealth,
+                double attackDamage,
+                double gunGoalSpeedModifier,
+                double movementSpeed,
+                double followRange,
+                double meleeSpeed,
+                double gunRadius,
+                double gunMeleeFrac,
+                int seeTimeToStopMove,
+                double gunStrafeOuterRingFrac,
+                double gunStrafeInnerRingFrac,
+                int gunAttackIntervalMin,
+                int seeTimeToShoot,
+                double findCoverNearDistance,
+                double findCoverFarDistance) {
             this.maxHealth = maxHealth;
             this.attackDamage = attackDamage;
             this.gunGoalSpeedModifier = gunGoalSpeedModifier;
@@ -422,6 +460,8 @@ public final class Config {
             this.gunStrafeInnerRingFrac = gunStrafeInnerRingFrac;
             this.gunAttackIntervalMin = gunAttackIntervalMin;
             this.seeTimeToShoot = seeTimeToShoot;
+            this.findCoverNearDistance = findCoverNearDistance;
+            this.findCoverFarDistance = findCoverFarDistance;
         }
     }
 

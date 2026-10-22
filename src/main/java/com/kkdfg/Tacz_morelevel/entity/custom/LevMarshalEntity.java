@@ -3,7 +3,8 @@ package com.kkdfg.Tacz_morelevel.entity.custom;
 import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -78,8 +79,8 @@ public final class LevMarshalEntity extends AbstractHolsterGunSoldierEntity {
     private int minionReserve = MarshalFactionHelper.MAX_MINION_RESERVE;
     private int reserveTtl;
 
-    private final MobGunCoverStrafeMoveGoal<LevMarshalEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<LevMarshalEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.levMarshalGunGoalSpeedModifier,
                     Config.levMarshalAttributes.gunAttackIntervalMin,
@@ -178,6 +179,13 @@ public final class LevMarshalEntity extends AbstractHolsterGunSoldierEntity {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         Config.CombatGoalStats jump = Config.levMarshalCombatGoals;
         this.goalSelector.addGoal(
                 3, new MobRandomJumpGoal(this, jump.jumpChance, jump.jumpEnabled, jump.jumpMaxDistance));

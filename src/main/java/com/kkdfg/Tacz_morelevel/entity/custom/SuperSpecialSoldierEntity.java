@@ -29,8 +29,8 @@ import javax.annotation.Nullable;
 
 /** 超级特种兵：纯化档枪械（{@code *_refined}）。*/
 public final class SuperSpecialSoldierEntity extends AbstractPlayerLikeSoldierEntity {
-    private final MobGunCoverStrafeMoveGoal<SuperSpecialSoldierEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<SuperSpecialSoldierEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.gunGoalSpeedModifierFor(SoldierSpawnArmorProfile.SUPER_SPECIAL),
                     Config.gunAttackIntervalMinFor(SoldierSpawnArmorProfile.SUPER_SPECIAL),
@@ -97,6 +97,13 @@ public final class SuperSpecialSoldierEntity extends AbstractPlayerLikeSoldierEn
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10.0F));

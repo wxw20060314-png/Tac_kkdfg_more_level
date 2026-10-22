@@ -26,6 +26,10 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableMob;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableSupport;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadInfo;
+import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SoldierLocomotionMode;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
@@ -125,7 +129,11 @@ import net.minecraft.util.RandomSource;
 public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         implements RangedAttackMob, GunEquippedMob, MilitiaAcquireTargetVoice, PlayerLikeHeadBodyYawMob,
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
-                JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder, MobCreativeAmmoBoxHolder {
+                JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder, MobCreativeAmmoBoxHolder,
+                SimThreadCapableMob {
+
+    private final SimThreadCapableSupport simThreadSupport =
+            new SimThreadCapableSupport(this::getCoverModeDurationTicks);
 
     /** NBT 键：持久化的皮肤索引。 */
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
@@ -597,6 +605,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+        this.simThreadSupport.serverTick(this.level().getGameTime());
         TaczGunMobHelper.tickInfiniteMobAmmo(this);
         if (IGun.mainHandHoldGun(this)) {
             ItemStack main = this.getMainHandItem();
@@ -606,6 +615,74 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         if (this.isGunCombatAiming()) {
             this.yHeadRot = this.getYRot();
         }
+    }
+
+    @Override
+    public boolean canSimThreadEnqueue() {
+        return true;
+    }
+
+    @Override
+    public boolean offerSimThreadInfo(SimThreadInfo info) {
+        return this.simThreadSupport.offer(info, this.level().getGameTime());
+    }
+
+    @Override
+    @Nullable
+    public SimThreadInfo peekSimThreadInfo() {
+        return this.simThreadSupport.peek();
+    }
+
+    @Override
+    public void clearSimThreadInfo() {
+        this.simThreadSupport.clearMailbox();
+    }
+
+    @Override
+    public boolean isSimThreadReceiveCooling() {
+        return this.simThreadSupport.isReceiveCooling(this.level().getGameTime());
+    }
+
+    @Override
+    public void tickSimThreadReceiver(long gameTime) {
+        // 已在 customServerAiStep → serverTick 推进，避免与 Manager 重复扣 TTL
+    }
+
+    @Override
+    public SoldierLocomotionMode getLocomotionMode() {
+        return this.simThreadSupport.mode();
+    }
+
+    @Override
+    public void enterCoverMode(@Nullable BlockPos coverPos, boolean crawl) {
+        this.simThreadSupport.enterCover(coverPos, crawl);
+    }
+
+    @Override
+    public void exitCoverMode() {
+        this.simThreadSupport.exitCover();
+    }
+
+    @Override
+    public int getCoverModeTicksLeft() {
+        return this.simThreadSupport.coverTicksLeft();
+    }
+
+    @Override
+    @Nullable
+    public BlockPos getPendingCoverPos() {
+        return this.simThreadSupport.pendingCoverPos();
+    }
+
+    @Override
+    public boolean isPendingCoverCrawl() {
+        return this.simThreadSupport.pendingCoverCrawl();
+    }
+
+    /** COVER 倒计时初值；子类可 override。 */
+    @Override
+    public int getCoverModeDurationTicks() {
+        return 30;
     }
 
     /**

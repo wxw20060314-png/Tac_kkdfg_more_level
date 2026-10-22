@@ -10,9 +10,14 @@ import net.minecraft.world.level.pathfinder.Target;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -51,6 +56,13 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
    private static final double CRAWL_STEP_MAX_RISE = 0.3D; //测试代码
    /** 仅趴可通过时叠在 base malus 上的代价（base ≥ 0 才加）。 */ //测试代码
    public static final float CRAWL_ONLY_MALUS = 8.0F; //测试代码
+   /**
+    * 以自身为中心 7×7 窗口的切比雪夫半径（{@code max(|dx|,|dz|) ≤ 3}）。
+    * 供 {@link #expandReachable7x7(Mob)} / {@link #expandReachableInWindow} 使用。
+    */
+   public static final int REACH_WINDOW_7X7_CHEBYSHEV = 3;
+   /** 7×7 扩点默认节点上限（含多层高度冗余）。 */
+   public static final int REACH_WINDOW_7X7_MAX_NODES = 49 * 3;
 
    private final boolean crawlPathfinding; //测试代码
    private final Long2ObjectMap<BlockPathTypes> pathTypesByPosCache = new Long2ObjectOpenHashMap<>();
@@ -238,6 +250,106 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
          pOutputArray[i++] = nSE;
       }
       return i;
+   }
+
+   /**
+    * 便捷 API：临时 Evaluator，以 mob 脚底为中心做 7×7（切比雪夫半径
+    * {@link #REACH_WINDOW_7X7_CHEBYSHEV}）内的寻路可达扩点，返回节点表。
+    * 内部自行 {@link #prepare}/{@link #done}；不改 Navigation 上正在用的 Evaluator。
+    * <p>趴开关与该 mob 导航同源（{@link SoldierGroundPathNavigation#isCrawlPathfinding()}），
+    * 避免掩体扩表关趴而日常开趴导致趴态进 COVER 不一致。打分等请在外部对返回表处理。
+    */
+   public static List<Node> expandReachable7x7(Mob mob) {
+      if (mob == null || mob.level().isClientSide()) {
+         return List.of();
+      }
+      SoldierWalkNodeEvaluator eval = new SoldierWalkNodeEvaluator(resolveCrawlPathfinding(mob));
+      eval.setCanPassDoors(true);
+      BlockPos center = mob.blockPosition();
+      int r = REACH_WINDOW_7X7_CHEBYSHEV;
+      int yPad = MAX_PATH_VERTICAL_DELTA + 1;
+      BlockPos min = center.offset(-r - 1, -yPad, -r - 1);
+      BlockPos max = center.offset(r + 1, yPad, r + 1);
+      PathNavigationRegion region = new PathNavigationRegion(mob.level(), min, max);
+      eval.prepare(region, mob);
+      try {
+         Node start = eval.getStart();
+         if (start == null) {
+            return List.of();
+         }
+         return eval.expandReachableInWindow(
+               start, center.getX(), center.getZ(), r, REACH_WINDOW_7X7_MAX_NODES);
+      } finally {
+         eval.done();
+      }
+   }
+
+   /**
+    * 在<strong>已 {@link #prepare}</strong> 的本实例上，从 {@code start} 用 {@link #getNeighbors} 做 BFS，
+    * 只保留切比雪夫窗口内的可达节点；不设置 {@link Node#closed}，避免污染节点缓存语义。
+    * <p>调用方负责 prepare/done。一般优先用 {@link #expandReachable7x7(Mob)}。
+    *
+    * @param chebyshevRadius 例如 3 → 以 (centerX,centerZ) 为中心的 7×7
+    * @param maxNodes 扩点硬上限
+    */
+   public List<Node> expandReachableInWindow(
+         Node start, int centerX, int centerZ, int chebyshevRadius, int maxNodes) {
+      if (start == null || this.mob == null || maxNodes <= 0 || chebyshevRadius < 0) {
+         return List.of();
+      }
+      if (!isInChebyshevWindow(start.x, start.z, centerX, centerZ, chebyshevRadius)) {
+         return List.of();
+      }
+      List<Node> out = new ArrayList<>(Math.min(maxNodes, 64));
+      ArrayDeque<Node> queue = new ArrayDeque<>();
+      LongOpenHashSet visited = new LongOpenHashSet();
+      Node[] buf = new Node[8];
+      long startKey = BlockPos.asLong(start.x, start.y, start.z);
+      visited.add(startKey);
+      queue.add(start);
+      out.add(start);
+      while (!queue.isEmpty() && out.size() < maxNodes) {
+         Node cur = queue.poll();
+         int n = this.getNeighbors(buf, cur);
+         for (int i = 0; i < n; i++) {
+            Node next = buf[i];
+            if (next == null || next.costMalus < 0.0F) {
+               continue;
+            }
+            if (!isInChebyshevWindow(next.x, next.z, centerX, centerZ, chebyshevRadius)) {
+               continue;
+            }
+            long key = BlockPos.asLong(next.x, next.y, next.z);
+            if (!visited.add(key)) {
+               continue;
+            }
+            out.add(next);
+            queue.add(next);
+            if (out.size() >= maxNodes) {
+               break;
+            }
+         }
+      }
+      return Collections.unmodifiableList(out);
+   }
+
+   /** {@code max(|x-cx|, |z-cz|) ≤ radius}。 */
+   public static boolean isInChebyshevWindow(int x, int z, int centerX, int centerZ, int radius) {
+      return Math.max(Math.abs(x - centerX), Math.abs(z - centerZ)) <= radius;
+   }
+
+   /** 与 mob 当前 Navigation Evaluator 的趴开关对齐。 */
+   public static boolean resolveCrawlPathfinding(Mob mob) {
+      if (mob == null) {
+         return false;
+      }
+      if (mob.getNavigation() instanceof SoldierGroundPathNavigation soldierNav) {
+         return soldierNav.isCrawlPathfinding();
+      }
+      if (mob.getNavigation().getNodeEvaluator() instanceof SoldierWalkNodeEvaluator eval) {
+         return eval.isCrawlPathfinding();
+      }
+      return false;
    }
 
    /** 单边选点：关趴/原点 CRAWL 一次 find；原点 STAND 先站后趴。 */ //测试代码

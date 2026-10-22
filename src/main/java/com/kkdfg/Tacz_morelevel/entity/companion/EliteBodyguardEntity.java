@@ -6,7 +6,8 @@ import com.kkdfg.Tacz_morelevel.BodyguardProfile;
 import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAttackMonsterGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAvoidGrenadeAndFireGoal;
@@ -68,8 +69,8 @@ public final class EliteBodyguardEntity extends AbstractFriendlyCompanionEntity 
         return PROFILE;
     }
 
-    private final MobGunCoverStrafeMoveGoal<EliteBodyguardEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<EliteBodyguardEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.bodyguardGunGoalSpeedModifierFor(PROFILE),
                     Config.bodyguardGunAttackIntervalMinFor(PROFILE),
@@ -165,6 +166,13 @@ public final class EliteBodyguardEntity extends AbstractFriendlyCompanionEntity 
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new CompanionAvoidGrenadeAndFireGoal(this));
+        Config.NpcAttributeStats coverRange = Config.bodyguardAttributesFor(PROFILE);
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         this.goalSelector.addGoal(1, new CompanionSitWhenOrderedGoal(this));
         this.goalSelector.addGoal(4, new CompanionFollowOwnerGoal(this, 1.0D, 25.0F, 10.0F, false));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));

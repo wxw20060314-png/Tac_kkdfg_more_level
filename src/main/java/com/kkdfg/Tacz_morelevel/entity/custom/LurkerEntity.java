@@ -6,7 +6,8 @@ import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.armor.skill.ArmorLegendarySkillRegistry;
 import com.kkdfg.Tacz_morelevel.armor.skill.ArmorStealthHandler;
 import com.kkdfg.Tacz_morelevel.armor.skill.impl.StealthCloakSkill;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCoverStrafeMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
@@ -42,8 +43,8 @@ import net.minecraft.world.level.Level;
  */
 public final class LurkerEntity extends AbstractPlayerLikeSoldierEntity {
 
-    private final MobGunCoverStrafeMoveGoal<LurkerEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<LurkerEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.lurkerGunGoalSpeedModifier,
                     Config.lurkerAttributes.gunAttackIntervalMin,
@@ -139,6 +140,13 @@ public final class LurkerEntity extends AbstractPlayerLikeSoldierEntity {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.95D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 9.5F));

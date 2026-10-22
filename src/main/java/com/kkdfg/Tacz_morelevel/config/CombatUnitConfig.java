@@ -111,9 +111,21 @@ public final class CombatUnitConfig {
             ForgeConfigSpec.IntValue gunAttackIntervalMin,
             ForgeConfigSpec.IntValue seeTimeToShoot,
             ForgeConfigSpec.DoubleValue gunGoalSpeedModifier,
+            ForgeConfigSpec.DoubleValue findCoverNearDistance,
+            ForgeConfigSpec.DoubleValue findCoverFarDistance,
             CombatGoalConfigEntry combatGoals,
             ForgeConfigSpec.IntValue removeWhenFarAway,
             ForgeConfigSpec.DoubleValue equipmentDropChance) {}
+
+    /** 近界默认：{@code 3 + (R×meleeFrac)/15}。 */
+    public static double defaultFindCoverNear(double gunRadius, double gunMeleeFrac) {
+        return 3.0D + (gunRadius * gunMeleeFrac) / 15.0D;
+    }
+
+    /** 远界默认：{@code 0.8 × R × √outerFrac}。 */
+    public static double defaultFindCoverFar(double gunRadius, double gunStrafeOuterRingFrac) {
+        return 0.8D * gunRadius * Math.sqrt(Math.max(0.0D, gunStrafeOuterRingFrac));
+    }
 
     private CombatUnitConfig() {}
 
@@ -301,6 +313,20 @@ public final class CombatUnitConfig {
         ForgeConfigSpec.DoubleValue gunGoalSpeedModifierSpec =
                 builder.comment("MobGunRangedPassthroughAttackGoal movement speed multiplier.")
                         .defineInRange("gunGoalSpeedModifier", gunGoalSpeedModifier, 0.5, 2.0);
+        double defaultNear =
+                defaultFindCoverNear(attributeDefaults[3], attributeDefaults[4]);
+        double defaultFar =
+                defaultFindCoverFar(attributeDefaults[3], attributeDefaults[6]);
+        ForgeConfigSpec.DoubleValue findCoverNearDistance =
+                builder.comment(
+                                "Find-cover request: reject if 3D dist to target < this (blocks). "
+                                        + "Default 3 + meleeBand/15.")
+                        .defineInRange("findCoverNearDistance", defaultNear, 0.0, 64.0);
+        ForgeConfigSpec.DoubleValue findCoverFarDistance =
+                builder.comment(
+                                "Find-cover request: reject if 3D dist to target > this (blocks). "
+                                        + "Default 0.8 * outerStrafeRadius.")
+                        .defineInRange("findCoverFarDistance", defaultFar, 1.0, 128.0);
         ForgeConfigSpec.IntValue removeWhenFarAway = null;
         if (removeWhenFarAwayDefault != null) {
             removeWhenFarAway =
@@ -345,6 +371,8 @@ public final class CombatUnitConfig {
                 gunAttackIntervalMin,
                 seeTimeToShoot,
                 gunGoalSpeedModifierSpec,
+                findCoverNearDistance,
+                findCoverFarDistance,
                 combatGoals,
                 removeWhenFarAway,
                 equipmentDropChance);
@@ -473,6 +501,9 @@ public final class CombatUnitConfig {
             double attackDamage,
             double gunGoalSpeedModifier,
             double[] attributeDefaults) {
+        double gunRadius = attributeDefaults[3];
+        double gunMeleeFrac = attributeDefaults[4];
+        double outerFrac = attributeDefaults[6];
         return new Config.NpcAttributeStats(
                 maxHealth,
                 attackDamage,
@@ -480,13 +511,15 @@ public final class CombatUnitConfig {
                 attributeDefaults[0],
                 attributeDefaults[1],
                 attributeDefaults[2],
-                attributeDefaults[3],
-                attributeDefaults[4],
+                gunRadius,
+                gunMeleeFrac,
                 (int) attributeDefaults[5],
-                attributeDefaults[6],
+                outerFrac,
                 attributeDefaults[7],
                 (int) attributeDefaults[8],
-                (int) attributeDefaults[9]);
+                (int) attributeDefaults[9],
+                defaultFindCoverNear(gunRadius, gunMeleeFrac),
+                defaultFindCoverFar(gunRadius, outerFrac));
     }
 
     public static Config.CombatGoalStats defaultCombatGoalStats(double[] defaults) {
@@ -526,6 +559,8 @@ public final class CombatUnitConfig {
         stats.gunStrafeInnerRingFrac = entry.gunStrafeInnerRingFrac().get();
         stats.gunAttackIntervalMin = entry.gunAttackIntervalMin().get();
         stats.seeTimeToShoot = entry.seeTimeToShoot().get();
+        stats.findCoverNearDistance = entry.findCoverNearDistance().get();
+        stats.findCoverFarDistance = entry.findCoverFarDistance().get();
     }
 
     public static void copyIntoCombatGoalStats(CombatGoalConfigEntry entry, Config.CombatGoalStats stats) {

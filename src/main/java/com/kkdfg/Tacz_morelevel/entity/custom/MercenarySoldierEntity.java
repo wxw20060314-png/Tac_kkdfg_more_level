@@ -22,8 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 /** 雇佣兵：改进档枪械（{@code *_improved}）。*/
 public final class MercenarySoldierEntity extends AbstractPlayerLikeSoldierEntity {
-    private final MobGunCoverStrafeMoveGoal<MercenarySoldierEntity> gunGoal =
-            new MobGunCoverStrafeMoveGoal<>(
+    private final MobGunSimThreadCoverStrafeMoveGoal<MercenarySoldierEntity> gunGoal =
+            new MobGunSimThreadCoverStrafeMoveGoal<>(
                     this,
                     Config.gunGoalSpeedModifierFor(SoldierSpawnArmorProfile.MERCENARY),
                     Config.gunAttackIntervalMinFor(SoldierSpawnArmorProfile.MERCENARY),
@@ -84,6 +84,13 @@ public final class MercenarySoldierEntity extends AbstractPlayerLikeSoldierEntit
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                3,
+                new MobGunFindCoverRequestGoal<>(
+                        this,
+                        (float) coverRange.findCoverNearDistance,
+                        (float) coverRange.findCoverFarDistance));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.92D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 9.0F));
