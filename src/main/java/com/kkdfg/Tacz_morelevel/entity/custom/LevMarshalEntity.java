@@ -112,6 +112,11 @@ public final class LevMarshalEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
+    public int getSimThreadUrgency() {
+        return 100;
+    }
+
+    @Override
     protected ResourceLocation pickHolsterGunId(RandomSource random) {
         return LEGENDARY_REVOLVER;
     }

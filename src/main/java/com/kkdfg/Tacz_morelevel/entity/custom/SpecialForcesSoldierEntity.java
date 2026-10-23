@@ -66,6 +66,11 @@ public final class SpecialForcesSoldierEntity extends AbstractPlayerLikeSoldierE
     }
 
     @Override
+    public int getSimThreadUrgency() {
+        return 40;
+    }
+
+    @Override
     protected SoldierSpawnArmorProfile spawnArmorWeightProfile() {
         return SoldierSpawnArmorProfile.SPECIAL_FORCES;
     }

@@ -111,6 +111,11 @@ public final class MarshalGuardEntity extends AbstractPlayerLikeSoldierEntity
     }
 
     @Override
+    public int getSimThreadUrgency() {
+        return 40;
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_OWNER_UUID, Optional.empty());

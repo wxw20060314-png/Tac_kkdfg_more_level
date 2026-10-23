@@ -25,7 +25,13 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTarg
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAlertness;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatSense;
+import com.kkdfg.Tacz_morelevel.entity.ai.ThrowableThreatKind;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableSupport;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadInfo;
@@ -39,7 +45,6 @@ import com.kkdfg.Tacz_morelevel.integration.tacz.MobCreativeAmmoBoxReloadAccess;
 import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczOrdinaryGunCatalog;
@@ -48,6 +53,7 @@ import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.entity.ShootResult;
 import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.entity.shooter.ShooterDataHolder;
+import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -112,7 +118,7 @@ import net.minecraft.util.RandomSource;
  *   <li><b>武器切换</b>：{@link #gunGoal} 与近战经 {@link #mountPermanentCombatGoals} 常驻挂载（priority 2）；
  *       有枪走远程、无枪走近战，靠 {@code canUse} 互斥，禁止运行时动态挂卸；
  *       {@link #reassessWeaponGoal} 仅刷新点射间隔（须在子类字段初始化后调用，勿在父类 {@code registerGoals} 里挂枪）。
- *       优先级 1 为 {@link SoldierAvoidGrenadeAndFireGoal}。</li>
+ *       优先级 1 为 {@link SoldierAvoidThrowableGoal}。</li>
  *   <li><b>子弹</b>：背包直读枪由 {@link TaczGunMobHelper#tickInfiniteMobAmmo} 每 tick 补满弹匣，并强制自动开火模式。</li>
  *   <li><b>碰撞/视角</b>：尺寸、眼高、下马姿态均与 {@link Player} 一致，便于潜行贴墙和受击判定。</li>
  *   <li><b>声音</b>：闲置与首次锁定敌对目标时为 {@link ModSounds} 随机语音；受伤/死亡使用玩家音效；
@@ -130,10 +136,16 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         implements RangedAttackMob, GunEquippedMob, MilitiaAcquireTargetVoice, PlayerLikeHeadBodyYawMob,
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
                 JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder, MobCreativeAmmoBoxHolder,
-                SimThreadCapableMob {
+                SimThreadCapableMob, SoldierAlertness, SoldierThrowableThreatSense {
 
     private final SimThreadCapableSupport simThreadSupport =
             new SimThreadCapableSupport(this::getCoverModeDurationTicks);
+
+    private int alertness = SoldierAlertness.ALERT_MIN;
+    private ThrowableThreatKind throwableThreatKind = ThrowableThreatKind.NONE;
+    @Nullable private Vec3 throwableThreatPos;
+    @Nullable private UUID throwableThreatEntityId;
+    private float throwableScanTtl = SoldierThrowableThreatSense.THROWABLE_SCAN_TTL_RESET;
 
     /** NBT 键：持久化的皮肤索引。 */
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
@@ -606,6 +618,10 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     protected void customServerAiStep() {
         super.customServerAiStep();
         this.simThreadSupport.serverTick(this.level().getGameTime());
+        LivingEntity alertTarget = this.getTarget();
+        this.tickAlertness(
+                alertTarget, alertTarget != null && this.hasLineOfSight(alertTarget));
+        this.tickThrowableThreatScan();
         TaczGunMobHelper.tickInfiniteMobAmmo(this);
         if (IGun.mainHandHoldGun(this)) {
             ItemStack main = this.getMainHandItem();
@@ -615,6 +631,62 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         if (this.isGunCombatAiming()) {
             this.yHeadRot = this.getYRot();
         }
+    }
+
+    @Override
+    public int getAlertness() {
+        return this.alertness;
+    }
+
+    @Override
+    public void setAlertness(int value) {
+        this.alertness = Mth.clamp(value, 0, SoldierAlertness.ALERT_MAX);
+    }
+
+    @Override
+    public ThrowableThreatKind getThrowableThreatKind() {
+        return this.throwableThreatKind;
+    }
+
+    @Override
+    @Nullable
+    public Vec3 getThrowableThreatPos() {
+        return this.throwableThreatPos;
+    }
+
+    @Override
+    @Nullable
+    public UUID getThrowableThreatEntityId() {
+        return this.throwableThreatEntityId;
+    }
+
+    @Override
+    public void setThrowableThreat(
+            ThrowableThreatKind kind, @Nullable Vec3 pos, @Nullable UUID entityId) {
+        if (kind == null || kind == ThrowableThreatKind.NONE || pos == null) {
+            this.throwableThreatKind = ThrowableThreatKind.NONE;
+            this.throwableThreatPos = null;
+            this.throwableThreatEntityId = null;
+            return;
+        }
+        this.throwableThreatKind = kind;
+        this.throwableThreatPos = pos;
+        this.throwableThreatEntityId = entityId;
+    }
+
+    @Override
+    public float getThrowableScanTtl() {
+        return this.throwableScanTtl;
+    }
+
+    @Override
+    public void setThrowableScanTtl(float ttl) {
+        this.throwableScanTtl = ttl;
+    }
+
+    @Override
+    public void tickThrowableThreatScan() {
+        SoldierThrowableThreatScan.tick(this, this, this);
     }
 
     @Override
@@ -744,7 +816,8 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         this.targetSelector.addGoal(5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Warden.class, false));
         this.targetSelector.addGoal(2, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Player.class, false));
         this.targetSelector.addGoal(3, new MobGunNearestAttackablePassthroughTargetGoal<>(this, AbstractFriendEntity.class, false));
-        this.goalSelector.addGoal(1, new SoldierAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
     }
 
     /**

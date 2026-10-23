@@ -104,6 +104,12 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
       pMob.onPathfindingStart();
    }
 
+   /** 缓存节点一律为 {@link SoldierPathNode}，供斜向趴搭板挂载。 */
+   @Override
+   protected Node getNode(int x, int y, int z) {
+      return this.nodes.computeIfAbsent(Node.createHash(x, y, z), hash -> new SoldierPathNode(x, y, z));
+   }
+
    /**
     * This method is called when all nodes have been processed and PathEntity is created.
     */
@@ -234,19 +240,19 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
          pOutputArray[i++] = nN;
       }
       Node nNW = this.resolveNeighbor(pNode.x - 1, pNode.y, pNode.z - 1, crawlJ, floor, Direction.NORTH, here, fromWater, originCrawl); //测试代码
-      if (this.isDiagonalValid(pNode, nW, nN, nNW)) {
+      if (this.isDiagonalValid(pNode, nW, nN, nNW, SoldierPathNode.DIAG_NW)) {
          pOutputArray[i++] = nNW;
       }
       Node nNE = this.resolveNeighbor(pNode.x + 1, pNode.y, pNode.z - 1, crawlJ, floor, Direction.NORTH, here, fromWater, originCrawl); //测试代码
-      if (this.isDiagonalValid(pNode, nE, nN, nNE)) {
+      if (this.isDiagonalValid(pNode, nE, nN, nNE, SoldierPathNode.DIAG_NE)) {
          pOutputArray[i++] = nNE;
       }
       Node nSW = this.resolveNeighbor(pNode.x - 1, pNode.y, pNode.z + 1, crawlJ, floor, Direction.SOUTH, here, fromWater, originCrawl); //测试代码
-      if (this.isDiagonalValid(pNode, nW, nS, nSW)) {
+      if (this.isDiagonalValid(pNode, nW, nS, nSW, SoldierPathNode.DIAG_SW)) {
          pOutputArray[i++] = nSW;
       }
       Node nSE = this.resolveNeighbor(pNode.x + 1, pNode.y, pNode.z + 1, crawlJ, floor, Direction.SOUTH, here, fromWater, originCrawl); //测试代码
-      if (this.isDiagonalValid(pNode, nE, nS, nSE)) {
+      if (this.isDiagonalValid(pNode, nE, nS, nSE, SoldierPathNode.DIAG_SE)) {
          pOutputArray[i++] = nSE;
       }
       return i;
@@ -371,23 +377,56 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
       return pNeighbor != null && !pNeighbor.closed && (pNeighbor.costMalus >= 0.0F || pNode.costMalus < 0.0F);
    }
 
-   protected boolean isDiagonalValid(Node pRoot, @Nullable Node pXNode, @Nullable Node pZNode, @Nullable Node pDiagonal) {
-      if (pDiagonal != null && pZNode != null && pXNode != null) {
-         if (pDiagonal.closed) {
-            return false;
-         } else if (pZNode.y <= pRoot.y && pXNode.y <= pRoot.y) {
-            if (pXNode.type != BlockPathTypes.WALKABLE_DOOR && pZNode.type != BlockPathTypes.WALKABLE_DOOR && pDiagonal.type != BlockPathTypes.WALKABLE_DOOR) {
-               boolean flag = pZNode.type == BlockPathTypes.FENCE && pXNode.type == BlockPathTypes.FENCE && (double)this.mob.getBbWidth() < 0.5D;
-               return pDiagonal.costMalus >= 0.0F && (pZNode.y < pRoot.y || pZNode.costMalus >= 0.0F || flag) && (pXNode.y < pRoot.y || pXNode.costMalus >= 0.0F || flag);
-            } else {
-               return false;
-            }
-         } else {
-            return false;
-         }
-      } else {
+   /**
+    * 原版斜向闸 + 开趴时打桥：根/对角均为 STAND 且正交边有 CRAWL →
+    * 在对角 {@link SoldierPathNode} 对应方向记要趴（不否决斜向）。
+    *
+    * @param diagIndex {@link SoldierPathNode#DIAG_NW} 等
+    */
+   protected boolean isDiagonalValid(
+         Node pRoot,
+         @Nullable Node pXNode,
+         @Nullable Node pZNode,
+         @Nullable Node pDiagonal,
+         int diagIndex) {
+      if (pDiagonal == null || pZNode == null || pXNode == null) {
          return false;
       }
+      if (pDiagonal.closed) {
+         return false;
+      }
+      if (pZNode.y > pRoot.y || pXNode.y > pRoot.y) {
+         return false;
+      }
+      if (pXNode.type == BlockPathTypes.WALKABLE_DOOR
+            || pZNode.type == BlockPathTypes.WALKABLE_DOOR
+            || pDiagonal.type == BlockPathTypes.WALKABLE_DOOR) {
+         return false;
+      }
+      boolean flag =
+            pZNode.type == BlockPathTypes.FENCE
+                  && pXNode.type == BlockPathTypes.FENCE
+                  && (double) this.mob.getBbWidth() < 0.5D;
+      boolean ok =
+            pDiagonal.costMalus >= 0.0F
+                  && (pZNode.y < pRoot.y || pZNode.costMalus >= 0.0F || flag)
+                  && (pXNode.y < pRoot.y || pXNode.costMalus >= 0.0F || flag);
+      if (!ok) {
+         return false;
+      }
+      // 站→站斜切且旁有趴边：对角对应斜向打要趴标
+      if (this.crawlPathfinding && pDiagonal instanceof SoldierPathNode soldierDiag) {
+         PoseMode rootPose = this.classifyCell(pRoot.x, pRoot.y, pRoot.z);
+         PoseMode diagPose = this.classifyCell(pDiagonal.x, pDiagonal.y, pDiagonal.z);
+         if (rootPose == PoseMode.STAND && diagPose == PoseMode.STAND) {
+            PoseMode xPose = this.classifyCell(pXNode.x, pXNode.y, pXNode.z);
+            PoseMode zPose = this.classifyCell(pZNode.x, pZNode.y, pZNode.z);
+            if (xPose == PoseMode.CRAWL || zPose == PoseMode.CRAWL) {
+               soldierDiag.setDiagonalCrawlRequest(diagIndex, true);
+            }
+         }
+      }
+      return true;
    }
 
    private static boolean doesBlockHavePartialCollision(BlockPathTypes pBlockPathType) {

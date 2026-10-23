@@ -1,5 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
+import com.tacz.guns.api.item.IGun;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
@@ -45,12 +47,17 @@ public class MobRandomSneakWithTargetInlongDistanceGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.enabled && this.targetValidAndInLongSneakDistance();
+        return this.enabled && this.mayDecorate() && this.targetValidAndInLongSneakDistance();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.enabled && this.targetValidAndInLongSneakDistance();
+        return this.enabled && this.mayDecorate() && this.targetValidAndInLongSneakDistance();
+    }
+
+    private boolean mayDecorate() {
+        return IGun.mainHandHoldGun(this.mob)
+                && !this.mob.hasEffect(ModMobEffects.FLASHED.get());
     }
 
     private boolean targetValidAndInLongSneakDistance() {

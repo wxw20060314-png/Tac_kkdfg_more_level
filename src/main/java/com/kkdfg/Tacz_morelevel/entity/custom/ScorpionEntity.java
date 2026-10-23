@@ -134,6 +134,11 @@ public final class ScorpionEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
+    public int getSimThreadUrgency() {
+        return 80;
+    }
+
+    @Override
     protected ResourceLocation pickHolsterGunId(RandomSource random) {
         return HOLSTER_GUN;
     }

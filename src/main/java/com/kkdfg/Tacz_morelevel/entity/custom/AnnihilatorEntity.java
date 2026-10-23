@@ -14,7 +14,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInShortDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobTaczCombatCrawlGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.annihilator.AnnihilatorBlink;
 import com.kkdfg.Tacz_morelevel.entity.ai.annihilator.AnnihilatorBlinkCooldown;
@@ -272,7 +273,8 @@ public final class AnnihilatorEntity extends AbstractPlayerLikeSoldierEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new SoldierAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.targetSelector.addGoal(
                 TARGET_PRIORITY_PLAYER,
                 new MobGunNearestAttackablePassthroughTargetGoal<>(this, Player.class, false));

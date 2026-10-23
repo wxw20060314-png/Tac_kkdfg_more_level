@@ -1,6 +1,8 @@
 package com.kkdfg.Tacz_morelevel.entity.companion.ai;
 
+import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
+import com.tacz.guns.api.item.IGun;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -39,7 +41,9 @@ public class CompanionMobRandomJumpGoal extends Goal {
                 && this.jumpChance > 0
                 && this.companion.mayUseCombatCrouchOrCrawl()
                 && !this.companion.isTaczCrawling()
-                && !this.companion.isOrderedToSit();
+                && !this.companion.isOrderedToSit()
+                && IGun.mainHandHoldGun(this.companion)
+                && !this.companion.hasEffect(ModMobEffects.FLASHED.get());
     }
 
     @Override

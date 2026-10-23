@@ -23,7 +23,7 @@ public final class SoldierCrawlSpeedEvents {
             UUID.fromString("a7c3e91b-4d2f-4e08-9b1a-6f0c8d5e2a11");
     private static final String CRAWL_SPEED_MODIFIER_NAME = "tacz_morelevel.crawl_movement_speed";
     /** 趴下移速相对原速的倍率。 */
-    private static final double CRAWL_SPEED_MULTIPLIER = 0.25D;
+    private static final double CRAWL_SPEED_MULTIPLIER = 0.5D;
     private static final double AMOUNT_EPS = 1.0E-6D;
 
     private SoldierCrawlSpeedEvents() {}

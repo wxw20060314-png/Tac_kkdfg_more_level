@@ -9,7 +9,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineFlyingGunMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.war_machine.WarMachineGunSight;
@@ -353,7 +354,8 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
         this.targetSelector.addGoal(3, new WarMachineTargetGoal<>(this, AbstractFriendEntity.class));
         this.targetSelector.addGoal(
                 1, new WarMachineTargetGoal.HurtBy(this, WarMachineEntity.class).setAlertOthers());
-        this.goalSelector.addGoal(1, new SoldierAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));

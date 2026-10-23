@@ -1,6 +1,8 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
 import com.kkdfg.Tacz_morelevel.api.JumpActingMob;
+import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
+import com.tacz.guns.api.item.IGun;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -37,6 +39,7 @@ public class MobRandomJumpGoal extends Goal {
     @Override
     public boolean canUse() {
         return this.enabled
+                && this.mayDecorate()
                 && this.hasLivingTarget()
                 && this.canSeeTarget()
                 && this.isWithinJumpDistance();
@@ -45,9 +48,16 @@ public class MobRandomJumpGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return this.enabled
+                && this.mayDecorate()
                 && this.hasLivingTarget()
                 && this.canSeeTarget()
                 && this.isWithinJumpDistance();
+    }
+
+    /** 主手持枪且无闪光效果。 */
+    private boolean mayDecorate() {
+        return IGun.mainHandHoldGun(this.mob)
+                && !this.mob.hasEffect(ModMobEffects.FLASHED.get());
     }
 
     private boolean hasLivingTarget() {

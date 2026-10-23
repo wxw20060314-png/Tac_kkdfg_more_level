@@ -10,7 +10,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAttackMonsterGoal;
-import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAvoidGrenadeAndFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionFollowOwnerGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionMobRandomJumpGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionMobRandomSneakWithNoTargetGoal;
@@ -165,7 +166,8 @@ public final class EliteBodyguardEntity extends AbstractFriendlyCompanionEntity 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new CompanionAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         Config.NpcAttributeStats coverRange = Config.bodyguardAttributesFor(PROFILE);
         this.goalSelector.addGoal(
                 3,

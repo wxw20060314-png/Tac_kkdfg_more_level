@@ -3,6 +3,7 @@ package com.kkdfg.Tacz_morelevel.entity.ai;
 import com.kkdfg.Tacz_morelevel.api.JumpActingMob;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
+import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierPathNode;
 import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierWalkNodeEvaluator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,7 +28,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * 原版 {@link MoveControl} + STRAFE 半砖等站立面放宽；MOVE_TO 起跳改为尝试性选档
  * （软窗口最低够用 → 否则原版拉闩吃默认档）。STRAFE 不起跳。
- * 开启趴寻路时：下一路径点只能趴则进趴；进趴后计时 ≥20 tick 且脚下可站则起身；趴着跨步/试跳软禁。
+ * 开启趴寻路时：下一路径点只能趴、或斜向搭板要求趴则进趴；
+ * 进趴后计时 ≥20 tick 且脚下可站则起身；趴着跨步/试跳软禁。
  */
 public final class SoldierMoveControl extends MoveControl {
 
@@ -145,7 +147,9 @@ public final class SoldierMoveControl extends MoveControl {
         this.crawlTicks = 0;
     }
 
-    /** 与 tryPathJump 对称：下一路径点只能趴则进趴。 */
+    /**
+     * 下一路径点只能趴，或 prev→next 为斜向且 next 搭板要求趴 → 进趴。
+     */
     private void tryEnterCrawlFromNextPathNode() {
         PathNavigation navigation = this.mob.getNavigation();
         if (navigation == null) {
@@ -160,8 +164,30 @@ public final class SoldierMoveControl extends MoveControl {
             return;
         }
         Node next = path.getNode(index);
-        if (!(navigation.getNodeEvaluator() instanceof SoldierWalkNodeEvaluator eval)
-                || !eval.needsCrawlPoseAt(this.mob, next.x, next.y, next.z)) {
+        boolean needCrawl = false;
+        if (navigation.getNodeEvaluator() instanceof SoldierWalkNodeEvaluator eval
+                && eval.needsCrawlPoseAt(this.mob, next.x, next.y, next.z)) {
+            needCrawl = true;
+        } else if (next instanceof SoldierPathNode soldierNext) {
+            int prevX;
+            int prevZ;
+            if (index > 0) {
+                Node prev = path.getNode(index - 1);
+                prevX = prev.x;
+                prevZ = prev.z;
+            } else {
+                prevX = this.mob.getBlockX();
+                prevZ = this.mob.getBlockZ();
+            }
+            int dx = Integer.signum(next.x - prevX);
+            int dz = Integer.signum(next.z - prevZ);
+            if (Math.abs(dx) == 1
+                    && Math.abs(dz) == 1
+                    && soldierNext.isDiagonalCrawlRequest(dx, dz)) {
+                needCrawl = true;
+            }
+        }
+        if (!needCrawl) {
             return;
         }
         if (this.mob instanceof TaczCrawlCapableMob crawl && crawl.setTaczCrawling(true)) {

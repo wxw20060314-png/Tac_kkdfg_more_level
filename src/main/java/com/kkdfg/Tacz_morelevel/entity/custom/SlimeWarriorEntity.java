@@ -15,7 +15,6 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInShortDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SlimeShareTargetToRootGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
@@ -178,7 +177,6 @@ public final class SlimeWarriorEntity extends AbstractSlimeExperimentEntity {
                 5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Warden.class, false));
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new SoldierAvoidGrenadeAndFireGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));

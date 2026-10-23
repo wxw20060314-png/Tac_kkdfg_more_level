@@ -6,6 +6,8 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import javax.annotation.Nullable;
 
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.*;
@@ -146,7 +148,8 @@ public final class BeautyBodyguardEntity extends AbstractFriendlyCompanionEntity
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new CompanionAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.goalSelector.addGoal(1, new CompanionSitWhenOrderedGoal(this));
         this.goalSelector.addGoal(4, new CompanionFollowOwnerGoal(this, 1.0D, 25.0F, 10.0F, false));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));

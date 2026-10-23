@@ -1,5 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierWalkNodeEvaluator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -98,6 +99,10 @@ public class MobGunCoverStrafeMoveGoal<T extends Mob & RangedAttackMob>
 
     @Override
     protected void issueStrafe(LivingEntity target, double distSqr) {
+        // 趴下时不做闪身选点 / 横移，避免与路径趴、战斗趴抢控制
+        if (this.mob() instanceof TaczCrawlCapableMob crawl && crawl.isTaczCrawling()) {
+            return;
+        }
         boolean prevMoveTo = !this.wasStrafing;
         boolean nowStrafe = this.isStrafing();
         if (prevMoveTo

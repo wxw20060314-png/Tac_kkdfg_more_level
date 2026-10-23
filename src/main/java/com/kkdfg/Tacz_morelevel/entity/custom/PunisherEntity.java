@@ -14,7 +14,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithNoTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInShortDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistanceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobTaczCombatCrawlGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidGrenadeAndFireGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import com.kkdfg.Tacz_morelevel.item.ModItems;
@@ -194,6 +195,11 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
+    public int getSimThreadUrgency() {
+        return 60;
+    }
+
+    @Override
     protected Goal gunGoal() {
         return this.gunGoal;
     }
@@ -234,7 +240,8 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
                 2, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Player.class, false));
         this.targetSelector.addGoal(
                 3, new MobGunNearestAttackablePassthroughTargetGoal<>(this, AbstractFriendEntity.class, false));
-        this.goalSelector.addGoal(1, new SoldierAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.targetSelector.addGoal(
                 1, new SoldierHurtByTargetGoal(this, PunisherEntity.class).setAlertOthers());
 

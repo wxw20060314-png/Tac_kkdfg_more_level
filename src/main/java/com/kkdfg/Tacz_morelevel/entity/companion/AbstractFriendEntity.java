@@ -19,14 +19,19 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSoldierRangedGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAlertness;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatSense;
+import com.kkdfg.Tacz_morelevel.entity.ai.ThrowableThreatKind;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableSupport;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadInfo;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SoldierLocomotionMode;
-import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAvoidGrenadeAndFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAttackMonsterGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionFollowOwnerGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionHurtByTargetGoal;
@@ -49,6 +54,8 @@ import com.tacz.guns.entity.shooter.ShooterDataHolder;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nullable;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -109,10 +116,18 @@ public abstract class AbstractFriendEntity extends PathfinderMob
                 MilitiaAcquireTargetVoice,
                 JumpActingMob,
                 GunCombatSightHolder,
-                SimThreadCapableMob {
+                SimThreadCapableMob,
+                SoldierAlertness,
+                SoldierThrowableThreatSense {
 
     private final SimThreadCapableSupport simThreadSupport =
             new SimThreadCapableSupport(this::getCoverModeDurationTicks);
+
+    private int alertness = SoldierAlertness.ALERT_MIN;
+    private ThrowableThreatKind throwableThreatKind = ThrowableThreatKind.NONE;
+    @Nullable private Vec3 throwableThreatPos;
+    @Nullable private UUID throwableThreatEntityId;
+    private float throwableScanTtl = SoldierThrowableThreatSense.THROWABLE_SCAN_TTL_RESET;
 
     private static final EntityDataAccessor<Boolean> DATA_TAME =
             SynchedEntityData.defineId(AbstractFriendEntity.class, EntityDataSerializers.BOOLEAN);
@@ -330,7 +345,8 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new CompanionAvoidGrenadeAndFireGoal(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
+        this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.goalSelector.addGoal(4, new CompanionFollowOwnerGoal(this, 1.0D, 25.0F, 10.0F, false));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -444,12 +460,72 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     protected void customServerAiStep() {
         super.customServerAiStep();
         this.simThreadSupport.serverTick(this.level().getGameTime());
+        LivingEntity alertTarget = this.getTarget();
+        this.tickAlertness(
+                alertTarget, alertTarget != null && this.hasLineOfSight(alertTarget));
+        this.tickThrowableThreatScan();
         if (IGun.mainHandHoldGun(this)) {
             ItemStack main = this.getMainHandItem();
             TaczGunMobHelper.normalizeFireModeIfInvalid(main);
             TaczGunMobHelper.preferAutoFireModeForMobMainHandGun(main);
             TaczGunMobHelper.tickInfiniteMobAmmo(this);
         }
+    }
+
+    @Override
+    public int getAlertness() {
+        return this.alertness;
+    }
+
+    @Override
+    public void setAlertness(int value) {
+        this.alertness = Mth.clamp(value, 0, SoldierAlertness.ALERT_MAX);
+    }
+
+    @Override
+    public ThrowableThreatKind getThrowableThreatKind() {
+        return this.throwableThreatKind;
+    }
+
+    @Override
+    @Nullable
+    public Vec3 getThrowableThreatPos() {
+        return this.throwableThreatPos;
+    }
+
+    @Override
+    @Nullable
+    public UUID getThrowableThreatEntityId() {
+        return this.throwableThreatEntityId;
+    }
+
+    @Override
+    public void setThrowableThreat(
+            ThrowableThreatKind kind, @Nullable Vec3 pos, @Nullable UUID entityId) {
+        if (kind == null || kind == ThrowableThreatKind.NONE || pos == null) {
+            this.throwableThreatKind = ThrowableThreatKind.NONE;
+            this.throwableThreatPos = null;
+            this.throwableThreatEntityId = null;
+            return;
+        }
+        this.throwableThreatKind = kind;
+        this.throwableThreatPos = pos;
+        this.throwableThreatEntityId = entityId;
+    }
+
+    @Override
+    public float getThrowableScanTtl() {
+        return this.throwableScanTtl;
+    }
+
+    @Override
+    public void setThrowableScanTtl(float ttl) {
+        this.throwableScanTtl = ttl;
+    }
+
+    @Override
+    public void tickThrowableThreatScan() {
+        SoldierThrowableThreatScan.tick(this, this, this);
     }
 
     @Override

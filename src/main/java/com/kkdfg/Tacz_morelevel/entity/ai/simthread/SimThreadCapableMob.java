@@ -35,4 +35,12 @@ public interface SimThreadCapableMob extends SimThreadRequester, SimThreadReceiv
      * COVER 模式时长（进入时写入倒计时）。子类可 override。
      */
     int getCoverModeDurationTicks();
+
+    /**
+     * 模拟线程请求紧急度；越大越优先上机。
+     * 默认 20；具体 NPC 可 override，动态算法以后再加。
+     */
+    default int getSimThreadUrgency() {
+        return 20;
+    }
 }
