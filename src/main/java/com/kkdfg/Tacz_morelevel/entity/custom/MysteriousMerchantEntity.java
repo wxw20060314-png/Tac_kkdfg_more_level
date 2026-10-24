@@ -94,6 +94,11 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
     }
 
     @Override
+    protected Config.NpcAttributeStats configuredAttributeStats() {
+        return Config.mysteriousMerchantAttributes;
+    }
+
+    @Override
     protected void applyEquipmentDropChances() {
         float p = Config.mysteriousMerchantEquipmentDropChance;
         this.setDropChance(EquipmentSlot.MAINHAND, p);

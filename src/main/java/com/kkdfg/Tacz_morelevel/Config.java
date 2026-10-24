@@ -126,6 +126,16 @@ public final class Config {
 
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    /** Cloth：本模组 NPC 对玩家伤害倍率。 */
+    public static ForgeConfigSpec.DoubleValue npcOutgoingDamageToPlayerScaleSpec() {
+        return NPC_OUTGOING_DAMAGE_TO_PLAYER_SCALE;
+    }
+
+    /** 从已加载的 common Spec 刷新运行时字段（Cloth 保存后调用）。 */
+    public static void applyLoadedValues() {
+        loadCommonConfig();
+    }
+
     public static final boolean[] removeWhenFarAwayByProfile = new boolean[SoldierSpawnArmorProfile.values().length];
 
     public static final NpcAttributeStats[] npcAttributesByProfile =
@@ -172,7 +182,13 @@ public final class Config {
     public static double scorpionAttackDamage = 2.0D;
     public static double scorpionGunGoalSpeedModifier = 1.2D;
 
-    /** {@code [slimeCommander]}：史莱姆指挥官走位/枪 Goal；血量由代码 {@code SPLIT_TABLE} 管，不读配置 maxHealth。 */
+    /**
+     * {@code [slimeCommanderSplit]}：指挥官阶段血量 gen0..2（战士附属共用）；已套 Boss
+     * {@code maxHealthScale}。缩放/分裂数仍看代码 {@code SPLIT_TABLE}。
+     */
+    public static final float[] slimeCommanderSplitMaxHealth = {300.0F, 150.0F, 75.0F};
+
+    /** {@code [slimeCommander]}：史莱姆指挥官走位/枪 Goal；实体血量见 {@link #slimeCommanderSplitMaxHealth}。 */
     public static NpcAttributeStats slimeCommanderAttributes;
     public static CombatGoalStats slimeCommanderCombatGoals;
     public static double slimeCommanderAttackDamage = 2.0D;
@@ -262,7 +278,7 @@ public final class Config {
     public static double bossGunMeleeFracOffsetA = 0.0D;
     public static double bossGunMeleeFracScaleB = 1.0D;
 
-    /** {@code [slimeWarrior]}：史莱姆战士走位/枪 Goal；血量由分裂表管。 */
+    /** {@code [slimeWarrior]}：史莱姆战士走位/枪 Goal；血量共用指挥官分裂表。 */
     public static NpcAttributeStats slimeWarriorAttributes;
     public static CombatGoalStats slimeWarriorCombatGoals;
     public static double slimeWarriorAttackDamage = 2.0D;
@@ -384,6 +400,8 @@ public final class Config {
         public double maxHealth;
         public double attackDamage;
         public double gunGoalSpeedModifier;
+        /** MoveControl STRAFE speedModifier（已含全局 a/b）。 */
+        public double gunStrafeSpeedModifier;
         public double movementSpeed;
         public double followRange;
         public double meleeSpeed;
@@ -403,6 +421,7 @@ public final class Config {
                 double maxHealth,
                 double attackDamage,
                 double gunGoalSpeedModifier,
+                double gunStrafeSpeedModifier,
                 double movementSpeed,
                 double followRange,
                 double meleeSpeed,
@@ -417,6 +436,7 @@ public final class Config {
                     maxHealth,
                     attackDamage,
                     gunGoalSpeedModifier,
+                    gunStrafeSpeedModifier,
                     movementSpeed,
                     followRange,
                     meleeSpeed,
@@ -435,6 +455,7 @@ public final class Config {
                 double maxHealth,
                 double attackDamage,
                 double gunGoalSpeedModifier,
+                double gunStrafeSpeedModifier,
                 double movementSpeed,
                 double followRange,
                 double meleeSpeed,
@@ -450,6 +471,7 @@ public final class Config {
             this.maxHealth = maxHealth;
             this.attackDamage = attackDamage;
             this.gunGoalSpeedModifier = gunGoalSpeedModifier;
+            this.gunStrafeSpeedModifier = gunStrafeSpeedModifier;
             this.movementSpeed = movementSpeed;
             this.followRange = followRange;
             this.meleeSpeed = meleeSpeed;
@@ -643,6 +665,10 @@ public final class Config {
         return npcAttributesFor(profile).gunGoalSpeedModifier;
     }
 
+    public static double gunStrafeSpeedModifierFor(SoldierSpawnArmorProfile profile) {
+        return npcAttributesFor(profile).gunStrafeSpeedModifier;
+    }
+
     public static double movementSpeedFor(SoldierSpawnArmorProfile profile) {
         return npcAttributesFor(profile).movementSpeed;
     }
@@ -697,6 +723,10 @@ public final class Config {
 
     public static double bodyguardGunGoalSpeedModifierFor(BodyguardProfile profile) {
         return bodyguardAttributesFor(profile).gunGoalSpeedModifier;
+    }
+
+    public static double bodyguardGunStrafeSpeedModifierFor(BodyguardProfile profile) {
+        return bodyguardAttributesFor(profile).gunStrafeSpeedModifier;
     }
 
     public static double bodyguardMovementSpeedFor(BodyguardProfile profile) {

@@ -66,6 +66,11 @@ public final class SlimeWarriorEntity extends AbstractSlimeExperimentEntity {
     }
 
     @Override
+    protected Config.NpcAttributeStats slimeCombatAttributes() {
+        return Config.slimeWarriorAttributes;
+    }
+
+    @Override
     public int mobGunBurstIntervalTicks() {
         return Config.mapBossGunBurstInterval(Config.slimeWarriorAttributes.gunAttackIntervalMin);
     }

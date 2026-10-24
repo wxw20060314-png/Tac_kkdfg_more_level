@@ -96,16 +96,16 @@ public class MobGunSimThreadCoverStrafeMoveGoal<T extends Mob & RangedAttackMob>
     public void tick() {
         T mob = this.mob();
         if (mob instanceof SimThreadCapableMob capable) {
-            //test
-            if(capable.getLocomotionMode() == SoldierLocomotionMode.NORMAL)
-            {
-                System.out.println(1);
-            }
-            else if(capable.getLocomotionMode() == SoldierLocomotionMode.COVER)
-            {
-                System.out.println(2);
-            }
-            //test
+//            //test
+//            if(capable.getLocomotionMode() == SoldierLocomotionMode.NORMAL)
+//            {
+//                System.out.println(1);
+//            }
+//            else if(capable.getLocomotionMode() == SoldierLocomotionMode.COVER)
+//            {
+//                System.out.println(2);
+//            }
+//            //test
             if (capable.getLocomotionMode() == SoldierLocomotionMode.NORMAL) {
                 this.coverMoveIssued = false;
                 SimThreadInfo info = capable.peekSimThreadInfo();

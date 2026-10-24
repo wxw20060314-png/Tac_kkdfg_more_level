@@ -50,6 +50,8 @@ public final class CombatUnitConfig {
     public static final double[] DEFAULT_SOLDIER_MAX_HEALTH = {16.0D, 20.0D, 20.0D, 20.0D, 20.0D, 20.0D};
     public static final double[] DEFAULT_SOLDIER_ATTACK_DAMAGE = {1.5D, 2.0D, 2.0D, 2.0D, 2.0D, 2.0D};
     public static final double[] DEFAULT_SOLDIER_GUN_GOAL_SPEED = {1.0D, 1.05D, 1.08D, 1.1D, 1.15D, 1.2D};
+    /** MoveControl STRAFE speedModifier；原版写死 0.25，本模组默认 0.5。 */
+    public static final double DEFAULT_GUN_STRAFE_SPEED_MODIFIER = 0.5D;
     public static final int[] DEFAULT_REMOVE_WHEN_FAR = {1, 1, 1, 1, 0, 0};
 
     public static final double DEFAULT_BODYGUARD_MAX_HEALTH = 20.0D;
@@ -111,6 +113,7 @@ public final class CombatUnitConfig {
             ForgeConfigSpec.IntValue gunAttackIntervalMin,
             ForgeConfigSpec.IntValue seeTimeToShoot,
             ForgeConfigSpec.DoubleValue gunGoalSpeedModifier,
+            ForgeConfigSpec.DoubleValue gunStrafeSpeedModifier,
             ForgeConfigSpec.DoubleValue findCoverNearDistance,
             ForgeConfigSpec.DoubleValue findCoverFarDistance,
             CombatGoalConfigEntry combatGoals,
@@ -311,8 +314,17 @@ public final class CombatUnitConfig {
                 builder.comment("Gun goal: minimum seeTime ticks before mid/long-range shot.")
                         .defineInRange("seeTimeToShoot", (int) attributeDefaults[9], 0, 100);
         ForgeConfigSpec.DoubleValue gunGoalSpeedModifierSpec =
-                builder.comment("MobGunRangedPassthroughAttackGoal movement speed multiplier.")
+                builder.comment("MobGunRangedPassthroughAttackGoal movement speed multiplier (moveTo / chase).")
                         .defineInRange("gunGoalSpeedModifier", gunGoalSpeedModifier, 0.5, 2.0);
+        ForgeConfigSpec.DoubleValue gunStrafeSpeedModifierSpec =
+                builder.comment(
+                                "MoveControl STRAFE speedModifier (x). Vanilla hardcodes 0.25; default 0.5. "
+                                        + "Final is clamp((x + gunStrafeSpeedModifierScale.offsetA) * gunStrafeSpeedModifierScale.scaleB, 0.05, 2).")
+                        .defineInRange(
+                                "gunStrafeSpeedModifier",
+                                DEFAULT_GUN_STRAFE_SPEED_MODIFIER,
+                                0.05,
+                                2.0);
         double defaultNear =
                 defaultFindCoverNear(attributeDefaults[3], attributeDefaults[4]);
         double defaultFar =
@@ -371,6 +383,7 @@ public final class CombatUnitConfig {
                 gunAttackIntervalMin,
                 seeTimeToShoot,
                 gunGoalSpeedModifierSpec,
+                gunStrafeSpeedModifierSpec,
                 findCoverNearDistance,
                 findCoverFarDistance,
                 combatGoals,
@@ -508,6 +521,7 @@ public final class CombatUnitConfig {
                 maxHealth,
                 attackDamage,
                 gunGoalSpeedModifier,
+                DEFAULT_GUN_STRAFE_SPEED_MODIFIER,
                 attributeDefaults[0],
                 attributeDefaults[1],
                 attributeDefaults[2],
@@ -549,6 +563,7 @@ public final class CombatUnitConfig {
         stats.maxHealth = entry.maxHealth().get();
         stats.attackDamage = entry.attackDamage().get();
         stats.gunGoalSpeedModifier = entry.gunGoalSpeedModifier().get();
+        stats.gunStrafeSpeedModifier = entry.gunStrafeSpeedModifier().get();
         stats.movementSpeed = entry.movementSpeed().get();
         stats.followRange = entry.followRange().get();
         stats.meleeSpeed = entry.meleeSpeed().get();

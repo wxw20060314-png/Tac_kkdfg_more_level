@@ -1,8 +1,10 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob;
 import com.kkdfg.Tacz_morelevel.api.JumpActingMob;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.TaczCrawlCapableMob;
+import com.kkdfg.Tacz_morelevel.config.CombatUnitConfig;
 import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierPathNode;
 import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierWalkNodeEvaluator;
 import net.minecraft.core.BlockPos;
@@ -49,6 +51,16 @@ public final class SoldierMoveControl extends MoveControl {
 
     public boolean isCrawlPathfinding() {
         return this.crawlPathfinding;
+    }
+    @Override
+    public void strafe(float pForward, float pStrafe) {
+        super.strafe(pForward, pStrafe);
+        // 原版 strafe 写死 0.25；改为每单位 gunStrafeSpeedModifier（已含全局 (x+a)*b）
+        if (this.mob instanceof GunStrafeSpeedMob gunStrafe) {
+            this.speedModifier = gunStrafe.gunStrafeSpeedModifier();
+        } else {
+            this.speedModifier = CombatUnitConfig.DEFAULT_GUN_STRAFE_SPEED_MODIFIER;
+        }
     }
 
     @Override

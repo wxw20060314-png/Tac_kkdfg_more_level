@@ -118,7 +118,8 @@ public abstract class AbstractFriendEntity extends PathfinderMob
                 GunCombatSightHolder,
                 SimThreadCapableMob,
                 SoldierAlertness,
-                SoldierThrowableThreatSense {
+                SoldierThrowableThreatSense,
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
 
     private final SimThreadCapableSupport simThreadSupport =
             new SimThreadCapableSupport(this::getCoverModeDurationTicks);
@@ -268,6 +269,11 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     protected abstract Goal gunGoal();
 
     protected abstract BodyguardProfile bodyguardProfile();
+
+    @Override
+    public double gunStrafeSpeedModifier() {
+        return Config.bodyguardGunStrafeSpeedModifierFor(this.bodyguardProfile());
+    }
 
     protected abstract MeleeAttackGoal meleeGoal();
 

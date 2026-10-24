@@ -41,9 +41,11 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -84,6 +86,18 @@ public class Tacz_MoreLevel
         context.registerConfig(ModConfig.Type.COMMON, NpcConfig.SPEC, "tacz_morelevel/npc.toml");
         context.registerConfig(ModConfig.Type.COMMON, BossConfig.SPEC, "tacz_morelevel/bosses.toml");
         context.registerConfig(ModConfig.Type.COMMON, ArmorConfig.SPEC, "tacz_morelevel/armor.toml");
+
+        // Forge：模组构造里用注入的 context.registerExtensionPoint(ConfigScreenFactory)。
+        // cloth_config 可选 + 专用服不加载客户端类 → Dist + isLoaded + 反射。
+        if (FMLEnvironment.dist == Dist.CLIENT && ModList.get().isLoaded("cloth_config")) {
+            try {
+                Class.forName("com.kkdfg.Tacz_morelevel.client.ClothConfigScreens")
+                        .getMethod("register", FMLJavaModLoadingContext.class)
+                        .invoke(null, context);
+            } catch (Throwable t) {
+                LOGGER.warn("Cloth Config is present but config screen failed to register", t);
+            }
+        }
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -207,6 +207,10 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
 
     @Override
     public void tick() {
+        //test
+        System.out.println(this.strafingBackwards);
+        System.out.println(this.strafingClockwise);
+        //test
         if (this.sideFlipCooldown > 0) {
             this.sideFlipCooldown--;
         }

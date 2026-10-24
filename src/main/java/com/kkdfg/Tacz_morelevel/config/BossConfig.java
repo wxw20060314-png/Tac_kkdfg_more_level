@@ -12,6 +12,8 @@ public final class BossConfig {
     private static final ForgeConfigSpec.DoubleValue GUN_BURST_INTERVAL_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue GUN_MELEE_FRAC_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue GUN_MELEE_FRAC_SCALE_B;
+    private static final ForgeConfigSpec.DoubleValue MAX_HEALTH_OFFSET_A;
+    private static final ForgeConfigSpec.DoubleValue MAX_HEALTH_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue MOVEMENT_SPEED_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue MOVEMENT_SPEED_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue FOLLOW_RANGE_OFFSET_A;
@@ -30,6 +32,8 @@ public final class BossConfig {
     private static final ForgeConfigSpec.DoubleValue SEE_TIME_TO_SHOOT_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue GUN_GOAL_SPEED_MODIFIER_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue GUN_GOAL_SPEED_MODIFIER_SCALE_B;
+    private static final ForgeConfigSpec.DoubleValue GUN_STRAFE_SPEED_MODIFIER_OFFSET_A;
+    private static final ForgeConfigSpec.DoubleValue GUN_STRAFE_SPEED_MODIFIER_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue LONG_SNEAK_TIME_DELAY_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue LONG_SNEAK_TIME_DELAY_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue LONG_SNEAK_TIME_OFFSET_A;
@@ -81,6 +85,17 @@ public final class BossConfig {
                         .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
         GUN_MELEE_FRAC_SCALE_B =
                 BUILDER.comment("Scale factor b in clamp((x + a) * b, 0.05, 1).")
+                        .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
+        BUILDER.pop();
+
+        BUILDER.push("maxHealthScale");
+        BUILDER.comment(
+                "Maps each BossConfig unit maxHealth x as (x + offsetA) * scaleB. Defaults leave x unchanged.");
+        MAX_HEALTH_OFFSET_A =
+                BUILDER.comment("Additive offset a in (x + a) * b.")
+                        .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
+        MAX_HEALTH_SCALE_B =
+                BUILDER.comment("Scale factor b in (x + a) * b.")
                         .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
         BUILDER.pop();
 
@@ -179,6 +194,17 @@ public final class BossConfig {
                 BUILDER.comment("Additive offset a in (x + a) * b.")
                         .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
         GUN_GOAL_SPEED_MODIFIER_SCALE_B =
+                BUILDER.comment("Scale factor b in (x + a) * b.")
+                        .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
+        BUILDER.pop();
+
+        BUILDER.push("gunStrafeSpeedModifierScale");
+        BUILDER.comment(
+                "Maps each BossConfig unit gunStrafeSpeedModifier x as (x + offsetA) * scaleB. Defaults leave x unchanged.");
+        GUN_STRAFE_SPEED_MODIFIER_OFFSET_A =
+                BUILDER.comment("Additive offset a in (x + a) * b.")
+                        .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
+        GUN_STRAFE_SPEED_MODIFIER_SCALE_B =
                 BUILDER.comment("Scale factor b in (x + a) * b.")
                         .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
         BUILDER.pop();
@@ -386,8 +412,49 @@ public final class BossConfig {
     static final CombatUnitConfig.SpecEntry SLIME_WARRIOR = defineSlimeWarrior();
     static final CombatUnitConfig.SpecEntry LEV_MARSHAL = defineLevMarshal();
     static final BombSightConfigEntry BOMB_SIGHT = defineBombSight();
+    static final SlimeCommanderSplitConfigEntry SLIME_COMMANDER_SPLIT = defineSlimeCommanderSplit();
 
     public static final ForgeConfigSpec SPEC = BUILDER.build();
+
+    /** Cloth：Boss 全局 maxHealth a。 */
+    public static ForgeConfigSpec.DoubleValue maxHealthOffsetA() {
+        return MAX_HEALTH_OFFSET_A;
+    }
+
+    /** Cloth：Boss 全局 maxHealth b。 */
+    public static ForgeConfigSpec.DoubleValue maxHealthScaleB() {
+        return MAX_HEALTH_SCALE_B;
+    }
+
+    /** Cloth：Boss 全局移速 a。 */
+    public static ForgeConfigSpec.DoubleValue movementSpeedOffsetA() {
+        return MOVEMENT_SPEED_OFFSET_A;
+    }
+
+    /** Cloth：Boss 全局移速 b。 */
+    public static ForgeConfigSpec.DoubleValue movementSpeedScaleB() {
+        return MOVEMENT_SPEED_SCALE_B;
+    }
+
+    /** Cloth：Boss moveTo / gunGoalSpeedModifier 全局 a。 */
+    public static ForgeConfigSpec.DoubleValue gunGoalSpeedModifierOffsetA() {
+        return GUN_GOAL_SPEED_MODIFIER_OFFSET_A;
+    }
+
+    /** Cloth：Boss moveTo / gunGoalSpeedModifier 全局 b。 */
+    public static ForgeConfigSpec.DoubleValue gunGoalSpeedModifierScaleB() {
+        return GUN_GOAL_SPEED_MODIFIER_SCALE_B;
+    }
+
+    /** Cloth：Boss strafe 全局 a。 */
+    public static ForgeConfigSpec.DoubleValue gunStrafeSpeedModifierOffsetA() {
+        return GUN_STRAFE_SPEED_MODIFIER_OFFSET_A;
+    }
+
+    /** Cloth：Boss strafe 全局 b。 */
+    public static ForgeConfigSpec.DoubleValue gunStrafeSpeedModifierScaleB() {
+        return GUN_STRAFE_SPEED_MODIFIER_SCALE_B;
+    }
 
     private BossConfig() {}
 
@@ -504,7 +571,7 @@ public final class BossConfig {
         return CombatUnitConfig.define(
                 BUILDER,
                 "slimeCommander",
-                "Slime Commander: gun/move/combatGoals only. Entity HP/scale/split from code SPLIT_TABLE (gen0=300); maxHealth here is unused. No armor; always drops nothing.",
+                "Slime Commander: gun/move/combatGoals. Entity HP from [slimeCommanderSplit] (boss maxHealthScale applies). Unit maxHealth unused. No armor; always drops nothing.",
                 300.0D,
                 2.0D,
                 1.2D,
@@ -523,7 +590,7 @@ public final class BossConfig {
         return CombatUnitConfig.define(
                 BUILDER,
                 "slimeWarrior",
-                "Slime Warrior: gun/move/combatGoals. Entity HP/scale/split from code SPLIT_TABLE; maxHealth here is unused. No armor.",
+                "Slime Warrior (split accessory): gun/move/combatGoals. Entity HP shares [slimeCommanderSplit]; unit maxHealth unused. No armor.",
                 CombatUnitConfig.DEFAULT_SOLDIER_MAX_HEALTH[specialForcesIndex],
                 CombatUnitConfig.DEFAULT_SOLDIER_ATTACK_DAMAGE[specialForcesIndex],
                 CombatUnitConfig.DEFAULT_SOLDIER_GUN_GOAL_SPEED[specialForcesIndex],
@@ -532,6 +599,29 @@ public final class BossConfig {
                 null,
                 null,
                 CombatGoalSection.sneakAndJump());
+    }
+
+    record SlimeCommanderSplitConfigEntry(
+            ForgeConfigSpec.DoubleValue gen0MaxHealth,
+            ForgeConfigSpec.DoubleValue gen1MaxHealth,
+            ForgeConfigSpec.DoubleValue gen2MaxHealth) {}
+
+    private static SlimeCommanderSplitConfigEntry defineSlimeCommanderSplit() {
+        BUILDER.push("slimeCommanderSplit");
+        BUILDER.comment(
+                "Slime Commander phase HP by generation (0..2). Split warriors share this table.",
+                "Boss maxHealthScale (x+a)*b is applied on load. Scale/split counts stay in code SPLIT_TABLE.");
+        ForgeConfigSpec.DoubleValue gen0 =
+                BUILDER.comment("gen0 (commander / top warrior) max health.")
+                        .defineInRange("gen0MaxHealth", 300.0D, 1.0D, 10000.0D);
+        ForgeConfigSpec.DoubleValue gen1 =
+                BUILDER.comment("gen1 max health.")
+                        .defineInRange("gen1MaxHealth", 150.0D, 1.0D, 10000.0D);
+        ForgeConfigSpec.DoubleValue gen2 =
+                BUILDER.comment("gen2 (leaf) max health.")
+                        .defineInRange("gen2MaxHealth", 75.0D, 1.0D, 10000.0D);
+        BUILDER.pop();
+        return new SlimeCommanderSplitConfigEntry(gen0, gen1, gen2);
     }
 
     private static CombatUnitConfig.SpecEntry defineLevMarshal() {
@@ -619,11 +709,11 @@ public final class BossConfig {
         applyBossUnit(LEV_MARSHAL, false);
 
         CombatUnitConfig.SpecEntry cdUnit = CEILING_DUEL.unit();
-        Config.ceilingDuelMaxHealth = cdUnit.maxHealth().get();
         Config.ceilingDuelAttackDamage = cdUnit.attackDamage().get();
         CombatUnitConfig.copyIntoAttributeStats(cdUnit, Config.ceilingDuelAttributes);
         Config.applyBossGunMeleeFracScale(Config.ceilingDuelAttributes);
         applyAttributeScales(Config.ceilingDuelAttributes);
+        Config.ceilingDuelMaxHealth = Config.ceilingDuelAttributes.maxHealth;
         Config.ceilingDuelGunGoalSpeedModifier = Config.ceilingDuelAttributes.gunGoalSpeedModifier;
         CombatUnitConfig.copyIntoCombatGoalStats(cdUnit.combatGoals(), Config.ceilingDuelCombatGoals);
         applyCombatGoalScales(Config.ceilingDuelCombatGoals);
@@ -633,11 +723,11 @@ public final class BossConfig {
         Config.ceilingDuelHelmetDropChance = CEILING_DUEL.helmetDropChance().get().floatValue();
 
         CombatUnitConfig.SpecEntry bsUnit = BOMB_SIGHT.unit();
-        Config.bombSightMaxHealth = bsUnit.maxHealth().get();
         Config.bombSightAttackDamage = bsUnit.attackDamage().get();
         CombatUnitConfig.copyIntoAttributeStats(bsUnit, Config.bombSightAttributes);
         Config.applyBossGunMeleeFracScale(Config.bombSightAttributes);
         applyAttributeScales(Config.bombSightAttributes);
+        Config.bombSightMaxHealth = Config.bombSightAttributes.maxHealth;
         Config.bombSightGunGoalSpeedModifier = Config.bombSightAttributes.gunGoalSpeedModifier;
         CombatUnitConfig.copyIntoCombatGoalStats(bsUnit.combatGoals(), Config.bombSightCombatGoals);
         applyCombatGoalScales(Config.bombSightCombatGoals);
@@ -645,6 +735,13 @@ public final class BossConfig {
             Config.bombSightEquipmentDropChance = bsUnit.equipmentDropChance().get().floatValue();
         }
         Config.bombSightResistanceAmplifier = BOMB_SIGHT.resistanceAmplifier().get();
+
+        Config.slimeCommanderSplitMaxHealth[0] =
+                (float) mapMaxHealth(SLIME_COMMANDER_SPLIT.gen0MaxHealth().get());
+        Config.slimeCommanderSplitMaxHealth[1] =
+                (float) mapMaxHealth(SLIME_COMMANDER_SPLIT.gen1MaxHealth().get());
+        Config.slimeCommanderSplitMaxHealth[2] =
+                (float) mapMaxHealth(SLIME_COMMANDER_SPLIT.gen2MaxHealth().get());
     }
 
     private static void finishBossAttrsAndGoals(
@@ -662,9 +759,9 @@ public final class BossConfig {
 
     private static void applyBossUnit(CombatUnitConfig.SpecEntry entry, boolean warMachine) {
         if (warMachine) {
-            Config.warMachineMaxHealth = entry.maxHealth().get();
             Config.warMachineAttackDamage = entry.attackDamage().get();
             finishBossAttrsAndGoals(entry, Config.warMachineAttributes, Config.warMachineCombatGoals);
+            Config.warMachineMaxHealth = Config.warMachineAttributes.maxHealth;
             Config.warMachineGunGoalSpeedModifier = Config.warMachineAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.warMachineEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
@@ -672,9 +769,9 @@ public final class BossConfig {
             return;
         }
         if (entry == BOMB_BABY) {
-            Config.bombBabyMaxHealth = entry.maxHealth().get();
             Config.bombBabyAttackDamage = entry.attackDamage().get();
             finishBossAttrsAndGoals(entry, Config.bombBabyAttributes, Config.bombBabyCombatGoals);
+            Config.bombBabyMaxHealth = Config.bombBabyAttributes.maxHealth;
             Config.bombBabyGunGoalSpeedModifier = Config.bombBabyAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.bombBabyEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
@@ -682,9 +779,9 @@ public final class BossConfig {
             return;
         }
         if (entry == ANNIHILATOR) {
-            Config.annihilatorMaxHealth = entry.maxHealth().get();
             Config.annihilatorAttackDamage = entry.attackDamage().get();
             finishBossAttrsAndGoals(entry, Config.annihilatorAttributes, Config.annihilatorCombatGoals);
+            Config.annihilatorMaxHealth = Config.annihilatorAttributes.maxHealth;
             Config.annihilatorGunGoalSpeedModifier = Config.annihilatorAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.annihilatorEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
@@ -692,9 +789,9 @@ public final class BossConfig {
             return;
         }
         if (entry == PUNISHER) {
-            Config.punisherMaxHealth = entry.maxHealth().get();
             Config.punisherAttackDamage = entry.attackDamage().get();
             finishBossAttrsAndGoals(entry, Config.punisherAttributes, Config.punisherCombatGoals);
+            Config.punisherMaxHealth = Config.punisherAttributes.maxHealth;
             Config.punisherGunGoalSpeedModifier = Config.punisherAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.punisherEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
@@ -702,9 +799,9 @@ public final class BossConfig {
             return;
         }
         if (entry == SCORPION) {
-            Config.scorpionMaxHealth = entry.maxHealth().get();
             Config.scorpionAttackDamage = entry.attackDamage().get();
             finishBossAttrsAndGoals(entry, Config.scorpionAttributes, Config.scorpionCombatGoals);
+            Config.scorpionMaxHealth = Config.scorpionAttributes.maxHealth;
             Config.scorpionGunGoalSpeedModifier = Config.scorpionAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.scorpionEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
@@ -725,9 +822,9 @@ public final class BossConfig {
             return;
         }
         if (entry == LEV_MARSHAL) {
-            Config.levMarshalMaxHealth = entry.maxHealth().get();
             Config.levMarshalAttackDamage = entry.attackDamage().get();
             finishBossAttrsAndGoals(entry, Config.levMarshalAttributes, Config.levMarshalCombatGoals);
+            Config.levMarshalMaxHealth = Config.levMarshalAttributes.maxHealth;
             Config.levMarshalGunGoalSpeedModifier = Config.levMarshalAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.levMarshalEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
@@ -735,10 +832,16 @@ public final class BossConfig {
         }
     }
 
+    private static double mapMaxHealth(double x) {
+        return clampDouble(
+                (x + MAX_HEALTH_OFFSET_A.get()) * MAX_HEALTH_SCALE_B.get(), 1.0D, 10000.0D);
+    }
+
     private static void applyAttributeScales(Config.NpcAttributeStats stats) {
         if (stats == null) {
             return;
         }
+        stats.maxHealth = mapMaxHealth(stats.maxHealth);
         stats.movementSpeed = clampDouble((stats.movementSpeed + MOVEMENT_SPEED_OFFSET_A.get()) * MOVEMENT_SPEED_SCALE_B.get(), 0.05D, 2.0D);
         stats.followRange = clampDouble((stats.followRange + FOLLOW_RANGE_OFFSET_A.get()) * FOLLOW_RANGE_SCALE_B.get(), 4.0D, 256.0D);
         stats.meleeSpeed = clampDouble((stats.meleeSpeed + MELEE_SPEED_OFFSET_A.get()) * MELEE_SPEED_SCALE_B.get(), 0.5D, 2.0D);
@@ -748,6 +851,12 @@ public final class BossConfig {
         stats.gunStrafeInnerRingFrac = clampDouble((stats.gunStrafeInnerRingFrac + GUN_STRAFE_INNER_RING_FRAC_OFFSET_A.get()) * GUN_STRAFE_INNER_RING_FRAC_SCALE_B.get(), 0.0D, 1.0D);
         stats.seeTimeToShoot = clampFloor((stats.seeTimeToShoot + SEE_TIME_TO_SHOOT_OFFSET_A.get()) * SEE_TIME_TO_SHOOT_SCALE_B.get(), 0, 100);
         stats.gunGoalSpeedModifier = clampDouble((stats.gunGoalSpeedModifier + GUN_GOAL_SPEED_MODIFIER_OFFSET_A.get()) * GUN_GOAL_SPEED_MODIFIER_SCALE_B.get(), 0.5D, 2.0D);
+        stats.gunStrafeSpeedModifier =
+                clampDouble(
+                        (stats.gunStrafeSpeedModifier + GUN_STRAFE_SPEED_MODIFIER_OFFSET_A.get())
+                                * GUN_STRAFE_SPEED_MODIFIER_SCALE_B.get(),
+                        0.05D,
+                        2.0D);
     }
 
     private static void applyCombatGoalScales(Config.CombatGoalStats stats) {

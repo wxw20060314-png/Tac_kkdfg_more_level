@@ -140,6 +140,10 @@ repositories {
         name = 'CurseMaven'
         url = 'https://www.cursemaven.com'
     }
+    maven {
+        name = 'Shedaniel'
+        url = 'https://maven.shedaniel.me/'
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
@@ -178,6 +182,10 @@ dependencies {
     // Mob Battle Mod：仅开发环境，不写入发布产物
     runtimeOnly fg.deobf("curse.maven:mob-battle-mod-268746:${mobbattle_file_id}")
 
+    // Cloth Config API：配置屏；compileOnly 便于写屏，runtimeOnly 进开发环境，不打进发布 jar
+    compileOnly fg.deobf("maven.modrinth:cloth-config:${cloth_config_version}")
+    runtimeOnly fg.deobf("maven.modrinth:cloth-config:${cloth_config_version}")
+
     // 卓越前线（Superb Warfare）：可选软依赖。compileOnly 便于写 Compat；不打进发布 jar。
     // 开关：gradle.properties 里 superbwarfare_in_dev=true/false，改完刷新 Gradle 再 run。
     compileOnly fg.deobf("maven.modrinth:superb-warfare:${superbwarfare_version}")
@@ -185,9 +193,8 @@ dependencies {
         runtimeOnly fg.deobf("maven.modrinth:superb-warfare:${superbwarfare_version}")
         // 0.8.9.1-hotfix 在 Modrinth 上唯一 required 前置
         runtimeOnly fg.deobf("maven.modrinth:kotlin-for-forge:${kotlin_for_forge_version}")
-        // Curios / Cloth Config 对 hotfix 为 optional；需要饰品栏或配置屏时再开：
+        // Curios 对 hotfix 为 optional；需要饰品栏时再开：
         // runtimeOnly fg.deobf("maven.modrinth:curios:5.14.1+1.20.1-forge")
-        // runtimeOnly fg.deobf("maven.modrinth:cloth-config:11.1.106+forge")
     }
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository

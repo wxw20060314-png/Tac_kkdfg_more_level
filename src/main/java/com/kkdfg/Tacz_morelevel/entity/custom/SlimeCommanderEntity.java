@@ -59,6 +59,11 @@ public final class SlimeCommanderEntity extends AbstractSlimeExperimentEntity {
                     BossEvent.BossBarColor.GREEN,
                     BossEvent.BossBarOverlay.NOTCHED_10);
 
+    @Override
+    protected Config.NpcAttributeStats slimeCombatAttributes() {
+        return Config.slimeCommanderAttributes;
+    }
+
     private final MobGunRangedPassthroughAttackGoal<SlimeCommanderEntity> gunGoal =
             new MobGunRangedPassthroughAttackGoal<>(
                     this,
@@ -240,7 +245,7 @@ public final class SlimeCommanderEntity extends AbstractSlimeExperimentEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, SPLIT_TABLE[0].maxHealth)
+                .add(Attributes.MAX_HEALTH, splitMaxHealth(0))
                 .add(Attributes.MOVEMENT_SPEED, Config.slimeCommanderAttributes.movementSpeed)
                 .add(Attributes.ATTACK_DAMAGE, Config.slimeCommanderAttackDamage)
                 .add(Attributes.FOLLOW_RANGE, Config.slimeCommanderAttributes.followRange);

@@ -95,7 +95,16 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                 SoldierWeaponArrangeHost,
                 SimThreadCapableMob,
                 SoldierAlertness,
-                SoldierThrowableThreatSense {
+                SoldierThrowableThreatSense,
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
+
+    /** 中立持枪单位的战斗属性（商人等）。 */
+    protected abstract Config.NpcAttributeStats configuredAttributeStats();
+
+    @Override
+    public double gunStrafeSpeedModifier() {
+        return this.configuredAttributeStats().gunStrafeSpeedModifier;
+    }
 
     private final SimThreadCapableSupport simThreadSupport =
             new SimThreadCapableSupport(this::getCoverModeDurationTicks);

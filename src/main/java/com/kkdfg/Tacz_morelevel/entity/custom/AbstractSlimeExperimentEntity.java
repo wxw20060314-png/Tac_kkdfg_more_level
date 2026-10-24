@@ -104,7 +104,8 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
                 TaczGunSoundInvestigatingMob,
                 JumpActingMob,
                 SoldierWeaponArrangeHost,
-                MobCreativeAmmoBoxHolder {
+                MobCreativeAmmoBoxHolder,
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
 
     public static final String TEXTURE_FOLDER = "slime_experiment";
     public static final ResourceLocation SKIN_TEXTURE =
@@ -143,12 +144,21 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
             SynchedEntityData.defineId(
                     AbstractSlimeExperimentEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
-    /** 分裂规格表：index = generation（0..2）。等级只影响血量、大小、分裂。 */
+    /**
+     * 分裂规格表：index = generation（0..2）。大小/能否分裂/数量在此；
+     * 血量以 {@link Config#slimeCommanderSplitMaxHealth}（bosses.toml {@code slimeCommanderSplit}）为准。
+     */
     public static final SplitSpec[] SPLIT_TABLE = {
         new SplitSpec(300.0F, 1.0F, 3, 4, true),
         new SplitSpec(150.0F, 0.7F, 3, 4, true),
         new SplitSpec(75.0F, 0.4F, 0, 0, false),
     };
+
+    /** 当前代血量（配置 + Boss 全局 maxHealthScale）。 */
+    public static float splitMaxHealth(int generation) {
+        int g = Mth.clamp(generation, 0, Config.slimeCommanderSplitMaxHealth.length - 1);
+        return Config.slimeCommanderSplitMaxHealth[g];
+    }
 
     /** 偏好主武器标记（非槽位）；默认 {@code null}，固定枪时写入。 */
     @Nullable private ResourceLocation preferredMainGunDataId;
@@ -325,14 +335,22 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         return animStep;
     }
 
-    /** 战士默认属性：移速等抄特种兵 Config；血量取 gen0 表值（spawn 时再按代际覆盖）。 */
+    /** 战士默认属性：移速等抄特种兵 Config；血量取 gen0 配置（spawn 时再按代际覆盖）。 */
     public static AttributeSupplier.Builder createBaseAttributes() {
         Config.NpcAttributeStats stats = Config.npcAttributesFor(SoldierSpawnArmorProfile.SPECIAL_FORCES);
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, SPLIT_TABLE[0].maxHealth)
+                .add(Attributes.MAX_HEALTH, splitMaxHealth(0))
                 .add(Attributes.MOVEMENT_SPEED, stats.movementSpeed)
                 .add(Attributes.FOLLOW_RANGE, stats.followRange)
                 .add(Attributes.ATTACK_DAMAGE, stats.attackDamage);
+    }
+
+    /** 交火属性段（指挥官 / 战士各用自己的 Boss 配置）。 */
+    protected abstract Config.NpcAttributeStats slimeCombatAttributes();
+
+    @Override
+    public double gunStrafeSpeedModifier() {
+        return this.slimeCombatAttributes().gunStrafeSpeedModifier;
     }
 
     @Override
@@ -644,7 +662,7 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
 
         AttributeInstance maxHealth = this.getAttribute(Attributes.MAX_HEALTH);
         if (maxHealth != null) {
-            maxHealth.setBaseValue(spec.maxHealth);
+            maxHealth.setBaseValue(splitMaxHealth(this.getGeneration()));
         }
 
         if (healToFull) {

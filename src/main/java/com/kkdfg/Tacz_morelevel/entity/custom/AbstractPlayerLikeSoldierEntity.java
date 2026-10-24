@@ -136,7 +136,8 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         implements RangedAttackMob, GunEquippedMob, MilitiaAcquireTargetVoice, PlayerLikeHeadBodyYawMob,
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
                 JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder, MobCreativeAmmoBoxHolder,
-                SimThreadCapableMob, SoldierAlertness, SoldierThrowableThreatSense {
+                SimThreadCapableMob, SoldierAlertness, SoldierThrowableThreatSense,
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
 
     private final SimThreadCapableSupport simThreadSupport =
             new SimThreadCapableSupport(this::getCoverModeDurationTicks);
@@ -211,6 +212,11 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
      */
     protected Config.NpcAttributeStats configuredAttributeStats() {
         return Config.npcAttributesFor(this.spawnArmorWeightProfile());
+    }
+
+    @Override
+    public double gunStrafeSpeedModifier() {
+        return this.configuredAttributeStats().gunStrafeSpeedModifier;
     }
 
     /** 将 {@link #configuredAttributeStats()} 写入属性实例（Config 已加载后现读）。 */

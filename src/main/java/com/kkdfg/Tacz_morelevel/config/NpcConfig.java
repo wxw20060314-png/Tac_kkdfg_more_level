@@ -40,6 +40,8 @@ public final class NpcConfig {
     private static final ForgeConfigSpec.DoubleValue GUN_BURST_INTERVAL_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue GUN_MELEE_FRAC_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue GUN_MELEE_FRAC_SCALE_B;
+    private static final ForgeConfigSpec.DoubleValue MAX_HEALTH_OFFSET_A;
+    private static final ForgeConfigSpec.DoubleValue MAX_HEALTH_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue MOVEMENT_SPEED_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue MOVEMENT_SPEED_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue FOLLOW_RANGE_OFFSET_A;
@@ -58,6 +60,8 @@ public final class NpcConfig {
     private static final ForgeConfigSpec.DoubleValue SEE_TIME_TO_SHOOT_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue GUN_GOAL_SPEED_MODIFIER_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue GUN_GOAL_SPEED_MODIFIER_SCALE_B;
+    private static final ForgeConfigSpec.DoubleValue GUN_STRAFE_SPEED_MODIFIER_OFFSET_A;
+    private static final ForgeConfigSpec.DoubleValue GUN_STRAFE_SPEED_MODIFIER_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue LONG_SNEAK_TIME_DELAY_OFFSET_A;
     private static final ForgeConfigSpec.DoubleValue LONG_SNEAK_TIME_DELAY_SCALE_B;
     private static final ForgeConfigSpec.DoubleValue LONG_SNEAK_TIME_OFFSET_A;
@@ -109,6 +113,17 @@ public final class NpcConfig {
                         .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
         GUN_MELEE_FRAC_SCALE_B =
                 BUILDER.comment("Scale factor b in clamp((x + a) * b, 0.05, 1).")
+                        .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
+        BUILDER.pop();
+
+        BUILDER.push("maxHealthScale");
+        BUILDER.comment(
+                "Maps each NPC unit maxHealth x as (x + offsetA) * scaleB. Defaults leave x unchanged.");
+        MAX_HEALTH_OFFSET_A =
+                BUILDER.comment("Additive offset a in (x + a) * b.")
+                        .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
+        MAX_HEALTH_SCALE_B =
+                BUILDER.comment("Scale factor b in (x + a) * b.")
                         .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
         BUILDER.pop();
 
@@ -207,6 +222,17 @@ public final class NpcConfig {
                 BUILDER.comment("Additive offset a in (x + a) * b.")
                         .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
         GUN_GOAL_SPEED_MODIFIER_SCALE_B =
+                BUILDER.comment("Scale factor b in (x + a) * b.")
+                        .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
+        BUILDER.pop();
+
+        BUILDER.push("gunStrafeSpeedModifierScale");
+        BUILDER.comment(
+                "Maps each NPC unit gunStrafeSpeedModifier x as (x + offsetA) * scaleB. Defaults leave x unchanged.");
+        GUN_STRAFE_SPEED_MODIFIER_OFFSET_A =
+                BUILDER.comment("Additive offset a in (x + a) * b.")
+                        .defineInRange("offsetA", 0.0D, -1000.0D, 1000.0D);
+        GUN_STRAFE_SPEED_MODIFIER_SCALE_B =
                 BUILDER.comment("Scale factor b in (x + a) * b.")
                         .defineInRange("scaleB", 1.0D, -1000.0D, 1000.0D);
         BUILDER.pop();
@@ -399,6 +425,46 @@ public final class NpcConfig {
 
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
+    /** Cloth：全局 maxHealth (x+a)*b 的 a。 */
+    public static ForgeConfigSpec.DoubleValue maxHealthOffsetA() {
+        return MAX_HEALTH_OFFSET_A;
+    }
+
+    /** Cloth：全局 maxHealth (x+a)*b 的 b。 */
+    public static ForgeConfigSpec.DoubleValue maxHealthScaleB() {
+        return MAX_HEALTH_SCALE_B;
+    }
+
+    /** Cloth / 调试：全局移速 (x+a)*b 的 a。 */
+    public static ForgeConfigSpec.DoubleValue movementSpeedOffsetA() {
+        return MOVEMENT_SPEED_OFFSET_A;
+    }
+
+    /** Cloth / 调试：全局移速 (x+a)*b 的 b。 */
+    public static ForgeConfigSpec.DoubleValue movementSpeedScaleB() {
+        return MOVEMENT_SPEED_SCALE_B;
+    }
+
+    /** Cloth：moveTo / gunGoalSpeedModifier 全局 a。 */
+    public static ForgeConfigSpec.DoubleValue gunGoalSpeedModifierOffsetA() {
+        return GUN_GOAL_SPEED_MODIFIER_OFFSET_A;
+    }
+
+    /** Cloth：moveTo / gunGoalSpeedModifier 全局 b。 */
+    public static ForgeConfigSpec.DoubleValue gunGoalSpeedModifierScaleB() {
+        return GUN_GOAL_SPEED_MODIFIER_SCALE_B;
+    }
+
+    /** Cloth：strafe 全局 a。 */
+    public static ForgeConfigSpec.DoubleValue gunStrafeSpeedModifierOffsetA() {
+        return GUN_STRAFE_SPEED_MODIFIER_OFFSET_A;
+    }
+
+    /** Cloth：strafe 全局 b。 */
+    public static ForgeConfigSpec.DoubleValue gunStrafeSpeedModifierScaleB() {
+        return GUN_STRAFE_SPEED_MODIFIER_SCALE_B;
+    }
+
     private NpcConfig() {}
 
     private static CombatUnitConfig.SpecEntry[] defineSoldiers() {
@@ -564,12 +630,12 @@ public final class NpcConfig {
 
         MysteriousMerchantConfigEntry mm = MYSTERIOUS_MERCHANT;
         CombatUnitConfig.SpecEntry mmUnit = mm.unit();
-        Config.mysteriousMerchantMaxHealth = mmUnit.maxHealth().get();
         Config.mysteriousMerchantAttackDamage = mmUnit.attackDamage().get();
         Config.mysteriousMerchantWanderStrollSpeed = mm.wanderStrollSpeed().get();
         CombatUnitConfig.copyIntoAttributeStats(mmUnit, Config.mysteriousMerchantAttributes);
         Config.applyNpcGunMeleeFracScale(Config.mysteriousMerchantAttributes);
         applyAttributeScales(Config.mysteriousMerchantAttributes);
+        Config.mysteriousMerchantMaxHealth = Config.mysteriousMerchantAttributes.maxHealth;
         Config.mysteriousMerchantGunGoalSpeedModifier =
                 Config.mysteriousMerchantAttributes.gunGoalSpeedModifier;
         CombatUnitConfig.copyIntoCombatGoalStats(mmUnit.combatGoals(), Config.mysteriousMerchantCombatGoals);
@@ -583,11 +649,11 @@ public final class NpcConfig {
         }
 
         CombatUnitConfig.SpecEntry mg = MARSHAL_GUARD;
-        Config.marshalGuardMaxHealth = mg.maxHealth().get();
         Config.marshalGuardAttackDamage = mg.attackDamage().get();
         CombatUnitConfig.copyIntoAttributeStats(mg, Config.marshalGuardAttributes);
         Config.applyNpcGunMeleeFracScale(Config.marshalGuardAttributes);
         applyAttributeScales(Config.marshalGuardAttributes);
+        Config.marshalGuardMaxHealth = Config.marshalGuardAttributes.maxHealth;
         Config.marshalGuardGunGoalSpeedModifier = Config.marshalGuardAttributes.gunGoalSpeedModifier;
         CombatUnitConfig.copyIntoCombatGoalStats(mg.combatGoals(), Config.marshalGuardCombatGoals);
         applyCombatGoalScales(Config.marshalGuardCombatGoals);
@@ -596,11 +662,11 @@ public final class NpcConfig {
         }
 
         CombatUnitConfig.SpecEntry lurker = LURKER;
-        Config.lurkerMaxHealth = lurker.maxHealth().get();
         Config.lurkerAttackDamage = lurker.attackDamage().get();
         CombatUnitConfig.copyIntoAttributeStats(lurker, Config.lurkerAttributes);
         Config.applyNpcGunMeleeFracScale(Config.lurkerAttributes);
         applyAttributeScales(Config.lurkerAttributes);
+        Config.lurkerMaxHealth = Config.lurkerAttributes.maxHealth;
         Config.lurkerGunGoalSpeedModifier = Config.lurkerAttributes.gunGoalSpeedModifier;
         CombatUnitConfig.copyIntoCombatGoalStats(lurker.combatGoals(), Config.lurkerCombatGoals);
         applyCombatGoalScales(Config.lurkerCombatGoals);
@@ -613,6 +679,11 @@ public final class NpcConfig {
         if (stats == null) {
             return;
         }
+        stats.maxHealth =
+                clampDouble(
+                        (stats.maxHealth + MAX_HEALTH_OFFSET_A.get()) * MAX_HEALTH_SCALE_B.get(),
+                        1.0D,
+                        10000.0D);
         stats.movementSpeed = clampDouble((stats.movementSpeed + MOVEMENT_SPEED_OFFSET_A.get()) * MOVEMENT_SPEED_SCALE_B.get(), 0.05D, 2.0D);
         stats.followRange = clampDouble((stats.followRange + FOLLOW_RANGE_OFFSET_A.get()) * FOLLOW_RANGE_SCALE_B.get(), 4.0D, 256.0D);
         stats.meleeSpeed = clampDouble((stats.meleeSpeed + MELEE_SPEED_OFFSET_A.get()) * MELEE_SPEED_SCALE_B.get(), 0.5D, 2.0D);
@@ -622,6 +693,12 @@ public final class NpcConfig {
         stats.gunStrafeInnerRingFrac = clampDouble((stats.gunStrafeInnerRingFrac + GUN_STRAFE_INNER_RING_FRAC_OFFSET_A.get()) * GUN_STRAFE_INNER_RING_FRAC_SCALE_B.get(), 0.0D, 1.0D);
         stats.seeTimeToShoot = clampFloor((stats.seeTimeToShoot + SEE_TIME_TO_SHOOT_OFFSET_A.get()) * SEE_TIME_TO_SHOOT_SCALE_B.get(), 0, 100);
         stats.gunGoalSpeedModifier = clampDouble((stats.gunGoalSpeedModifier + GUN_GOAL_SPEED_MODIFIER_OFFSET_A.get()) * GUN_GOAL_SPEED_MODIFIER_SCALE_B.get(), 0.5D, 2.0D);
+        stats.gunStrafeSpeedModifier =
+                clampDouble(
+                        (stats.gunStrafeSpeedModifier + GUN_STRAFE_SPEED_MODIFIER_OFFSET_A.get())
+                                * GUN_STRAFE_SPEED_MODIFIER_SCALE_B.get(),
+                        0.05D,
+                        2.0D);
     }
 
     private static void applyCombatGoalScales(Config.CombatGoalStats stats) {

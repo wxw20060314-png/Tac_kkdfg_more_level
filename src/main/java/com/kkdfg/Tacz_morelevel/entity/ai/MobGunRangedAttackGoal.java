@@ -9,6 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+//彩蛋文档ovo
 
 /**
  * 行为骨架参考 {@link net.minecraft.world.entity.ai.goal.RangedBowAttackGoal}：接近、视野、走位与朝向目标。
