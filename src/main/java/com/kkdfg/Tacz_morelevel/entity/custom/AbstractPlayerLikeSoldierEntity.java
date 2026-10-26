@@ -1386,5 +1386,4 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
             default -> ModSounds.SOUND_SOLDIER_DIED_1.get();
         };
     }
-
 }

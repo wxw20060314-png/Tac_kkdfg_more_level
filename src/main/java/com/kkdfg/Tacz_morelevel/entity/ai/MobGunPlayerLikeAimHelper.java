@@ -18,7 +18,7 @@ import net.minecraft.world.phys.Vec3;
 public final class MobGunPlayerLikeAimHelper {
 
     /** 头相对躯干的最大水平偏角（度）；躯干相对头同理。 */
-    public static final float MAX_HEAD_BODY_YAW_DEG = 45.0F;
+    public static final float MAX_HEAD_BODY_YAW_DEG = 25.0F;
     /** 与原版 {@link net.minecraft.world.entity.LivingEntity#tickHeadTurn} 一致。 */
     private static final float BODY_FOLLOW_MOVE_FACTOR = 0.3F;
     /** 与原版 {@link net.minecraft.world.entity.LivingEntity#tickHeadTurn} 大角度跟进一致。 */

@@ -4,6 +4,8 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    // Mixin 通道长期保留；具体 Mixin 类可随时删，json client 数组清空即可
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -17,6 +19,7 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
     // Channel:   Version:
@@ -186,6 +189,10 @@ dependencies {
     compileOnly fg.deobf("maven.modrinth:cloth-config:${cloth_config_version}")
     runtimeOnly fg.deobf("maven.modrinth:cloth-config:${cloth_config_version}")
 
+    // Mixin AP：生成 refmap（【TEST】乘骑 yaw 用；正式可不依赖长期 Mixin）
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+
     // 卓越前线（Superb Warfare）：可选软依赖。compileOnly 便于写 Compat；不打进发布 jar。
     // 开关：gradle.properties 里 superbwarfare_in_dev=true/false，改完刷新 Gradle 再 run。
     compileOnly fg.deobf("maven.modrinth:superb-warfare:${superbwarfare_version}")
@@ -205,6 +212,12 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+// MixinGradle：refmap + 自动写入 jar Manifest MixinConfigs（与 mods.toml mixinConfigs 一致）
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -237,7 +250,8 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'MixinConfigs'            : 'tacz_morelevel.mixins.json'
         ])
     }
 

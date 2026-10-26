@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.kkdfg.Tacz_morelevel.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "tacz_morelevel.refmap.json",
+  "mixins": [],
+  "client": [
+    "LivingEntityRendererRidingYawTestMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
