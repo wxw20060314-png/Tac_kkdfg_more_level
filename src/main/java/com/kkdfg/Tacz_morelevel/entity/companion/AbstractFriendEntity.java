@@ -22,6 +22,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAlertness;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatSense;
@@ -351,6 +352,7 @@ public abstract class AbstractFriendEntity extends PathfinderMob
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new SoldierFleeFireGoal(this));
         this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
         this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.goalSelector.addGoal(4, new CompanionFollowOwnerGoal(this, 1.0D, 25.0F, 10.0F, false));

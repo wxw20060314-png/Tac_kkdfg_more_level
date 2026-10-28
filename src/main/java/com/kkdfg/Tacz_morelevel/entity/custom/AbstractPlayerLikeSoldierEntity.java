@@ -28,6 +28,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAlertness;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatSense;
@@ -118,7 +119,7 @@ import net.minecraft.util.RandomSource;
  *   <li><b>武器切换</b>：{@link #gunGoal} 与近战经 {@link #mountPermanentCombatGoals} 常驻挂载（priority 2）；
  *       有枪走远程、无枪走近战，靠 {@code canUse} 互斥，禁止运行时动态挂卸；
  *       {@link #reassessWeaponGoal} 仅刷新点射间隔（须在子类字段初始化后调用，勿在父类 {@code registerGoals} 里挂枪）。
- *       优先级 1 为 {@link SoldierAvoidThrowableGoal}。</li>
+ *       优先级 0 为 {@link SoldierFleeFireGoal}；优先级 1 为 {@link SoldierAvoidThrowableGoal}。</li>
  *   <li><b>子弹</b>：背包直读枪由 {@link TaczGunMobHelper#tickInfiniteMobAmmo} 每 tick 补满弹匣，并强制自动开火模式。</li>
  *   <li><b>碰撞/视角</b>：尺寸、眼高、下马姿态均与 {@link Player} 一致，便于潜行贴墙和受击判定。</li>
  *   <li><b>声音</b>：闲置与首次锁定敌对目标时为 {@link ModSounds} 随机语音；受伤/死亡使用玩家音效；
@@ -822,6 +823,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         this.targetSelector.addGoal(5, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Warden.class, false));
         this.targetSelector.addGoal(2, new MobGunNearestAttackablePassthroughTargetGoal<>(this, Player.class, false));
         this.targetSelector.addGoal(3, new MobGunNearestAttackablePassthroughTargetGoal<>(this, AbstractFriendEntity.class, false));
+        this.goalSelector.addGoal(0, new SoldierFleeFireGoal(this));
         this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
         this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
     }

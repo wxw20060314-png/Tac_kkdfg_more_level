@@ -54,8 +54,8 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
    private static final float VIRTUAL_CRAWL_HEIGHT = Player.SWIMMING_BB_HEIGHT; //测试代码
    /** 趴边允许的非跳地板上升（半砖以下）；不抬整格（crawlJ 仍为 0）。 */ //测试代码
    private static final double CRAWL_STEP_MAX_RISE = 0.3D; //测试代码
-   /** 仅趴可通过时叠在 base malus 上的代价（base ≥ 0 才加）。 */ //测试代码
-   public static final float CRAWL_ONLY_MALUS = 8.0F; //测试代码
+   /** 仅趴可通过时叠在 base malus 上的代价（base ≥ 0 才加）；斜向搭板边同值。 */ //测试代码
+   public static final float CRAWL_ONLY_MALUS = 4.0F; //测试代码
    /**
     * 以自身为中心 7×7 窗口的切比雪夫半径（{@code max(|dx|,|dz|) ≤ 3}）。
     * 供 {@link #expandReachable7x7(Mob)} / {@link #expandReachableInWindow} 使用。
@@ -629,7 +629,7 @@ public class SoldierWalkNodeEvaluator extends NodeEvaluator {
       if (mode == PoseMode.STAND) { //测试代码
          return node; //测试代码
       } //测试代码
-      // CRAWL：站立选点否决；趴边叠 +16 //测试代码
+      // CRAWL：站立选点否决；趴边叠 CRAWL_ONLY_MALUS //测试代码
       if (!asCrawl) { //测试代码
          return null; //测试代码
       } //测试代码

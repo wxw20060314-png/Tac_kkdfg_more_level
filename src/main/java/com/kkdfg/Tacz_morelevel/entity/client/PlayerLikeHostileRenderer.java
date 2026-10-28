@@ -1,28 +1,36 @@
 package com.kkdfg.Tacz_morelevel.entity.client;
 
 import com.kkdfg.Tacz_morelevel.api.TaczPlayerLikeMob;
-import com.kkdfg.Tacz_morelevel.entity.custom.AbstractPlayerLikeSoldierEntity;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import java.util.List;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderNameTagEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.Event;
 
 /**
  * 必须使用 {@link HumanoidMobRenderer}（而不是 {@link net.minecraft.client.renderer.entity.MobRenderer}），才会注册
@@ -76,6 +84,7 @@ public class PlayerLikeHostileRenderer<T extends net.minecraft.world.entity.Mob 
         this.addLayer(new TaczMobItemInHandLayer(this, context.getItemInHandRenderer()));
     }
 
+    /** CV {@link net.minecraft.client.renderer.entity.LivingEntityRenderer#render}；仅 85→45、2500→2025。 */
     @Override
     public void render(
             T entity,
@@ -85,7 +94,121 @@ public class PlayerLikeHostileRenderer<T extends net.minecraft.world.entity.Mob 
             MultiBufferSource buffer,
             int packedLight) {
         this.setModelProperties(entity);
-        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        if (MinecraftForge.EVENT_BUS.post(
+                new RenderLivingEvent.Pre<T, PlayerLikeHostileModel<T>>(
+                        entity, this, partialTicks, poseStack, buffer, packedLight))) {
+            return;
+        }
+        poseStack.pushPose();
+        this.model.attackTime = this.getAttackAnim(entity, partialTicks);
+
+        boolean shouldSit =
+                entity.isPassenger()
+                        && (entity.getVehicle() != null && entity.getVehicle().shouldRiderSit());
+        this.model.riding = shouldSit;
+        this.model.young = entity.isBaby();
+        float f = Mth.rotLerp(partialTicks, entity.yBodyRotO, entity.yBodyRot);
+        float f1 = Mth.rotLerp(partialTicks, entity.yHeadRotO, entity.yHeadRot);
+        float f2 = f1 - f;
+        if (shouldSit && entity.getVehicle() instanceof LivingEntity) {
+            LivingEntity livingentity = (LivingEntity) entity.getVehicle();
+            f = Mth.rotLerp(partialTicks, livingentity.yBodyRotO, livingentity.yBodyRot);
+            f2 = f1 - f;
+            float f3 = Mth.wrapDegrees(f2);
+            if (f3 < -56.25F) {
+                f3 = -56.25F;
+            }
+
+            if (f3 >= 56.25F) {
+                f3 = 56.25F;
+            }
+
+            f = f1 - f3;
+            if (f3 * f3 > 2025.0F) {
+                f += f3 * 0.2F;
+            }
+
+            f2 = f1 - f;
+        }
+
+        float f6 = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
+        if (isEntityUpsideDown(entity)) {
+            f6 *= -1.0F;
+            f2 *= -1.0F;
+        }
+
+        if (entity.hasPose(Pose.SLEEPING)) {
+            Direction direction = entity.getBedOrientation();
+            if (direction != null) {
+                float f4 = entity.getEyeHeight(Pose.STANDING) - 0.1F;
+                poseStack.translate(
+                        (float) (-direction.getStepX()) * f4,
+                        0.0F,
+                        (float) (-direction.getStepZ()) * f4);
+            }
+        }
+
+        float f7 = this.getBob(entity, partialTicks);
+        this.setupRotations(entity, poseStack, f7, f, partialTicks);
+        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        this.scale(entity, poseStack, partialTicks);
+        poseStack.translate(0.0F, -1.501F, 0.0F);
+        float f8 = 0.0F;
+        float f5 = 0.0F;
+        if (!shouldSit && entity.isAlive()) {
+            f8 = entity.walkAnimation.speed(partialTicks);
+            f5 = entity.walkAnimation.position(partialTicks);
+            if (entity.isBaby()) {
+                f5 *= 3.0F;
+            }
+
+            if (f8 > 1.0F) {
+                f8 = 1.0F;
+            }
+        }
+
+        this.model.prepareMobModel(entity, f5, f8, partialTicks);
+        this.model.setupAnim(entity, f5, f8, f7, f2, f6);
+        Minecraft minecraft = Minecraft.getInstance();
+        boolean flag = this.isBodyVisible(entity);
+        boolean flag1 = !flag && !entity.isInvisibleTo(minecraft.player);
+        boolean flag2 = minecraft.shouldEntityAppearGlowing(entity);
+        RenderType rendertype = this.getRenderType(entity, flag, flag1, flag2);
+        if (rendertype != null) {
+            VertexConsumer vertexconsumer = buffer.getBuffer(rendertype);
+            int i = getOverlayCoords(entity, this.getWhiteOverlayProgress(entity, partialTicks));
+            this.model.renderToBuffer(
+                    poseStack, vertexconsumer, packedLight, i, 1.0F, 1.0F, 1.0F, flag1 ? 0.15F : 1.0F);
+        }
+
+        if (!entity.isSpectator()) {
+            for (RenderLayer<T, PlayerLikeHostileModel<T>> renderlayer : this.layers) {
+                renderlayer.render(
+                        poseStack, buffer, packedLight, entity, f5, f8, partialTicks, f7, f2, f6);
+            }
+        }
+
+        poseStack.popPose();
+        // 原版此处 super.render → EntityRenderer 名牌；这里不能 super（会回到 LivingEntityRenderer ±85）
+        var renderNameTagEvent =
+                new RenderNameTagEvent(
+                        entity,
+                        entity.getDisplayName(),
+                        this,
+                        poseStack,
+                        buffer,
+                        packedLight,
+                        partialTicks);
+        MinecraftForge.EVENT_BUS.post(renderNameTagEvent);
+        if (renderNameTagEvent.getResult() != Event.Result.DENY
+                && (renderNameTagEvent.getResult() == Event.Result.ALLOW
+                        || this.shouldShowName(entity))) {
+            this.renderNameTag(
+                    entity, renderNameTagEvent.getContent(), poseStack, buffer, packedLight);
+        }
+        MinecraftForge.EVENT_BUS.post(
+                new RenderLivingEvent.Post<T, PlayerLikeHostileModel<T>>(
+                        entity, this, partialTicks, poseStack, buffer, packedLight));
     }
 
     private void setModelProperties(T entity) {

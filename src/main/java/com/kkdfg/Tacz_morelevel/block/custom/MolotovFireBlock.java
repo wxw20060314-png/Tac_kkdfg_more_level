@@ -1,10 +1,13 @@
 package com.kkdfg.Tacz_morelevel.block.custom;
 
 import com.kkdfg.Tacz_morelevel.Config;
+import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
+import com.kkdfg.Tacz_morelevel.effect.MolotovBurnEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
@@ -23,6 +26,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class MolotovFireBlock extends Block {
     private static final int PERIOD_TICKS = 5;
+    private static final int BURN_EFFECT_PERIOD_TICKS = 20;
+    /** 燃烧 effect 时长累加上限。 */
+    private static final int BURN_EFFECT_MAX_TICKS = 1000;
     private static final int LIFETIME_TICKS = 200; // 10 seconds
     /** Horizontal faces: fraction 1/N per random tick attempt (feel of ground/wall crawl). */
     private static final int SPREAD_CHANCE_HORIZONTAL = 3;
@@ -41,12 +47,43 @@ public class MolotovFireBlock extends Block {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide) {
+        if (!(entity instanceof LivingEntity living)) {
             return;
         }
-        if (entity instanceof LivingEntity living && living.tickCount % PERIOD_TICKS == 0) {
+        if (level.isClientSide) {
+            spawnAroundParticles(level, living);
+            return;
+        }
+        if (living.tickCount % PERIOD_TICKS == 0) {
             living.hurt(level.damageSources().inFire(), Config.molotovFireDamage);
             living.setSecondsOnFire(3);
+        }
+        if (living.tickCount % BURN_EFFECT_PERIOD_TICKS == 0) {
+            var burn = ModMobEffects.MOLOTOV_BURN.get();
+            MobEffectInstance cur = living.getEffect(burn);
+            int next =
+                    Math.min(
+                            BURN_EFFECT_MAX_TICKS,
+                            (cur != null ? cur.getDuration() : 0)
+                                    + MolotovBurnEffect.APPLY_DURATION_TICKS);
+            int amp =
+                    Math.max(
+                            MolotovBurnEffect.APPLY_AMPLIFIER,
+                            cur != null ? cur.getAmplifier() : 0);
+            living.addEffect(new MobEffectInstance(burn, next, amp, false, false, true));
+        }
+    }
+
+    private static void spawnAroundParticles(Level level, LivingEntity living) {
+        if (living.tickCount % 2 != 0) {
+            return;
+        }
+        double x = living.getX() + (living.getRandom().nextDouble() - 0.5D) * living.getBbWidth();
+        double y = living.getY() + living.getRandom().nextDouble() * living.getBbHeight();
+        double z = living.getZ() + (living.getRandom().nextDouble() - 0.5D) * living.getBbWidth();
+        level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.02D, 0.0D);
+        if (living.getRandom().nextBoolean()) {
+            level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.01D, 0.0D);
         }
     }
 

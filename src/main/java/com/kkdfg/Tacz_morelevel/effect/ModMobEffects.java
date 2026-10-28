@@ -46,6 +46,10 @@ public final class ModMobEffects {
     public static final RegistryObject<MobEffect> FLASHED =
             MOB_EFFECTS.register("flashed", FlashedEffect::new);
 
+    /** 燃烧瓶燃烧：每 20 tick 5 点；无视护甲与保护附魔。 */
+    public static final RegistryObject<MobEffect> MOLOTOV_BURN =
+            MOB_EFFECTS.register("molotov_burn", MolotovBurnEffect::new);
+
     private ModMobEffects() {}
 
     public static void register(IEventBus modEventBus) {

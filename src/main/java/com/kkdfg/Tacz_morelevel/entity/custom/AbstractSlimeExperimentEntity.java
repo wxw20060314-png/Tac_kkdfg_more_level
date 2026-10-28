@@ -20,6 +20,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
@@ -55,6 +56,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -225,6 +227,7 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
             ground.setCanPassDoors(true);
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
+        this.goalSelector.addGoal(0, new SoldierFleeFireGoal(this));
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
         this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
         this.goalSelector.addGoal(1, new MobGunIdleMainhandArrangeGoal(this));
@@ -729,6 +732,9 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         }
         if (this.shouldBlockSameTreeDamage(source)) {
             return false;
+        }
+        if (source.is(DamageTypeTags.IS_FIRE)) {
+            amount *= 5.0F;
         }
         return super.hurt(source, amount);
     }

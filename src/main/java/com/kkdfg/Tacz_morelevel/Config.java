@@ -96,8 +96,8 @@ public final class Config {
         FLASHBANG_POINT_BLANK_FACTOR =
                 BUILDER.comment(
                                 "Within radius * t, targets are fully flashed (flash=1) if LOS ok;",
-                                "facing/distance falloff skipped. t default 0.2.")
-                        .defineInRange("pointBlankFactor", 0.2, 0.0, 1.0);
+                                "facing/distance falloff skipped. t default 0.07.")
+                        .defineInRange("pointBlankFactor", 0.07, 0.0, 1.0);
         BUILDER.pop();
     }
 
@@ -813,7 +813,7 @@ public final class Config {
     /** 闪光弹满闪基础秒数；对应 {@code flashbang.baseDurationSeconds}。 */
     public static double flashbangBaseDurationSeconds = 7.0;
     /** 近点满闪比例 t：距离 ≤ radius*t 时满闪；对应 {@code flashbang.pointBlankFactor}。 */
-    public static double flashbangPointBlankFactor = 0.2;
+    public static double flashbangPointBlankFactor = 0.07;
     /** NPC 对玩家伤害倍率；对应 common.toml {@code npcOutgoingDamageToPlayerScale}（0.01–100，默认 1）。 */
     public static float npcOutgoingDamageToPlayerScale = 1.0f;
     public static float bodyguardDeathItemDropChance = 1.0f;

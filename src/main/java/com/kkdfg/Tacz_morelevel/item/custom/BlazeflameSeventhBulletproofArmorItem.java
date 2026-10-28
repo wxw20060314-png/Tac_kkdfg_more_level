@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -34,7 +33,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
  *
  * <p>爆炸伤害：每件见 {@code armor.toml} {@code explosionReductionPerPiece.blazeflame}（默认
  * {@link #EXPLOSION_REDUCTION_PER_PIECE}；运行时 {@link ExplosionArmorReduction}）。
- * <p>全套抗火：胸甲 {@link #inventoryTick}。
+ * <p>全套抗火：{@link com.kkdfg.Tacz_morelevel.event.FullSetFireResistanceEvents} 查四格。
  */
 public class BlazeflameSeventhBulletproofArmorItem extends BulletproofArmor implements GeoItem {
 
@@ -92,16 +91,6 @@ public class BlazeflameSeventhBulletproofArmorItem extends BulletproofArmor impl
             }
         }
         return true;
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if (level.isClientSide() || this.getType() != Type.CHESTPLATE) {
-            return;
-        }
-        if (entity instanceof LivingEntity living) {
-            tickFullSetFireResistance(living);
-        }
     }
 
     @Override

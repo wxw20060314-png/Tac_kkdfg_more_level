@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 黑曜石盔甲：实体渲染使用 {@code textures/models/armor/obsidian_layer_1|2.png}。
- * <p>全套抗火：胸甲 {@link #inventoryTick}。
+ * <p>全套抗火：{@link com.kkdfg.Tacz_morelevel.event.FullSetFireResistanceEvents} 查四格。
  */
 public class ObsidianArmorItem extends ArmorItem {
     public ObsidianArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
@@ -36,9 +36,12 @@ public class ObsidianArmorItem extends ArmorItem {
         return Tacz_MoreLevel.MOD_ID + ":textures/models/armor/obsidian_layer_" + layer + ".png";
     }
 
-    /** 全套时每 tick 刷新抗火 II（40 tick）。 */
+    /** 全套时每 4 tick 刷新抗火 II（40 tick）。 */
     public static void tickFullSetFireResistance(LivingEntity entity) {
         if (entity.level().isClientSide()) {
+            return;
+        }
+        if (entity.level().getGameTime() % 4 != 0) {
             return;
         }
         if (!hasFullObsidianSet(entity)) {
@@ -71,16 +74,6 @@ public class ObsidianArmorItem extends ArmorItem {
             }
         }
         return true;
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if (level.isClientSide() || this.getType() != Type.CHESTPLATE) {
-            return;
-        }
-        if (entity instanceof LivingEntity living) {
-            tickFullSetFireResistance(living);
-        }
     }
 
     public boolean isCorrective(List<ItemStack> p_1, List<Item> p_2) {

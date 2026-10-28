@@ -22,6 +22,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAlertness;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
@@ -297,6 +298,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     protected abstract String skinTextureFolder();
 
     protected void registerNeutralGunCombatGoals() {
+        this.goalSelector.addGoal(0, new SoldierFleeFireGoal(this));
         this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
         this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
     }
