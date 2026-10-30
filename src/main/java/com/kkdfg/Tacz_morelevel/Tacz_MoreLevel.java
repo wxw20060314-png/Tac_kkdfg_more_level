@@ -146,6 +146,10 @@ public class Tacz_MoreLevel
                         GeoItem.registerSyncedAnimatable(
                                 (software.bernie.geckolib.core.animatable.GeoAnimatable) ro.get());
                     }
+                    for (var ro : ModItems.POLICE_ITEMS) {
+                        GeoItem.registerSyncedAnimatable(
+                                (software.bernie.geckolib.core.animatable.GeoAnimatable) ro.get());
+                    }
                     for (var ro : ModItems.SPACETIME_BULLETPROOF_ITEMS) {
                         GeoItem.registerSyncedAnimatable(
                                 (software.bernie.geckolib.core.animatable.GeoAnimatable) ro.get());
@@ -284,6 +288,7 @@ public class Tacz_MoreLevel
             event.registerEntityRenderer(ModEntities.MILITIA.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(ModEntities.MERCENARY.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(ModEntities.MYSTERIOUS_MERCHANT.get(), PlayerLikeHostileRenderer::new);
+            event.registerEntityRenderer(ModEntities.POLICE.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(ModEntities.ASSAULT_SOLDIER.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(
                     ModEntities.LURKER.get(), PlayerLikeHostileRenderer::new);

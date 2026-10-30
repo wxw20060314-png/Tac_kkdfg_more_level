@@ -209,6 +209,13 @@ public final class Config {
     public static double lurkerGunGoalSpeedModifier = 1.1D;
     public static boolean lurkerRemoveWhenFarAway = false;
 
+    /** {@code [police]}：警察（中立）；默认数值同突击兵。 */
+    public static NpcAttributeStats policeAttributes;
+    public static CombatGoalStats policeCombatGoals;
+    public static double policeMaxHealth = 20.0D;
+    public static double policeAttackDamage = 2.0D;
+    public static double policeGunGoalSpeedModifier = 1.1D;
+
     /**
      * 双手 Boss（战争机器 / 炸弹宝宝）非偏好枪普通开火；默认抄超级特种兵射击段。
      * 见 {@code bosses.toml} {@code [normalShoot]}。
@@ -601,6 +608,18 @@ public final class Config {
         lurkerAttackDamage = CombatUnitConfig.DEFAULT_SOLDIER_ATTACK_DAMAGE[assaultIndex];
         lurkerGunGoalSpeedModifier = CombatUnitConfig.DEFAULT_SOLDIER_GUN_GOAL_SPEED[assaultIndex];
         lurkerRemoveWhenFarAway = false;
+        policeAttributes =
+                CombatUnitConfig.defaultAttributeStats(
+                        CombatUnitConfig.DEFAULT_SOLDIER_MAX_HEALTH[assaultIndex],
+                        CombatUnitConfig.DEFAULT_SOLDIER_ATTACK_DAMAGE[assaultIndex],
+                        CombatUnitConfig.DEFAULT_SOLDIER_GUN_GOAL_SPEED[assaultIndex],
+                        CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[assaultIndex]);
+        policeCombatGoals =
+                CombatUnitConfig.defaultCombatGoalStats(
+                        CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[assaultIndex]);
+        policeMaxHealth = CombatUnitConfig.DEFAULT_SOLDIER_MAX_HEALTH[assaultIndex];
+        policeAttackDamage = CombatUnitConfig.DEFAULT_SOLDIER_ATTACK_DAMAGE[assaultIndex];
+        policeGunGoalSpeedModifier = CombatUnitConfig.DEFAULT_SOLDIER_GUN_GOAL_SPEED[assaultIndex];
         warMachineAttributes =
                 CombatUnitConfig.defaultAttributeStats(
                         30.0D, 2.0D, 1.0D, new double[] {0.8D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D});

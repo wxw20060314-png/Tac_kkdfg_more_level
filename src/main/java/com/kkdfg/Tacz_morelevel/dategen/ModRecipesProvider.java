@@ -605,6 +605,16 @@ public class ModRecipesProvider extends RecipeProvider implements IConditionBuil
             .define('g', Items.GUNPOWDER)
             .unlockedBy(getHasName(ModItems.SIXTH_STEEL_INGOT.get()), has(ModItems.SIXTH_STEEL_INGOT.get()))
             .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.ARMOR_REPAIR_KIT.get())
+            .pattern("xxx")
+            .pattern("ygy")
+            .pattern("zzz")
+            .define('z', ModItems.SIXTH_STEEL_INGOT.get())
+            .define('y', ModItems.OBSIDIAN_ITEM.get())
+            .define('x', ModItems.SEVENTH_STEEL_INGOT.get())
+            .define('g', Items.ANVIL)
+            .unlockedBy(getHasName(ModItems.SIXTH_STEEL_INGOT.get()), has(ModItems.SEVENTH_STEEL_INGOT.get()))
+            .save(writer);
 
         addSixthSteelCrafting(writer);
         addNeedleCrafting(writer);

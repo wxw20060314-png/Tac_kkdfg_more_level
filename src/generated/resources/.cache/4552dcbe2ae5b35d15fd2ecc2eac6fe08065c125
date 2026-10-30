@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-03T18:03:30.0198296	Item Models: tacz_morelevel
+// 1.20.1	2026-10-30T21:14:11.0838339	Item Models: tacz_morelevel
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/tacz_morelevel/models/item/annihilator_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/tacz_morelevel/models/item/assault_soldier_spawn_egg.json
 a6286e21da9357f6c0d7100bf6ff0de2d23ce538 assets/tacz_morelevel/models/item/ballistic_steel_armor_plate_advanced.json
@@ -67,6 +67,11 @@ c6b333c207cb58d1d4063153578fc6468a2c71bd assets/tacz_morelevel/models/item/obsid
 789ce0c2467611c582b0b5c63e9b37f955ced216 assets/tacz_morelevel/models/item/officer_helmet.json
 8646c734f47e54bfb0d4ae13cafd08cef2eb424f assets/tacz_morelevel/models/item/officer_leggings.json
 ff503079641e0826247929654c1727ef9b039b3b assets/tacz_morelevel/models/item/perfect_gun_upgrade_voucher.json
+aba62d464867ab1221a54de454636547d55d95d8 assets/tacz_morelevel/models/item/police_boots.json
+af22d980c721c793c90503208724ffe0622f79e0 assets/tacz_morelevel/models/item/police_chestplate.json
+a26c13d695ce95bae5aa8fdd789225432a34256c assets/tacz_morelevel/models/item/police_helmet.json
+9afd8cc6a9f97ecbbfbcfef090294213717e852c assets/tacz_morelevel/models/item/police_leggings.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/tacz_morelevel/models/item/police_spawn_egg.json
 432c5912324c025366c263eeac19a00841c99716 assets/tacz_morelevel/models/item/power_mech_bulletproof_boots.json
 fbcf95db4f89bcd7111be4d9d9cdbed15e5c5d4a assets/tacz_morelevel/models/item/power_mech_bulletproof_chestplate.json
 ac4bc21016136fe1756eec2e311f41293f35c57c assets/tacz_morelevel/models/item/power_mech_bulletproof_helmet.json

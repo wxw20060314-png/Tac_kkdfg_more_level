@@ -23,6 +23,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
+import com.kkdfg.Tacz_morelevel.integration.superbwarfare.SuperbWarfareCompat;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczGunMobHelper;
 import com.kkdfg.Tacz_morelevel.integration.tacz.TaczOrdinaryGunCatalog;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
@@ -42,6 +43,7 @@ import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -49,15 +51,18 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -722,6 +727,14 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
 
     // region —— 二命分裂 ——
 
+    /** TaCZ 动能弹伤害类型标签（与防弹事件同式）。 */
+    private static final TagKey<DamageType> TACZ_BULLETS =
+            TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("tacz:bullets"));
+    /** 枪弹（TaCZ / SBW）受伤倍率：减伤 80%。 */
+    private static final float GUN_PROJECTILE_DAMAGE_MULTIPLIER = 0.2F;
+    /** 火焰 / 爆炸受伤倍率。 */
+    private static final float FIRE_EXPLOSION_DAMAGE_MULTIPLIER = 3.0F;
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
@@ -733,10 +746,43 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
         if (this.shouldBlockSameTreeDamage(source)) {
             return false;
         }
-        if (source.is(DamageTypeTags.IS_FIRE)) {
-            amount *= 5.0F;
+        if (this.isGunProjectileDamage(source)) {
+            amount *= GUN_PROJECTILE_DAMAGE_MULTIPLIER;
+        }
+        if (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_EXPLOSION)) {
+            amount *= FIRE_EXPLOSION_DAMAGE_MULTIPLIER;
         }
         return super.hurt(source, amount);
+    }
+
+    /**
+     * TaCZ 动能弹或 Superb Warfare 伤害类型；不 import SBW 类，仅认命名空间。
+     */
+    protected boolean isGunProjectileDamage(DamageSource source) {
+        if (source.getDirectEntity() instanceof EntityKineticBullet
+                || source.getEntity() instanceof EntityKineticBullet) {
+            return true;
+        }
+        if (source.typeHolder().is(TACZ_BULLETS)) {
+            return true;
+        }
+        Optional<ResourceKey<DamageType>> key = source.typeHolder().unwrapKey();
+        if (key.isEmpty()) {
+            key =
+                    this.level()
+                            .registryAccess()
+                            .registryOrThrow(Registries.DAMAGE_TYPE)
+                            .getResourceKey(source.type());
+        }
+        return key.map(
+                        k -> {
+                            ResourceLocation id = k.location();
+                            if ("tacz".equals(id.getNamespace()) && id.getPath().startsWith("bullet")) {
+                                return true;
+                            }
+                            return SuperbWarfareCompat.MOD_ID.equals(id.getNamespace());
+                        })
+                .orElse(false);
     }
 
     /**

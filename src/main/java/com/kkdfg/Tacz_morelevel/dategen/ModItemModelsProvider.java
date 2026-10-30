@@ -50,6 +50,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         ModItems.POWER_MECH_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.MYSTERIOUS_MERCHANT_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.OFFICER_UNIFORM_ITEMS.forEach(ro -> basicItem(ro.get()));
+        ModItems.POLICE_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.JOKER_SEVENTH_HELMET_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.SPACETIME_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.SPECIAL_OPS_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));

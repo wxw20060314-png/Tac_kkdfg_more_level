@@ -19,6 +19,7 @@ import com.kkdfg.Tacz_morelevel.entity.custom.MolotovEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MercenarySoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MilitiaEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MysteriousMerchantEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.PoliceEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PunisherEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.RefugeeEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.SpecialForcesSoldierEntity;
@@ -225,6 +226,16 @@ public final class ModEntities {
                                     .sized(0.6F, 1.8F)
                                     .clientTrackingRange(10)
                                     .build(Tacz_MoreLevel.MOD_ID + ":mysterious_merchant"));
+
+    /** 警察：中立；独立 [police] / troop_guns/police；警官套；集体仇恨；趴寻路；CoverStrafe 交火。 */
+    public static final RegistryObject<EntityType<PoliceEntity>> POLICE =
+            ENTITY_TYPES.register(
+                    "police",
+                    () ->
+                            EntityType.Builder.of(PoliceEntity::new, MobCategory.CREATURE)
+                                    .sized(0.6F, 1.8F)
+                                    .clientTrackingRange(10)
+                                    .build(Tacz_MoreLevel.MOD_ID + ":police"));
 
     /** 中立炸弹小车：有主追仇恨目标自爆；无主待机。碰撞约车体大小。 */
     public static final RegistryObject<EntityType<BombCartEntity>> BOMB_CART =

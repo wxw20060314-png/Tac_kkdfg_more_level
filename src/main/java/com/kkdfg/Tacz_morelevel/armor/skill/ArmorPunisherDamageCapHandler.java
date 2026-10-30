@@ -1,8 +1,10 @@
 package com.kkdfg.Tacz_morelevel.armor.skill;
 
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
+import com.kkdfg.Tacz_morelevel.item.custom.PoliceArmorItem;
 import com.kkdfg.Tacz_morelevel.item.custom.PunisherBulletproofArmorItem;
 import java.util.Optional;
+import java.util.function.Predicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +20,14 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-/** 判罚者传说技能：限制伤害。 */
+/**
+ * 限制伤害：全套时子弹实伤封顶，溢出部分按倍率分摊磨损各件盔甲。
+ *
+ * <ul>
+ *   <li>判罚者套：{@link PunisherBulletproofArmorItem#BULLET_DAMAGE_CAP}
+ *   <li>警官套：{@link PoliceArmorItem#BULLET_DAMAGE_CAP}
+ * </ul>
+ */
 @Mod.EventBusSubscriber(modid = Tacz_MoreLevel.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ArmorPunisherDamageCapHandler {
 
@@ -26,6 +35,12 @@ public final class ArmorPunisherDamageCapHandler {
             TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("tacz:bullets"));
 
     private static final String SUPERB_WARFARE_MOD_ID = "superbwarfare";
+
+    /**
+     * 溢出耐久倍率：超出 cap 的伤害量 × 本系数后均摊到各甲，再 {@code hurtAndBreak}。
+     * 判罚者 / 警官共用。
+     */
+    private static final float EXCESS_DURABILITY_FACTOR = 5.0F;
 
     private ArmorPunisherDamageCapHandler() {}
 
@@ -38,21 +53,32 @@ public final class ArmorPunisherDamageCapHandler {
         if (target.level().isClientSide()) {
             return;
         }
-        if (!PunisherBulletproofArmorItem.hasFullSet(target)) {
-            return;
-        }
         if (!isBulletDamage(event.getSource(), target)) {
             return;
         }
+
+        final float cap;
+        final Predicate<ItemStack> pieceMatch;
+        final int pieces;
+        if (PunisherBulletproofArmorItem.hasFullSet(target)) {
+            cap = PunisherBulletproofArmorItem.BULLET_DAMAGE_CAP;
+            pieceMatch = stack -> stack.getItem() instanceof PunisherBulletproofArmorItem;
+            pieces = PunisherBulletproofArmorItem.countEquippedPieces(target);
+        } else if (PoliceArmorItem.hasFullSet(target)) {
+            cap = PoliceArmorItem.BULLET_DAMAGE_CAP;
+            pieceMatch = stack -> stack.getItem() instanceof PoliceArmorItem;
+            pieces = PoliceArmorItem.countEquippedPieces(target);
+        } else {
+            return;
+        }
+
         float amount = event.getAmount();
-        float cap = PunisherBulletproofArmorItem.BULLET_DAMAGE_CAP;
         if (amount <= cap) {
             return;
         }
-        float excess = 5 * (amount - cap);
+        float excess = EXCESS_DURABILITY_FACTOR * (amount - cap);
         event.setAmount(cap);
 
-        int pieces = PunisherBulletproofArmorItem.countEquippedPieces(target);
         if (pieces <= 0) {
             return;
         }
@@ -65,7 +91,7 @@ public final class ArmorPunisherDamageCapHandler {
                 continue;
             }
             ItemStack stack = target.getItemBySlot(slot);
-            if (!(stack.getItem() instanceof PunisherBulletproofArmorItem)) {
+            if (!pieceMatch.test(stack)) {
                 continue;
             }
             stack.hurtAndBreak(perPiece, target, living -> living.broadcastBreakEvent(slot));

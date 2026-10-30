@@ -113,6 +113,7 @@ public final class RefugeeEntity extends AbstractPlayerLikeSoldierEntity {
                 g.crawlRandomDenominator, g.crawlExitRandomDenominator, g.crawlMaxHealthExclusive,
                 g.crawlMinPlanarDistance, g.crawlMinHeightToDistanceRatio, g.crawlEnabled));
         this.goalSelector.addGoal(2, new MobRandomJumpGoal(this, g.jumpChance, g.jumpEnabled, g.jumpMaxDistance));
+        this.goalSelector.addGoal(4, new SoldierAvoidPoliceGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.85D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));

@@ -17,6 +17,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistance
 import com.kkdfg.Tacz_morelevel.entity.ai.MobTaczCombatCrawlGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MysteriousMerchantLookAtTradingPlayerGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MysteriousMerchantTradeWithPlayerGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidPoliceGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.integration.tacz.MysteriousMerchantGunCatalog;
@@ -123,6 +124,7 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        this.goalSelector.addGoal(4, new SoldierAvoidPoliceGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, Config.mysteriousMerchantWanderStrollSpeed));
         Config.CombatGoalStats g = Config.mysteriousMerchantCombatGoals;

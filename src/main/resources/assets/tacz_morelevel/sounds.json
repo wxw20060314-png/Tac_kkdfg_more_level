@@ -2006,5 +2006,85 @@
     "sounds": [
       "tacz_morelevel:medicine/injection_01"
     ]
+  },
+  "police_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.police_idle",
+    "sounds": ["tacz_morelevel:police/police_idle_1"]
+  },
+  "police_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.police_idle",
+    "sounds": ["tacz_morelevel:police/police_idle_2"]
+  },
+  "police_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.police_idle",
+    "sounds": ["tacz_morelevel:police/police_idle_3"]
+  },
+  "police_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.police_idle",
+    "sounds": ["tacz_morelevel:police/police_idle_4"]
+  },
+  "police_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.police_idle",
+    "sounds": ["tacz_morelevel:police/police_idle_5"]
+  },
+  "police_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.police_combat_idle",
+    "sounds": ["tacz_morelevel:police/police_combat_idle_1"]
+  },
+  "police_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.police_combat_idle",
+    "sounds": ["tacz_morelevel:police/police_combat_idle_2"]
+  },
+  "police_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.police_combat_idle",
+    "sounds": ["tacz_morelevel:police/police_combat_idle_3"]
+  },
+  "police_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.police_combat_idle",
+    "sounds": ["tacz_morelevel:police/police_combat_idle_4"]
+  },
+  "police_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.police_combat_idle",
+    "sounds": ["tacz_morelevel:police/police_combat_idle_5"]
+  },
+  "police_target_1": {
+    "subtitles": "sounds.tacz_morelevel.police_target",
+    "sounds": ["tacz_morelevel:police/police_target_1"]
+  },
+  "police_target_2": {
+    "subtitles": "sounds.tacz_morelevel.police_target",
+    "sounds": ["tacz_morelevel:police/police_target_2"]
+  },
+  "police_target_3": {
+    "subtitles": "sounds.tacz_morelevel.police_target",
+    "sounds": ["tacz_morelevel:police/police_target_3"]
+  },
+  "police_target_4": {
+    "subtitles": "sounds.tacz_morelevel.police_target",
+    "sounds": ["tacz_morelevel:police/police_target_4"]
+  },
+  "police_target_5": {
+    "subtitles": "sounds.tacz_morelevel.police_target",
+    "sounds": ["tacz_morelevel:police/police_target_5"]
+  },
+  "police_death_1": {
+    "subtitles": "sounds.tacz_morelevel.police_death",
+    "sounds": ["tacz_morelevel:police/police_death_1"]
+  },
+  "police_death_2": {
+    "subtitles": "sounds.tacz_morelevel.police_death",
+    "sounds": ["tacz_morelevel:police/police_death_2"]
+  },
+  "police_death_3": {
+    "subtitles": "sounds.tacz_morelevel.police_death",
+    "sounds": ["tacz_morelevel:police/police_death_3"]
+  },
+  "police_death_4": {
+    "subtitles": "sounds.tacz_morelevel.police_death",
+    "sounds": ["tacz_morelevel:police/police_death_4"]
+  },
+  "police_death_5": {
+    "subtitles": "sounds.tacz_morelevel.police_death",
+    "sounds": ["tacz_morelevel:police/police_death_5"]
   }
 }

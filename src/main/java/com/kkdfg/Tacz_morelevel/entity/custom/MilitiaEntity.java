@@ -87,6 +87,7 @@ public final class MilitiaEntity extends AbstractPlayerLikeSoldierEntity {
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        this.goalSelector.addGoal(4, new SoldierAvoidPoliceGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.9D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "g": {
+      "item": "minecraft:anvil"
+    },
+    "x": {
+      "item": "tacz_morelevel:seventh_steel_ingot"
+    },
+    "y": {
+      "item": "tacz_morelevel:obsidian_item"
+    },
+    "z": {
+      "item": "tacz_morelevel:sixth_steel_ingot"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "ygy",
+    "zzz"
+  ],
+  "result": {
+    "item": "tacz_morelevel:armor_repair_kit"
+  },
+  "show_notification": true
+}

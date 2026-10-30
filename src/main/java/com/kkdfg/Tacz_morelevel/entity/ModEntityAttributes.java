@@ -15,6 +15,7 @@ import com.kkdfg.Tacz_morelevel.entity.custom.LurkerEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MercenarySoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MysteriousMerchantEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MilitiaEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.PoliceEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PunisherEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.RefugeeEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.SpecialForcesSoldierEntity;
@@ -40,6 +41,7 @@ public final class ModEntityAttributes {
         event.put(ModEntities.REFUGEE.get(), RefugeeEntity.createAttributes().build());
         event.put(ModEntities.MERCENARY.get(), MercenarySoldierEntity.createAttributes().build());
         event.put(ModEntities.MYSTERIOUS_MERCHANT.get(), MysteriousMerchantEntity.createAttributes().build());
+        event.put(ModEntities.POLICE.get(), PoliceEntity.createAttributes().build());
         event.put(ModEntities.ASSAULT_SOLDIER.get(), AssaultSoldierEntity.createAttributes().build());
         event.put(
                 ModEntities.LURKER.get(),

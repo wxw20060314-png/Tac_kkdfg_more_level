@@ -92,6 +92,7 @@ public final class AssaultSoldierEntity extends AbstractPlayerLikeSoldierEntity 
                         this,
                         (float) coverRange.findCoverNearDistance,
                         (float) coverRange.findCoverFarDistance));
+        this.goalSelector.addGoal(4, new SoldierAvoidPoliceGoal(this));
         this.goalSelector.addGoal(4, new MobInvestigateGunSoundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.95D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 9.5F));

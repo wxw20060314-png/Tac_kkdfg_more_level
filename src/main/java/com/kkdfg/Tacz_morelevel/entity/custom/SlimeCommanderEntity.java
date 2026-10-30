@@ -260,9 +260,6 @@ public final class SlimeCommanderEntity extends AbstractSlimeExperimentEntity {
         if (!this.hasEffect(MobEffects.DOLPHINS_GRACE)) {
             this.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 999999, 4, false, false));
         }
-        if (!this.hasEffect(MobEffects.DAMAGE_RESISTANCE)) {
-            this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 999999, 2, false, false));
-        }
         if (!this.level().isClientSide()) {
             this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
         }

@@ -1,4 +1,5 @@
-// 1.20.1	2026-10-05T00:59:25.6890117	Recipes
+// 1.20.1	2026-10-31T00:46:46.8339672	Recipes
+e29e56941875b37cdfced0926d33616f52620770 data/tacz_morelevel/advancements/recipes/combat/armor_repair_kit.json
 73e2ade9c9b4c13197ebe1a85ad11daf334376ff data/tacz_morelevel/advancements/recipes/combat/ballistic_steel_armor_plate_junior.json
 35acfeb997be0301c4cf7811f431486e20ee4cbe data/tacz_morelevel/advancements/recipes/combat/ballistic_steel_armor_plate_medium.json
 30ed6901d625c5a9eef7564ec3cbb96639d99cd4 data/tacz_morelevel/advancements/recipes/combat/blast_steel_armor_plate_junior.json
@@ -98,6 +99,7 @@ bfd1cd8456c4d7193c83e713b0f88e65eae2f8fe data/tacz_morelevel/advancements/recipe
 2496354ea0b05e618f35ff1675f24439fcfa3b20 data/tacz_morelevel/advancements/recipes/tools/obsidian_item.json
 7b45a78576cbe50e3ecbe1b3fa1373aabd11c1a3 data/tacz_morelevel/advancements/recipes/tools/obsidian_pickaxe.json
 32fe9e60fd63851a51d46d00168c69d8ea42edb0 data/tacz_morelevel/advancements/recipes/tools/obsidian_shovel.json
+2f0f66dc58c6993f7b0550a6f701e75185b2580a data/tacz_morelevel/recipes/armor_repair_kit.json
 153010413adb9d5ce7f69100026bcce1a2c0081b data/tacz_morelevel/recipes/ballistic_steel_armor_plate_junior.json
 af6e79cfe6c0fbffdb46240aefc26c4ac56bb02e data/tacz_morelevel/recipes/ballistic_steel_armor_plate_medium.json
 dbece9979910f6d816d0f85a649d8e7a0ae851be data/tacz_morelevel/recipes/black_market_contact.json

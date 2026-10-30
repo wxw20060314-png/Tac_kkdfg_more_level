@@ -119,6 +119,14 @@ public final class ModItems {
                                     0x6B5B95,
                                     new Item.Properties()));
 
+    /** 警察：浅蓝刷怪蛋。 */
+    public static final RegistryObject<Item> POLICE_SPAWN_EGG =
+            ITEMS.register(
+                    "police_spawn_egg",
+                    () ->
+                            new ForgeSpawnEggItem(
+                                    ModEntities.POLICE, 0x3A5F8A, 0xF5D76E, new Item.Properties()));
+
     /** 战争机器：金色刷怪蛋。 */
     public static final RegistryObject<Item> WAR_MACHINE_SPAWN_EGG =
             ITEMS.register(
@@ -523,7 +531,8 @@ public final class ModItems {
                     STANDARD_BODYGUARD_SPAWN_EGG,
                     ELITE_BODYGUARD_SPAWN_EGG,
                     DEMON_LORD_BODYGUARD_SPAWN_EGG,
-                    MYSTERIOUS_MERCHANT_SPAWN_EGG);
+                    MYSTERIOUS_MERCHANT_SPAWN_EGG,
+                    POLICE_SPAWN_EGG);
 
     /** 美女护航联络器（粉色，k=0）。 */
     public static final RegistryObject<Item> BEAUTY_BODYGUARD_CONTACT =
@@ -574,6 +583,24 @@ public final class ModItems {
             registerTierArmor("second_bulletproof_leggings", BulletproofArmorTier.SECOND, ArmorItem.Type.LEGGINGS);
     public static final RegistryObject<Item> SECOND_BULLETPROOF_BOOTS =
             registerTierArmor("second_bulletproof_boots", BulletproofArmorTier.SECOND, ArmorItem.Type.BOOTS);
+
+    /** 警官套：数值同二级；Gecko {@code geo/armor/police.geo.json}；背包贴图 {@code textures/item/police_<部位>.png}。 */
+    public static final RegistryObject<Item> POLICE_HELMET =
+            ITEMS.register(
+                    "police_helmet",
+                    () -> new PoliceArmorItem(ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> POLICE_CHESTPLATE =
+            ITEMS.register(
+                    "police_chestplate",
+                    () -> new PoliceArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> POLICE_LEGGINGS =
+            ITEMS.register(
+                    "police_leggings",
+                    () -> new PoliceArmorItem(ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> POLICE_BOOTS =
+            ITEMS.register(
+                    "police_boots",
+                    () -> new PoliceArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> THIRD_BULLETPROOF_HELMET =
             registerTierArmor("third_bulletproof_helmet", BulletproofArmorTier.THIRD, ArmorItem.Type.HELMET);
@@ -1289,6 +1316,10 @@ public final class ModItems {
     /** 军官制服四件：背包图标 {@code textures/item/officer_<部位>.png}；穿戴贴图 {@code textures/item/armor/officer_uniform.png}。 */
     public static final List<RegistryObject<Item>> OFFICER_UNIFORM_ITEMS =
             List.of(OFFICER_HELMET, OFFICER_CHESTPLATE, OFFICER_LEGGINGS, OFFICER_BOOTS);
+
+    /** 警官套四件：二级数值；穿戴贴图 {@code textures/item/armor/police.png}；背包 {@code textures/item/police_<部位>.png}。 */
+    public static final List<RegistryObject<Item>> POLICE_ITEMS =
+            List.of(POLICE_HELMET, POLICE_CHESTPLATE, POLICE_LEGGINGS, POLICE_BOOTS);
 
     /** 隐身斗篷四件：背包图标 {@code textures/item/stealth_*.png}；穿戴贴图 {@code textures/item/armor/stealth_cloak.png}。 */
     public static final List<RegistryObject<Item>> STEALTH_CLOAK_ITEMS =

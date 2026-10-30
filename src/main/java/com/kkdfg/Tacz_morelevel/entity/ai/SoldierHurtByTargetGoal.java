@@ -1,7 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -23,6 +22,9 @@ public class SoldierHurtByTargetGoal extends TargetGoal {
     private final Class<?>[] toIgnoreDamage;
     @Nullable
     private Class<?>[] toIgnoreAlert;
+    /** 额外招呼的友军类型（与同类一并喊人）；默认空。 */
+    @SuppressWarnings("unchecked")
+    private Class<? extends Mob>[] alertAllyTypes = new Class[0];
 
     public SoldierHurtByTargetGoal(PathfinderMob pMob, Class<?>... pToIgnoreDamage) {
         super(pMob, true);
@@ -68,6 +70,16 @@ public class SoldierHurtByTargetGoal extends TargetGoal {
     }
 
     /**
+     * 在同类集体仇恨之外，再招呼这些类型（如警察 ↔ 判罚者）。会顺带打开 {@link #alertSameType}。
+     */
+    @SafeVarargs
+    public final SoldierHurtByTargetGoal setAlertAllyTypes(Class<? extends Mob>... allyTypes) {
+        this.alertSameType = true;
+        this.alertAllyTypes = allyTypes != null ? allyTypes : new Class[0];
+        return this;
+    }
+
+    /**
      * Execute a one shot task or start executing a continuous task
      */
     public void start() {
@@ -85,39 +97,48 @@ public class SoldierHurtByTargetGoal extends TargetGoal {
     protected void alertOthers() {
         double d0 = this.followDistance;
         AABB aabb = AABB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, ALERT_RANGE_Y, d0);
-        List<? extends Mob> list = this.mob.level().getEntitiesOfClass(this.mob.getClass(), aabb, EntitySelector.NO_SPECTATORS);
-        Iterator iterator = list.iterator();
-
-        while (true) {
-            Mob mob;
-            while (true) {
-                if (!iterator.hasNext()) {
-                    return;
-                }
-
-                mob = (Mob) iterator.next();
-                if (this.mob != mob && mob.getTarget() == null && (!(this.mob instanceof TamableAnimal) || ((TamableAnimal) this.mob).getOwner() == ((TamableAnimal) mob).getOwner()) && !mob.isAlliedTo(this.mob.getLastHurtByMob())) {
-                    if (this.toIgnoreAlert == null) {
-                        break;
-                    }
-
-                    boolean flag = false;
-
-                    for (Class<?> oclass : this.toIgnoreAlert) {
-                        if (mob.getClass() == oclass) {
-                            flag = true;
-                            break;
-                        }
-                    }
-
-                    if (!flag) {
-                        break;
-                    }
-                }
+        this.alertClass(this.mob.getClass(), aabb);
+        for (Class<? extends Mob> ally : this.alertAllyTypes) {
+            if (ally != null && ally != this.mob.getClass()) {
+                this.alertClass(ally, aabb);
             }
-
-            this.alertOther(mob, this.mob.getLastHurtByMob());
         }
+    }
+
+    private void alertClass(Class<? extends Mob> type, AABB aabb) {
+        List<? extends Mob> list =
+                this.mob.level().getEntitiesOfClass(type, aabb, EntitySelector.NO_SPECTATORS);
+        LivingEntity revenge = this.mob.getLastHurtByMob();
+        for (Mob other : list) {
+            if (!this.shouldAlert(other, revenge)) {
+                continue;
+            }
+            this.alertOther(other, revenge);
+        }
+    }
+
+    private boolean shouldAlert(Mob other, @Nullable LivingEntity revenge) {
+        if (this.mob == other || other.getTarget() != null) {
+            return false;
+        }
+        if (this.mob instanceof TamableAnimal selfTame) {
+            if (!(other instanceof TamableAnimal otherTame)
+                    || selfTame.getOwner() != otherTame.getOwner()) {
+                return false;
+            }
+        }
+        if (revenge != null && other.isAlliedTo(revenge)) {
+            return false;
+        }
+        if (this.toIgnoreAlert == null) {
+            return true;
+        }
+        for (Class<?> oclass : this.toIgnoreAlert) {
+            if (other.getClass() == oclass) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected void alertOther(Mob pMob, LivingEntity pTarget) {

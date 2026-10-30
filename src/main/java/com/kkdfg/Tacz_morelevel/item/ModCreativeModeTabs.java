@@ -76,6 +76,7 @@ public final class ModCreativeModeTabs {
                                                 ModItems.MYSTERIOUS_MERCHANT_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.SPECIAL_OPS_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.OFFICER_UNIFORM_ITEMS.forEach(ro -> output.accept(ro.get()));
+                                                ModItems.POLICE_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.STEALTH_CLOAK_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.STEALTH_SEVENTH_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.JOKER_SEVENTH_HELMET_ITEMS.forEach(ro -> output.accept(ro.get()));

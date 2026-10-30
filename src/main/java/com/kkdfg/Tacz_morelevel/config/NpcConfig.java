@@ -422,6 +422,7 @@ public final class NpcConfig {
     static final MysteriousMerchantConfigEntry MYSTERIOUS_MERCHANT = defineMysteriousMerchant();
     static final CombatUnitConfig.SpecEntry MARSHAL_GUARD = defineMarshalGuard();
     static final CombatUnitConfig.SpecEntry LURKER = defineLurker();
+    static final CombatUnitConfig.SpecEntry POLICE = definePolice();
 
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -536,6 +537,21 @@ public final class NpcConfig {
                 CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[assaultIndex],
                 CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[assaultIndex],
                 0,
+                null);
+    }
+
+    private static CombatUnitConfig.SpecEntry definePolice() {
+        int assaultIndex = CombatUnitConfig.ASSAULT_NPC_DEFAULT_INDEX;
+        return CombatUnitConfig.define(
+                BUILDER,
+                "police",
+                "Police neutral NPC: combat defaults match assault; fixed police armor; assault gun pool; alert others on hurt.",
+                CombatUnitConfig.DEFAULT_SOLDIER_MAX_HEALTH[assaultIndex],
+                CombatUnitConfig.DEFAULT_SOLDIER_ATTACK_DAMAGE[assaultIndex],
+                CombatUnitConfig.DEFAULT_SOLDIER_GUN_GOAL_SPEED[assaultIndex],
+                CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[assaultIndex],
+                CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[assaultIndex],
+                null,
                 null);
     }
 
@@ -673,6 +689,16 @@ public final class NpcConfig {
         if (lurker.removeWhenFarAway() != null) {
             Config.lurkerRemoveWhenFarAway = lurker.removeWhenFarAway().get() != 0;
         }
+
+        CombatUnitConfig.SpecEntry police = POLICE;
+        Config.policeAttackDamage = police.attackDamage().get();
+        CombatUnitConfig.copyIntoAttributeStats(police, Config.policeAttributes);
+        Config.applyNpcGunMeleeFracScale(Config.policeAttributes);
+        applyAttributeScales(Config.policeAttributes);
+        Config.policeMaxHealth = Config.policeAttributes.maxHealth;
+        Config.policeGunGoalSpeedModifier = Config.policeAttributes.gunGoalSpeedModifier;
+        CombatUnitConfig.copyIntoCombatGoalStats(police.combatGoals(), Config.policeCombatGoals);
+        applyCombatGoalScales(Config.policeCombatGoals);
     }
 
     private static void applyAttributeScales(Config.NpcAttributeStats stats) {

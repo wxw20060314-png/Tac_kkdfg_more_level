@@ -149,6 +149,10 @@ public final class ModGeoItemClientExtensions {
         registerGeoArmorRenderer(consumer, SpecialOpsBulletproofArmorRenderer::new);
     }
 
+    public static void registerPoliceArmor(Consumer<IClientItemExtensions> consumer) {
+        registerGeoArmorRenderer(consumer, PoliceArmorRenderer::new);
+    }
+
     public static void registerShockwaveBulletproofArmor(Consumer<IClientItemExtensions> consumer) {
         registerGeoArmorRenderer(consumer, ShockwaveBulletproofArmorRenderer::new);
     }

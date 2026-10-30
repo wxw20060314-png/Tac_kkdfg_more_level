@@ -16,7 +16,7 @@ import com.kkdfg.Tacz_morelevel.entity.SoldierTaczCrawlState;
 import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSightHolder;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunCombatMainhandArrangeGoal;
-import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleMainhandArrangeGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.MobGunIdleOffhandArrangeGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunPlayerLikeAimHelper;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeBodyRotationControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAlertness;
@@ -76,6 +76,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -175,7 +176,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     protected AbstractNeutralGunNpcEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.lookControl = new SoldierPlayerLikeLookControl(this);
-        this.moveControl = new SoldierMoveControl(this);
+        this.moveControl = new SoldierMoveControl(this, this.allowsCrawlPathfinding());
         this.applyEquipmentDropChances();
         if (this.getNavigation() instanceof GroundPathNavigation ground) {
             ground.setCanOpenDoors(true);
@@ -183,14 +184,22 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
+        // 拔枪/收枪对齐敌对枪套类：有目标立刻整理主手；无目标满 noTargetWeaponArrangeTtl 再收副手。
+        // 勿在 setTarget 里立刻 draw/holster（会绕过冷却）。
         this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
-        this.goalSelector.addGoal(1, new MobGunIdleMainhandArrangeGoal(this));
+        // 闲置收枪到副手；勿挂士兵式 IdleMainhandArrange（会把枪拎回主手）。
+        this.goalSelector.addGoal(1, new MobGunIdleOffhandArrangeGoal(this));
         this.resetJumpTierToDefault();
+    }
+
+    /** 趴寻路白名单；仅返回常量，避免构造期读未初始化字段。 */
+    protected boolean allowsCrawlPathfinding() {
+        return false;
     }
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        return new SoldierGroundPathNavigation(this, level);
+        return new SoldierGroundPathNavigation(this, level, this.allowsCrawlPathfinding());
     }
 
     @Override
@@ -335,12 +344,17 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         this.entityData.define(DATA_TACZ_CRAWLING, false);
     }
 
+    /** 皮肤套数；子类可缩至自有 skin_0..N-1。 */
+    protected int skinVariantCount() {
+        return SOLDIER_SKIN_COUNT;
+    }
+
     public int getSoldierSkinIndex() {
-        return Mth.clamp(this.entityData.get(DATA_SKIN_INDEX), 0, SOLDIER_SKIN_COUNT - 1);
+        return Mth.clamp(this.entityData.get(DATA_SKIN_INDEX), 0, this.skinVariantCount() - 1);
     }
 
     protected void setSoldierSkinIndex(int index) {
-        this.entityData.set(DATA_SKIN_INDEX, Mth.clamp(index, 0, SOLDIER_SKIN_COUNT - 1));
+        this.entityData.set(DATA_SKIN_INDEX, Mth.clamp(index, 0, this.skinVariantCount() - 1));
     }
 
     @Override
@@ -419,31 +433,6 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
             SoldierTaczCrawlHelper.maintainCrawlFromSync(this);
         }
         SoldierTaczCrawlHelper.applyCrawlPose(this);
-    }
-
-    @Override
-    public void setTarget(@Nullable LivingEntity target) {
-        LivingEntity previous = this.getTarget();
-        super.setTarget(target);
-        if (this.level().isClientSide()) {
-            return;
-        }
-        if (target != null && target.isAlive() && previous != target) {
-            this.enterCombatStance();
-        } else if (target == null && previous != null) {
-            this.enterPeacefulStance();
-        }
-    }
-
-    protected void enterCombatStance() {
-        this.drawHolsteredGun();
-        this.reassessCombatGoals();
-    }
-
-    protected void enterPeacefulStance() {
-        this.setAggressive(false);
-        this.holsterGun();
-        this.reassessCombatGoals();
     }
 
     public void equipHolsteredGun(ResourceLocation gunDataId) {
@@ -582,7 +571,11 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         op.aim(false);
         op.cancelReload();
         this.setAggressive(false);
-        this.reassessCombatGoals();
+        if (IGun.mainHandHoldGun(this)) {
+            this.holsterGun();
+        } else {
+            this.reassessCombatGoals();
+        }
     }
 
     @Override
@@ -819,6 +812,31 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         this.investigateGunSoundUntilTick = this.tickCount + GUN_SOUND_MEMORY_TICKS;
     }
 
+    /**
+     * 将 {@code soundOrigin} 球半径内的中立枪械 NPC 引向该点；{@code shooter} 自身不计。
+     * 范围 = {@link #GUN_SOUND_HEAR_RANGE_BLOCKS}。
+     */
+    public static void alertNeutralsInRangeToGunshot(
+            Level level, Vec3 soundOrigin, @Nullable LivingEntity shooter) {
+        if (level.isClientSide()) {
+            return;
+        }
+        double r = GUN_SOUND_HEAR_RANGE_BLOCKS;
+        double rsq = r * r;
+        AABB box =
+                new AABB(
+                        soundOrigin.x - r,
+                        soundOrigin.y - r,
+                        soundOrigin.z - r,
+                        soundOrigin.x + r,
+                        soundOrigin.y + r,
+                        soundOrigin.z + r);
+        for (AbstractNeutralGunNpcEntity mob :
+                level.getEntitiesOfClass(AbstractNeutralGunNpcEntity.class, box, e -> e != shooter)) {
+            mob.notifyGunFireHeard(soundOrigin, rsq);
+        }
+    }
+
     @Override
     public boolean hasPendingGunSoundInvestigation() {
         return this.investigateGunSoundPos != null && this.tickCount < this.investigateGunSoundUntilTick;
@@ -839,7 +857,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     }
 
     protected void initializeNeutralGunLoadout(net.minecraft.util.RandomSource random) {
-        this.setSoldierSkinIndex(random.nextInt(SOLDIER_SKIN_COUNT));
+        this.setSoldierSkinIndex(random.nextInt(this.skinVariantCount()));
         this.equipHolsteredGun(this.pickSpawnGunId(random));
     }
 
@@ -858,7 +876,8 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         super.readAdditionalSaveData(compound);
         this.setLeftHanded(false);
         if (compound.contains(TAG_SKIN_INDEX, Tag.TAG_INT)) {
-            this.setSoldierSkinIndex(Mth.clamp(compound.getInt(TAG_SKIN_INDEX), 0, SOLDIER_SKIN_COUNT - 1));
+            this.setSoldierSkinIndex(
+                    Mth.clamp(compound.getInt(TAG_SKIN_INDEX), 0, this.skinVariantCount() - 1));
         }
         if (compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
             this.preferredMainGunDataId =

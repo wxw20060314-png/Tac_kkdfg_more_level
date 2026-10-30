@@ -754,6 +754,33 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SOUND_MYSTERIOUS_MERCHANT_TRADE_FAIL_6 =
             registerMysteriousMerchant("mysterious_merchant_trade_fail_6");
 
+    /** 警察闲置 / 战斗闲置 / 发现目标 / 死亡 */
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_IDLE_1 = registerPolice("police_idle_1");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_IDLE_2 = registerPolice("police_idle_2");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_IDLE_3 = registerPolice("police_idle_3");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_IDLE_4 = registerPolice("police_idle_4");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_IDLE_5 = registerPolice("police_idle_5");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_COMBAT_IDLE_1 =
+            registerPolice("police_combat_idle_1");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_COMBAT_IDLE_2 =
+            registerPolice("police_combat_idle_2");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_COMBAT_IDLE_3 =
+            registerPolice("police_combat_idle_3");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_COMBAT_IDLE_4 =
+            registerPolice("police_combat_idle_4");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_COMBAT_IDLE_5 =
+            registerPolice("police_combat_idle_5");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_TARGET_1 = registerPolice("police_target_1");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_TARGET_2 = registerPolice("police_target_2");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_TARGET_3 = registerPolice("police_target_3");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_TARGET_4 = registerPolice("police_target_4");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_TARGET_5 = registerPolice("police_target_5");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_DEATH_1 = registerPolice("police_death_1");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_DEATH_2 = registerPolice("police_death_2");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_DEATH_3 = registerPolice("police_death_3");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_DEATH_4 = registerPolice("police_death_4");
+    public static final RegistryObject<SoundEvent> SOUND_POLICE_DEATH_5 = registerPolice("police_death_5");
+
     /** 护航存储器：存入 / 放出 */
     public static final RegistryObject<SoundEvent> SOUND_BODYGUARD_STORAGE_XIU =
             registerSoldier("bodyguard_storage_xiu");
@@ -871,6 +898,14 @@ public class ModSounds {
     }
 
     private static RegistryObject<SoundEvent> registerMysteriousMerchant(String id) {
+        return SOUNDS_EVENTS.register(
+                id,
+                () ->
+                        SoundEvent.createVariableRangeEvent(
+                                ResourceLocation.fromNamespaceAndPath(Tacz_MoreLevel.MOD_ID, id)));
+    }
+
+    private static RegistryObject<SoundEvent> registerPolice(String id) {
         return SOUNDS_EVENTS.register(
                 id,
                 () ->

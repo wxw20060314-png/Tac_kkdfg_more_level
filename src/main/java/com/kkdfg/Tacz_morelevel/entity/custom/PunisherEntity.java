@@ -243,7 +243,10 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
         this.goalSelector.addGoal(1, new SoldierAvoidThrowableGoal<>(this));
         this.goalSelector.addGoal(1, new SoldierAvoidFlashbangLookGoal<>(this));
         this.targetSelector.addGoal(
-                1, new SoldierHurtByTargetGoal(this, PunisherEntity.class).setAlertOthers());
+                1,
+                new SoldierHurtByTargetGoal(this, PunisherEntity.class, PoliceEntity.class)
+                        .setAlertOthers()
+                        .setAlertAllyTypes(PoliceEntity.class));
 
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
