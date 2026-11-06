@@ -91,6 +91,23 @@ public final class ArmorConfig {
 
     private ArmorConfig() {}
 
+    /** Cloth：对应档位的整套防弹减伤，单件取四分之一。 */
+    public static ForgeConfigSpec.DoubleValue totalBulletproof(int level) {
+        return tierEntry(level).totalBulletproof();
+    }
+
+    /** Cloth：对应档位的整套穿甲减免，单件取四分之一。 */
+    public static ForgeConfigSpec.DoubleValue totalPenReduction(int level) {
+        return tierEntry(level).totalPenReduction();
+    }
+
+    private static BulletproofTierConfigEntry tierEntry(int level) {
+        if (level < 1 || level > BULLETPROOF_TIER_COUNT) {
+            throw new IllegalArgumentException("Bulletproof tier must be 1-" + BULLETPROOF_TIER_COUNT);
+        }
+        return BULLETPROOF_ARMOR_TIERS[level - 1];
+    }
+
     private static BulletproofTierConfigEntry[] defineBulletproofArmorTiers() {
         BUILDER.push("bulletproofArmorTiers");
         BUILDER.comment(

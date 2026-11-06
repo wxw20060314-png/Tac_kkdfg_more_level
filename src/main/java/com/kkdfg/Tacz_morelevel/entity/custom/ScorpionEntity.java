@@ -222,23 +222,13 @@ public final class ScorpionEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        this.setLeftHanded(false);
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.setPreferredMainGunDataId(HOLSTER_GUN);
-            this.applyConfiguredLivingAttributes(true);
-            this.setSoldierSkinIndex(this.random.nextInt(SCORPION_SKIN_COUNT));
-            this.equipStealthSeventhLoadout();
-            TaczGunMobHelper.tickInfiniteMobAmmo(this);
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        super.initializeSpawnEquipment(random);
+        this.setPreferredMainGunDataId(HOLSTER_GUN);
+        this.applyConfiguredLivingAttributes(true);
+        this.setSoldierSkinIndex(random.nextInt(SCORPION_SKIN_COUNT));
+        this.equipStealthSeventhLoadout();
+        TaczGunMobHelper.tickInfiniteMobAmmo(this);
     }
 
     private void equipStealthSeventhLoadout() {

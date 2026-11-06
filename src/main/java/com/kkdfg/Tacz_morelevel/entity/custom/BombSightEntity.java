@@ -203,20 +203,11 @@ public final class BombSightEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.setPreferredMainGunDataId(HOLSTER_GUN);
-            this.setSoldierSkinIndex(0);
-            this.equipShockwaveLoadout();
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        super.initializeSpawnEquipment(random);
+        this.setPreferredMainGunDataId(HOLSTER_GUN);
+        this.setSoldierSkinIndex(0);
+        this.equipShockwaveLoadout();
     }
 
     private void equipShockwaveLoadout() {

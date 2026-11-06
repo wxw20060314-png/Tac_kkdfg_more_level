@@ -38,6 +38,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         spawnEggItem(ModItems.GUARD_SPAWN_EGG.get());
         // 护航联络器：Gecko 模型在 src/main/resources/models/item/ 手写（parent builtin/entity），勿 basicItem。
         ModItems.ALL_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
+        ModItems.BULLETPROOF_HORSE_ARMOR_ITEMS.forEach(ro -> basicItem(ro.get()));
         // 爆破七级：背包图标暂用 textures/item/seventh_blast_bulletproof_<部位>.png（穿戴贴图占位）
         ModItems.SEVENTH_BLAST_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.SHOCKWAVE_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
@@ -51,6 +52,7 @@ public class ModItemModelsProvider extends ItemModelProvider {
         ModItems.MYSTERIOUS_MERCHANT_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.OFFICER_UNIFORM_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.POLICE_ITEMS.forEach(ro -> basicItem(ro.get()));
+        ModItems.DARK_COWBOY_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.JOKER_SEVENTH_HELMET_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.SPACETIME_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));
         ModItems.SPECIAL_OPS_BULLETPROOF_ITEMS.forEach(ro -> basicItem(ro.get()));

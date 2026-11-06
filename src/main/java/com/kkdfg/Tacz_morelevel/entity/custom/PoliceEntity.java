@@ -249,20 +249,10 @@ public final class PoliceEntity extends AbstractNeutralGunNpcEntity implements M
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            ConfiguredLivingAttributes.apply(this, Config.policeAttributes, true);
-            this.initializeNeutralGunLoadout(level.getRandom());
-            this.applyPoliceArmor();
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        ConfiguredLivingAttributes.apply(this, Config.policeAttributes, true);
+        this.initializeNeutralGunLoadout(random);
+        this.applyPoliceArmor();
     }
 
     /** 警官全套：保护 IV；头盔中级防闪；胸/腿/靴各一块中级防爆板。 */

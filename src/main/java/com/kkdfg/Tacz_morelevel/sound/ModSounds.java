@@ -690,6 +690,56 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SOUND_PUNISHER_DEATH_7 =
             registerPunisher("punisher_death_7");
 
+    /** 机械牛仔语音（源目录 cowboy：闲置 / 战斗闲置 / 发现射击 / death）。 */
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_IDLE_1 =
+            registerMechanicalCowboy("mechanical_cowboy_idle_1");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_IDLE_2 =
+            registerMechanicalCowboy("mechanical_cowboy_idle_2");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_IDLE_3 =
+            registerMechanicalCowboy("mechanical_cowboy_idle_3");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_IDLE_4 =
+            registerMechanicalCowboy("mechanical_cowboy_idle_4");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_IDLE_5 =
+            registerMechanicalCowboy("mechanical_cowboy_idle_5");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_IDLE_6 =
+            registerMechanicalCowboy("mechanical_cowboy_idle_6");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_COMBAT_IDLE_1 =
+            registerMechanicalCowboy("mechanical_cowboy_combat_idle_1");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_COMBAT_IDLE_2 =
+            registerMechanicalCowboy("mechanical_cowboy_combat_idle_2");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_COMBAT_IDLE_3 =
+            registerMechanicalCowboy("mechanical_cowboy_combat_idle_3");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_COMBAT_IDLE_4 =
+            registerMechanicalCowboy("mechanical_cowboy_combat_idle_4");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_COMBAT_IDLE_5 =
+            registerMechanicalCowboy("mechanical_cowboy_combat_idle_5");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_COMBAT_IDLE_6 =
+            registerMechanicalCowboy("mechanical_cowboy_combat_idle_6");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_TARGET_1 =
+            registerMechanicalCowboy("mechanical_cowboy_target_1");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_TARGET_2 =
+            registerMechanicalCowboy("mechanical_cowboy_target_2");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_TARGET_3 =
+            registerMechanicalCowboy("mechanical_cowboy_target_3");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_TARGET_4 =
+            registerMechanicalCowboy("mechanical_cowboy_target_4");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_TARGET_5 =
+            registerMechanicalCowboy("mechanical_cowboy_target_5");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_TARGET_6 =
+            registerMechanicalCowboy("mechanical_cowboy_target_6");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_DEATH_1 =
+            registerMechanicalCowboy("mechanical_cowboy_death_1");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_DEATH_2 =
+            registerMechanicalCowboy("mechanical_cowboy_death_2");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_DEATH_3 =
+            registerMechanicalCowboy("mechanical_cowboy_death_3");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_DEATH_4 =
+            registerMechanicalCowboy("mechanical_cowboy_death_4");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_DEATH_5 =
+            registerMechanicalCowboy("mechanical_cowboy_death_5");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_COWBOY_DEATH_6 =
+            registerMechanicalCowboy("mechanical_cowboy_death_6");
+
     /** 神秘商人闲置语音 */
     public static final RegistryObject<SoundEvent> SOUND_MYSTERIOUS_MERCHANT_IDLE_1 =
             registerMysteriousMerchant("mysterious_merchant_idle_1");
@@ -890,6 +940,14 @@ public class ModSounds {
     }
 
     private static RegistryObject<SoundEvent> registerPunisher(String id) {
+        return SOUNDS_EVENTS.register(
+                id,
+                () ->
+                        SoundEvent.createVariableRangeEvent(
+                                ResourceLocation.fromNamespaceAndPath(Tacz_MoreLevel.MOD_ID, id)));
+    }
+
+    private static RegistryObject<SoundEvent> registerMechanicalCowboy(String id) {
         return SOUNDS_EVENTS.register(
                 id,
                 () ->

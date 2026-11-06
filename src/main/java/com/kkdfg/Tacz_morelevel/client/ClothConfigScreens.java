@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.client;
 
 import com.kkdfg.Tacz_morelevel.Config;
+import com.kkdfg.Tacz_morelevel.config.ArmorConfig;
 import com.kkdfg.Tacz_morelevel.config.BossConfig;
 import com.kkdfg.Tacz_morelevel.config.NpcConfig;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
  * Cloth Config 屏（对照官方：ConfigBuilder → Category → EntryBuilder → setSavingRunnable）。
- * 全局：血量 / 移速 / moveTo / strafe（NPC+Boss）与对玩家伤害。
+ * 全局：血量 / 移速 / moveTo / strafe（NPC+Boss）、对玩家伤害与 1–8 档防弹参数。
  */
 public final class ClothConfigScreens {
     private ClothConfigScreens() {}
@@ -101,6 +102,15 @@ public final class ClothConfigScreens {
                 BossConfig.gunStrafeSpeedModifierOffsetA(),
                 BossConfig.gunStrafeSpeedModifierScaleB());
 
+        ConfigCategory armor =
+                builder.getOrCreateCategory(Component.translatable("config.tacz_morelevel.category.armor"));
+        for (int level = 1; level <= ArmorConfig.BULLETPROOF_TIER_COUNT; level++) {
+            addArmorTierValue(
+                    armor, entries, level, "bulletproof", ArmorConfig.totalBulletproof(level));
+            addArmorTierValue(
+                    armor, entries, level, "pen_reduction", ArmorConfig.totalPenReduction(level));
+        }
+
         ConfigCategory general =
                 builder.getOrCreateCategory(Component.translatable("config.tacz_morelevel.category.general"));
         ForgeConfigSpec.DoubleValue damageScale = Config.npcOutgoingDamageToPlayerScaleSpec();
@@ -120,13 +130,33 @@ public final class ClothConfigScreens {
                 () -> {
                     NpcConfig.SPEC.save();
                     BossConfig.SPEC.save();
+                    ArmorConfig.SPEC.save();
                     Config.SPEC.save();
                     NpcConfig.applyLoadedValues();
                     BossConfig.applyLoadedValues();
+                    ArmorConfig.applyLoadedValues();
                     Config.applyLoadedValues();
                 });
 
         return builder.build();
+    }
+
+    private static void addArmorTierValue(
+            ConfigCategory category,
+            ConfigEntryBuilder entries,
+            int level,
+            String parameter,
+            ForgeConfigSpec.DoubleValue value) {
+        category.addEntry(
+                entries.startDoubleField(
+                                Component.translatable("config.tacz_morelevel.armor." + parameter, level),
+                                value.get())
+                        .setDefaultValue(value.getDefault())
+                        .setMin(0.001D)
+                        .setMax(0.999D)
+                        .setTooltip(Component.translatable("config.tacz_morelevel.tooltip.armor." + parameter))
+                        .setSaveConsumer(value::set)
+                        .build());
     }
 
     private static void addAbPair(

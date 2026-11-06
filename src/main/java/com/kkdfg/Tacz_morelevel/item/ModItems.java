@@ -18,6 +18,7 @@ import com.kkdfg.Tacz_morelevel.item.medicine.MedicineEffectSpec;
 import com.kkdfg.Tacz_morelevel.item.medicine.MedicineSounds;
 import com.kkdfg.Tacz_morelevel.item.medicine.MedicineSpec;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
@@ -209,6 +210,14 @@ public final class ModItems {
                     () ->
                             new ForgeSpawnEggItem(
                                     ModEntities.PUNISHER, 0xB24BF3, 0x3A1B52, new Item.Properties()));
+
+    /** 机械牛仔：浅红刷怪蛋（底色 / 斑点）。 */
+    public static final RegistryObject<Item> MECHANICAL_COWBOY_SPAWN_EGG =
+            ITEMS.register(
+                    "mechanical_cowboy_spawn_egg",
+                    () ->
+                            new ForgeSpawnEggItem(
+                                    ModEntities.MECHANICAL_COWBOY, 0xFF8B8B, 0xFF5555, new Item.Properties()));
 
     /** 美女护航：粉色刷怪蛋（底色 / 斑点）。 */
     public static final RegistryObject<Item> BEAUTY_BODYGUARD_SPAWN_EGG =
@@ -497,7 +506,8 @@ public final class ModItems {
                     BOMB_BABY_SPAWN_EGG,
                     CEILING_DUEL_SPAWN_EGG,
                     BOMB_SIGHT_SPAWN_EGG,
-                    PUNISHER_SPAWN_EGG);
+                    PUNISHER_SPAWN_EGG,
+                    MECHANICAL_COWBOY_SPAWN_EGG);
 
     /** 护航刷怪蛋（创造栏顺序：美女→标准→高级→魔王）。 */
     public static final List<RegistryObject<Item>> ALL_BODYGUARD_SPAWN_EGGS =
@@ -527,6 +537,7 @@ public final class ModItems {
                     CEILING_DUEL_SPAWN_EGG,
                     BOMB_SIGHT_SPAWN_EGG,
                     PUNISHER_SPAWN_EGG,
+                    MECHANICAL_COWBOY_SPAWN_EGG,
                     BEAUTY_BODYGUARD_SPAWN_EGG,
                     STANDARD_BODYGUARD_SPAWN_EGG,
                     ELITE_BODYGUARD_SPAWN_EGG,
@@ -602,6 +613,24 @@ public final class ModItems {
                     "police_boots",
                     () -> new PoliceArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
 
+    /** 牛仔套：数值同四级；Gecko {@code geo/armor/dark_cowboy.geo.json}；背包贴图 {@code textures/item/dark_cowboy_<部位>.png}。 */
+    public static final RegistryObject<Item> DARK_COWBOY_HELMET =
+            ITEMS.register(
+                    "dark_cowboy_helmet",
+                    () -> new DarkCowboyArmorItem(ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> DARK_COWBOY_CHESTPLATE =
+            ITEMS.register(
+                    "dark_cowboy_chestplate",
+                    () -> new DarkCowboyArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> DARK_COWBOY_LEGGINGS =
+            ITEMS.register(
+                    "dark_cowboy_leggings",
+                    () -> new DarkCowboyArmorItem(ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> DARK_COWBOY_BOOTS =
+            ITEMS.register(
+                    "dark_cowboy_boots",
+                    () -> new DarkCowboyArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
+
     public static final RegistryObject<Item> THIRD_BULLETPROOF_HELMET =
             registerTierArmor("third_bulletproof_helmet", BulletproofArmorTier.THIRD, ArmorItem.Type.HELMET);
     public static final RegistryObject<Item> THIRD_BULLETPROOF_CHESTPLATE =
@@ -646,6 +675,30 @@ public final class ModItems {
             registerTierArmor("seventh_bulletproof_leggings", BulletproofArmorTier.SEVENTH, ArmorItem.Type.LEGGINGS);
     public static final RegistryObject<Item> SEVENTH_BULLETPROOF_BOOTS =
             registerTierArmor("seventh_bulletproof_boots", BulletproofArmorTier.SEVENTH, ArmorItem.Type.BOOTS);
+
+    /** 六级防弹马甲：整套六级减伤；原版护甲点与钻马甲同为 11。 */
+    public static final RegistryObject<Item> SIXTH_BULLETPROOF_HORSE_ARMOR =
+            registerHorseArmor("sixth_bulletproof_horse_armor", 6, 11);
+
+    /** 七级防弹马甲：整套七级减伤；原版护甲点 15。 */
+    public static final RegistryObject<Item> SEVENTH_BULLETPROOF_HORSE_ARMOR =
+            registerHorseArmor("seventh_bulletproof_horse_armor", 7, 15);
+
+    /** 爆炎七级马甲：等级 7。事件以后再接。 */
+    public static final RegistryObject<Item> SEVENTH_BLAZEFLAME_BULLETPROOF_HORSE_ARMOR =
+            registerHorseArmor("seventh_blazeflame_bulletproof_horse_armor", 7, 15);
+
+    /** 深渊七级马甲：等级 7。事件以后再接。 */
+    public static final RegistryObject<Item> SEVENTH_ABYSS_BULLETPROOF_HORSE_ARMOR =
+            registerHorseArmor("seventh_abyss_bulletproof_horse_armor", 7, 15);
+
+    /** 幽匿七级马甲：防弹等级 8。 */
+    public static final RegistryObject<Item> SEVENTH_SCULK_BULLETPROOF_HORSE_ARMOR =
+            registerHorseArmor("seventh_sculk_bulletproof_horse_armor", 8, 15);
+
+    /** 辐抗七级马甲：等级 7。 */
+    public static final RegistryObject<Item> SEVENTH_RADIATION_BULLETPROOF_HORSE_ARMOR =
+            registerHorseArmor("seventh_radiation_bulletproof_horse_armor", 7, 15);
 
     /**
      * 爆破七级套：数值同七级防弹；独立 Gecko {@code geo/armor/seventh_blast_bulletproof.geo.json}；
@@ -1321,6 +1374,24 @@ public final class ModItems {
     public static final List<RegistryObject<Item>> POLICE_ITEMS =
             List.of(POLICE_HELMET, POLICE_CHESTPLATE, POLICE_LEGGINGS, POLICE_BOOTS);
 
+    /** 防弹马甲：身上贴图 {@code textures/entity/horse/armor/<id>.png}；背包 {@code textures/item/<id>.png}。 */
+    public static final List<RegistryObject<Item>> BULLETPROOF_HORSE_ARMOR_ITEMS =
+            List.of(
+                    SIXTH_BULLETPROOF_HORSE_ARMOR,
+                    SEVENTH_BULLETPROOF_HORSE_ARMOR,
+                    SEVENTH_BLAZEFLAME_BULLETPROOF_HORSE_ARMOR,
+                    SEVENTH_ABYSS_BULLETPROOF_HORSE_ARMOR,
+                    SEVENTH_SCULK_BULLETPROOF_HORSE_ARMOR,
+                    SEVENTH_RADIATION_BULLETPROOF_HORSE_ARMOR);
+
+    /** 牛仔套四件：四级数值；穿戴贴图 {@code textures/item/armor/dark_cowboy.png}；背包 {@code textures/item/dark_cowboy_<部位>.png}。 */
+    public static final List<RegistryObject<Item>> DARK_COWBOY_ITEMS =
+            List.of(
+                    DARK_COWBOY_HELMET,
+                    DARK_COWBOY_CHESTPLATE,
+                    DARK_COWBOY_LEGGINGS,
+                    DARK_COWBOY_BOOTS);
+
     /** 隐身斗篷四件：背包图标 {@code textures/item/stealth_*.png}；穿戴贴图 {@code textures/item/armor/stealth_cloak.png}。 */
     public static final List<RegistryObject<Item>> STEALTH_CLOAK_ITEMS =
             List.of(STEALTH_HELMET, STEALTH_CLOAK, STEALTH_LEGGINGS, STEALTH_BOOTS);
@@ -1344,6 +1415,18 @@ public final class ModItems {
                     SPACETIME_BULLETPROOF_CHESTPLATE,
                     SPACETIME_BULLETPROOF_LEGGINGS,
                     SPACETIME_BULLETPROOF_BOOTS);
+
+    private static RegistryObject<Item> registerHorseArmor(String name, int level, int protection) {
+        return ITEMS.register(
+                name,
+                () ->
+                        new BulletproofHorseArmorItem(
+                                level,
+                                protection,
+                                ResourceLocation.fromNamespaceAndPath(
+                                        Tacz_MoreLevel.MOD_ID, "textures/entity/horse/armor/" + name + ".png"),
+                                new Item.Properties()));
+    }
 
     private static RegistryObject<Item> registerTierArmor(
             String name, BulletproofArmorTier tier, ArmorItem.Type slot) {

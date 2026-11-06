@@ -2,10 +2,12 @@ package com.kkdfg.Tacz_morelevel.event;
 
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
 import com.kkdfg.Tacz_morelevel.armor.plugin.CarbonFiberArmorPlateItem;
+import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.item.custom.AbyssSeventhBulletproofArmorItem;
 import java.util.UUID;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -39,6 +41,9 @@ public final class AbyssSeventhArmorAttributeEvents {
         int n = AbyssSeventhBulletproofArmorItem.countEquippedPieces(entity);
         double plateJump = CarbonFiberArmorPlateItem.sumJumpDeltaVy(entity);
         double extra = n * JUMP_DELTA_VY_PER_PIECE + plateJump;
+        if (isAbyssHorseArmor(entity)) {
+            extra += JUMP_DELTA_VY_PER_PIECE * 4.0D;
+        }
         if (extra <= 0d) {
             return;
         }
@@ -90,6 +95,9 @@ public final class AbyssSeventhArmorAttributeEvents {
         int n = AbyssSeventhBulletproofArmorItem.countEquippedPieces(entity);
         double plateSpeed = CarbonFiberArmorPlateItem.sumSpeedMultiplyBase(entity);
         double amount = n * AbyssSeventhBulletproofArmorItem.SPEED_MULTIPLY_BASE_PER_PIECE + plateSpeed;
+        if (isAbyssHorseArmor(entity)) {
+            amount += AbyssSeventhBulletproofArmorItem.SPEED_MULTIPLY_BASE_PER_PIECE * 4.0D;
+        }
         if (amount <= 0d) {
             return;
         }
@@ -99,5 +107,12 @@ public final class AbyssSeventhArmorAttributeEvents {
                         ABYSS_SPEED_MODIFIER_NAME,
                         amount,
                         AttributeModifier.Operation.MULTIPLY_BASE));
+    }
+
+    /** 马的胸甲是深渊马甲时，在人甲结果上再加一整套。 */
+    private static boolean isAbyssHorseArmor(LivingEntity entity) {
+        return entity instanceof Horse
+                && entity.getItemBySlot(EquipmentSlot.CHEST).getItem()
+                        == ModItems.SEVENTH_ABYSS_BULLETPROOF_HORSE_ARMOR.get();
     }
 }

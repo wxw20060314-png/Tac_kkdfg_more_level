@@ -11,15 +11,11 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
  * 与 {@link AbstractDualGunSoldierEntity} 同级：副手枪套。
@@ -156,18 +152,9 @@ public abstract class AbstractHolsterGunSoldierEntity extends AbstractPlayerLike
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.equipHolsteredGun(this.pickHolsterGunId(level.getRandom()));
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(RandomSource random) {
+        super.initializeSpawnEquipment(random);
+        this.equipHolsteredGun(this.pickHolsterGunId(random));
     }
 
     @Override

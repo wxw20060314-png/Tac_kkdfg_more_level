@@ -153,6 +153,10 @@ public final class ModGeoItemClientExtensions {
         registerGeoArmorRenderer(consumer, PoliceArmorRenderer::new);
     }
 
+    public static void registerDarkCowboyArmor(Consumer<IClientItemExtensions> consumer) {
+        registerGeoArmorRenderer(consumer, DarkCowboyArmorRenderer::new);
+    }
+
     public static void registerShockwaveBulletproofArmor(Consumer<IClientItemExtensions> consumer) {
         registerGeoArmorRenderer(consumer, ShockwaveBulletproofArmorRenderer::new);
     }

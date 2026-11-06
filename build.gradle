@@ -165,6 +165,9 @@ dependencies {
     compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
     runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
 
+    // JER：仅开发环境客户端，不写发布产物（前置 JEI）
+    runtimeOnly fg.deobf("maven.modrinth:just-enough-resources-jer:${jer_version}")
+
     // GeckoLib 4（Forge 1.20.1 需同时引入 mclib）
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
     implementation('com.eliotlash.mclib:mclib:20')
@@ -181,6 +184,11 @@ dependencies {
 
     // Mob Battle Mod：仅开发环境，不写入发布产物
     runtimeOnly fg.deobf("curse.maven:mob-battle-mod-268746:${mobbattle_file_id}")
+
+    // Simply Airdrops：仅开发环境测空投刷怪；不写发布产物。开关：simply_airdrops_in_dev
+    if (findProperty('simply_airdrops_in_dev')?.toString()?.equalsIgnoreCase('true')) {
+        runtimeOnly fg.deobf("maven.modrinth:simply-airdrops:${simply_airdrops_version}")
+    }
 
     // Cloth Config API：配置屏；compileOnly 便于写屏，runtimeOnly 进开发环境，不打进发布 jar
     compileOnly fg.deobf("maven.modrinth:cloth-config:${cloth_config_version}")

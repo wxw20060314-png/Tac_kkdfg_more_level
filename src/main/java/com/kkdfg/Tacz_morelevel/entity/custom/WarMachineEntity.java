@@ -308,11 +308,16 @@ public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
             @Nullable CompoundTag dataTag) {
         this.setLeftHanded(false);
         if (!level.isClientSide()) {
-            this.applyConfiguredLivingAttributes(true);
-            this.setSoldierSkinIndex(0);
-            this.equipDualGunLoadout();
+            this.ensureSpawnEquipment(level.getRandom());
         }
         return spawnData;
+    }
+
+    @Override
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        this.applyConfiguredLivingAttributes(true);
+        this.setSoldierSkinIndex(0);
+        this.equipDualGunLoadout();
     }
 
     @Override

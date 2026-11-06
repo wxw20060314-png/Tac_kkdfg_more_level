@@ -102,3 +102,61 @@ Tacz_morelevel 规范手册
    - 挂点：`ModGeoItemClientExtensions.getHumanoidArmorModel`。
    - 后置：按甲套装 id（`armor/punisher` 等）；快捷键不做。
 
+
+
+九、模拟 CPU：当前 Level 查不到实体就丢票（2026-11-04）
+--------------------------------
+
+规则（已实现）：
+- 找掩体是即时请求。SimThreadCpuManager.isKnownDead 在 level.getEntity(uuid) == null
+  时返回 true，与已死亡同等丢弃。
+- Wait、Ready、Running 都走这条判断：清 byId 及对应队列；Running 同时 cpu.clear()。
+- admitFromWait 不再把查不到的票放回 Wait 队尾。
+- 不引入 submitPos、超时保留或重试。实体回来后由 AI 重新提交。
+- 允许丢掉一次未执行请求。
+
+涉及：entity/ai/simthread/SimThreadCpuManager.java。
+
+
+十、虚拟弹药容器：补充判空及空列表检查（待修，2026-11-04）
+--------------------------------
+
+当前检查结果：
+- 四个实体基类的 getCapability / invalidateCaps / reviveCaps 直接使用 creativeAmmoReload，
+  未判空；如果在该字段初始化前触发这些方法，存在空指针风险，触发路径尚未复现。
+- MobCreativeAmmoBoxHandler.getStackInSlot、MobCreativeAmmoBox.ensure、
+  MobGunReloadGoal.canUse 直接取容器 get(0)，缺少容器为 null / 列表为空时的保护。
+- MobCreativeAmmoBox.isAllTypeCreative 直接调用 stack.isEmpty()，不接受 null。
+- 正常创建路径使用一格 NonNullList；以上属于异常或未就绪状态的防御性检查，
+  不表示正常路径已经确认会传入 null 或空列表。
+
+后续修改约定（已提出，尚未实现）：
+- 弹药访问对象未初始化时，能力查询回退父类；invalidate / revive 做空值保护。
+- 容器为 null 或空列表时避免 get(0) / set(0)；读取返回 ItemStack.EMPTY，
+  ensure 跳过，换弹条件返回 false；物品栈为 null 时类型检查返回 false。
+- 保持正常的一格创造弹药箱及换弹流程不变，不扩展为其他库存机制。
+
+涉及：
+- integration/tacz/MobCreativeAmmoBoxReloadAccess.java、MobCreativeAmmoBoxHandler.java、
+  MobCreativeAmmoBox.java。
+- entity/ai/MobGunReloadGoal.java。
+- entity/custom/AbstractPlayerLikeSoldierEntity.java、AbstractNeutralGunNpcEntity.java、
+  AbstractSlimeExperimentEntity.java。
+- entity/companion/AbstractSoldierArrangeFriendEntity.java。
+
+
+十一、生成装备：finalizeSpawn 打标记，乘客由 tick 补一次（2026-11-06）
+--------------------------------
+
+骑马 / 结构乘客不会走 finalizeSpawn，枪和甲会丢。
+
+规则：
+- 四个基类各有一个不进 NBT 的标记。真正执行到的 finalizeSpawn 里置 true。
+- 歼灭者、战争机器、炸弹宝宝不调用 super.finalizeSpawn，在自己的生成函数里置标记。
+- 标记仍为 false 时，服务端 tick 调用该类的 initializeSpawnEquipment 一次，然后置 true。
+- 读档时已有皮肤标记、代际标记或装备槽物品，则视为已经生成过，不再重发。
+
+涉及：
+- AbstractPlayerLikeSoldierEntity、AbstractNeutralGunNpcEntity、AbstractSlimeExperimentEntity。
+- AbstractSoldierArrangeFriendEntity。
+

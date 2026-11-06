@@ -154,6 +154,12 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     /** NBT 键：偏好主武器标记（非槽位；枪本体只靠原版装备槽）。 */
     private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
 
+    /**
+     * {@link #finalizeSpawn} 跑过则为 true。骑马乘客会跳过生成函数，由服务端 tick 补装一次。
+     * 不写进 NBT；读档时按皮肤标记或已有装备置回 true。
+     */
+    private boolean spawnEquipmentReady;
+
     /** 可用皮肤数量，与 {@code assets/tacz_morelevel/textures/entity/militia/skin_*.png} 数量一致（各兵种暂不区分贴图）。 */
     public static final int SOLDIER_SKIN_COUNT = 10;
 
@@ -263,6 +269,10 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        // 父类构造期间可能查询能力，此时子类字段尚未初始化。
+        if (this.creativeAmmoReload == null) {
+            return super.getCapability(cap, side);
+        }
         LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
         return ammo != null ? ammo : super.getCapability(cap, side);
     }
@@ -502,6 +512,7 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     @Override
     public void tick() {
         if (!this.level().isClientSide()) {
+            this.ensureSpawnEquipment(this.getRandom());
             this.tickGunCombatSight();
             MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
 
@@ -786,17 +797,47 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         this.setLeftHanded(false);
         if (!level.isClientSide()) {
-            this.applyConfiguredLivingAttributes(true);
-            RandomSource rnd = level.getLevel().getRandom();
-            this.entityData.set(DATA_SKIN_INDEX, rnd.nextInt(SOLDIER_SKIN_COUNT));
-            if (this.shouldEquipRandomTroopGun()) {
-                ResourceLocation gid =
-                        TaczOrdinaryGunCatalog.pickRandomForPoolId(rnd, this.troopGunPoolId());
-                this.equipTaCZGunMainHand(gid);
-            }
-            this.applyMilitiaSpawnArmor(rnd);
+            this.ensureSpawnEquipment(level.getRandom());
         }
         return spawnData;
+    }
+
+    /**
+     * 生成装备。子类覆盖后由 {@link #finalizeSpawn} 与补装 tick 共用。
+     * 不调用 {@code super} 的首领在这里写自己的装配，避免再发一套普通兵的枪。
+     */
+    protected void initializeSpawnEquipment(RandomSource random) {
+        this.applyConfiguredLivingAttributes(true);
+        this.entityData.set(DATA_SKIN_INDEX, random.nextInt(SOLDIER_SKIN_COUNT));
+        if (this.shouldEquipRandomTroopGun()) {
+            ResourceLocation gid =
+                    TaczOrdinaryGunCatalog.pickRandomForPoolId(random, this.troopGunPoolId());
+            this.equipTaCZGunMainHand(gid);
+        }
+        this.applyMilitiaSpawnArmor(random);
+    }
+
+    /** 生成函数或补装 tick 调用一次。已标记则直接返回。 */
+    protected final void ensureSpawnEquipment(RandomSource random) {
+        if (this.spawnEquipmentReady) {
+            return;
+        }
+        this.initializeSpawnEquipment(random);
+        this.spawnEquipmentReady = true;
+    }
+
+    /** 读档实体已经有皮肤或装备时，不再在 tick 里重发。 */
+    protected boolean savedSpawnEquipmentPresent(CompoundTag compound) {
+        if (compound.contains(TAG_SKIN_INDEX, Tag.TAG_INT)
+                || compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            return true;
+        }
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!this.getItemBySlot(slot).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -1218,6 +1259,9 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
                 this.reassessWeaponGoal();
             }
             this.applyConfiguredLivingAttributes(false);
+        }
+        if (this.savedSpawnEquipmentPresent(compound)) {
+            this.spawnEquipmentReady = true;
         }
         this.applyEquipmentDropChances();
     }

@@ -150,6 +150,10 @@ public class Tacz_MoreLevel
                         GeoItem.registerSyncedAnimatable(
                                 (software.bernie.geckolib.core.animatable.GeoAnimatable) ro.get());
                     }
+                    for (var ro : ModItems.DARK_COWBOY_ITEMS) {
+                        GeoItem.registerSyncedAnimatable(
+                                (software.bernie.geckolib.core.animatable.GeoAnimatable) ro.get());
+                    }
                     for (var ro : ModItems.SPACETIME_BULLETPROOF_ITEMS) {
                         GeoItem.registerSyncedAnimatable(
                                 (software.bernie.geckolib.core.animatable.GeoAnimatable) ro.get());
@@ -309,6 +313,7 @@ public class Tacz_MoreLevel
             event.registerEntityRenderer(ModEntities.CEILING_DUEL.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(ModEntities.BOMB_SIGHT.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(ModEntities.PUNISHER.get(), PlayerLikeHostileRenderer::new);
+            event.registerEntityRenderer(ModEntities.MECHANICAL_COWBOY.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(ModEntities.GUARD.get(), PlayerLikeHostileRenderer::new);
             event.registerEntityRenderer(
                     ModEntities.BOMB_CART.get(),

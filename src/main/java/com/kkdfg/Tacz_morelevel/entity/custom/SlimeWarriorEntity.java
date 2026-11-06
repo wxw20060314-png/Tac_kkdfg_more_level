@@ -20,15 +20,11 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierUnarmedMeleeGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -40,7 +36,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
  * 史莱姆战士：不穿甲；自然生成 / 刷怪蛋时仅 gen1/gen2 随机（不刷最高级 gen0）；分裂只出战士。
@@ -212,24 +207,17 @@ public final class SlimeWarriorEntity extends AbstractSlimeExperimentEntity {
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
         boolean naturalRoot = this.getParentUuid() == null && !this.isRootCommanderTree();
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide() && naturalRoot && this.getParentUuid() == null) {
+        super.initializeSpawnEquipment(random);
+        if (naturalRoot && this.getParentUuid() == null) {
             // 自然刷 / 刷怪蛋：只出 2 级(gen1) / 3 级(gen2)，不出最高级 gen0
-            int gen = this.getRandom().nextBoolean() ? 1 : 2;
+            int gen = random.nextBoolean() ? 1 : 2;
             this.setRootUuid(this.getUUID());
             this.setRootIsCommander(false);
             this.applyGenerationStats(gen, true, true);
         }
         this.mountCombatGoals();
-        return spawnData;
     }
 
     @Override

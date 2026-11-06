@@ -133,6 +133,9 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     public static final int SOLDIER_BACKPACK_SLOTS = SoldierBackpack.SLOTS;
 
     private static final String TAG_GENERATION = "SlimeExpGeneration";
+
+    /** {@link #finalizeSpawn} 跑过则为 true。乘客跳过生成时由 tick 补装一次。 */
+    private boolean spawnEquipmentReady;
     private static final String TAG_ROOT = "SlimeExpRoot";
     private static final String TAG_PARENT = "SlimeExpParent";
     private static final String TAG_LINK_TTL = "SlimeExpLinkTtl";
@@ -186,6 +189,10 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        // 父类构造期间可能查询能力，此时子类字段尚未初始化。
+        if (this.creativeAmmoReload == null) {
+            return super.getCapability(cap, side);
+        }
         LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
         return ammo != null ? ammo : super.getCapability(cap, side);
     }
@@ -712,6 +719,17 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
             @Nullable CompoundTag dataTag) {
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         this.setLeftHanded(false);
+        if (!level.isClientSide()) {
+            this.ensureSpawnEquipment(level.getRandom());
+        }
+        return spawnData;
+    }
+
+    /**
+     * 树根发 0 代枪与属性。碎片在调用前已写好父节点，这里不会再套 0 代。
+     * 战士覆盖后改成 1/2 代。
+     */
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
         this.ensureRootIdentity();
         if (this.isCommanderEntity()) {
             this.setRootIsCommander(true);
@@ -720,7 +738,27 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
             this.applyGenerationStats(0, true, true);
         }
         this.applyNoDropChances();
-        return spawnData;
+    }
+
+    protected final void ensureSpawnEquipment(net.minecraft.util.RandomSource random) {
+        if (this.spawnEquipmentReady) {
+            return;
+        }
+        this.initializeSpawnEquipment(random);
+        this.spawnEquipmentReady = true;
+    }
+
+    protected boolean savedSpawnEquipmentPresent(CompoundTag compound) {
+        if (compound.contains(TAG_GENERATION, Tag.TAG_INT)
+                || compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            return true;
+        }
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!this.getItemBySlot(slot).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // endregion
@@ -943,6 +981,7 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     @Override
     public void tick() {
         if (!this.level().isClientSide()) {
+            this.ensureSpawnEquipment(this.getRandom());
             this.tickGunCombatSight();
             MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
         }
@@ -1459,6 +1498,9 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        if (this.savedSpawnEquipmentPresent(compound)) {
+            this.spawnEquipmentReady = true;
+        }
         this.setLeftHanded(false);
         if (compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
             this.preferredMainGunDataId =

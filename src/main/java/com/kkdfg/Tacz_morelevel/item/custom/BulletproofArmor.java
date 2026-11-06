@@ -100,6 +100,7 @@ public class BulletproofArmor extends ArmorItem {
             }
         }
         sum += BallisticSteelArmorPlateItem.sumBulletproofBonus(entity);
+        sum += BulletproofHorseArmorItem.sumBulletproof(entity);
         return sum;
     }
 
@@ -112,6 +113,7 @@ public class BulletproofArmor extends ArmorItem {
             }
         }
         sum += BallisticSteelArmorPlateItem.sumPenetrationReductionBonus(entity);
+        sum += BulletproofHorseArmorItem.sumPenetrationReduction(entity);
         return sum;
     }
 

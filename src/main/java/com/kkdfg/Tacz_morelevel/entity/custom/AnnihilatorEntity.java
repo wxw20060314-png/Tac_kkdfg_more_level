@@ -252,10 +252,15 @@ public final class AnnihilatorEntity extends AbstractPlayerLikeSoldierEntity {
             @Nullable net.minecraft.nbt.CompoundTag dataTag) {
         this.setLeftHanded(false);
         if (!level.isClientSide()) {
-            this.applyConfiguredLivingAttributes(true);
-            this.equipAnnihilatorLoadout();
+            this.ensureSpawnEquipment(level.getRandom());
         }
         return spawnData;
+    }
+
+    @Override
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        this.applyConfiguredLivingAttributes(true);
+        this.equipAnnihilatorLoadout();
     }
 
     private void equipAnnihilatorLoadout() {

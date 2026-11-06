@@ -407,6 +407,7 @@ public final class BossConfig {
     static final CeilingDuelConfigEntry CEILING_DUEL = defineCeilingDuel();
     static final CombatUnitConfig.SpecEntry ANNIHILATOR = defineAnnihilator();
     static final CombatUnitConfig.SpecEntry PUNISHER = definePunisher();
+    static final CombatUnitConfig.SpecEntry MECHANICAL_COWBOY = defineMechanicalCowboy();
     static final CombatUnitConfig.SpecEntry SCORPION = defineScorpion();
     static final CombatUnitConfig.SpecEntry SLIME_COMMANDER = defineSlimeCommander();
     static final CombatUnitConfig.SpecEntry SLIME_WARRIOR = defineSlimeWarrior();
@@ -539,6 +540,21 @@ public final class BossConfig {
                 BUILDER,
                 "punisher",
                 "Punisher boss; attribute defaults match superSpecial soldier (was hardcoded).",
+                20.0D,
+                2.0D,
+                1.2D,
+                CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[superSpecialIndex],
+                CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[superSpecialIndex],
+                null,
+                0.2D);
+    }
+
+    private static CombatUnitConfig.SpecEntry defineMechanicalCowboy() {
+        int superSpecialIndex = CombatUnitConfig.SUPER_SPECIAL_NPC_DEFAULT_INDEX;
+        return CombatUnitConfig.define(
+                BUILDER,
+                "mechanicalCowboy",
+                "Mechanical Cowboy boss; holster M1014 dragon breath; defaults match superSpecial.",
                 20.0D,
                 2.0D,
                 1.2D,
@@ -703,6 +719,7 @@ public final class BossConfig {
         applyBossUnit(BOMB_BABY, false);
         applyBossUnit(ANNIHILATOR, false);
         applyBossUnit(PUNISHER, false);
+        applyBossUnit(MECHANICAL_COWBOY, false);
         applyBossUnit(SCORPION, false);
         applyBossUnit(SLIME_COMMANDER, false);
         applyBossUnit(SLIME_WARRIOR, false);
@@ -795,6 +812,19 @@ public final class BossConfig {
             Config.punisherGunGoalSpeedModifier = Config.punisherAttributes.gunGoalSpeedModifier;
             if (entry.equipmentDropChance() != null) {
                 Config.punisherEquipmentDropChance = entry.equipmentDropChance().get().floatValue();
+            }
+            return;
+        }
+        if (entry == MECHANICAL_COWBOY) {
+            Config.mechanicalCowboyAttackDamage = entry.attackDamage().get();
+            finishBossAttrsAndGoals(
+                    entry, Config.mechanicalCowboyAttributes, Config.mechanicalCowboyCombatGoals);
+            Config.mechanicalCowboyMaxHealth = Config.mechanicalCowboyAttributes.maxHealth;
+            Config.mechanicalCowboyGunGoalSpeedModifier =
+                    Config.mechanicalCowboyAttributes.gunGoalSpeedModifier;
+            if (entry.equipmentDropChance() != null) {
+                Config.mechanicalCowboyEquipmentDropChance =
+                        entry.equipmentDropChance().get().floatValue();
             }
             return;
         }

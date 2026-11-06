@@ -312,15 +312,25 @@ public final class GuardEntity extends AbstractSoldierArrangeFriendEntity
             @Nullable CompoundTag dataTag) {
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         if (!level.isClientSide()) {
-            this.entityData.set(DATA_SKIN_INDEX, level.getRandom().nextInt(SKIN_COUNT));
-            this.applySpawnArmorFromJson(level.getRandom());
-            ResourceLocation gunId = TaczOrdinaryGunCatalog.pickRandomForPoolId(level.getRandom(), GUN_POOL_ID);
-            if (gunId != null) {
-                this.setPreferredMainGunDataId(gunId);
-                this.equipTaCZGunMainHand(gunId);
-            }
+            this.ensureSpawnEquipment(level.getRandom());
         }
         return spawnData;
+    }
+
+    @Override
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        this.entityData.set(DATA_SKIN_INDEX, random.nextInt(SKIN_COUNT));
+        this.applySpawnArmorFromJson(random);
+        ResourceLocation gunId = TaczOrdinaryGunCatalog.pickRandomForPoolId(random, GUN_POOL_ID);
+        if (gunId != null) {
+            this.setPreferredMainGunDataId(gunId);
+            this.equipTaCZGunMainHand(gunId);
+        }
+    }
+
+    @Override
+    protected boolean savedSpawnEquipmentPresent(CompoundTag compound) {
+        return compound.contains(TAG_SKIN_INDEX, Tag.TAG_INT) || super.savedSpawnEquipmentPresent(compound);
     }
 
     @Override

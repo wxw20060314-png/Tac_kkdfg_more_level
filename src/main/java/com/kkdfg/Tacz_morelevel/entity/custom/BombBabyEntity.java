@@ -273,10 +273,15 @@ public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
             @Nullable CompoundTag dataTag) {
         this.setLeftHanded(false);
         if (!level.isClientSide()) {
-            this.applyConfiguredLivingAttributes(true);
-            this.equipDualGunLoadout();
+            this.ensureSpawnEquipment(level.getRandom());
         }
         return spawnData;
+    }
+
+    @Override
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        this.applyConfiguredLivingAttributes(true);
+        this.equipDualGunLoadout();
     }
 
     /** 主手 MK14 爆破、背枪传奇榴弹；爆破七级全套。 */

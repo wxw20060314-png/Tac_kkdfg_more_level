@@ -520,22 +520,12 @@ public final class CeilingDuelEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        this.setLeftHanded(false);
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.setPreferredMainGunDataId(MAIN_GUN);
-            this.setSoldierSkinIndex(this.random.nextInt(SOLDIER_SKIN_COUNT));
-            this.equipSeventhWithJokerHelmetLoadout();
-            this.enterBaseFresh();
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        super.initializeSpawnEquipment(random);
+        this.setPreferredMainGunDataId(MAIN_GUN);
+        this.setSoldierSkinIndex(random.nextInt(SOLDIER_SKIN_COUNT));
+        this.equipSeventhWithJokerHelmetLoadout();
+        this.enterBaseFresh();
     }
 
     /** 普通七级身甲 + 小丑七级头；全件保护 IV。 */

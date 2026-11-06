@@ -65,6 +65,7 @@ public final class ModCreativeModeTabs {
                                                 ModItems.ALL_BODYGUARD_CONTACT_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 output.accept(ModItems.BODYGUARD_STORAGE.get());
                                                 ModItems.ALL_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
+                                                ModItems.BULLETPROOF_HORSE_ARMOR_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.SEVENTH_BLAST_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.SHOCKWAVE_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.SEVENTH_BLAZEFLAME_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
@@ -77,6 +78,7 @@ public final class ModCreativeModeTabs {
                                                 ModItems.SPECIAL_OPS_BULLETPROOF_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.OFFICER_UNIFORM_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.POLICE_ITEMS.forEach(ro -> output.accept(ro.get()));
+                                                ModItems.DARK_COWBOY_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.STEALTH_CLOAK_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.STEALTH_SEVENTH_ITEMS.forEach(ro -> output.accept(ro.get()));
                                                 ModItems.JOKER_SEVENTH_HELMET_ITEMS.forEach(ro -> output.accept(ro.get()));

@@ -17,6 +17,7 @@ import com.kkdfg.Tacz_morelevel.entity.custom.MysteriousMerchantEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MilitiaEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PoliceEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PunisherEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalCowboyEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.RefugeeEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.SpecialForcesSoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
@@ -62,6 +63,7 @@ public final class ModEntityAttributes {
         event.put(ModEntities.CEILING_DUEL.get(), CeilingDuelEntity.createAttributes().build());
         event.put(ModEntities.BOMB_SIGHT.get(), BombSightEntity.createAttributes().build());
         event.put(ModEntities.PUNISHER.get(), PunisherEntity.createAttributes().build());
+        event.put(ModEntities.MECHANICAL_COWBOY.get(), MechanicalCowboyEntity.createAttributes().build());
         event.put(ModEntities.BOMB_CART.get(), BombCartEntity.createAttributes().build());
         event.put(
                 ModEntities.PUNISHER_SHOULDER_CANNON.get(),

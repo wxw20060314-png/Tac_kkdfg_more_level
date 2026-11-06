@@ -2086,5 +2086,101 @@
   "police_death_5": {
     "subtitles": "sounds.tacz_morelevel.police_death",
     "sounds": ["tacz_morelevel:police/police_death_5"]
+  },
+  "mechanical_cowboy_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_idle_1"]
+  },
+  "mechanical_cowboy_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_idle_2"]
+  },
+  "mechanical_cowboy_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_idle_3"]
+  },
+  "mechanical_cowboy_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_idle_4"]
+  },
+  "mechanical_cowboy_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_idle_5"]
+  },
+  "mechanical_cowboy_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_idle_6"]
+  },
+  "mechanical_cowboy_combat_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_combat_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_combat_idle_1"]
+  },
+  "mechanical_cowboy_combat_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_combat_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_combat_idle_2"]
+  },
+  "mechanical_cowboy_combat_idle_3": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_combat_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_combat_idle_3"]
+  },
+  "mechanical_cowboy_combat_idle_4": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_combat_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_combat_idle_4"]
+  },
+  "mechanical_cowboy_combat_idle_5": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_combat_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_combat_idle_5"]
+  },
+  "mechanical_cowboy_combat_idle_6": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_combat_idle",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_combat_idle_6"]
+  },
+  "mechanical_cowboy_target_1": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_target",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_target_1"]
+  },
+  "mechanical_cowboy_target_2": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_target",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_target_2"]
+  },
+  "mechanical_cowboy_target_3": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_target",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_target_3"]
+  },
+  "mechanical_cowboy_target_4": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_target",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_target_4"]
+  },
+  "mechanical_cowboy_target_5": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_target",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_target_5"]
+  },
+  "mechanical_cowboy_target_6": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_target",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_target_6"]
+  },
+  "mechanical_cowboy_death_1": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_1"]
+  },
+  "mechanical_cowboy_death_2": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_2"]
+  },
+  "mechanical_cowboy_death_3": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_3"]
+  },
+  "mechanical_cowboy_death_4": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_4"]
+  },
+  "mechanical_cowboy_death_5": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_5"]
+  },
+  "mechanical_cowboy_death_6": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
+    "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_6"]
   }
 }

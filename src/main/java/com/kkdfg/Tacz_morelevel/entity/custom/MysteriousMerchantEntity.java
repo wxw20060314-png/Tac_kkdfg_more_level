@@ -248,23 +248,13 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.applyConfiguredLivingAttributes(true);
-            this.initializeNeutralGunLoadout(level.getRandom());
-            this.applyMysteriousMerchantArmor();
-            if (this.offers == null || this.offers.isEmpty()) {
-                this.offers = MysteriousMerchantTradeCatalog.rollOffers(level.getRandom());
-            }
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {
+        this.applyConfiguredLivingAttributes(true);
+        this.initializeNeutralGunLoadout(random);
+        this.applyMysteriousMerchantArmor();
+        if (this.offers == null || this.offers.isEmpty()) {
+            this.offers = MysteriousMerchantTradeCatalog.rollOffers(random);
         }
-        return spawnData;
     }
 
     private void applyConfiguredLivingAttributes(boolean fillHealth) {

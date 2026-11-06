@@ -1,9 +1,13 @@
 package com.kkdfg.Tacz_morelevel.event;
 
+import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
+import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.item.custom.ExplosionArmorReduction;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,6 +35,12 @@ public final class ExplosionArmorEvents {
             return;
         }
         float reduction = ExplosionArmorReduction.total(target);
+        if (target instanceof Horse
+                && target.getItemBySlot(EquipmentSlot.CHEST).getItem()
+                        == ModItems.SEVENTH_BLAZEFLAME_BULLETPROOF_HORSE_ARMOR.get()) {
+            reduction += Config.blazeflameExplosionReductionPerPiece * 4f;
+        }
+        reduction = Math.min(reduction, 1f);
         if (reduction <= 0f) {
             return;
         }

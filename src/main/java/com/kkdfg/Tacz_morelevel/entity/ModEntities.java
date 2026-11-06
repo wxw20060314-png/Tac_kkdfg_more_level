@@ -21,6 +21,7 @@ import com.kkdfg.Tacz_morelevel.entity.custom.MilitiaEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MysteriousMerchantEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PoliceEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PunisherEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalCowboyEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.RefugeeEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.SpecialForcesSoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
@@ -217,6 +218,16 @@ public final class ModEntities {
                                     .sized(0.6F, 1.8F)
                                     .clientTrackingRange(10)
                                     .build(Tacz_MoreLevel.MOD_ID + ":punisher"));
+
+    /** 机械牛仔：枪套龙息喷 + 牛仔套；数值 {@code bosses.toml} {@code [mechanicalCowboy]}，默认同超特。 */
+    public static final RegistryObject<EntityType<MechanicalCowboyEntity>> MECHANICAL_COWBOY =
+            ENTITY_TYPES.register(
+                    "mechanical_cowboy",
+                    () ->
+                            EntityType.Builder.of(MechanicalCowboyEntity::new, MobCategory.MONSTER)
+                                    .sized(0.6F, 1.8F)
+                                    .clientTrackingRange(10)
+                                    .build(Tacz_MoreLevel.MOD_ID + ":mechanical_cowboy"));
 
     public static final RegistryObject<EntityType<MysteriousMerchantEntity>> MYSTERIOUS_MERCHANT =
             ENTITY_TYPES.register(

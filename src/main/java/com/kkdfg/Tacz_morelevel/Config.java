@@ -175,6 +175,14 @@ public final class Config {
     public static double punisherAttackDamage = 2.0D;
     public static double punisherGunGoalSpeedModifier = 1.2D;
 
+    /** {@code [mechanicalCowboy]}：机械牛仔；默认数值同超特。 */
+    public static NpcAttributeStats mechanicalCowboyAttributes;
+    public static CombatGoalStats mechanicalCowboyCombatGoals;
+    public static double mechanicalCowboyMaxHealth = 20.0D;
+    public static double mechanicalCowboyAttackDamage = 2.0D;
+    public static double mechanicalCowboyGunGoalSpeedModifier = 1.2D;
+    public static float mechanicalCowboyEquipmentDropChance = 0.2F;
+
     /** {@code [scorpion]}：毒蝎（枪套 M107 卓越）；交火 100 / 近战带 20 / 侧移外 80 内 40。 */
     public static NpcAttributeStats scorpionAttributes;
     public static CombatGoalStats scorpionCombatGoals;
@@ -546,6 +554,15 @@ public final class Config {
                         1.2D,
                         CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[superSpecialIndex]);
         punisherCombatGoals =
+                CombatUnitConfig.defaultCombatGoalStats(
+                        CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[superSpecialIndex]);
+        mechanicalCowboyAttributes =
+                CombatUnitConfig.defaultAttributeStats(
+                        20.0D,
+                        2.0D,
+                        1.2D,
+                        CombatUnitConfig.DEFAULT_NPC_ATTRIBUTE_VALUES[superSpecialIndex]);
+        mechanicalCowboyCombatGoals =
                 CombatUnitConfig.defaultCombatGoalStats(
                         CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[superSpecialIndex]);
         scorpionAttributes =

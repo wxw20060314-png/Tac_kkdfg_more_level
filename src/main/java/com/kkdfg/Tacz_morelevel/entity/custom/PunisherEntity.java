@@ -330,22 +330,11 @@ public final class PunisherEntity extends AbstractHolsterGunSoldierEntity {
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.setPreferredMainGunDataId(HOLSTER_GUN);
-            // 皮肤：暂借超级特种兵集合，随机一套
-            RandomSource rnd = level.getLevel().getRandom();
-            this.setSoldierSkinIndex(rnd.nextInt(PUNISHER_SKIN_COUNT));
-            this.equipPunisherArmor();
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(RandomSource random) {
+        super.initializeSpawnEquipment(random);
+        this.setPreferredMainGunDataId(HOLSTER_GUN);
+        this.setSoldierSkinIndex(random.nextInt(PUNISHER_SKIN_COUNT));
+        this.equipPunisherArmor();
     }
 
     /** 判罚者全套：保护 IV + 耐久 III；高级防闪 / 肩炮 / 腿高级防爆 / 靴高级辐射抗。 */

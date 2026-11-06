@@ -36,6 +36,9 @@ public abstract class AbstractSoldierArrangeFriendEntity extends AbstractFriendE
 
     private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
 
+    /** {@link net.minecraft.world.entity.Mob#finalizeSpawn} 跑过则为 true。乘客跳过生成时由 tick 补装一次。 */
+    private boolean spawnEquipmentReady;
+
     @Nullable
     private ResourceLocation preferredMainGunDataId;
     private final NonNullList<ItemStack> soldierBackpack = SoldierBackpack.createSlots();
@@ -67,6 +70,10 @@ public abstract class AbstractSoldierArrangeFriendEntity extends AbstractFriendE
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        // 父类构造期间可能查询能力，此时子类字段尚未初始化。
+        if (this.creativeAmmoReload == null) {
+            return super.getCapability(cap, side);
+        }
         LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
         return ammo != null ? ammo : super.getCapability(cap, side);
     }
@@ -86,9 +93,33 @@ public abstract class AbstractSoldierArrangeFriendEntity extends AbstractFriendE
     @Override
     public void tick() {
         if (!this.level().isClientSide()) {
+            this.ensureSpawnEquipment(this.getRandom());
             MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
         }
         super.tick();
+    }
+
+    /** 生成装备。护卫覆盖。 */
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {}
+
+    protected final void ensureSpawnEquipment(net.minecraft.util.RandomSource random) {
+        if (this.spawnEquipmentReady) {
+            return;
+        }
+        this.initializeSpawnEquipment(random);
+        this.spawnEquipmentReady = true;
+    }
+
+    protected boolean savedSpawnEquipmentPresent(CompoundTag compound) {
+        if (compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            return true;
+        }
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!this.getItemBySlot(slot).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setPreferredMainGunDataId(@Nullable ResourceLocation gunDataId) {
@@ -241,5 +272,8 @@ public abstract class AbstractSoldierArrangeFriendEntity extends AbstractFriendE
                     ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_MAIN_GUN_DATA_ID));
         }
         SoldierBackpack.load(compound, this.soldierBackpack);
+        if (this.savedSpawnEquipmentPresent(compound)) {
+            this.spawnEquipmentReady = true;
+        }
     }
 }

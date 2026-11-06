@@ -1,9 +1,13 @@
 package com.kkdfg.Tacz_morelevel.event;
 
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
+import com.kkdfg.Tacz_morelevel.item.ModItems;
+import com.kkdfg.Tacz_morelevel.item.custom.AbyssSeventhBulletproofArmorItem;
 import com.kkdfg.Tacz_morelevel.item.custom.FallArmorReduction;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,6 +34,12 @@ public final class FallArmorEvents {
             return;
         }
         float reduction = FallArmorReduction.total(target);
+        if (target instanceof Horse
+                && target.getItemBySlot(EquipmentSlot.CHEST).getItem()
+                        == ModItems.SEVENTH_ABYSS_BULLETPROOF_HORSE_ARMOR.get()) {
+            reduction += AbyssSeventhBulletproofArmorItem.FALL_REDUCTION_PER_PIECE * 4f;
+        }
+        reduction = Math.min(reduction, 1f);
         if (reduction <= 0f) {
             return;
         }

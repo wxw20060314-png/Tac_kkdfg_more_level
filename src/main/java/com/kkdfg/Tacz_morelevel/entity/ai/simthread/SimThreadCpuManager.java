@@ -173,7 +173,7 @@ public final class SimThreadCpuManager {
         }
     }
 
-    /** Ready 区 FIND_COVER 距离闸失败则摘票（UDP）。未加载实体保留。 */
+    /** Ready 区 FIND_COVER 距离闸失败则摘票（UDP）。查不到的实体已在 {@link #scrubReady} 丢掉。 */
     private void scrubCoverRangeGate(ServerLevel level) {
         Iterator<UUID> it = this.readyOrder.iterator();
         while (it.hasNext()) {
@@ -192,7 +192,8 @@ public final class SimThreadCpuManager {
     }
 
     /**
-     * @return true = 应丢弃（越界 / 无目标 / 非 Mob）；实体未加载返回 false（保留票）
+     * @return true = 应丢弃（越界 / 无目标 / 非 Mob）。实体不在本 Level 时返回 false，
+     *     丢票由 {@link #isKnownDead} 负责。
      */
     private boolean failsCoverRangeGate(ServerLevel level, SimThreadTicket ticket) {
         if (ticket.type != SimThreadEventType.FIND_COVER || !ticket.hasCoverRangeGate()) {
@@ -260,11 +261,6 @@ public final class SimThreadCpuManager {
                 this.byId.remove(id);
                 continue;
             }
-            Entity entity = level.getEntity(id);
-            if (entity == null) {
-                this.waitOrder.addLast(id);
-                continue;
-            }
             ticket.seat = SimThreadTicket.Seat.READY;
             ticket.resetWait();
             this.readyOrder.add(id);
@@ -309,12 +305,12 @@ public final class SimThreadCpuManager {
     }
 
     /**
-     * 仅当实体已加载且确认死亡/非活物时丢弃；{@code getEntity == null} 视为未加载，保留票。
+     * 当前 Level 查不到、或已加载但不是存活生物时丢弃。不保留等待重新加载。
      */
     private boolean isKnownDead(ServerLevel level, UUID uuid) {
         Entity entity = level.getEntity(uuid);
         if (entity == null) {
-            return false;
+            return true;
         }
         return !(entity instanceof LivingEntity living && living.isAlive());
     }

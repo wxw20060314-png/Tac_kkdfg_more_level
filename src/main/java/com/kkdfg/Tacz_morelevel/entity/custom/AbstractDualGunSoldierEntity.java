@@ -11,15 +11,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
  * 双枪士兵基类：主手为当前枪械，副手为背上枪械（由 TaCZ {@code HumanoidOffhandRender} 渲染）。
@@ -217,18 +213,9 @@ public abstract class AbstractDualGunSoldierEntity extends AbstractPlayerLikeSol
     }
 
     @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnReason,
-            @Nullable SpawnGroupData spawnData,
-            @Nullable CompoundTag dataTag) {
-        spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
-        if (!level.isClientSide()) {
-            this.equipDualGunLoadout();
-        }
-        return spawnData;
+    protected void initializeSpawnEquipment(RandomSource random) {
+        super.initializeSpawnEquipment(random);
+        this.equipDualGunLoadout();
     }
 
     @Override

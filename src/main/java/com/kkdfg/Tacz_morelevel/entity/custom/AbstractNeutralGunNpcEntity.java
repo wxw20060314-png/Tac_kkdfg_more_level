@@ -118,6 +118,9 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     private float throwableScanTtl = SoldierThrowableThreatSense.THROWABLE_SCAN_TTL_RESET;
 
     private static final String TAG_SKIN_INDEX = "TaczMoreLevelSkinIdx";
+
+    /** {@link #finalizeSpawn} 跑过则为 true。乘客跳过生成时由 tick 补装一次。 */
+    private boolean spawnEquipmentReady;
     private static final String TAG_PREFERRED_MAIN_GUN_DATA_ID = "TaczMoreLevelPreferredMainGunDataId";
 
     public static final int SOLDIER_SKIN_COUNT = 10;
@@ -157,6 +160,10 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        // 父类构造期间可能查询能力，此时子类字段尚未初始化。
+        if (this.creativeAmmoReload == null) {
+            return super.getCapability(cap, side);
+        }
         LazyOptional<T> ammo = this.creativeAmmoReload.getCapability(cap, side, this.isAlive());
         return ammo != null ? ammo : super.getCapability(cap, side);
     }
@@ -299,7 +306,34 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
             @Nullable CompoundTag dataTag) {
         spawnData = super.finalizeSpawn(level, difficulty, spawnReason, spawnData, dataTag);
         this.setLeftHanded(false);
+        if (!level.isClientSide()) {
+            this.ensureSpawnEquipment(level.getRandom());
+        }
         return spawnData;
+    }
+
+    /** 生成装备。警察、神秘商人覆盖。 */
+    protected void initializeSpawnEquipment(net.minecraft.util.RandomSource random) {}
+
+    protected final void ensureSpawnEquipment(net.minecraft.util.RandomSource random) {
+        if (this.spawnEquipmentReady) {
+            return;
+        }
+        this.initializeSpawnEquipment(random);
+        this.spawnEquipmentReady = true;
+    }
+
+    protected boolean savedSpawnEquipmentPresent(CompoundTag compound) {
+        if (compound.contains(TAG_SKIN_INDEX, Tag.TAG_INT)
+                || compound.contains(TAG_PREFERRED_MAIN_GUN_DATA_ID, Tag.TAG_STRING)) {
+            return true;
+        }
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!this.getItemBySlot(slot).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected abstract ResourceLocation pickSpawnGunId(net.minecraft.util.RandomSource random);
@@ -418,6 +452,7 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     @Override
     public void tick() {
         if (!this.level().isClientSide()) {
+            this.ensureSpawnEquipment(this.getRandom());
             this.tickGunCombatSight();
             MobCreativeAmmoBox.ensure(this.creativeAmmoBox, this.tickCount);
         }
@@ -884,6 +919,9 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                     ResourceLocation.tryParse(compound.getString(TAG_PREFERRED_MAIN_GUN_DATA_ID));
         }
         SoldierBackpack.load(compound, this.soldierBackpack);
+        if (this.savedSpawnEquipmentPresent(compound)) {
+            this.spawnEquipmentReady = true;
+        }
         this.applyEquipmentDropChances();
     }
 
