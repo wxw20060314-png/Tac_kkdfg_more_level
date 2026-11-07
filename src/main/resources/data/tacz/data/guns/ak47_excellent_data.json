@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:762x39",
   "ammo_amount": 30,
   "extended_mag_ammo_amount": [
@@ -81,7 +82,7 @@
   },
   "draw_time": 0.35,
   "put_away_time": 0.57,
-  "aim_time": 0.2,
+  "aim_time": 0.22,
   "sprint_time": 0.2,
   "weight": 3.5,
   "movement_speed": {
@@ -105,15 +106,22 @@
       {
         "time": 0,
         "value": [
-          0.66,
-          0.66
+          0.8,
+          0.8
         ]
       },
       {
         "time": 0.1,
         "value": [
-          0.66,
-          0.66
+          1.4,
+          1.4
+        ]
+      },
+      {
+        "time": 0.15,
+        "value": [
+          0.8,
+          0.8
         ]
       },
       {
@@ -150,11 +158,11 @@
   },
   "hurt_bob_tweak_multiplier": 0.05,
   "inaccuracy": {
-    "stand": 1.8,
-    "move": 2.0,
-    "sneak": 1.0,
-    "lie": 0.6,
-    "aim": 0.06
+    "stand": 2.7,
+    "move": 3.0,
+    "sneak": 1.5,
+    "lie": 0.9,
+    "aim": 0.15
   },
   "melee": {
     "distance": 1,
@@ -174,5 +182,15 @@
     "stock",
     "muzzle",
     "extended_mag"
-  ]
+  ],
+  "builtin_attachments": {
+    "stock": {
+      "attachments": [
+        "tacz:oem_stock_light",
+        "tacz:oem_stock_tactical",
+        "tacz:oem_stock_heavy"
+      ],
+      "default_attached": "tacz:oem_stock_tactical"
+    }
+  }
 }

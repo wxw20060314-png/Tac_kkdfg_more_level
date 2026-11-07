@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:308",
   "can_crawl": false,
   "bolt": "open_bolt",
@@ -9,7 +10,7 @@
     "damage": 16.0,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.7,
+      "armor_ignore": 0.8333,
       "head_shot_multiplier": 1.8,
       "damage_adjust": [
         {
@@ -26,18 +27,19 @@
         }
       ]
     },
-    "speed": 300,
+    "speed": 340,
     "gravity": 0.105,
     "knockback": 0.1,
     "friction": 0.025,
     "pierce": 2
   },
   "heat": {
-    "max": 360,
+    "max": 500,
     "per_shot": 2,
-    "cooling_multiplier": 5,
-    "cooling_delay": 500,
-    "over_heat_time": 3000,
+    "cooling_multiplier": 15,
+    "inventory_cooling_per_tick": 3.25,
+    "cooling_delay": 5,
+    "over_heat_time": 2500,
     "min_inaccuracy": 1,
     "max_inaccuracy": 1.2,
     "min_rpm_mod": 1,
@@ -74,7 +76,7 @@
     "bpm": 1200,
     "min_interval": 0.5
   },
-  "crawl_recoil_multiplier": 0.5,
+  "crawl_recoil_multiplier": 0.75,
   "recoil": {
     "pitch": [
       {
@@ -132,11 +134,11 @@
   },
   "hurt_bob_tweak_multiplier": 0.05,
   "inaccuracy": {
-    "stand": 1.575,
-    "move": 2.1,
-    "sneak": 1.575,
-    "lie": 1.575,
-    "aim": 0.63
+    "stand": 1.8,
+    "move": 2.4,
+    "sneak": 1.8,
+    "lie": 1.8,
+    "aim": 0.8
   },
   "melee": {
     "distance": 1,

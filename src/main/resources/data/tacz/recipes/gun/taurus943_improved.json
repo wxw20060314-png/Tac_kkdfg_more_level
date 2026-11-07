@@ -3,12 +3,6 @@
   "materials": [
     {
       "item": {
-        "tag": "forge:ingots/iron"
-      },
-      "count": 3
-    },
-    {
-      "item": {
         "type": "forge:partial_nbt",
         "item": "tacz:modern_kinetic_gun",
         "nbt": {

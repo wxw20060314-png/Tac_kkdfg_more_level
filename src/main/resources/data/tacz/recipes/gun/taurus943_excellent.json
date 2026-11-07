@@ -3,27 +3,21 @@
   "materials": [
     {
       "item": {
-        "tag": "forge:gems/lapis"
+        "tag": "forge:ingots/iron"
       },
       "count": 3
     },
     {
       "item": {
-        "tag": "forge:ingots/gold"
+        "tag": "minecraft:planks"
       },
       "count": 1
     },
     {
       "item": {
-        "tag": "forge:ingots/iron"
+        "tag": "forge:rods/wooden"
       },
-      "count": 12
-    },
-    {
-      "item": {
-        "tag": "minecraft:logs"
-      },
-      "count": 2
+      "count": 1
     },
     {
       "item": {

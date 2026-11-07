@@ -127,10 +127,10 @@
     ]
   },
   "inaccuracy": {
-    "stand": 2.3,
-    "move": 2.2,
-    "sneak": 1.2,
-    "lie": 0.8,
+    "stand": 3.45,
+    "move": 3.3,
+    "sneak": 1.8,
+    "lie": 1.2,
     "aim": 0.07
   },
   "melee": {

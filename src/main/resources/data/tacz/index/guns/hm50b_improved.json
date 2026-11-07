@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.hm50b_improved.name",
+  "display": "tacz:hm50b_display",
+  "data": "tacz:hm50b_improved_data",
+  "tooltip": "tacz.gun.hm50b_improved.desc",
+  "type": "sniper",
+  "sort": 9
+}

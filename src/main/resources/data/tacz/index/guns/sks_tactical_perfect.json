@@ -3,6 +3,6 @@
   "display": "tacz:sks_tactical_display",
   "data": "tacz:sks_tactical_perfect_data",
   "tooltip": "tacz.gun.sks_tactical_perfect.desc",
-  "type": "rifle",
-  "sort": 4
+  "type": "dmr",
+  "sort": 7
 }

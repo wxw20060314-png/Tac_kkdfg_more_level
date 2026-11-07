@@ -1,5 +1,10 @@
 package com.kkdfg.Tacz_morelevel.debug;
 
+/**
+ * 枪包同步体积打印。TaCZ 1.2.0 起 {@code ServerMessageSyncGunPack} 只接受分片，
+ * 旧的 Map 构造器已删除。下面整段是当时的测试代码，不参与编译，也不注册事件。
+ */
+/*
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
 import com.tacz.guns.network.message.ServerMessageSyncGunPack;
 import com.tacz.guns.resource.CommonAssetsManager;
@@ -12,9 +17,6 @@ import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-/**
- * 进世界 / datapack 同步时打印 TaCZ {@link ServerMessageSyncGunPack} 载荷大小（未压缩）。
- */
 @Mod.EventBusSubscriber(modid = Tacz_MoreLevel.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class TaczGunPackSizePrint {
 
@@ -43,4 +45,10 @@ public final class TaczGunPackSizePrint {
             buf.release();
         }
     }
+}
+*/
+
+public final class TaczGunPackSizePrint {
+
+    private TaczGunPackSizePrint() {}
 }

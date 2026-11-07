@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.hcar_perfect.name",
+  "display": "tacz:hcar_display",
+  "data": "tacz:hcar_perfect_data",
+  "tooltip": "tacz.gun.hcar_perfect.desc",
+  "type": "rifle",
+  "sort": 23
+}

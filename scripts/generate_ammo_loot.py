@@ -42,6 +42,7 @@ AMMO_ENTRIES: list[tuple[str, int, int, int, int]] = [
     ("tacz:58x42", 7, 16, 48, 64),
     ("tacz:46x30", 7, 16, 48, 64),
     ("tacz:68x51fury", 7, 16, 48, 64),
+    ("tacz:300blk", 7, 16, 48, 64),
     ("tacz:357mag", 7, 12, 36, 64),
     ("tacz:50ae", 7, 12, 36, 64),
     ("tacz:45_70", 7, 12, 36, 64),

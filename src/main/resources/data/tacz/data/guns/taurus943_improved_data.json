@@ -1,27 +1,28 @@
 {
   "ammo": "tacz:22wmr",
   "ammo_amount": 8,
-  "rpm": 180,
+  "force_aim_exit_on_reload": true,
+  "rpm": 200,
   "bullet": {
-    "life": 0.85,
+    "life": 1,
     "bullet_amount": 1,
-    "damage": 9.0,
+    "damage": 12.0,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.4,
-      "head_shot_multiplier": 1.65,
+      "armor_ignore": 0.5,
+      "head_shot_multiplier": 2.2,
       "damage_adjust": [
         {
-          "distance": 15,
-          "damage": 9.0
+          "distance": 12,
+          "damage": 12.0
         },
         {
           "distance": 25,
-          "damage": 6.75
+          "damage": 9.0
         },
         {
-          "distance": 30,
-          "damage": 4.5
+          "distance": 32,
+          "damage": 6.0
         },
         {
           "distance": "infinite",
@@ -29,10 +30,10 @@
         }
       ]
     },
-    "speed": 135,
+    "speed": 150,
     "gravity": 0.1062,
     "knockback": 0.005,
-    "friction": 0.03,
+    "friction": 0.015,
     "ignite": false,
     "pierce": 1,
     "explosion": {
@@ -66,14 +67,14 @@
       "increase_per_tick": 0.1,
       "decrease_per_tick": 0.1,
       "decrease_on_fire": 0.3,
-      "max_charge": 0.3,
-      "fire_threshold": 0.3,
+      "max_charge": 0.2,
+      "fire_threshold": 0.2,
       "charge_during_cooldown": false
     }
   },
   "draw_time": 0.33,
   "put_away_time": 0.23,
-  "aim_time": 0.15,
+  "aim_time": 0.16,
   "sprint_time": 0.1,
   "weight": 0.85,
   "movement_speed": {
@@ -85,11 +86,7 @@
   "fire_mode": [
     "semi"
   ],
-  "allow_attachment_types": [
-    "scope",
-    "laser",
-    "extended_mag"
-  ],
+  "allow_attachment_types": [],
   "recoil": {
     "pitch": [
       {
@@ -116,26 +113,12 @@
       {
         "time": 0.25,
         "value": [
-          -0.115,
-          -0.115
-        ]
-      },
-      {
-        "time": 0.5,
-        "value": [
-          0.1,
-          0.1
-        ]
-      },
-      {
-        "time": 0.7,
-        "value": [
           0,
           0
         ]
       },
       {
-        "time": 1.0,
+        "time": 0.5,
         "value": [
           0,
           0
@@ -151,7 +134,7 @@
         ]
       },
       {
-        "time": 0.5,
+        "time": 0.2,
         "value": [
           0,
           0
@@ -159,11 +142,22 @@
       }
     ]
   },
+  "can_slide": false,
   "inaccuracy": {
-    "stand": 2.55,
-    "move": 2.975,
-    "sneak": 1.0625,
-    "lie": 1.275,
-    "aim": 0.085
+    "stand": 1.125,
+    "move": 1.125,
+    "sneak": 0.45,
+    "lie": 0.45,
+    "aim": 0.1
+  },
+  "script": "tacz:taurus943_gun_logic",
+  "script_param": {
+    "intro": 1.45,
+    "loop": 0.45,
+    "loop_feed": 0.1,
+    "ending": 0.75,
+    "unload_magazine": true,
+    "unload_amount": 8,
+    "unload_time": 0.8
   }
 }

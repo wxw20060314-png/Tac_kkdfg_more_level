@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.m1866_perfect.name",
+  "display": "tacz:m1866_display",
+  "data": "tacz:m1866_perfect_data",
+  "tooltip": "tacz.gun.m1866_perfect.desc",
+  "type": "dmr",
+  "sort": 28
+}

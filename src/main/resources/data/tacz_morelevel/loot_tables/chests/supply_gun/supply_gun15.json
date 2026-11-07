@@ -34,6 +34,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:ak74m\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:aug\"}"
             }
           ]
@@ -89,6 +100,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:hk_mp7a1\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:kar98\"}"
             }
           ]
@@ -112,6 +134,28 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:m4a1\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mk18\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mrad\"}"
             }
           ]
         },
@@ -188,6 +232,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:svd\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 16,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:type_81\"}"
             }
           ]
@@ -222,6 +277,17 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:ak47_improved\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:ak74m_improved\"}"
             }
           ]
         },
@@ -287,6 +353,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:hk_mp7a1_improved\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:kar98_improved\"}"
             }
           ]
@@ -310,6 +387,28 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:m4a1_improved\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mk18_improved\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mrad_improved\"}"
             }
           ]
         },
@@ -386,6 +485,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:svd_improved\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:type_81_improved\"}"
             }
           ]
@@ -420,6 +530,17 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:ak47_refined\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:ak74m_refined\"}"
             }
           ]
         },
@@ -485,6 +606,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:hk_mp7a1_refined\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:kar98_refined\"}"
             }
           ]
@@ -508,6 +640,28 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:m4a1_refined\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mk18_refined\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mrad_refined\"}"
             }
           ]
         },
@@ -584,6 +738,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:svd_refined\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:type_81_refined\"}"
             }
           ]
@@ -618,6 +783,17 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:ak47_perfect\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:ak74m_perfect\"}"
             }
           ]
         },
@@ -683,6 +859,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:hk_mp7a1_perfect\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:kar98_perfect\"}"
             }
           ]
@@ -706,6 +893,28 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:m4a1_perfect\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mk18_perfect\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mrad_perfect\"}"
             }
           ]
         },
@@ -782,6 +991,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:svd_perfect\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:type_81_perfect\"}"
             }
           ]
@@ -816,6 +1036,17 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:ak47_excellent\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:ak74m_excellent\"}"
             }
           ]
         },
@@ -881,6 +1112,17 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:hk_mp7a1_excellent\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:kar98_excellent\"}"
             }
           ]
@@ -904,6 +1146,28 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:m4a1_excellent\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mk18_excellent\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:mrad_excellent\"}"
             }
           ]
         },
@@ -970,6 +1234,17 @@
             {
               "function": "minecraft:set_nbt",
               "tag": "{GunId:\"tacz:springfield1873_excellent\"}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "tacz:modern_kinetic_gun",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{GunId:\"tacz:svd_excellent\"}"
             }
           ]
         },

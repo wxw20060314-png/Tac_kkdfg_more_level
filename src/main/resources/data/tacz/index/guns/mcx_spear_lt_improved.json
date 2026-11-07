@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.mcx_spear_lt_improved.name",
+  "display": "tacz:mcx_spear_lt_display",
+  "data": "tacz:mcx_spear_lt_improved_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.mcx_spear_lt_improved.desc",
+  "sort": 20
+}

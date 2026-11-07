@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.svd_excellent.name",
+  "display": "tacz:svd_display",
+  "data": "tacz:svd_excellent_data",
+  "tooltip": "tacz.gun.svd_excellent.desc",
+  "type": "sniper",
+  "sort": 11
+}

@@ -1,6 +1,26 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:9mm",
   "rpm": 400,
+  "script": "tacz:xmag_reload_logic",
+  "script_param": {
+    "reload_feed": 1.05,
+    "reload_cooldown": 1.5,
+    "empty_feed": 1.63,
+    "empty_cooldown": 1.88,
+    "reload_xmag_1_feed": 1.32,
+    "reload_xmag_1_cooldown": 2.1,
+    "empty_xmag_1_feed": 1.9,
+    "empty_xmag_1_cooldown": 2.23,
+    "reload_xmag_2_feed": 1.32,
+    "reload_xmag_2_cooldown": 2.1,
+    "empty_xmag_2_feed": 1.9,
+    "empty_xmag_2_cooldown": 2.23,
+    "reload_xmag_3_feed": 1.32,
+    "reload_xmag_3_cooldown": 2.1,
+    "empty_xmag_3_feed": 1.9,
+    "empty_xmag_3_cooldown": 2.23
+  },
   "bullet": {
     "life": 0.8,
     "bullet_amount": 1,
@@ -51,7 +71,7 @@
   },
   "draw_time": 0.32,
   "put_away_time": 0.35,
-  "aim_time": 0.13,
+  "aim_time": 0.16,
   "sprint_time": 0.05,
   "weight": 1,
   "movement_speed": {
@@ -79,14 +99,14 @@
         ]
       },
       {
-        "time": 0.08,
+        "time": 0.1,
         "value": [
-          0.9,
-          0.9
+          1,
+          1
         ]
       },
       {
-        "time": 0.26,
+        "time": 0.25,
         "value": [
           0.1,
           0.1
@@ -111,7 +131,7 @@
       {
         "time": 0,
         "value": [
-          -0.75,
+          -0.5,
           0.5
         ]
       },
@@ -121,14 +141,21 @@
           0,
           0
         ]
+      },
+      {
+        "time": 0.3,
+        "value": [
+          0,
+          0
+        ]
       }
     ]
   },
   "inaccuracy": {
-    "stand": 0.8,
-    "move": 1.0,
-    "sneak": 0.6,
-    "lie": 0.3,
-    "aim": 0.08
+    "stand": 1.2,
+    "move": 1.5,
+    "sneak": 0.9,
+    "lie": 0.45,
+    "aim": 0.2
   }
 }

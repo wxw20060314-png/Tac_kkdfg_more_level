@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:556x45",
   "ammo_amount": 15,
   "extended_mag_ammo_amount": [
@@ -6,6 +7,7 @@
     25,
     30
   ],
+  "can_slide": false,
   "bolt": "closed_bolt",
   "rpm": 700,
   "script": "tacz:xmag_reload_logic",
@@ -70,7 +72,7 @@
   },
   "draw_time": 0.43,
   "put_away_time": 0.42,
-  "aim_time": 0.13,
+  "aim_time": 0.2,
   "sprint_time": 0.16,
   "weight": 3.2,
   "movement_speed": {
@@ -84,7 +86,7 @@
     "burst"
   ],
   "burst_data": {
-    "bpm": 750,
+    "bpm": 850,
     "continuous_shoot": true,
     "count": 2,
     "min_interval": 0.5
@@ -95,7 +97,7 @@
       "rpm": -400,
       "head_shot_multiplier": 0.25,
       "aim_inaccuracy": -0.05,
-      "other_inaccuracy": -0.2
+      "other_inaccuracy": -0.5
     }
   },
   "recoil": {
@@ -168,11 +170,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.55,
-    "move": 1.8,
-    "sneak": 1.0,
-    "lie": 0.6,
-    "aim": 0.032
+    "stand": 2.325,
+    "move": 2.7,
+    "sneak": 1.5,
+    "lie": 0.9,
+    "aim": 0.08
   },
   "melee": {
     "distance": 1,

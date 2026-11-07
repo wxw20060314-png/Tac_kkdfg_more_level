@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.mk18_excellent.name",
+  "display": "tacz:mk18_display",
+  "data": "tacz:mk18_excellent_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.mk18_excellent.desc",
+  "sort": 27
+}

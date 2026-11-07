@@ -570,7 +570,7 @@ public final class Config {
                         20.0D,
                         2.0D,
                         1.2D,
-                        new double[] {0.64D, 108.0D, 1.25D, 100.0D, 0.2D, 3.0D, 0.64D, 0.16D, 0.0D, 2.0D});
+                        new double[] {0.64D, 108.0D, 1.25D, 100.0D, 0.16D, 3.0D, 0.64D, 0.16D, 0.0D, 2.0D});
         scorpionCombatGoals =
                 CombatUnitConfig.defaultCombatGoalStats(
                         CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[superSpecialIndex]);
@@ -607,7 +607,7 @@ public final class Config {
                         20.0D,
                         2.0D,
                         1.2D,
-                        new double[] {0.64D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 2.0D, 2.0D});
+                        new double[] {0.64D, 108.0D, 1.25D, 80.0D, 0.32D, 3.0D, 0.3D, 0.1D, 2.0D, 2.0D});
         marshalGuardCombatGoals =
                 CombatUnitConfig.defaultCombatGoalStats(
                         CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[superSpecialIndex]);
@@ -639,7 +639,7 @@ public final class Config {
         policeGunGoalSpeedModifier = CombatUnitConfig.DEFAULT_SOLDIER_GUN_GOAL_SPEED[assaultIndex];
         warMachineAttributes =
                 CombatUnitConfig.defaultAttributeStats(
-                        30.0D, 2.0D, 1.0D, new double[] {0.8D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D});
+                        30.0D, 2.0D, 1.0D, new double[] {0.8D, 108.0D, 1.25D, 80.0D, 0.32D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D});
         warMachineCombatGoals =
                 CombatUnitConfig.defaultCombatGoalStats(
                         CombatUnitConfig.DEFAULT_NPC_COMBAT_GOAL_VALUES[superSpecialIndex]);

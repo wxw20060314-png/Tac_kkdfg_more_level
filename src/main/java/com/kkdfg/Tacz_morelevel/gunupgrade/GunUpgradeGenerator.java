@@ -43,7 +43,11 @@ public final class GunUpgradeGenerator {
 
     private static final String[] TIERS = {"improved", "refined", "perfect", "excellent"};
     private static final double[] DAMAGE_MULT = {1.5D, 2.0D, 2.5D, 3.0D};
+    /** 重力。卓越档下标 {@link #EXCELLENT_TIER_INDEX}。 */
     private static final double[] COMFORT_MULT = {0.85D, 0.7D, 0.55D, 0.4D};
+    /** 腰射散布 stand/move/sneak/lie。不乘瞄准散布，也不动后坐力。 */
+    private static final double[] HIP_INACCURACY_MULT = {0.9D, 0.8D, 0.7D, 0.6D};
+    private static final int EXCELLENT_TIER_INDEX = 3;
     private static final double[] ARMOR_K = {0.5D, 2.0D / 3.0D, 0.75D, 0.8D};
     private static final double[] RECIPE_RATIO = {0.1D, 0.2D, 0.3D, 0.4D};
     private static final String[] VOUCHERS = {
@@ -200,6 +204,10 @@ public final class GunUpgradeGenerator {
             baseSort = baseIndex.get("sort").getAsInt();
         }
 
+        if (GunUpgradeFilter.isSpecialVariant(gunId)) {
+            return generateExcellentInPlace(packRoot, gunId, baseData, baseIndex, allowAttachments);
+        }
+
         String pretty = gunId.getPath().replace('_', ' ');
         int files = 0;
         int recipes = 0;
@@ -291,6 +299,51 @@ public final class GunUpgradeGenerator {
         return new int[] {files, recipes};
     }
 
+    /**
+     * 特殊枪不另开四档。数据就地套卓越档，index 名称保持原样。
+     */
+    private static int[] generateExcellentInPlace(
+            Path packRoot,
+            ResourceLocation gunId,
+            JsonObject baseData,
+            JsonObject baseIndex,
+            @Nullable JsonArray allowAttachments)
+            throws IOException {
+        JsonObject tierData = deepCopy(baseData);
+        applyTier(tierData, EXCELLENT_TIER_INDEX);
+        int files =
+                writeJson(
+                        packRoot.resolve("data")
+                                .resolve(gunId.getNamespace())
+                                .resolve("data")
+                                .resolve("guns")
+                                .resolve(gunId.getPath() + "_data.json"),
+                        tierData);
+
+        JsonObject tierIndex = deepCopy(baseIndex);
+        files +=
+                writeJson(
+                        packRoot.resolve("data")
+                                .resolve(gunId.getNamespace())
+                                .resolve("index")
+                                .resolve("guns")
+                                .resolve(gunId.getPath() + ".json"),
+                        tierIndex);
+
+        if (allowAttachments != null) {
+            files +=
+                    writeJson(
+                            packRoot.resolve("data")
+                                    .resolve(gunId.getNamespace())
+                                    .resolve("tacz_tags")
+                                    .resolve("attachments")
+                                    .resolve("allow_attachments")
+                                    .resolve(gunId.getPath() + ".json"),
+                            allowAttachments);
+        }
+        return new int[] {files, 0};
+    }
+
     private static JsonObject buildTierRecipe(
             JsonObject baseRecipe, ResourceLocation baseGunId, ResourceLocation outGunId, int tierIndex) {
         JsonObject recipe = new JsonObject();
@@ -363,6 +416,7 @@ public final class GunUpgradeGenerator {
     private static void applyTier(JsonObject gun, int tierIdx) {
         double dm = DAMAGE_MULT[tierIdx];
         double cm = COMFORT_MULT[tierIdx];
+        double hip = HIP_INACCURACY_MULT[tierIdx];
         double ak = ARMOR_K[tierIdx];
         double headMul = 1.0D + 0.1D * (tierIdx + 1);
 
@@ -397,7 +451,7 @@ public final class GunUpgradeGenerator {
             JsonObject inc = gun.getAsJsonObject("inaccuracy");
             for (String key : List.of("stand", "move", "sneak", "lie")) {
                 if (inc.has(key) && inc.get(key).isJsonPrimitive()) {
-                    inc.addProperty(key, round4(inc.get(key).getAsDouble() * cm));
+                    inc.addProperty(key, round4(inc.get(key).getAsDouble() * hip));
                 }
             }
         }

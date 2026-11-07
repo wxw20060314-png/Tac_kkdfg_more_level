@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.pkm_excellent.name",
+  "display": "tacz:pkm_display",
+  "data": "tacz:pkm_excellent_data",
+  "tooltip": "tacz.gun.pkm_excellent.desc",
+  "type": "mg",
+  "sort": 8
+}

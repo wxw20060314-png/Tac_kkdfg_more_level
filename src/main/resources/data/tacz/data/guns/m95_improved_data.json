@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:50bmg",
   "ammo_amount": 5,
   "extended_mag_ammo_amount": [
@@ -6,15 +7,22 @@
     8,
     10
   ],
+  "can_slide": false,
   "bolt": "manual_action",
   "rpm": 151,
+  "recoil_push": {
+    "ground_strength": 0.05,
+    "air_strength": 0.25,
+    "sneak_strength": 0.025,
+    "crawl_strength": 0.0
+  },
   "bullet": {
     "life": 1.1,
     "bullet_amount": 1,
     "damage": 112.5,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.8,
+      "armor_ignore": 0.875,
       "head_shot_multiplier": 2.75,
       "damage_adjust": [
         {
@@ -39,10 +47,10 @@
     "pierce": 5,
     "explosion": {
       "explode": false,
-      "damage": 140,
+      "damage": 30,
       "radius": 1.8,
       "knockback": true,
-      "delay": 1
+      "delay": 0.25
     }
   },
   "reload": {
@@ -58,7 +66,7 @@
   },
   "draw_time": 1.03,
   "put_away_time": 0.87,
-  "aim_time": 0.23,
+  "aim_time": 0.37,
   "sprint_time": 0.2,
   "bolt_action_time": 1.43,
   "weight": 10.7,
@@ -176,11 +184,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 4.25,
-    "move": 4.675,
-    "sneak": 2.975,
-    "lie": 2.125,
-    "aim": 0.0425
+    "stand": 4.5,
+    "move": 4.95,
+    "sneak": 3.15,
+    "lie": 2.25,
+    "aim": 0.05
   },
   "melee": {
     "distance": 1,

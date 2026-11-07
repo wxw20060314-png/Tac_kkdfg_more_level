@@ -116,10 +116,10 @@
   },
   "hurt_bob_tweak_multiplier": 0.05,
   "inaccuracy": {
-    "stand": 0.9,
-    "move": 1.2,
-    "sneak": 0.9,
-    "lie": 0.9,
+    "stand": 1.35,
+    "move": 1.8,
+    "sneak": 1.35,
+    "lie": 1.35,
     "aim": 0.36
   },
   "melee": {

@@ -8,6 +8,8 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE_GUN_RECIPES = ROOT / "run/tacz/tacz_default_gun/data/tacz/recipes/gun"
 GUNS_DATA = ROOT / "src/main/resources/data/tacz/data/guns"
 OUT_DIR = ROOT / "src/main/resources/data/tacz/recipes/gun"
+# 毒蝎枪套 M107 卓越不保留配方。单独重跑本脚本时也不写回。
+DROP_EXCELLENT_RECIPE = {"m107"}
 
 
 def scale_count(c: int, ratio: float) -> int:
@@ -90,6 +92,11 @@ def main() -> None:
             }
 
             out_file = OUT_DIR / f"{base}_{out_suffix}.json"
+            if out_suffix == "excellent" and base in DROP_EXCELLENT_RECIPE:
+                if out_file.is_file():
+                    out_file.unlink()
+                skipped.append(f"{base}_{out_suffix}: excellent recipe removed")
+                continue
             with out_file.open("w", encoding="utf-8", newline="\n") as f:
                 json.dump(recipe, f, ensure_ascii=False, indent=2)
                 f.write("\n")

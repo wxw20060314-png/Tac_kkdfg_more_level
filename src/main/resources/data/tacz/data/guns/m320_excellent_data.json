@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:40mm",
   "rpm": 150,
   "ammo_amount": 1,
@@ -111,11 +112,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 0.6,
-    "move": 1.0,
-    "sneak": 0.4,
-    "lie": 0.2,
-    "aim": 0.08
+    "stand": 0.9,
+    "move": 1.5,
+    "sneak": 0.6,
+    "lie": 0.3,
+    "aim": 0.2
   },
   "melee": {
     "distance": 1,

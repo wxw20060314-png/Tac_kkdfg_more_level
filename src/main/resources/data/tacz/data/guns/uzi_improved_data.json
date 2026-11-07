@@ -1,22 +1,23 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:9mm",
   "rpm": 600,
   "bullet": {
     "life": 0.65,
     "bullet_amount": 1,
-    "damage": 9.75,
+    "damage": 12.75,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.32,
+      "armor_ignore": 0.575,
       "head_shot_multiplier": 1.375,
       "damage_adjust": [
         {
           "distance": 24,
-          "damage": 9.75
+          "damage": 12.75
         },
         {
           "distance": 50,
-          "damage": 8.25
+          "damage": 11.25
         },
         {
           "distance": "infinite",
@@ -51,7 +52,7 @@
   },
   "draw_time": 0.42,
   "put_away_time": 0.43,
-  "aim_time": 0.12,
+  "aim_time": 0.18,
   "sprint_time": 0.15,
   "weight": 4,
   "movement_speed": {
@@ -65,6 +66,7 @@
   ],
   "allow_attachment_types": [
     "scope",
+    "stock",
     "muzzle",
     "extended_mag"
   ],
@@ -124,11 +126,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 2.975,
-    "move": 3.4,
-    "sneak": 1.7,
-    "lie": 0.85,
-    "aim": 0.187
+    "stand": 3.15,
+    "move": 3.6,
+    "sneak": 1.8,
+    "lie": 0.9,
+    "aim": 0.22
   },
   "melee": {
     "distance": 1,
@@ -141,6 +143,14 @@
       "damage": 1,
       "knockback": 0.4,
       "prep": 0.1
+    }
+  },
+  "builtin_attachments": {
+    "stock": {
+      "attachments": [
+        "tacz:oem_stock_unfolded"
+      ],
+      "default_attached": "tacz:oem_stock_unfolded"
     }
   }
 }

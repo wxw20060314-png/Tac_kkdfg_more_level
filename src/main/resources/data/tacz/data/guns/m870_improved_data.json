@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:12g",
   "ammo_amount": 5,
   "extended_mag_ammo_amount": [
@@ -14,7 +15,7 @@
     "damage": 54.0,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.4,
+      "armor_ignore": 0.625,
       "head_shot_multiplier": 1.463,
       "damage_adjust": [
         {
@@ -36,7 +37,14 @@
     "knockback": 0.15,
     "friction": 0.05,
     "ignite": false,
-    "pierce": 1
+    "pierce": 1,
+    "explosion": {
+      "explode": false,
+      "damage": 16,
+      "radius": 3,
+      "knockback": false,
+      "delay": 0.15
+    }
   },
   "reload": {
     "type": "magazine",
@@ -51,7 +59,7 @@
   },
   "draw_time": 0.25,
   "put_away_time": 0.45,
-  "aim_time": 0.15,
+  "aim_time": 0.18,
   "sprint_time": 0.13,
   "weight": 3.2,
   "movement_speed": {
@@ -146,11 +154,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 3.1025,
-    "move": 3.145,
-    "sneak": 3.1025,
-    "lie": 2.975,
-    "aim": 2.975
+    "stand": 3.285,
+    "move": 3.33,
+    "sneak": 3.285,
+    "lie": 3.15,
+    "aim": 3.5
   },
   "melee": {
     "distance": 1.25,
@@ -164,7 +172,7 @@
       "prep": 0.1
     }
   },
-  "script": "tacz:m870_gun_logic",
+  "script": "tacz:m870_unload_gun_logic",
   "script_param": {
     "bolt_time": 0.55,
     "bolt_feed_time": 0.3,
@@ -175,6 +183,7 @@
     "intro_empty_feed": 1.35,
     "loop_feed": 0.25
   },
+  "can_slide": false,
   "allow_attachment_types": [
     "extended_mag",
     "muzzle"

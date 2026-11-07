@@ -190,6 +190,56 @@
     {
       "input": {
         "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 40
+      },
+      "output": {
+        "gun": "tacz:ak74m",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 45
+      },
+      "output": {
+        "gun": "tacz:mk18",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 32
+      },
+      "output": {
+        "gun": "tacz:hk_mp7a1",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 48
+      },
+      "output": {
+        "gun": "tacz:svd",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
+        "count": 64
+      },
+      "output": {
+        "gun": "tacz:mrad",
+        "count": 1
+      }
+    },
+    {
+      "input": {
+        "item": "tacz_morelevel:black_universal_currency_digit_1",
         "count": 15
       },
       "output": {

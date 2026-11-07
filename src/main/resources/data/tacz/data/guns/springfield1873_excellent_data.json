@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:45_70",
   "bolt": "open_bolt",
   "ammo_amount": 1,
@@ -53,7 +54,7 @@
   },
   "draw_time": 0.45,
   "put_away_time": 0.4,
-  "aim_time": 0.15,
+  "aim_time": 0.22,
   "sprint_time": 0.25,
   "bolt_action_time": 2.5,
   "weight": 3.5,
@@ -171,12 +172,13 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.3,
-    "move": 1.4,
-    "sneak": 0.7,
-    "lie": 0.4,
-    "aim": 0.084
+    "stand": 1.95,
+    "move": 2.1,
+    "sneak": 1.05,
+    "lie": 0.6,
+    "aim": 0.21
   },
+  "can_slide": false,
   "melee": {
     "distance": 3,
     "cooldown": 1.15,

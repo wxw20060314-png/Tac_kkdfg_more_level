@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.urgi_improved.name",
+  "display": "tacz:urgi_display",
+  "data": "tacz:urgi_improved_data",
+  "type": "rifle",
+  "tooltip": "tacz.gun.urgi_improved.desc",
+  "sort": 27
+}

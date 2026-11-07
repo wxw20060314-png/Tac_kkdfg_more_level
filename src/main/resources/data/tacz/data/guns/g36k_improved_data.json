@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:556x45",
   "ammo_amount": 30,
   "extended_mag_ammo_amount": [
@@ -33,7 +34,7 @@
     "damage": 10.5,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.36,
+      "armor_ignore": 0.6,
       "head_shot_multiplier": 1.65,
       "damage_adjust": [
         {
@@ -70,7 +71,7 @@
   },
   "draw_time": 0.6,
   "put_away_time": 0.6,
-  "aim_time": 0.16,
+  "aim_time": 0.2,
   "sprint_time": 0.15,
   "weight": 3.3,
   "movement_speed": {
@@ -132,11 +133,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 3.1875,
-    "move": 3.6125,
-    "sneak": 2.125,
-    "lie": 1.275,
-    "aim": 0.0935
+    "stand": 3.375,
+    "move": 3.825,
+    "sneak": 2.25,
+    "lie": 1.35,
+    "aim": 0.11
   },
   "melee": {
     "distance": 1,

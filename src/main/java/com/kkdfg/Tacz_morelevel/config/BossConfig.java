@@ -460,7 +460,7 @@ public final class BossConfig {
     private BossConfig() {}
 
     private static CombatUnitConfig.SpecEntry defineWarMachine() {
-        double[] attrs = {0.54D, 108.0D, 1.25D, 80.0D, 0.4D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D};
+        double[] attrs = {0.54D, 108.0D, 1.25D, 80.0D, 0.32D, 3.0D, 0.3D, 0.1D, 0.0D, 2.0D};
         // 无潜行/趴/跳 Goal → 不写 combatGoals 段
         return CombatUnitConfig.define(
                 BUILDER,
@@ -566,12 +566,12 @@ public final class BossConfig {
 
     private static CombatUnitConfig.SpecEntry defineScorpion() {
         int superSpecialIndex = CombatUnitConfig.SUPER_SPECIAL_NPC_DEFAULT_INDEX;
-        // Melee/no-aim ≤20; engage 100; strafe outer≈80 / inner≈40 → (80/100)²=0.64, (40/100)²=0.16.
-        double[] attrs = {0.5D, 108.0D, 1.25D, 100.0D, 0.2D, 3.0D, 0.64D, 0.16D, 0.0D, 2.0D};
+        // Melee/no-aim ≤16; engage 100; strafe outer≈80 / inner≈40 → (80/100)²=0.64, (40/100)²=0.16.
+        double[] attrs = {0.5D, 108.0D, 1.25D, 100.0D, 0.16D, 3.0D, 0.64D, 0.16D, 0.0D, 2.0D};
         return CombatUnitConfig.define(
                 BUILDER,
                 "scorpion",
-                "Scorpion boss; holster M107 excellent (draw on target); stealth seventh set; gunRadius 100, melee 20, strafe 80/40.",
+                "Scorpion boss; holster M107 excellent (draw on target); stealth seventh set; gunRadius 100, melee 16, strafe 80/40.",
                 20.0D,
                 2.0D,
                 1.2D,

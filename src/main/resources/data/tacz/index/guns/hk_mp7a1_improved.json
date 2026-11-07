@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.hk_mp7a1_improved.name",
+  "display": "tacz:hk_mp7a1_display",
+  "data": "tacz:hk_mp7a1_improved_data",
+  "tooltip": "tacz.gun.hk_mp7a1_improved.desc",
+  "type": "smg",
+  "sort": 7
+}

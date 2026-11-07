@@ -1,13 +1,33 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:9mm",
   "rpm": 900,
+  "script": "tacz:xmag_reload_logic",
+  "script_param": {
+    "reload_feed": 1.2,
+    "reload_cooldown": 1.8,
+    "empty_feed": 1.53,
+    "empty_cooldown": 2.1,
+    "reload_xmag_1_feed": 1.38,
+    "reload_xmag_1_cooldown": 1.9,
+    "empty_xmag_1_feed": 1.55,
+    "empty_xmag_1_cooldown": 2.15,
+    "reload_xmag_2_feed": 1.45,
+    "reload_xmag_2_cooldown": 2.08,
+    "empty_xmag_2_feed": 1.6,
+    "empty_xmag_2_cooldown": 2.25,
+    "reload_xmag_3_feed": 1.63,
+    "reload_xmag_3_cooldown": 2.4,
+    "empty_xmag_3_feed": 1.7,
+    "empty_xmag_3_cooldown": 2.35
+  },
   "bullet": {
     "life": 0.6,
     "bullet_amount": 1,
     "damage": 18.75,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.68,
+      "armor_ignore": 0.8,
       "head_shot_multiplier": 1.625,
       "damage_adjust": [
         {
@@ -55,7 +75,7 @@
   },
   "draw_time": 0.33,
   "put_away_time": 0.5,
-  "aim_time": 0.13,
+  "aim_time": 0.16,
   "sprint_time": 0.1,
   "weight": 1.5,
   "movement_speed": {
@@ -78,7 +98,7 @@
     "semi": {
       "head_shot_multiplier": 0.25,
       "aim_inaccuracy": -0.06,
-      "other_inaccuracy": -0.1375
+      "other_inaccuracy": -0.25
     }
   },
   "allow_attachment_types": [
@@ -142,10 +162,10 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.4575,
-    "move": 1.6225,
-    "sneak": 0.825,
-    "lie": 0.55,
-    "aim": 0.0935
+    "stand": 1.855,
+    "move": 2.065,
+    "sneak": 1.05,
+    "lie": 0.7,
+    "aim": 0.17
   }
 }

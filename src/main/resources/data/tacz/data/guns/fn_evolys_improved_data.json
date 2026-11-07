@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:308",
   "ammo_amount": 75,
   "extended_mag_ammo_amount": [
@@ -15,7 +16,7 @@
     "damage": 18.0,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.52,
+      "armor_ignore": 0.7,
       "head_shot_multiplier": 1.76,
       "damage_adjust": [
         {
@@ -127,11 +128,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 4.8875,
-    "move": 4.675,
-    "sneak": 2.55,
-    "lie": 1.7,
-    "aim": 0.14875
+    "stand": 5.175,
+    "move": 4.95,
+    "sneak": 2.7,
+    "lie": 1.8,
+    "aim": 0.175
   },
   "melee": {
     "distance": 1,

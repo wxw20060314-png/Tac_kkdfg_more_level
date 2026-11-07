@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:rpg_rocket",
   "rpm": 150,
   "ammo_amount": 1,
@@ -8,11 +9,11 @@
     "bullet_amount": 1,
     "damage": 30.0,
     "extra_damage": {
-      "armor_ignore": 0.2,
+      "armor_ignore": 0.5,
       "head_shot_multiplier": 1.1
     },
     "speed": 80,
-    "gravity": 0.01275,
+    "gravity": 0.0127,
     "knockback": 0,
     "friction": 0.005,
     "ignite": false,
@@ -115,11 +116,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 2.55,
-    "move": 3.4,
-    "sneak": 1.7,
-    "lie": 1.275,
-    "aim": 0.2125
+    "stand": 2.7,
+    "move": 3.6,
+    "sneak": 1.8,
+    "lie": 1.35,
+    "aim": 0.25
   },
   "melee": {
     "distance": 1,

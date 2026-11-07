@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.tec_9_perfect.name",
+  "display": "tacz:tec_9_display",
+  "data": "tacz:tec_9_perfect_data",
+  "tooltip": "tacz.gun.tec_9_perfect.desc",
+  "type": "pistol",
+  "sort": 18
+}

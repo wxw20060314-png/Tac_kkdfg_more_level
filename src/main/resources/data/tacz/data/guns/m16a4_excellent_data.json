@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:556x45",
   "ammo_amount": 30,
   "extended_mag_ammo_amount": [
@@ -18,12 +19,12 @@
       "head_shot_multiplier": 1.89,
       "damage_adjust": [
         {
-          "distance": 35,
+          "distance": 32,
           "damage": 24.0
         },
         {
-          "distance": 70,
-          "damage": 19.5
+          "distance": 64,
+          "damage": 21.0
         },
         {
           "distance": "infinite",
@@ -31,7 +32,7 @@
         }
       ]
     },
-    "speed": 305,
+    "speed": 360,
     "gravity": 0.06,
     "knockback": 0,
     "friction": 0.015,
@@ -51,7 +52,7 @@
   },
   "draw_time": 0.43,
   "put_away_time": 0.53,
-  "aim_time": 0.17,
+  "aim_time": 0.22,
   "sprint_time": 0.15,
   "weight": 3.6,
   "movement_speed": {
@@ -67,30 +68,30 @@
   "burst_data": {
     "continuous_shoot": false,
     "count": 3,
-    "bpm": 900,
-    "min_interval": 0.4
+    "bpm": 937,
+    "min_interval": 0.3
   },
   "recoil": {
     "pitch": [
       {
         "time": 0,
         "value": [
-          0.35,
-          0.35
+          0.45,
+          0.45
         ]
       },
       {
-        "time": 0.35,
+        "time": 0.3,
         "value": [
-          0.35,
-          0.35
+          0.45,
+          0.45
         ]
       },
       {
         "time": 0.55,
         "value": [
-          -0.125,
-          -0.125
+          0,
+          0
         ]
       },
       {
@@ -105,19 +106,19 @@
       {
         "time": 0,
         "value": [
-          -0.3,
+          -0.2,
           0.1
         ]
       },
       {
-        "time": 0.3,
+        "time": 0.45,
         "value": [
-          -0.3,
-          0.1
+          0,
+          0
         ]
       },
       {
-        "time": 0.5,
+        "time": 0.55,
         "value": [
           0,
           0
@@ -126,11 +127,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.5,
-    "move": 1.8,
-    "sneak": 0.8,
-    "lie": 0.6,
-    "aim": 0.048
+    "stand": 2.25,
+    "move": 2.7,
+    "sneak": 1.2,
+    "lie": 0.9,
+    "aim": 0.12
   },
   "melee": {
     "distance": 1,

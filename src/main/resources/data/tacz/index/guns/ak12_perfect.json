@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.ak12_perfect.name",
+  "display": "tacz:ak12_display",
+  "data": "tacz:ak12_perfect_data",
+  "tooltip": "tacz.gun.ak12_perfect.desc",
+  "type": "rifle",
+  "sort": 27
+}

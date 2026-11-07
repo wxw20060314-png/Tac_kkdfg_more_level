@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:556x45",
   "ammo_amount": 30,
   "extended_mag_ammo_amount": [
@@ -7,7 +8,7 @@
     70
   ],
   "bolt": "closed_bolt",
-  "rpm": 650,
+  "rpm": 625,
   "script": "tacz:xmag_reload_logic",
   "script_param": {
     "reload_feed": 1.13,
@@ -41,7 +42,7 @@
           "damage": 22.5
         },
         {
-          "distance": 70,
+          "distance": 55,
           "damage": 18.0
         },
         {
@@ -70,7 +71,7 @@
   },
   "draw_time": 0.43,
   "put_away_time": 0.43,
-  "aim_time": 0.17,
+  "aim_time": 0.21,
   "sprint_time": 0.16,
   "weight": 3.5,
   "movement_speed": {
@@ -153,11 +154,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 2.0,
-    "move": 2.2,
-    "sneak": 1.0,
-    "lie": 0.6,
-    "aim": 0.05
+    "stand": 3.0,
+    "move": 3.3,
+    "sneak": 1.5,
+    "lie": 0.9,
+    "aim": 0.125
   },
   "melee": {
     "distance": 1,
@@ -179,5 +180,19 @@
     "extended_mag",
     "laser"
   ],
+  "builtin_attachments": {
+    "laser": {
+      "attachments": [
+        "tacz:oem_side_cover"
+      ],
+      "default_attached": "tacz:oem_side_cover"
+    },
+    "grip": {
+      "attachments": [
+        "tacz:oem_grip_cover"
+      ],
+      "default_attached": "tacz:oem_grip_cover"
+    }
+  },
   "exclusive_attachments": {}
 }

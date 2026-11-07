@@ -246,6 +246,24 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{AmmoId:\"tacz:300blk\"}"
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 8,
+                "max": 24
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "tacz:ammo",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{AmmoId:\"tacz:357mag\"}"
             },
             {

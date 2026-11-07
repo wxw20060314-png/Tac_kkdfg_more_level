@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:357mag",
   "rpm": 350,
   "script": "tacz:xmag_reload_logic",
@@ -26,7 +27,7 @@
     "damage": 30.0,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.68,
+      "armor_ignore": 0.8,
       "head_shot_multiplier": 2.34,
       "damage_adjust": [
         {
@@ -55,10 +56,10 @@
     "pierce": 1,
     "explosion": {
       "explode": false,
-      "damage": 20,
-      "radius": 0.6,
+      "damage": 5,
+      "radius": 1,
       "knockback": true,
-      "delay": 1
+      "delay": 0.15
     }
   },
   "ammo_amount": 9,
@@ -156,11 +157,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.65,
-    "move": 1.925,
-    "sneak": 1.1,
-    "lie": 0.66,
-    "aim": 0.055
+    "stand": 2.1,
+    "move": 2.45,
+    "sneak": 1.4,
+    "lie": 0.84,
+    "aim": 0.1
   },
   "allow_attachment_types": [
     "scope",

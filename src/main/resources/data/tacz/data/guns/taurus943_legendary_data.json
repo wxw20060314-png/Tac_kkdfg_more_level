@@ -160,10 +160,10 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.2,
-    "move": 1.4,
-    "sneak": 0.5,
-    "lie": 0.6,
+    "stand": 0.75,
+    "move": 0.75,
+    "sneak": 0.3,
+    "lie": 0.3,
     "aim": 0.04
   }
 }

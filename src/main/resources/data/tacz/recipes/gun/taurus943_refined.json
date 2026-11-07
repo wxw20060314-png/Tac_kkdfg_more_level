@@ -3,19 +3,7 @@
   "materials": [
     {
       "item": {
-        "tag": "forge:gems/lapis"
-      },
-      "count": 1
-    },
-    {
-      "item": {
         "tag": "forge:ingots/iron"
-      },
-      "count": 6
-    },
-    {
-      "item": {
-        "tag": "minecraft:logs"
       },
       "count": 1
     },

@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:45acp",
   "rpm": 450,
   "bullet": {
@@ -7,7 +8,7 @@
     "damage": 15.0,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.36,
+      "armor_ignore": 0.6,
       "head_shot_multiplier": 1.925,
       "damage_adjust": [
         {
@@ -125,10 +126,10 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.53,
-    "move": 1.7,
-    "sneak": 1.0625,
-    "lie": 0.6375,
-    "aim": 0.14875
+    "stand": 1.62,
+    "move": 1.8,
+    "sneak": 1.125,
+    "lie": 0.675,
+    "aim": 0.175
   }
 }

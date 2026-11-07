@@ -1,0 +1,8 @@
+{
+  "name": "tacz.gun.scar_mk20_improved.name",
+  "display": "tacz:scar_mk20_display",
+  "data": "tacz:scar_mk20_improved_data",
+  "tooltip": "tacz.gun.scar_mk20_improved.desc",
+  "type": "dmr",
+  "sort": 9
+}

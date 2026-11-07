@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:rpg_rocket",
   "rpm": 150,
   "ammo_amount": 1,
@@ -115,11 +116,11 @@
     ]
   },
   "inaccuracy": {
-    "stand": 1.2,
-    "move": 1.6,
-    "sneak": 0.8,
-    "lie": 0.6,
-    "aim": 0.1
+    "stand": 1.8,
+    "move": 2.4,
+    "sneak": 1.2,
+    "lie": 0.9,
+    "aim": 0.25
   },
   "melee": {
     "distance": 1,

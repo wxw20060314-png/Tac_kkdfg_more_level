@@ -1,4 +1,5 @@
 {
+  "allow_ammo_unload": true,
   "ammo": "tacz:45acp",
   "rpm": 350,
   "bullet": {
@@ -7,16 +8,16 @@
     "damage": 27.5,
     "tracer_count_interval": 0,
     "extra_damage": {
-      "armor_ignore": 0.68,
+      "armor_ignore": 0.8,
       "head_shot_multiplier": 1.95,
       "damage_adjust": [
         {
-          "distance": 18,
+          "distance": 19,
           "damage": 27.5
         },
         {
           "distance": 40,
-          "damage": 17.5
+          "damage": 22.5
         },
         {
           "distance": "infinite",
@@ -24,7 +25,7 @@
         }
       ]
     },
-    "speed": 170,
+    "speed": 180,
     "gravity": 0.0825,
     "knockback": 0,
     "friction": 0.035,
@@ -41,17 +42,17 @@
   "reload": {
     "type": "magazine",
     "feed": {
-      "empty": 1.96,
+      "empty": 1.5,
       "tactical": 1.16
     },
     "cooldown": {
-      "empty": 2.48,
-      "tactical": 1.98
+      "empty": 2,
+      "tactical": 1.7
     }
   },
   "draw_time": 0.49,
   "put_away_time": 0.28,
-  "aim_time": 0.08,
+  "aim_time": 0.16,
   "sprint_time": 0.05,
   "weight": 1.2,
   "movement_speed": {
@@ -72,26 +73,12 @@
       {
         "time": 0,
         "value": [
-          2.75,
-          2.75
+          1.5,
+          1.5
         ]
       },
       {
-        "time": 0.04,
-        "value": [
-          1.75,
-          1.75
-        ]
-      },
-      {
-        "time": 0.08,
-        "value": [
-          2.25,
-          2.25
-        ]
-      },
-      {
-        "time": 0.27,
+        "time": 0.2,
         "value": [
           0.1,
           0.1
@@ -105,7 +92,7 @@
         ]
       },
       {
-        "time": 0.55,
+        "time": 0.4,
         "value": [
           0,
           0
@@ -144,10 +131,10 @@
     ]
   },
   "inaccuracy": {
-    "stand": 0.9075,
-    "move": 1.0725,
-    "sneak": 0.5225,
-    "lie": 0.4125,
-    "aim": 0.088
+    "stand": 1.05,
+    "move": 1.225,
+    "sneak": 0.665,
+    "lie": 0.525,
+    "aim": 0.16
   }
 }
