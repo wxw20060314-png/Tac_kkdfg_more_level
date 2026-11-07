@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
 import com.kkdfg.Tacz_morelevel.api.TaczCombatCrawlMob;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.core.BlockPos;
@@ -92,6 +93,7 @@ public class MobTaczCombatCrawlGoal extends Goal {
     @Override
     public boolean canUse() {
         return this.enabled
+                && !HorseRidingNpc.suppressesFootGoals(this.soldier)
                 && !this.soldier.level().isClientSide()
                 && this.shouldCombatCrawl()
                 && this.hasSolidCrawlGroundBelow();

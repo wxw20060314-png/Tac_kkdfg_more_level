@@ -81,6 +81,12 @@ import net.minecraft.world.level.ServerLevelAccessor;
  */
 public final class CeilingDuelEntity extends AbstractHolsterGunSoldierEntity {
 
+    @Override
+    public boolean adoptsHorseRiding() {
+        return false;
+    }
+
+
     public static final ResourceLocation MAIN_GUN =
             ResourceLocation.fromNamespaceAndPath("tacz", "m4a1_ceiling");
 

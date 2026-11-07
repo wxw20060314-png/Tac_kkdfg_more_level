@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
 import com.kkdfg.Tacz_morelevel.api.JumpActingMob;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
 import com.tacz.guns.api.item.IGun;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,6 +40,7 @@ public class MobRandomJumpGoal extends Goal {
     @Override
     public boolean canUse() {
         return this.enabled
+                && !HorseRidingNpc.suppressesFootGoals(this.mob)
                 && this.mayDecorate()
                 && this.hasLivingTarget()
                 && this.canSeeTarget()
@@ -48,6 +50,7 @@ public class MobRandomJumpGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return this.enabled
+                && !HorseRidingNpc.suppressesFootGoals(this.mob)
                 && this.mayDecorate()
                 && this.hasLivingTarget()
                 && this.canSeeTarget()

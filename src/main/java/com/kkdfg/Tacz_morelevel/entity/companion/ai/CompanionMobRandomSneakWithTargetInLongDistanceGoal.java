@@ -1,5 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.companion.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -52,6 +53,7 @@ public class CompanionMobRandomSneakWithTargetInLongDistanceGoal extends Goal {
     @Override
     public boolean canUse() {
         return CompanionMobSneakGuard.maySneak(this.companion)
+                && !HorseRidingNpc.suppressesFootGoals(this.companion)
                 && this.isRunnable()
                 && this.targetValidAndInLongSneakDistance();
     }
@@ -59,6 +61,7 @@ public class CompanionMobRandomSneakWithTargetInLongDistanceGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return CompanionMobSneakGuard.maySneak(this.companion)
+                && !HorseRidingNpc.suppressesFootGoals(this.companion)
                 && this.isRunnable()
                 && this.targetValidAndInLongSneakDistance();
     }

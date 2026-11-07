@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.companion.ai;
 
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierGunPassthroughSight;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import com.kkdfg.Tacz_morelevel.integration.tacz.SoldierTaczCrawlHelper;
 import net.minecraft.core.BlockPos;
@@ -79,6 +80,7 @@ public class CompanionMobTaczCombatCrawlGoal extends Goal {
     @Override
     public boolean canUse() {
         return this.isRunnable()
+                && !HorseRidingNpc.suppressesFootGoals(this.companion)
                 && !this.companion.level().isClientSide()
                 && this.companion.mayUseCombatCrouchOrCrawl()
                 && this.shouldCombatCrawl()

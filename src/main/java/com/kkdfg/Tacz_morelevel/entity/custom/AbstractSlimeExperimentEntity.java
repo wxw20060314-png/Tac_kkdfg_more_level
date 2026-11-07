@@ -112,7 +112,8 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
                 JumpActingMob,
                 SoldierWeaponArrangeHost,
                 MobCreativeAmmoBoxHolder,
-                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob,
+                com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc {
 
     public static final String TEXTURE_FOLDER = "slime_experiment";
     public static final ResourceLocation SKIN_TEXTURE =
@@ -226,6 +227,11 @@ public abstract class AbstractSlimeExperimentEntity extends Monster
     private int currentJumpTier;
     /** 本拍对当前目标的交火看见。默认头→身→脚。 */
     private boolean gunCombatSight;
+
+    @Override
+    public boolean adoptsHorseRiding() {
+        return false;
+    }
 
     protected AbstractSlimeExperimentEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);

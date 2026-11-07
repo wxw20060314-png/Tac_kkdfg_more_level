@@ -65,6 +65,12 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class BombSightEntity extends AbstractHolsterGunSoldierEntity {
 
+    @Override
+    public boolean adoptsHorseRiding() {
+        return false;
+    }
+
+
     public static final ResourceLocation HOLSTER_GUN =
             ResourceLocation.fromNamespaceAndPath("tacz", "aa12_shockwave");
 

@@ -72,6 +72,12 @@ import net.minecraft.world.level.ServerLevelAccessor;
  */
 public final class BombBabyEntity extends AbstractDualGunSoldierEntity {
 
+    @Override
+    public boolean adoptsHorseRiding() {
+        return false;
+    }
+
+
     /** 与 {@code textures/entity/bomb_baby/skin_*.png} 数量一致。 */
     public static final int BOMB_BABY_SKIN_COUNT = 3;
 

@@ -1,5 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
@@ -151,6 +152,9 @@ public class MobGunRangedMoveGoal<T extends Mob & RangedAttackMob> extends Goal
 
     @Override
     public boolean canUse() {
+        if (HorseRidingNpc.suppressesFootGoals(this.mob)) {
+            return false;
+        }
         LivingEntity target = this.mob.getTarget();
         if (target == null || !target.isAlive() || !IGun.mainHandHoldGun(this.mob)) {
             return false;
@@ -160,6 +164,9 @@ public class MobGunRangedMoveGoal<T extends Mob & RangedAttackMob> extends Goal
 
     @Override
     public boolean canContinueToUse() {
+        if (HorseRidingNpc.suppressesFootGoals(this.mob)) {
+            return false;
+        }
         return (this.canUse() || !this.mob.getNavigation().isDone()) && IGun.mainHandHoldGun(this.mob);
     }
 

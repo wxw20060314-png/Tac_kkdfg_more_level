@@ -76,6 +76,12 @@ import net.minecraft.world.level.ServerLevelAccessor;
  */
 public final class WarMachineEntity extends AbstractDualGunSoldierEntity {
 
+    @Override
+    public boolean adoptsHorseRiding() {
+        return false;
+    }
+
+
     private static final EntityDataAccessor<Boolean> DATA_POWER_MECH_FLYING =
             SynchedEntityData.defineId(WarMachineEntity.class, EntityDataSerializers.BOOLEAN);
 

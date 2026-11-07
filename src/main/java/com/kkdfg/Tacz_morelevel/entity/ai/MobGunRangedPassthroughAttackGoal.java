@@ -1,5 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.tacz.guns.api.item.IGun;
 import java.util.EnumSet;
 import net.minecraft.util.Mth;
@@ -172,12 +173,18 @@ public class MobGunRangedPassthroughAttackGoal<T extends Mob & RangedAttackMob> 
 
     @Override
     public boolean canUse() {
+        if (HorseRidingNpc.suppressesFootGoals(this.mob)) {
+            return false;
+        }
         LivingEntity target = this.mob.getTarget();
         return target != null && target.isAlive() && IGun.mainHandHoldGun(this.mob);
     }
 
     @Override
     public boolean canContinueToUse() {
+        if (HorseRidingNpc.suppressesFootGoals(this.mob)) {
+            return false;
+        }
         return (this.canUse() || !this.mob.getNavigation().isDone()) && IGun.mainHandHoldGun(this.mob);
     }
 

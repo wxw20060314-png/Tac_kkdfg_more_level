@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.companion.ai;
 
 import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.entity.companion.AbstractFriendEntity;
 import com.tacz.guns.api.item.IGun;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,6 +50,7 @@ public class CompanionMobRandomJumpGoal extends Goal {
     @Override
     public boolean canUse() {
         return this.isRunnable()
+                && !HorseRidingNpc.suppressesFootGoals(this.companion)
                 && this.hasLivingTarget()
                 && this.canSeeTarget()
                 && this.isWithinJumpDistance();
@@ -57,6 +59,7 @@ public class CompanionMobRandomJumpGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return this.isRunnable()
+                && !HorseRidingNpc.suppressesFootGoals(this.companion)
                 && this.hasLivingTarget()
                 && this.canSeeTarget()
                 && this.isWithinJumpDistance();

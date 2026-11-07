@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
 import com.kkdfg.Tacz_morelevel.effect.ModMobEffects;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.tacz.guns.api.item.IGun;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -47,12 +48,18 @@ public class MobRandomSneakWithTargetInShortDistanceGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.enabled && this.mayDecorate() && this.targetValidAndWithinSneakDistance();
+        return this.enabled
+                && !HorseRidingNpc.suppressesFootGoals(this.mob)
+                && this.mayDecorate()
+                && this.targetValidAndWithinSneakDistance();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.enabled && this.mayDecorate() && this.targetValidAndWithinSneakDistance();
+        return this.enabled
+                && !HorseRidingNpc.suppressesFootGoals(this.mob)
+                && this.mayDecorate()
+                && this.targetValidAndWithinSneakDistance();
     }
 
     private boolean mayDecorate() {

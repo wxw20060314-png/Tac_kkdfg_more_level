@@ -1,5 +1,6 @@
 package com.kkdfg.Tacz_morelevel.entity.ai;
 
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadCapableMob;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadEventType;
 import com.kkdfg.Tacz_morelevel.entity.ai.simthread.SimThreadServices;
@@ -54,6 +55,9 @@ public class MobGunFindCoverRequestGoal<T extends Mob & SimThreadCapableMob> ext
 
     @Override
     public boolean canUse() {
+        if (HorseRidingNpc.suppressesFootGoals(this.mob)) {
+            return false;
+        }
         if (this.mob.getLocomotionMode() != SoldierLocomotionMode.NORMAL) {
             return false;
         }

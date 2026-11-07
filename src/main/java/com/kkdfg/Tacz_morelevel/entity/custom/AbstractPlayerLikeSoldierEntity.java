@@ -30,6 +30,11 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingGroundPathNavigation;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingPathSource;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatSense;
 import com.kkdfg.Tacz_morelevel.entity.ai.ThrowableThreatKind;
@@ -138,7 +143,9 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
                 SpawnArmorConfigurableMob, TaczCombatCrawlMob, TaczGunSoundInvestigatingMob, TaczPlayerLikeMob,
                 JumpActingMob, SoldierWeaponArrangeHost, GunCombatSightHolder, MobCreativeAmmoBoxHolder,
                 SimThreadCapableMob, SoldierAlertness, SoldierThrowableThreatSense,
-                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob,
+                RidingPathSource,
+                HorseRidingNpc {
 
     private final SimThreadCapableSupport simThreadSupport =
             new SimThreadCapableSupport(this::getCoverModeDurationTicks);
@@ -295,6 +302,11 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     /** 调查任务的过期 tick 值（{@link #tickCount} + {@link #GUN_SOUND_MEMORY_TICKS}）；仅服务端有效。 */
     private int investigateGunSoundUntilTick;
 
+    /** 骑行寻路，与步行 {@code navigation} 分开，不随上下马替换。 */
+    private final RidingGroundPathNavigation ridingPathNavigation;
+    /** 骑行横移。马可以暂时没有，控制每拍再取。 */
+    private final RidingMoveControl ridingMoveControl;
+
     /** 下一次 {@link #getJumpPower()} 用的档；消费后归 {@link #defaultJumpTier()}。子类可细改。 */
     private int currentJumpTier;
     /** 本拍对当前目标的交火看见。默认头→身→脚。 */
@@ -311,6 +323,8 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
 
     protected AbstractPlayerLikeSoldierEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        this.ridingPathNavigation = new RidingGroundPathNavigation(this, level);
+        this.ridingMoveControl = new RidingMoveControl(this);
         this.lookControl = new SoldierPlayerLikeLookControl(this);
         this.moveControl = new SoldierMoveControl(this, this.allowsCrawlPathfinding());
         this.applyEquipmentDropChances();
@@ -320,7 +334,13 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
+        this.goalSelector.addGoal(2, new HorseRidingMoveGoal(this));
         this.resetJumpTierToDefault();
+    }
+
+    @Override
+    public void stopFootNavigation() {
+        this.navigation.stop();
     }
 
     /** 趴寻路白名单；仅返回常量，避免构造期读未初始化字段。 */
@@ -331,6 +351,21 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
     @Override
     protected PathNavigation createNavigation(Level level) {
         return new SoldierGroundPathNavigation(this, level, this.allowsCrawlPathfinding());
+    }
+
+    @Override
+    public PathNavigation ridingPathNavigation() {
+        return this.ridingPathNavigation;
+    }
+
+    @Override
+    public RidingMoveControl ridingMoveControl() {
+        return this.ridingMoveControl;
+    }
+
+    @Override
+    public boolean adoptsHorseRiding() {
+        return true;
     }
 
     @Override

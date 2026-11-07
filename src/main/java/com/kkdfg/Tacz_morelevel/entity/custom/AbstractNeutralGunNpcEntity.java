@@ -24,6 +24,11 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingGroundPathNavigation;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingMoveControl;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingPathSource;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierPlayerLikeLookControl;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatScan;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierThrowableThreatSense;
@@ -98,7 +103,9 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
                 SimThreadCapableMob,
                 SoldierAlertness,
                 SoldierThrowableThreatSense,
-                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob {
+                com.kkdfg.Tacz_morelevel.api.GunStrafeSpeedMob,
+                RidingPathSource,
+                HorseRidingNpc {
 
     /** 中立持枪单位的战斗属性（商人等）。 */
     protected abstract Config.NpcAttributeStats configuredAttributeStats();
@@ -135,6 +142,11 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     @Nullable
     private BlockPos investigateGunSoundPos;
     private int investigateGunSoundUntilTick;
+
+    /** 骑行寻路，与步行 {@code navigation} 分开，不随上下马替换。 */
+    private final RidingGroundPathNavigation ridingPathNavigation;
+    /** 骑行横移。马可以暂时没有，控制每拍再取。 */
+    private final RidingMoveControl ridingMoveControl;
 
     /** 下一次 {@link #getJumpPower()} 用的档；消费后归 {@link #defaultJumpTier()}。子类可细改。 */
     private int currentJumpTier;
@@ -182,6 +194,8 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
 
     protected AbstractNeutralGunNpcEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
+        this.ridingPathNavigation = new RidingGroundPathNavigation(this, level);
+        this.ridingMoveControl = new RidingMoveControl(this);
         this.lookControl = new SoldierPlayerLikeLookControl(this);
         this.moveControl = new SoldierMoveControl(this, this.allowsCrawlPathfinding());
         this.applyEquipmentDropChances();
@@ -196,7 +210,13 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
         // 闲置收枪到副手；勿挂士兵式 IdleMainhandArrange（会把枪拎回主手）。
         this.goalSelector.addGoal(1, new MobGunIdleOffhandArrangeGoal(this));
+        this.goalSelector.addGoal(2, new HorseRidingMoveGoal(this));
         this.resetJumpTierToDefault();
+    }
+
+    @Override
+    public void stopFootNavigation() {
+        this.navigation.stop();
     }
 
     /** 趴寻路白名单；仅返回常量，避免构造期读未初始化字段。 */
@@ -207,6 +227,21 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
     @Override
     protected PathNavigation createNavigation(Level level) {
         return new SoldierGroundPathNavigation(this, level, this.allowsCrawlPathfinding());
+    }
+
+    @Override
+    public PathNavigation ridingPathNavigation() {
+        return this.ridingPathNavigation;
+    }
+
+    @Override
+    public RidingMoveControl ridingMoveControl() {
+        return this.ridingMoveControl;
+    }
+
+    @Override
+    public boolean adoptsHorseRiding() {
+        return true;
     }
 
     @Override
