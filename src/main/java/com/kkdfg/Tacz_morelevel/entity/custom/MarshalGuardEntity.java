@@ -7,6 +7,10 @@ import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.api.SpawnArmorEnchantableMob;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardOwnerHurtByTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardOwnerHurtTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MarshalGuardShareTargetToOwnerGoal;
@@ -100,6 +104,10 @@ public final class MarshalGuardEntity extends AbstractPlayerLikeSoldierEntity
 
     public MarshalGuardEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(3, new HorseMountGoal(this));
+        this.goalSelector.addGoal(3, new HorseDismountGoal(this));
+        this.goalSelector.addGoal(3, new HorseArmorEquipGoal(this));
+        this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.xpReward = 0;
         this.applyEquipmentDropChances();
         this.reassessWeaponGoal();

@@ -5,6 +5,10 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunNearestAttackablePassthroughTargetGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
@@ -156,6 +160,10 @@ public final class AnnihilatorEntity extends AbstractPlayerLikeSoldierEntity {
 
     public AnnihilatorEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(3, new HorseMountGoal(this));
+        this.goalSelector.addGoal(3, new HorseDismountGoal(this));
+        this.goalSelector.addGoal(3, new HorseArmorEquipGoal(this));
+        this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
         this.reassessWeaponGoal();
     }

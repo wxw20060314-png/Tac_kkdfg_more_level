@@ -676,29 +676,29 @@ public final class ModItems {
     public static final RegistryObject<Item> SEVENTH_BULLETPROOF_BOOTS =
             registerTierArmor("seventh_bulletproof_boots", BulletproofArmorTier.SEVENTH, ArmorItem.Type.BOOTS);
 
-    /** 六级防弹马甲：整套六级减伤；原版护甲点与钻马甲同为 11。 */
+    /** 六级防弹马甲：整套六级减伤；原版护甲点 20。 */
     public static final RegistryObject<Item> SIXTH_BULLETPROOF_HORSE_ARMOR =
-            registerHorseArmor("sixth_bulletproof_horse_armor", 6, 11);
+            registerHorseArmor("sixth_bulletproof_horse_armor", 6, 20);
 
-    /** 七级防弹马甲：整套七级减伤；原版护甲点 15。 */
+    /** 七级防弹马甲：整套七级减伤；原版护甲点 30。 */
     public static final RegistryObject<Item> SEVENTH_BULLETPROOF_HORSE_ARMOR =
-            registerHorseArmor("seventh_bulletproof_horse_armor", 7, 15);
+            registerHorseArmor("seventh_bulletproof_horse_armor", 7, 30);
 
-    /** 爆炎七级马甲：等级 7。事件以后再接。 */
+    /** 爆炎七级马甲：等级 7，护甲点 30。 */
     public static final RegistryObject<Item> SEVENTH_BLAZEFLAME_BULLETPROOF_HORSE_ARMOR =
-            registerHorseArmor("seventh_blazeflame_bulletproof_horse_armor", 7, 15);
+            registerHorseArmor("seventh_blazeflame_bulletproof_horse_armor", 7, 30);
 
-    /** 深渊七级马甲：等级 7。事件以后再接。 */
+    /** 深渊七级马甲：等级 7，护甲点 30。 */
     public static final RegistryObject<Item> SEVENTH_ABYSS_BULLETPROOF_HORSE_ARMOR =
-            registerHorseArmor("seventh_abyss_bulletproof_horse_armor", 7, 15);
+            registerHorseArmor("seventh_abyss_bulletproof_horse_armor", 7, 30);
 
-    /** 幽匿七级马甲：防弹等级 8。 */
+    /** 幽匿七级马甲：防弹等级 8，护甲点 30。 */
     public static final RegistryObject<Item> SEVENTH_SCULK_BULLETPROOF_HORSE_ARMOR =
-            registerHorseArmor("seventh_sculk_bulletproof_horse_armor", 8, 15);
+            registerHorseArmor("seventh_sculk_bulletproof_horse_armor", 8, 30);
 
-    /** 辐抗七级马甲：等级 7。 */
+    /** 辐抗七级马甲：等级 7，护甲点 30。 */
     public static final RegistryObject<Item> SEVENTH_RADIATION_BULLETPROOF_HORSE_ARMOR =
-            registerHorseArmor("seventh_radiation_bulletproof_horse_armor", 7, 15);
+            registerHorseArmor("seventh_radiation_bulletproof_horse_armor", 7, 30);
 
     /**
      * 爆破七级套：数值同七级防弹；独立 Gecko {@code geo/armor/seventh_blast_bulletproof.geo.json}；

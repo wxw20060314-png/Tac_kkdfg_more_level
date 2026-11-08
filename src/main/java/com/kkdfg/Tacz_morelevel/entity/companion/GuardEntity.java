@@ -14,6 +14,7 @@ import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.companion.ai.CompanionAttackMonsterGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
@@ -117,6 +118,15 @@ public final class GuardEntity extends AbstractSoldierArrangeFriendEntity
 
     public GuardEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
+        Config.NpcAttributeStats rings = Config.marshalGuardAttributes;
+        this.goalSelector.addGoal(
+                2,
+                new HorseRidingMoveGoal(
+                        this,
+                        rings.gunRadius,
+                        rings.gunStrafeOuterRingFrac,
+                        rings.gunStrafeInnerRingFrac,
+                        rings.seeTimeToStopMove));
         this.reassessWeaponGoal();
     }
 

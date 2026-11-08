@@ -6,6 +6,10 @@ import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
@@ -107,6 +111,10 @@ public final class LevMarshalEntity extends AbstractHolsterGunSoldierEntity {
 
     public LevMarshalEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(3, new HorseMountGoal(this));
+        this.goalSelector.addGoal(3, new HorseDismountGoal(this));
+        this.goalSelector.addGoal(3, new HorseArmorEquipGoal(this));
+        this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
         this.reassessWeaponGoal();
     }

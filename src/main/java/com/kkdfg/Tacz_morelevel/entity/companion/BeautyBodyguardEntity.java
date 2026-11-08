@@ -5,6 +5,7 @@ import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
@@ -73,6 +74,14 @@ public final class BeautyBodyguardEntity extends AbstractFriendlyCompanionEntity
 
     public BeautyBodyguardEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(
+                2,
+                new HorseRidingMoveGoal(
+                        this,
+                        Config.bodyguardGunRadiusFor(PROFILE),
+                        Config.bodyguardGunStrafeOuterRingFracFor(PROFILE),
+                        Config.bodyguardGunStrafeInnerRingFracFor(PROFILE),
+                        Config.bodyguardSeeTimeToStopMoveFor(PROFILE)));
         this.reassessWeaponGoal();
     }
 

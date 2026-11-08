@@ -24,7 +24,6 @@ import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidFlashbangLookGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierAvoidThrowableGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierFleeFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierMoveControl;
-import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingMoveGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingGroundPathNavigation;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.RidingMoveControl;
@@ -173,7 +172,6 @@ public abstract class AbstractFriendEntity extends PathfinderMob
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
-        this.goalSelector.addGoal(2, new HorseRidingMoveGoal(this));
         this.resetJumpTierToDefault();
     }
 

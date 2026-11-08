@@ -1,5 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai.riding;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,12 +15,17 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.NodeEvaluator;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RidingMoveControl implements Control {
    public static final float MIN_SPEED = 5.0E-4F;
    public static final float MIN_SPEED_SQR = 2.5000003E-7F;
    protected static final int MAX_TURN = 90;
+   private static final double COLLISION_EPSILON = 1.0E-7D;
+   private static final double MAX_STRAFE_CHECK_DISTANCE = 2.0D;
    protected final RidingPathSource rider;
    protected double wantedX;
    protected double wantedY;
@@ -70,13 +77,17 @@ public class RidingMoveControl implements Control {
    }
 
    public void strafe(float pForward, float pStrafe) {
+      this.strafe(pForward, pStrafe, 1.0D);
+   }
+
+   public void strafe(float pForward, float pStrafe, double pSpeed) {
       if (this.currentMount() == null) {
          return;
       }
       this.operation = RidingMoveControl.Operation.STRAFE;
       this.strafeForwards = pForward;
       this.strafeRight = pStrafe;
-      this.speedModifier = 1.0D;
+      this.speedModifier = pSpeed;
    }
 
    public void tick() {
@@ -103,8 +114,12 @@ public class RidingMoveControl implements Control {
          float f7 = f2 * f6 - f3 * f5;
          float f8 = f3 * f6 + f2 * f5;
          if (!this.isWalkable(mount, f7, f8)) {
-            this.strafeForwards = 1.0F;
-            this.strafeRight = 0.0F;
+             this.strafeForwards = 0.0F;
+             this.strafeRight = 0.0F;
+             float yaw = Mth.wrapDegrees(mount.getYRot() + 10.0F);
+             mount.setYRot(yaw);
+             mount.setYHeadRot(yaw);
+             mount.yBodyRot = yaw;
          }
 
          mount.setSpeed(f1);
@@ -143,9 +158,7 @@ public class RidingMoveControl implements Control {
 
    }
 
-   /**
-    * @return true if the mob can walk successfully to a given X and Z
-    */
+   /** 检查马沿横移方向的通行空间、跨步净空及落脚支撑。 */
    private boolean isWalkable(AbstractHorse mount, float pRelativeX, float pRelativeZ) {
       PathNavigation pathnavigation = this.rider.ridingPathNavigation();
       if (pathnavigation == null || !(this.rider instanceof Mob riderMob)) {
@@ -157,43 +170,82 @@ public class RidingMoveControl implements Control {
          return true;
       }
 
+      double distanceSqr = (double)pRelativeX * pRelativeX + (double)pRelativeZ * pRelativeZ;
+      if (!Double.isFinite(distanceSqr) || distanceSqr > MAX_STRAFE_CHECK_DISTANCE * MAX_STRAFE_CHECK_DISTANCE) {
+         return false;
+      }
+
       int x = Mth.floor(mount.getX() + (double)pRelativeX);
       int y = mount.getBlockY();
       int z = Mth.floor(mount.getZ() + (double)pRelativeZ);
       BlockPathTypes here = nodeevaluator.getBlockPathType(mount.level(), x, y, z);
-      if (riderMob.getPathfindingMalus(here) >= 0.0F) {
-         return true;
-      }
-
-      if (this.canStepUp(mount, nodeevaluator, riderMob, x, y, z, here)) {
-         return true;
-      }
-
-      if (here != BlockPathTypes.OPEN) {
+      // 实心障碍可以尝试跨步，水等负代价地形直接排除。
+      if (here != BlockPathTypes.BLOCKED && RidingWalkNodeEvaluator.pathMalus(riderMob, here) < 0.0F) {
          return false;
       }
+      // 平地沿用路径类型。空气和实心障碍才进入跳跃、落下的碰撞箱。
+      if (here != BlockPathTypes.OPEN && RidingWalkNodeEvaluator.pathMalus(riderMob, here) >= 0.0F) {
+         return true;
+      }
 
-      BlockPathTypes below = nodeevaluator.getBlockPathType(mount.level(), x, y - 1, z);
-      return below != BlockPathTypes.OPEN && riderMob.getPathfindingMalus(below) >= 0.0F;
+      AABB body = mount.getBoundingBox();
+      AABB searchBox = body.expandTowards(pRelativeX, 0.0D, pRelativeZ)
+            .expandTowards(0.0D, 1.0D, 0.0D)
+            .expandTowards(0.0D, -1.0D - COLLISION_EPSILON * 2.0D, 0.0D);
+      List<VoxelShape> collisions = new ArrayList<>();
+      mount.level().getBlockCollisions(mount, searchBox).forEach(collisions::add);
+
+      AABB landing = findStrafeLanding(body, pRelativeX, pRelativeZ, 1.0D, 1.0D, collisions);
+      if (landing == null) {
+         return false;
+      }
+      // 半砖等非整格表面用上方的路径格，实际支撑已由碰撞形状确认。
+      int landingY = Mth.ceil(landing.minY - COLLISION_EPSILON);
+      BlockPathTypes landingType = nodeevaluator.getBlockPathType(mount.level(), x, landingY, z);
+      return RidingWalkNodeEvaluator.pathMalus(riderMob, landingType) >= 0.0F;
    }
 
-   /** 上一格落差用马当前站立面，超过 1 格就拒绝。栅栏、不可通行铁轨、活板门、细雪不往上探。 */
-   private boolean canStepUp(AbstractHorse mount, NodeEvaluator nodeevaluator, Mob riderMob, int x, int y, int z, BlockPathTypes here) {
-      if (here == BlockPathTypes.FENCE
-         || here == BlockPathTypes.UNPASSABLE_RAIL
-         || here == BlockPathTypes.TRAPDOOR
-         || here == BlockPathTypes.POWDER_SNOW) {
-         return false;
+   /** 各段沿原版的分轴碰撞流程检查，避免大包围盒将台阶本体误判为障碍。 */
+   @Nullable
+   private static AABB findStrafeLanding(
+         AABB body, double dx, double dz, double stepHeight, double fallDistance, List<VoxelShape> collisions) {
+      double rise = 0.0D;
+      if (!canMoveHorizontally(body, dx, dz, collisions)) {
+         // 先计入前方顶板，允许在低顶下跨过半砖；再尝试只在起点抬升。
+         rise = Shapes.collide(Direction.Axis.Y, body.expandTowards(dx, 0.0D, dz), collisions, stepHeight);
+         if (rise <= COLLISION_EPSILON || !canMoveHorizontally(body.move(0.0D, rise, 0.0D), dx, dz, collisions)) {
+            rise = Shapes.collide(Direction.Axis.Y, body, collisions, stepHeight);
+            if (rise <= COLLISION_EPSILON || !canMoveHorizontally(body.move(0.0D, rise, 0.0D), dx, dz, collisions)) {
+               return null;
+            }
+         }
       }
 
-      double origin = RidingWalkNodeEvaluator.getFloorLevel(mount.level(), mount.blockPosition());
-      double stepped = RidingWalkNodeEvaluator.getFloorLevel(mount.level(), new BlockPos(x, y + 1, z));
-      if (stepped - origin > 1.0D) {
-         return false;
+      AABB moved = body.move(dx, rise, dz);
+      double downward = -(rise + fallDistance + COLLISION_EPSILON * 2.0D);
+      double drop = Shapes.collide(Direction.Axis.Y, moved, collisions, downward);
+      if (drop <= downward + COLLISION_EPSILON) {
+         return null;
       }
+      AABB landing = moved.move(0.0D, drop, 0.0D);
+      VoxelShape landingShape = Shapes.create(landing);
+      for (VoxelShape collision : collisions) {
+         if (Shapes.joinIsNotEmpty(collision, landingShape, BooleanOp.AND)) {
+            return null;
+         }
+      }
+      return landing;
+   }
 
-      BlockPathTypes above = nodeevaluator.getBlockPathType(mount.level(), x, y + 1, z);
-      return riderMob.getPathfindingMalus(above) >= 0.0F;
+   private static boolean canMoveHorizontally(AABB body, double dx, double dz, List<VoxelShape> collisions) {
+      if (Math.abs(dx) >= Math.abs(dz)) {
+         return Math.abs(Shapes.collide(Direction.Axis.X, body, collisions, dx) - dx) <= COLLISION_EPSILON
+               && Math.abs(Shapes.collide(Direction.Axis.Z, body.move(dx, 0.0D, 0.0D), collisions, dz) - dz)
+                     <= COLLISION_EPSILON;
+      }
+      return Math.abs(Shapes.collide(Direction.Axis.Z, body, collisions, dz) - dz) <= COLLISION_EPSILON
+            && Math.abs(Shapes.collide(Direction.Axis.X, body.move(0.0D, 0.0D, dz), collisions, dx) - dx)
+                  <= COLLISION_EPSILON;
    }
 
    /**

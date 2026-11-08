@@ -5,28 +5,32 @@
       "helmet": "tacz_morelevel:seventh_bulletproof_helmet",
       "chestplate": "tacz_morelevel:seventh_bulletproof_chestplate",
       "leggings": "tacz_morelevel:seventh_bulletproof_leggings",
-      "boots": "tacz_morelevel:seventh_bulletproof_boots"
+      "boots": "tacz_morelevel:seventh_bulletproof_boots",
+      "backpack": "tacz_morelevel:seventh_bulletproof_horse_armor_0"
     },
     {
       "weight": 1,
       "helmet": "tacz_morelevel:seventh_blazeflame_bulletproof_helmet",
       "chestplate": "tacz_morelevel:seventh_blazeflame_bulletproof_chestplate",
       "leggings": "tacz_morelevel:seventh_blazeflame_bulletproof_leggings",
-      "boots": "tacz_morelevel:seventh_blazeflame_bulletproof_boots"
+      "boots": "tacz_morelevel:seventh_blazeflame_bulletproof_boots",
+      "backpack": "tacz_morelevel:seventh_blazeflame_bulletproof_horse_armor_0"
     },
     {
       "weight": 1,
       "helmet": "tacz_morelevel:seventh_abyss_bulletproof_helmet",
       "chestplate": "tacz_morelevel:seventh_abyss_bulletproof_chestplate",
       "leggings": "tacz_morelevel:seventh_abyss_bulletproof_leggings",
-      "boots": "tacz_morelevel:seventh_abyss_bulletproof_boots"
+      "boots": "tacz_morelevel:seventh_abyss_bulletproof_boots",
+      "backpack": "tacz_morelevel:seventh_abyss_bulletproof_horse_armor_0"
     },
     {
       "weight": 1,
       "helmet": "tacz_morelevel:seventh_sculk_bulletproof_helmet",
       "chestplate": "tacz_morelevel:seventh_sculk_bulletproof_chestplate",
       "leggings": "tacz_morelevel:seventh_sculk_bulletproof_leggings",
-      "boots": "tacz_morelevel:seventh_sculk_bulletproof_boots"
+      "boots": "tacz_morelevel:seventh_sculk_bulletproof_boots",
+      "backpack": "tacz_morelevel:seventh_sculk_bulletproof_horse_armor_0"
     }
   ]
 }

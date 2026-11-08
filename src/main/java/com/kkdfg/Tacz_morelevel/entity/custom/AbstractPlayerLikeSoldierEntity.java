@@ -334,7 +334,15 @@ public abstract class AbstractPlayerLikeSoldierEntity extends Monster
         }
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0F);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
-        this.goalSelector.addGoal(2, new HorseRidingMoveGoal(this));
+        Config.NpcAttributeStats ridingRings = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                2,
+                new HorseRidingMoveGoal(
+                        this,
+                        ridingRings.gunRadius,
+                        ridingRings.gunStrafeOuterRingFrac,
+                        ridingRings.gunStrafeInnerRingFrac,
+                        ridingRings.seeTimeToStopMove));
         this.resetJumpTierToDefault();
     }
 

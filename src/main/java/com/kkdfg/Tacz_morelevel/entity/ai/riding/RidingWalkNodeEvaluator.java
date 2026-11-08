@@ -48,11 +48,11 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
          return;
       }
       this.entityWidth = Mth.floor(volume.getBbWidth() + 1.0F);
-      this.entityHeight = Mth.floor((float) (volume.getPassengersRidingOffset() + pMob.getBbHeight()) + 1.0F);
+      this.entityHeight = Mth.floor(volume.getBbHeight() + 1.0F);
       this.entityDepth = Mth.floor(volume.getBbWidth() + 1.0F);
    }
 
-   /** 水平碰撞和落点用脚下的马，高度加上骑手。没骑着马就用评估器自己的生物。 */
+   /** 碰撞和落点用脚下的马。没骑着马就用评估器自己的生物。 */
    private Mob volumeMob() {
       if (this.mob != null && this.mob.getVehicle() instanceof AbstractHorse horse) {
          return horse;
@@ -115,16 +115,25 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
       return this.getStartNode(new BlockPos(blockpos1.getX(), i, blockpos1.getZ()));
    }
 
+   /** 已经落水时允许高代价经过水格，岸上禁止主动入水。 */
+   public static float pathMalus(Mob mob, BlockPathTypes type) {
+      if (type == BlockPathTypes.WATER) {
+         Mob body = mob.getVehicle() instanceof AbstractHorse horse ? horse : mob;
+         return body.isInWater() ? 16.0F : -1.0F;
+      }
+      return mob.getPathfindingMalus(type);
+   }
+
    protected Node getStartNode(BlockPos pPos) {
       Node node = this.getNode(pPos);
       node.type = this.getBlockPathType(this.mob, node.asBlockPos());
-      node.costMalus = this.mob.getPathfindingMalus(node.type);
+      node.costMalus = pathMalus(this.mob, node.type);
       return node;
    }
 
    protected boolean canStartAt(BlockPos pPos) {
       BlockPathTypes blockpathtypes = this.getBlockPathType(this.mob, pPos);
-      return blockpathtypes != BlockPathTypes.OPEN && this.mob.getPathfindingMalus(blockpathtypes) >= 0.0F;
+      return blockpathtypes != BlockPathTypes.OPEN && pathMalus(this.mob, blockpathtypes) >= 0.0F;
    }
 
    public Target getGoal(double pX, double pY, double pZ) {
@@ -136,7 +145,7 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
       int j = 0;
       BlockPathTypes blockpathtypes = this.getCachedBlockType(this.mob, pNode.x, pNode.y + 1, pNode.z);
       BlockPathTypes blockpathtypes1 = this.getCachedBlockType(this.mob, pNode.x, pNode.y, pNode.z);
-      if (this.mob.getPathfindingMalus(blockpathtypes) >= 0.0F && blockpathtypes1 != BlockPathTypes.STICKY_HONEY) {
+      if (pathMalus(this.mob, blockpathtypes) >= 0.0F && blockpathtypes1 != BlockPathTypes.STICKY_HONEY) {
          j = Mth.floor(Math.max(1.0F, this.volumeMob().getStepHeight()));
       }
 
@@ -251,7 +260,7 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
          return null;
       } else {
          BlockPathTypes blockpathtypes = this.getCachedBlockType(this.mob, pX, pY, pZ);
-         float f = this.mob.getPathfindingMalus(blockpathtypes);
+         float f = pathMalus(this.mob, blockpathtypes);
          Mob body = this.volumeMob();
          double d1 = (double)body.getBbWidth() / 2.0D;
          if (f >= 0.0F) {
@@ -287,7 +296,7 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
                      return node;
                   }
 
-                  node = this.getNodeAndUpdateCostToMax(pX, pY, pZ, blockpathtypes, this.mob.getPathfindingMalus(blockpathtypes));
+                  node = this.getNodeAndUpdateCostToMax(pX, pY, pZ, blockpathtypes, pathMalus(this.mob, blockpathtypes));
                }
             }
 
@@ -306,7 +315,7 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
                   }
 
                   blockpathtypes = this.getCachedBlockType(this.mob, pX, pY, pZ);
-                  f = this.mob.getPathfindingMalus(blockpathtypes);
+                  f = pathMalus(this.mob, blockpathtypes);
                   if (blockpathtypes != BlockPathTypes.OPEN && f >= 0.0F) {
                      node = this.getNodeAndUpdateCostToMax(pX, pY, pZ, blockpathtypes, f);
                      break;
@@ -368,16 +377,16 @@ public class RidingWalkNodeEvaluator extends NodeEvaluator {
          BlockPathTypes blockpathtypes1 = BlockPathTypes.BLOCKED;
 
          for(BlockPathTypes blockpathtypes2 : enumset) {
-            if (pMob.getPathfindingMalus(blockpathtypes2) < 0.0F) {
+            if (pathMalus(pMob, blockpathtypes2) < 0.0F) {
                return blockpathtypes2;
             }
 
-            if (pMob.getPathfindingMalus(blockpathtypes2) >= pMob.getPathfindingMalus(blockpathtypes1)) {
+            if (pathMalus(pMob, blockpathtypes2) >= pathMalus(pMob, blockpathtypes1)) {
                blockpathtypes1 = blockpathtypes2;
             }
          }
 
-         return blockpathtypes == BlockPathTypes.OPEN && pMob.getPathfindingMalus(blockpathtypes1) == 0.0F && this.entityWidth <= 1 ? BlockPathTypes.OPEN : blockpathtypes1;
+         return blockpathtypes == BlockPathTypes.OPEN && pathMalus(pMob, blockpathtypes1) == 0.0F && this.entityWidth <= 1 ? BlockPathTypes.OPEN : blockpathtypes1;
       }
    }
 

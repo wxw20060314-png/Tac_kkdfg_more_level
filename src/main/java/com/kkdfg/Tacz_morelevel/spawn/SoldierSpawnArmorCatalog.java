@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
+import com.kkdfg.Tacz_morelevel.entity.SoldierBackpack;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -36,32 +37,36 @@ record ArmorSpawnOption(
         @Nullable Item helmet,
         @Nullable Item chestplate,
         @Nullable Item leggings,
-        @Nullable Item boots) {
+        @Nullable Item boots,
+        @Nullable Item backpack,
+        int backpackSlot) {
 
     SpawnArmorPick toPick() {
         if (bare) {
             return SpawnArmorPick.noArmor();
         }
-        return new SpawnArmorPick(false, helmet, chestplate, leggings, boots);
+        return new SpawnArmorPick(false, helmet, chestplate, leggings, boots, backpack, backpackSlot);
     }
 }
 
-/** 权重抽取结果：裸甲或四件护甲。 */
+/** 权重抽取结果：裸甲或四件护甲，另可带一件背包物品。 */
 record SpawnArmorPick(
         boolean bare,
         @Nullable Item helmet,
         @Nullable Item chestplate,
         @Nullable Item leggings,
-        @Nullable Item boots) {
+        @Nullable Item boots,
+        @Nullable Item backpack,
+        int backpackSlot) {
 
     static SpawnArmorPick noArmor() {
-        return new SpawnArmorPick(true, null, null, null, null);
+        return new SpawnArmorPick(true, null, null, null, null, null, -1);
     }
 }
 
 /**
  * 兵种生成护甲池：{@code data/tacz_morelevel/troop_armor/<poolId>.json}。
- * 每条含 weight 与四件护甲 id；纯注册表识别，不做套装映射。
+ * 每条含 weight 与四件护甲 id。可选 {@code backpack} 为 {@code 物品id_格子}，格子超出或切不开则忽略。
  */
 @Mod.EventBusSubscriber(modid = Tacz_MoreLevel.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class SoldierSpawnArmorCatalog
@@ -249,14 +254,54 @@ public final class SoldierSpawnArmorCatalog
         Item legs = resolveArmorItem(entry.get("leggings"), poolId);
         Item boots = resolveArmorItem(entry.get("boots"), poolId);
 
+        BackpackSpawn backpack = resolveBackpack(entry.get("backpack"));
         if (helmet == null && chest == null && legs == null && boots == null) {
-            return new ArmorSpawnOption(weight, true, null, null, null, null);
+            return new ArmorSpawnOption(weight, true, null, null, null, null, null, -1);
         }
         if (helmet == null || chest == null || legs == null || boots == null) {
             LOGGER.warn("troop_armor/{}.json: armor entry must have all four slots or all null", poolId);
             return null;
         }
-        return new ArmorSpawnOption(weight, false, helmet, chest, legs, boots);
+        return new ArmorSpawnOption(
+                weight, false, helmet, chest, legs, boots, backpack.item, backpack.slot);
+    }
+
+    /** {@code 命名空间:物品路径_格子}。切不开、格子越界、物品不存在则当没有。 */
+    private static BackpackSpawn resolveBackpack(@Nullable JsonElement element) {
+        if (element == null || element.isJsonNull() || !element.isJsonPrimitive() || !element.getAsJsonPrimitive().isString()) {
+            return BackpackSpawn.NONE;
+        }
+        String raw = element.getAsString();
+        if (raw == null) {
+            return BackpackSpawn.NONE;
+        }
+        raw = raw.trim();
+        int split = raw.lastIndexOf('_');
+        if (split <= 0 || split >= raw.length() - 1) {
+            return BackpackSpawn.NONE;
+        }
+        int slot;
+        try {
+            slot = Integer.parseInt(raw.substring(split + 1));
+        } catch (NumberFormatException ex) {
+            return BackpackSpawn.NONE;
+        }
+        if (slot < 0 || slot >= SoldierBackpack.SLOTS) {
+            return BackpackSpawn.NONE;
+        }
+        ResourceLocation id = ResourceLocation.tryParse(raw.substring(0, split));
+        if (id == null) {
+            return BackpackSpawn.NONE;
+        }
+        Item item = BuiltInRegistries.ITEM.get(id);
+        if (item == null || item == net.minecraft.world.item.Items.AIR) {
+            return BackpackSpawn.NONE;
+        }
+        return new BackpackSpawn(item, slot);
+    }
+
+    private record BackpackSpawn(@Nullable Item item, int slot) {
+        private static final BackpackSpawn NONE = new BackpackSpawn(null, -1);
     }
 
     @Nullable

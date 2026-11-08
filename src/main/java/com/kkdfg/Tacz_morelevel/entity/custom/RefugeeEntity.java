@@ -3,6 +3,10 @@ package com.kkdfg.Tacz_morelevel.entity.custom;
 import com.kkdfg.Tacz_morelevel.Config;
 import com.kkdfg.Tacz_morelevel.SoldierSpawnArmorProfile;
 import com.kkdfg.Tacz_morelevel.entity.ai.*;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -55,6 +59,10 @@ public final class RefugeeEntity extends AbstractPlayerLikeSoldierEntity {
 
     public RefugeeEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(3, new HorseMountGoal(this));
+        this.goalSelector.addGoal(3, new HorseDismountGoal(this));
+        this.goalSelector.addGoal(3, new HorseArmorEquipGoal(this));
+        this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.reassessWeaponGoal();
     }
     @Override

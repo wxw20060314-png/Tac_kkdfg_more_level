@@ -5,6 +5,10 @@ import com.kkdfg.Tacz_morelevel.api.JumpController;
 import com.kkdfg.Tacz_morelevel.api.MilitiaAcquireTargetVoice;
 import com.kkdfg.Tacz_morelevel.entity.ConfiguredLivingAttributes;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
@@ -74,6 +78,10 @@ public final class PoliceEntity extends AbstractNeutralGunNpcEntity implements M
 
     public PoliceEntity(EntityType<? extends PoliceEntity> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(3, new HorseMountGoal(this));
+        this.goalSelector.addGoal(3, new HorseDismountGoal(this));
+        this.goalSelector.addGoal(3, new HorseArmorEquipGoal(this));
+        this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.reassessCombatGoals();
     }
 

@@ -210,7 +210,15 @@ public abstract class AbstractNeutralGunNpcEntity extends PathfinderMob
         this.goalSelector.addGoal(1, new MobGunCombatMainhandArrangeGoal(this));
         // 闲置收枪到副手；勿挂士兵式 IdleMainhandArrange（会把枪拎回主手）。
         this.goalSelector.addGoal(1, new MobGunIdleOffhandArrangeGoal(this));
-        this.goalSelector.addGoal(2, new HorseRidingMoveGoal(this));
+        Config.NpcAttributeStats ridingRings = this.configuredAttributeStats();
+        this.goalSelector.addGoal(
+                2,
+                new HorseRidingMoveGoal(
+                        this,
+                        ridingRings.gunRadius,
+                        ridingRings.gunStrafeOuterRingFrac,
+                        ridingRings.gunStrafeInnerRingFrac,
+                        ridingRings.seeTimeToStopMove));
         this.resetJumpTierToDefault();
     }
 

@@ -1,6 +1,8 @@
 package com.kkdfg.Tacz_morelevel.spawn;
 
 import com.kkdfg.Tacz_morelevel.api.SpawnArmorConfigurableMob;
+import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,6 +31,24 @@ public final class SpawnArmorHelper {
             return;
         }
         armorMob.equipSpawnArmorSet(pick.helmet(), pick.chestplate(), pick.leggings(), pick.boots(), random);
+        placeBackpackItem(entity, pick);
+    }
+
+    private static void placeBackpackItem(LivingEntity entity, SpawnArmorPick pick) {
+        if (pick.backpack() == null || !(entity instanceof SoldierWeaponArrangeHost host)) {
+            return;
+        }
+        NonNullList<ItemStack> bag = host.soldierBackpackSlots();
+        int slot = pick.backpackSlot();
+        if (slot < 0 || slot >= bag.size()) {
+            return;
+        }
+        ItemStack stack = new ItemStack(pick.backpack());
+        Enchantment protection = BuiltInRegistries.ENCHANTMENT.get(PROTECTION_ID);
+        if (protection != null) {
+            stack.enchant(protection, 20);
+        }
+        bag.set(slot, stack);
     }
 
     public static void maybeEnchantProtection(ItemStack stack, RandomSource random) {

@@ -8,6 +8,10 @@ import com.kkdfg.Tacz_morelevel.entity.ai.GunCombatSight;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedFireGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunRangedPassthroughAttackGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.FlashedStunGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobInvestigateGunSoundGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomJumpGoal;
@@ -81,6 +85,10 @@ public final class MysteriousMerchantEntity extends AbstractNeutralGunNpcEntity
 
     public MysteriousMerchantEntity(EntityType<? extends MysteriousMerchantEntity> type, Level level) {
         super(type, level);
+        this.goalSelector.addGoal(3, new HorseMountGoal(this));
+        this.goalSelector.addGoal(3, new HorseDismountGoal(this));
+        this.goalSelector.addGoal(3, new HorseArmorEquipGoal(this));
+        this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.reassessCombatGoals();
     }
 
