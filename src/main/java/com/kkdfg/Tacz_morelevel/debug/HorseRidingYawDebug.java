@@ -1,5 +1,10 @@
-package com.kkdfg.Tacz_morelevel.event;
+package com.kkdfg.Tacz_morelevel.debug;
 
+/**
+ * 骑马 NPC 朝向打印。每 20 拍打出骑手和马的 yRot、yBodyRot、yHeadRot，客户端和服务器各一份。
+ * 下面整段是测试代码，不参与编译，也不注册事件。
+ */
+/*
 import com.kkdfg.Tacz_morelevel.Tacz_MoreLevel;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseRidingNpc;
 import com.mojang.logging.LogUtils;
@@ -11,14 +16,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
-/** 骑马 NPC：每 20 拍打出马和骑手的朝向。客户端、服务器各打一份。 */
 @Mod.EventBusSubscriber(modid = Tacz_MoreLevel.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public final class HorseRidingYawDebugEvents {
+public final class HorseRidingYawDebug {
 
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final int LOG_INTERVAL_TICKS = 20;
 
-    private HorseRidingYawDebugEvents() {}
+    private HorseRidingYawDebug() {}
 
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
@@ -45,3 +49,4 @@ public final class HorseRidingYawDebugEvents {
                 headMinusHorseBody);
     }
 }
+*/

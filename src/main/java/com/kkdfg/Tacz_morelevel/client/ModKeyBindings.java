@@ -20,6 +20,9 @@ public final class ModKeyBindings {
     /** 盔甲夜视开关（默认 O）；时空 / 动力机甲 / 特种 / 爆破 / 冲击波头盔。 */
     public static KeyMapping ARMOR_NIGHT_VISION;
 
+    /** 骑机械马时朝视线落点发射导弹（默认 V）。 */
+    public static KeyMapping MECHANICAL_HORSE_MISSILE;
+
     private ModKeyBindings() {}
 
     @SubscribeEvent
@@ -39,5 +42,13 @@ public final class ModKeyBindings {
                         GLFW.GLFW_KEY_O,
                         CATEGORY);
         event.register(ARMOR_NIGHT_VISION);
+
+        MECHANICAL_HORSE_MISSILE =
+                new KeyMapping(
+                        "key." + Tacz_MoreLevel.MOD_ID + ".mechanical_horse_missile",
+                        InputConstants.Type.KEYSYM,
+                        GLFW.GLFW_KEY_V,
+                        CATEGORY);
+        event.register(MECHANICAL_HORSE_MISSILE);
     }
 }

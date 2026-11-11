@@ -319,6 +319,12 @@ public class Tacz_MoreLevel
                     ModEntities.BOMB_CART.get(),
                     com.kkdfg.Tacz_morelevel.entity.client.BombCartRenderer::new);
             event.registerEntityRenderer(
+                    ModEntities.MECHANICAL_HORSE.get(),
+                    com.kkdfg.Tacz_morelevel.entity.client.MechanicalHorseRenderer::new);
+            event.registerEntityRenderer(
+                    ModEntities.MECHANICAL_HORSE_MISSILE.get(),
+                    com.kkdfg.Tacz_morelevel.entity.client.MechanicalHorseMissileRenderer::new);
+            event.registerEntityRenderer(
                     ModEntities.PUNISHER_SHOULDER_CANNON.get(),
                     com.kkdfg.Tacz_morelevel.entity.client.PunisherShoulderCannonRenderer::new);
             event.registerEntityRenderer(ModEntities.GRENADE.get(), GrenadeEntityRenderer::new);

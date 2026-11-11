@@ -12,9 +12,9 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 
 /**
  * 骑马走位。只占 {@link Flag#MOVE}。
- * 距离和看见时间沿用 {@code MobGunRangedMoveGoal}：半径外或还没看见够久就寻路靠近，
- * 半径内看见够久就沿马头直线走。远战圈外夹角收到 {@link #FAR_HEADING_MAX} 内，两圈之间保持
- * {@link #MID_HEADING_MIN} 到 {@link #MID_HEADING_MAX}。进入近战圈后锁住当时的马头，沿这个方向冲。
+ * 连续看见目标达到阈值前寻路靠近，达到阈值后沿马头方向前进。
+ * 远战圈外夹角收到 {@link #FAR_HEADING_MAX} 内，两圈之间保持
+ * {@link #MID_HEADING_MIN} 到 {@link #MID_HEADING_MAX}。近战圈内沿当前朝向前进。
  * 远近圈用配置里的 {@code gunRadius}、{@code gunStrafeOuterRingFrac}、{@code gunStrafeInnerRingFrac}，
  * 平方边界在这里算。
  */
@@ -31,21 +31,21 @@ public class HorseRidingMoveGoal extends Goal {
     /** 还没贴到边界时，每拍至少转这么多度。 */
     private static final double TURN_MIN = 0.5D;
     private static final int SEE_TIME_MAX = 1000;
+    /** 朝向已在允许范围内时，隔这么多拍才再偏一次。 */
+    private static final int HEADING_OFFSET_COOLDOWN = 8;
+    private static final float HEADING_OFFSET_BASE = 10.0F;
+    private static final float HEADING_OFFSET_RANDOM = 5.0F;
 
     private final Mob mob;
     private final RidingPathSource paths;
-    /** {@code gunRadius²}。 */
-    private final double attackRadiusSqr;
     /** {@code gunRadius² × gunStrafeOuterRingFrac}。 */
     private final double farRingSqr;
     /** {@code gunRadius² × gunStrafeInnerRingFrac}。 */
     private final double nearRingSqr;
     private final int seeTimeToStopMove;
     private PausedHorseMoveControl pausedHorseControl;
-    /** 已经进入近战圈并锁住冲锋方向。 */
-    private boolean nearCharge;
-    private float nearChargeYaw;
     private int seeTime;
+    private int headingOffsetCooldown;
 
     public HorseRidingMoveGoal(
             Mob mob, double gunRadius, double outerRingFrac, double innerRingFrac, int seeTimeToStopMove) {
@@ -55,7 +55,6 @@ public class HorseRidingMoveGoal extends Goal {
         this.mob = mob;
         this.paths = paths;
         double radiusSqr = gunRadius * gunRadius;
-        this.attackRadiusSqr = radiusSqr;
         this.farRingSqr = radiusSqr * outerRingFrac;
         this.nearRingSqr = radiusSqr * innerRingFrac;
         this.seeTimeToStopMove = seeTimeToStopMove;
@@ -87,7 +86,6 @@ public class HorseRidingMoveGoal extends Goal {
 
     @Override
     public void stop() {
-        this.nearCharge = false;
         this.seeTime = 0;
         this.paths.ridingPathNavigation().stop();
         this.paths.stopFootNavigation();
@@ -103,6 +101,9 @@ public class HorseRidingMoveGoal extends Goal {
 
     @Override
     public void tick() {
+        if (this.headingOffsetCooldown > 0) {
+            this.headingOffsetCooldown--;
+        }
         LivingEntity target = this.mob.getTarget();
         if (target == null || !(this.mob.getVehicle() instanceof AbstractHorse horse)) {
             return;
@@ -132,13 +133,14 @@ public class HorseRidingMoveGoal extends Goal {
         }
 
         PathNavigation ridingNavigation = this.paths.ridingPathNavigation();
-        if (!(distSqr > this.attackRadiusSqr) && this.seeTime >= this.seeTimeToStopMove+5) {
+        if (this.seeTime >= this.seeTimeToStopMove + 5) {
             ridingNavigation.stop();
-            this.steerHorse(horse, target);
+            if (distSqr > this.nearRingSqr) {
+                this.steerHorse(horse, target);
+            }
             ridingMove.strafe(FORWARD, 0.0F, STRAFE_SPEED);
             ridingMove.tick();
         } else {
-            this.nearCharge = false;
             ridingNavigation.moveTo(target, playerMatchedMoveSpeed(horse));
             ridingNavigation.tick();
             ridingMove.tick();
@@ -171,17 +173,6 @@ public class HorseRidingMoveGoal extends Goal {
 
     private void steerHorse(AbstractHorse horse, LivingEntity target) {
         double distSqr = this.mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
-        if (distSqr <= this.nearRingSqr) {
-            if (!this.nearCharge) {
-                this.nearCharge = true;
-                this.nearChargeYaw = horse.getYRot();
-            }
-            horse.setYRot(this.nearChargeYaw);
-            horse.setYHeadRot(this.nearChargeYaw);
-            horse.yBodyRot = this.nearChargeYaw;
-            return;
-        }
-        this.nearCharge = false;
         double dx = target.getX() - horse.getX();
         double dz = target.getZ() - horse.getZ();
         float targetYaw = (float) (Mth.atan2(dz, dx) * (180.0D / Math.PI)) - 90.0F;
@@ -197,6 +188,7 @@ public class HorseRidingMoveGoal extends Goal {
             maxAbs = MID_HEADING_MAX;
         }
         if (abs >= minAbs && abs <= maxAbs) {
+            this.offsetHeading(horse);
             return;
         }
 
@@ -235,5 +227,21 @@ public class HorseRidingMoveGoal extends Goal {
         horse.setYRot(newYaw);
         horse.setYHeadRot(newYaw);
         horse.yBodyRot = newYaw;
+    }
+
+    /** 朝向已经在允许范围内时随机偏一次。偏出范围后由上面的拉回处理。 */
+    private void offsetHeading(AbstractHorse horse) {
+        if (this.headingOffsetCooldown > 0) {
+            return;
+        }
+        float delta = HEADING_OFFSET_BASE + horse.getRandom().nextFloat() * HEADING_OFFSET_RANDOM;
+        if (horse.getRandom().nextBoolean()) {
+            delta = -delta;
+        }
+        float yaw = Mth.wrapDegrees(horse.getYRot() + delta);
+        horse.setYRot(yaw);
+        horse.setYHeadRot(yaw);
+        horse.yBodyRot = yaw;
+        this.headingOffsetCooldown = HEADING_OFFSET_COOLDOWN;
     }
 }

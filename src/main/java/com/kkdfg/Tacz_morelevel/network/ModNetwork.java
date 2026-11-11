@@ -10,6 +10,7 @@ import com.kkdfg.Tacz_morelevel.network.packet.BlackMarketRefreshPacket;
 import com.kkdfg.Tacz_morelevel.network.packet.BlackMarketSyncMenuPacket;
 import com.kkdfg.Tacz_morelevel.network.packet.BlackMarketTradePacket;
 import com.kkdfg.Tacz_morelevel.network.packet.GrenadeControlPacket;
+import com.kkdfg.Tacz_morelevel.network.packet.MechanicalHorseMissilePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -80,6 +81,12 @@ public final class ModNetwork {
                 ShockwaveDashPacket::encode,
                 ShockwaveDashPacket::decode,
                 ShockwaveDashPacket::handle);
+        CHANNEL.registerMessage(
+                nextId++,
+                MechanicalHorseMissilePacket.class,
+                MechanicalHorseMissilePacket::encode,
+                MechanicalHorseMissilePacket::decode,
+                MechanicalHorseMissilePacket::handle);
     }
 
     private ModNetwork() {}

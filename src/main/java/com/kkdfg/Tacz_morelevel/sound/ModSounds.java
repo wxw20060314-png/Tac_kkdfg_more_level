@@ -196,6 +196,11 @@ public class ModSounds {
     /** 战争机器受创。 */
     public static final RegistryObject<SoundEvent> SOUND_WAR_MACHINE_HURT =
             registerWarMachine("war_machine_hurt");
+    /** 机械马闲置机械音。 */
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_HORSE_IDLE_1 =
+            registerWarMachine("mechanical_horse_idle_1");
+    public static final RegistryObject<SoundEvent> SOUND_MECHANICAL_HORSE_IDLE_2 =
+            registerWarMachine("mechanical_horse_idle_2");
     public static final RegistryObject<SoundEvent> SOUND_WAR_MACHINE_DEATH_1 =
             registerWarMachine("war_machine_death_1");
     public static final RegistryObject<SoundEvent> SOUND_WAR_MACHINE_DEATH_2 =

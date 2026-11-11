@@ -111,17 +111,16 @@ public class RidingMoveControl implements Control {
          f3 *= f4;
          float f5 = Mth.sin(mount.getYRot() * ((float)Math.PI / 180F));
          float f6 = Mth.cos(mount.getYRot() * ((float)Math.PI / 180F));
-         float f7 = f2 * f6 - f3 * f5;
-         float f8 = f3 * f6 + f2 * f5;
+         float f7 = f3 * f6 - f2 * f5;
+         float f8 = f2 * f6 + f3 * f5;
          if (!this.isWalkable(mount, f7, f8)) {
              this.strafeForwards = 0.0F;
              this.strafeRight = 0.0F;
-             float yaw = Mth.wrapDegrees(mount.getYRot() + 10.0F);
+             float yaw = Mth.wrapDegrees(mount.getYRot() + 30.0F);
              mount.setYRot(yaw);
              mount.setYHeadRot(yaw);
              mount.yBodyRot = yaw;
          }
-
          mount.setSpeed(f1);
          mount.setZza(this.strafeForwards);
          mount.setXxa(this.strafeRight);
@@ -160,49 +159,43 @@ public class RidingMoveControl implements Control {
 
    /** 检查马沿横移方向的通行空间、跨步净空及落脚支撑。 */
    private boolean isWalkable(AbstractHorse mount, float pRelativeX, float pRelativeZ) {
-      PathNavigation pathnavigation = this.rider.ridingPathNavigation();
-      if (pathnavigation == null || !(this.rider instanceof Mob riderMob)) {
-         return true;
-      }
-
-      NodeEvaluator nodeevaluator = pathnavigation.getNodeEvaluator();
-      if (nodeevaluator == null) {
-         return true;
-      }
-
-      double distanceSqr = (double)pRelativeX * pRelativeX + (double)pRelativeZ * pRelativeZ;
-      if (!Double.isFinite(distanceSqr) || distanceSqr > MAX_STRAFE_CHECK_DISTANCE * MAX_STRAFE_CHECK_DISTANCE) {
-         return false;
-      }
-
-      int x = Mth.floor(mount.getX() + (double)pRelativeX);
-      int y = mount.getBlockY();
-      int z = Mth.floor(mount.getZ() + (double)pRelativeZ);
-      BlockPathTypes here = nodeevaluator.getBlockPathType(mount.level(), x, y, z);
-      // 实心障碍可以尝试跨步，水等负代价地形直接排除。
-      if (here != BlockPathTypes.BLOCKED && RidingWalkNodeEvaluator.pathMalus(riderMob, here) < 0.0F) {
-         return false;
-      }
-      // 平地沿用路径类型。空气和实心障碍才进入跳跃、落下的碰撞箱。
-      if (here != BlockPathTypes.OPEN && RidingWalkNodeEvaluator.pathMalus(riderMob, here) >= 0.0F) {
-         return true;
-      }
+       double dx = pRelativeX;
+       double dz = pRelativeZ;
+       double distanceSqr = dx * dx + dz * dz;
+       if (!Double.isFinite(distanceSqr)
+           || distanceSqr > MAX_STRAFE_CHECK_DISTANCE * MAX_STRAFE_CHECK_DISTANCE) {
+           return false;
+       }
 
       AABB body = mount.getBoundingBox();
-      AABB searchBox = body.expandTowards(pRelativeX, 0.0D, pRelativeZ)
-            .expandTowards(0.0D, 1.0D, 0.0D)
-            .expandTowards(0.0D, -1.0D - COLLISION_EPSILON * 2.0D, 0.0D);
-      List<VoxelShape> collisions = new ArrayList<>();
-      mount.level().getBlockCollisions(mount, searchBox).forEach(collisions::add);
+       AABB searchBox = body.expandTowards(dx, 0.0D, dz)
+           .expandTowards(0.0D, 1.0D, 0.0D)
+           .expandTowards(0.0D, -1.0D - COLLISION_EPSILON * 2.0D, 0.0D);
 
-      AABB landing = findStrafeLanding(body, pRelativeX, pRelativeZ, 1.0D, 1.0D, collisions);
-      if (landing == null) {
-         return false;
-      }
-      // 半砖等非整格表面用上方的路径格，实际支撑已由碰撞形状确认。
-      int landingY = Mth.ceil(landing.minY - COLLISION_EPSILON);
-      BlockPathTypes landingType = nodeevaluator.getBlockPathType(mount.level(), x, landingY, z);
-      return RidingWalkNodeEvaluator.pathMalus(riderMob, landingType) >= 0.0F;
+       List<VoxelShape> collisions = new ArrayList<>();
+       mount.level().getBlockCollisions(mount, searchBox).forEach(collisions::add);
+
+       AABB landing = findStrafeLanding(body, dx, dz, 1.0D, 1.0D, collisions);
+       if (landing == null) {
+           return false;
+       }
+
+       PathNavigation navigation = this.rider.ridingPathNavigation();
+       if (navigation == null || !(this.rider instanceof Mob riderMob)) {
+           return true;
+       }
+
+       NodeEvaluator evaluator = navigation.getNodeEvaluator();
+       if (evaluator == null) {
+           return true;
+       }
+
+// 碰撞箱检查通过后，再查落脚中心格的地形。
+       int x = Mth.floor(mount.getX() + dx);
+       int y = Mth.ceil(landing.minY - COLLISION_EPSILON);
+       int z = Mth.floor(mount.getZ() + dz);
+       BlockPathTypes landingType = evaluator.getBlockPathType(mount.level(), x, y, z);
+       return RidingWalkNodeEvaluator.pathMalus(riderMob, landingType) >= 0.0F;
    }
 
    /** 各段沿原版的分轴碰撞流程检查，避免大包围盒将台阶本体误判为障碍。 */

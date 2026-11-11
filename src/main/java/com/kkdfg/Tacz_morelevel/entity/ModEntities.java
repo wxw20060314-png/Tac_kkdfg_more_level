@@ -22,6 +22,8 @@ import com.kkdfg.Tacz_morelevel.entity.custom.MysteriousMerchantEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PoliceEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.PunisherEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalCowboyEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalHorseEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalHorseMissileEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.RefugeeEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.SpecialForcesSoldierEntity;
 import com.kkdfg.Tacz_morelevel.entity.custom.WarMachineEntity;
@@ -257,6 +259,29 @@ public final class ModEntities {
                                     .sized(0.9F, 0.6F)
                                     .clientTrackingRange(10)
                                     .build(Tacz_MoreLevel.MOD_ID + ":bomb_cart"));
+
+    /** 机械马：默认驯服，碰撞箱高度为 1.9 格。 */
+    public static final RegistryObject<EntityType<MechanicalHorseEntity>> MECHANICAL_HORSE =
+            ENTITY_TYPES.register(
+                    "mechanical_horse",
+                    () ->
+                            EntityType.Builder.<MechanicalHorseEntity>of(
+                                            MechanicalHorseEntity::new, MobCategory.CREATURE)
+                                    .sized(1.3964844F, 1.9F)
+                                    .clientTrackingRange(10)
+                                    .build(Tacz_MoreLevel.MOD_ID + ":mechanical_horse"));
+
+    public static final RegistryObject<EntityType<MechanicalHorseMissileEntity>> MECHANICAL_HORSE_MISSILE =
+            ENTITY_TYPES.register(
+                    "mechanical_horse_missile",
+                    () -> EntityType.Builder.of(MechanicalHorseMissileEntity::new, MobCategory.MISC)
+                            .sized(0.16F, 0.16F)
+                            .noSave()
+                            .noSummon()
+                            .clientTrackingRange(12)
+                            .setUpdateInterval(1)
+                            .setShouldReceiveVelocityUpdates(true)
+                            .build(Tacz_MoreLevel.MOD_ID + ":mechanical_horse_missile"));
 
     public static final RegistryObject<EntityType<PunisherShoulderCannonEntity>> PUNISHER_SHOULDER_CANNON =
             ENTITY_TYPES.register(

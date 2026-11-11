@@ -219,6 +219,14 @@ public final class ModItems {
                             new ForgeSpawnEggItem(
                                     ModEntities.MECHANICAL_COWBOY, 0xFF8B8B, 0xFF5555, new Item.Properties()));
 
+    /** 机械马：钢灰刷怪蛋。 */
+    public static final RegistryObject<Item> MECHANICAL_HORSE_SPAWN_EGG =
+            ITEMS.register(
+                    "mechanical_horse_spawn_egg",
+                    () ->
+                            new ForgeSpawnEggItem(
+                                    ModEntities.MECHANICAL_HORSE, 0x8A8F98, 0xC4A35A, new Item.Properties()));
+
     /** 美女护航：粉色刷怪蛋（底色 / 斑点）。 */
     public static final RegistryObject<Item> BEAUTY_BODYGUARD_SPAWN_EGG =
             ITEMS.register(
@@ -538,6 +546,7 @@ public final class ModItems {
                     BOMB_SIGHT_SPAWN_EGG,
                     PUNISHER_SPAWN_EGG,
                     MECHANICAL_COWBOY_SPAWN_EGG,
+                    MECHANICAL_HORSE_SPAWN_EGG,
                     BEAUTY_BODYGUARD_SPAWN_EGG,
                     STANDARD_BODYGUARD_SPAWN_EGG,
                     ELITE_BODYGUARD_SPAWN_EGG,

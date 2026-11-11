@@ -9,6 +9,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseArmorEquipGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseWaterFloatGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseDismountGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.riding.HorseMountGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.MechanicalHorseMissileGoal;
+import com.kkdfg.Tacz_morelevel.entity.ai.riding.MechanicalHorseRecallGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunFindCoverRequestGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunReloadGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.MobGunSimThreadCoverStrafeMoveGoal;
@@ -20,14 +22,17 @@ import com.kkdfg.Tacz_morelevel.entity.ai.MobRandomSneakWithTargetInlongDistance
 import com.kkdfg.Tacz_morelevel.entity.ai.MobTaczCombatCrawlGoal;
 import com.kkdfg.Tacz_morelevel.entity.ai.SoldierHurtByTargetGoal;
 import com.google.common.collect.ImmutableMap;
+import com.kkdfg.Tacz_morelevel.entity.ModEntities;
 import com.kkdfg.Tacz_morelevel.item.ModItems;
 import com.kkdfg.Tacz_morelevel.sound.ModSounds;
 import com.tacz.guns.api.item.attachment.AttachmentType;
 import java.util.Map;
+import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -36,6 +41,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -108,6 +114,11 @@ public final class MechanicalCowboyEntity extends AbstractHolsterGunSoldierEntit
                     BossEvent.BossBarColor.RED,
                     BossEvent.BossBarOverlay.NOTCHED_10);
 
+    /** 为真时，服务端 tick 在脚下召唤一匹机械马，然后改回 false。不写存档。 */
+    private boolean summonMechanicalHorse;
+    /** 最后骑过的机械马。马死亡或找不到也不清。不写存档。 */
+    @Nullable private UUID controlledMechanicalHorse;
+
     public MechanicalCowboyEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.goalSelector.addGoal(3, new HorseMountGoal(this));
@@ -116,6 +127,11 @@ public final class MechanicalCowboyEntity extends AbstractHolsterGunSoldierEntit
         this.goalSelector.addGoal(3, new HorseWaterFloatGoal(this));
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
         this.reassessWeaponGoal();
+    }
+
+    /** 下一 tick 是否在脚下召唤机械马。生成装备时会设为 true，可在那之后改掉。 */
+    public void setSummonMechanicalHorse(boolean summon) {
+        this.summonMechanicalHorse = summon;
     }
 
     @Override
@@ -204,6 +220,8 @@ public final class MechanicalCowboyEntity extends AbstractHolsterGunSoldierEntit
         this.goalSelector.addGoal(0, new FlashedStunGoal(this));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MobGunReloadGoal(this));
+        this.goalSelector.addGoal(2, new MechanicalHorseMissileGoal(this));
+        this.goalSelector.addGoal(2, new MechanicalHorseRecallGoal(this));
         Config.NpcAttributeStats coverRange = this.configuredAttributeStats();
         this.goalSelector.addGoal(
                 3,
@@ -278,6 +296,8 @@ public final class MechanicalCowboyEntity extends AbstractHolsterGunSoldierEntit
         }
         if (!this.level().isClientSide()) {
             this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+            this.summonMechanicalHorseIfNeeded();
+            this.rememberControlledHorse();
         }
         MobEffectInstance defence = this.getEffect(ModMobEffects.MOD_DEFFENCE.get());
         if (defence == null || defence.getAmplifier() != DEFENCE_LEVEL - 1) {
@@ -302,6 +322,40 @@ public final class MechanicalCowboyEntity extends AbstractHolsterGunSoldierEntit
         this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.DARK_COWBOY_LEGGINGS.get()));
         this.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.DARK_COWBOY_BOOTS.get()));
         this.applyEquipmentDropChances();
+        this.setSummonMechanicalHorse(true);
+    }
+
+    private void summonMechanicalHorseIfNeeded() {
+        if (!this.summonMechanicalHorse || !(this.level() instanceof ServerLevel server)) {
+            return;
+        }
+        this.summonMechanicalHorse = false;
+        MechanicalHorseEntity horse = ModEntities.MECHANICAL_HORSE.get().create(server);
+        if (horse == null) {
+            return;
+        }
+        horse.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
+        horse.finalizeSpawn(
+                server,
+                server.getCurrentDifficultyAt(horse.blockPosition()),
+                MobSpawnType.MOB_SUMMONED,
+                null,
+                null);
+        server.addFreshEntity(horse);
+        if (!this.isPassenger()) {
+            this.startRiding(horse, true);
+        }
+    }
+
+    @Nullable
+    public UUID controlledMechanicalHorseId() {
+        return this.controlledMechanicalHorse;
+    }
+
+    private void rememberControlledHorse() {
+        if (this.getVehicle() instanceof MechanicalHorseEntity horse) {
+            this.controlledMechanicalHorse = horse.getUUID();
+        }
     }
 
     @Override

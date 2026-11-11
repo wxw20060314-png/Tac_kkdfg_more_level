@@ -1,6 +1,7 @@
 package com.kkdfg.Tacz_morelevel.entity.ai.riding;
 
 import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalHorseEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -33,6 +34,7 @@ public class HorseArmorEquipGoal extends Goal {
     @Override
     public boolean canUse() {
         if (!(this.mob.getVehicle() instanceof AbstractHorse horse)
+                || horse instanceof MechanicalHorseEntity
                 || !(this.mob instanceof HorseRidingNpc npc)
                 || !npc.adoptsHorseRiding()) {
             return false;
@@ -51,7 +53,7 @@ public class HorseArmorEquipGoal extends Goal {
 
     @Override
     public void start() {
-        if (!(this.mob.getVehicle() instanceof AbstractHorse horse)) {
+        if (!(this.mob.getVehicle() instanceof AbstractHorse horse) || horse instanceof MechanicalHorseEntity) {
             this.clearChoice();
             return;
         }

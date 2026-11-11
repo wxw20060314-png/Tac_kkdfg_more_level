@@ -2182,5 +2182,13 @@
   "mechanical_cowboy_death_6": {
     "subtitles": "sounds.tacz_morelevel.mechanical_cowboy_death",
     "sounds": ["tacz_morelevel:cowboy/mechanical_cowboy_death_6"]
+  },
+  "mechanical_horse_idle_1": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_horse_idle",
+    "sounds": ["tacz_morelevel:mechanical_horse/mechanical_horse_idle_1"]
+  },
+  "mechanical_horse_idle_2": {
+    "subtitles": "sounds.tacz_morelevel.mechanical_horse_idle",
+    "sounds": ["tacz_morelevel:mechanical_horse/mechanical_horse_idle_2"]
   }
 }

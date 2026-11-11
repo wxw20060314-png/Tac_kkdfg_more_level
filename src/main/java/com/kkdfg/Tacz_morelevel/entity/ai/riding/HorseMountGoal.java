@@ -1,6 +1,8 @@
 package com.kkdfg.Tacz_morelevel.entity.ai.riding;
 
 import com.kkdfg.Tacz_morelevel.entity.SoldierWeaponArrangeHost;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalCowboyEntity;
+import com.kkdfg.Tacz_morelevel.entity.custom.MechanicalHorseEntity;
 import com.kkdfg.Tacz_morelevel.item.custom.BulletproofHorseArmorItem;
 import java.util.List;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,7 +14,8 @@ import net.minecraft.world.phys.AABB;
 
 /**
  * 士兵和中立单位上马。每 20 tick 扫脚下 5×5×2。
- * 马已经穿着防弹马甲就直接上。否则先查默认 6 格装备和 6 格背包里有没有防弹马甲。
+ * 穿防弹马甲的马可直接上。机械马只有机械牛仔会扫到，扫到就直接上。
+ * 其余空马需要 NPC 自带防弹马甲。
  */
 public class HorseMountGoal extends Goal {
 
@@ -46,7 +49,7 @@ public class HorseMountGoal extends Goal {
         }
         this.cooldown = INTERVAL;
         List<AbstractHorse> horses = this.findHorses();
-        this.horse = this.nearestWearingArmor(horses);
+        this.horse = this.nearestArmoredMount(horses);
         if (this.horse != null) {
             return true;
         }
@@ -98,14 +101,18 @@ public class HorseMountGoal extends Goal {
         return this.mob.level().getEntitiesOfClass(
                 AbstractHorse.class,
                 box,
-                horse -> horse.isAlive() && !horse.isVehicle());
+                horse -> horse.isAlive()
+                        && !horse.isVehicle()
+                        && (!(horse instanceof MechanicalHorseEntity)
+                                || this.mob instanceof MechanicalCowboyEntity));
     }
 
-    private AbstractHorse nearestWearingArmor(List<AbstractHorse> horses) {
+    private AbstractHorse nearestArmoredMount(List<AbstractHorse> horses) {
         AbstractHorse nearest = null;
         double nearestSqr = Double.MAX_VALUE;
         for (AbstractHorse horse : horses) {
-            if (!isBulletproofHorseArmor(horse.getItemBySlot(EquipmentSlot.CHEST))) {
+            if (!(horse instanceof MechanicalHorseEntity)
+                    && !isBulletproofHorseArmor(horse.getItemBySlot(EquipmentSlot.CHEST))) {
                 continue;
             }
             double distSqr = this.mob.distanceToSqr(horse);

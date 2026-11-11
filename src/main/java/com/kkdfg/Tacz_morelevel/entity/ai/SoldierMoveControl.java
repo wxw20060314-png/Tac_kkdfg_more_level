@@ -9,6 +9,8 @@ import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierPathNode;
 import com.kkdfg.Tacz_morelevel.entity.ai.pathing.SoldierWalkNodeEvaluator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
@@ -89,6 +91,7 @@ public final class SoldierMoveControl extends MoveControl {
             if (!this.isWalkable(f7, f8)) {
                 this.strafeForwards = 1.0F;
                 this.strafeRight = 0.0F;
+                System.out.println(23);
             }
 
             this.mob.setSpeed(f1);
@@ -259,6 +262,19 @@ public final class SoldierMoveControl extends MoveControl {
         if (type == BlockPathTypes.WALKABLE) {
             return true;
         }
+        //test
+//        if (mob.level() instanceof ServerLevel server) {
+//            server.sendParticles(
+//                ParticleTypes.END_ROD,
+//                x + 0.5D,
+//                y + 0.5D,
+//                z + 0.5D,
+//                1,
+//                0.0D,
+//                0.0D,
+//                0.0D,
+//                0.0D);
+//        }
         Block block = this.mob.level().getBlockState(new BlockPos(x, y, z)).getBlock();
         return isStrafeGroundLike(block);
     }
